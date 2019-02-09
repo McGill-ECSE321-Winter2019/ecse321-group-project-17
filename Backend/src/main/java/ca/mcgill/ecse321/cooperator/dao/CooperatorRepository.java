@@ -34,12 +34,14 @@ public class CooperatorRepository {
 		return p;
 	}
 	
-	@Transactional Profile getProfile(String email) {
+	@Transactional 
+	public Profile getProfile(String email) {
 		Profile p = entityManager.find(Profile.class, email);
 		return p;
 	}
 	
-	@Transactional Coop createCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
+	@Transactional 
+	public Coop createCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
 		Coop c = new Coop();
 		c.setId(id);
 		c.setTitle(title);
@@ -52,12 +54,14 @@ public class CooperatorRepository {
 		return c;
 	}
 	
-	@Transactional Coop getCoop(Integer id) {
+	@Transactional 
+	public Coop getCoop(Integer id) {
 		Coop c = entityManager.find(Coop.class, id);
 		return c;
 	}
 	
-	@Transactional Student createStudent(Integer id, Integer status) {
+	@Transactional 
+	public Student createStudent(Integer id, Integer status) {
 		Student s = new Student();
 		s.setId(id);
 		s.setStatus(status);
@@ -65,36 +69,42 @@ public class CooperatorRepository {
 		return s;
 	}
 	
-	@Transactional Student getStudent(Integer id) {
+	@Transactional 
+	public Student getStudent(Integer id) {
 		Student s = entityManager.find(Student.class, id);
 		return s;
 	}
 	
-	@Transactional Employer createEmployer(Integer id) {
+	@Transactional 
+	public Employer createEmployer(Integer id) {
 		Employer e = new Employer();
 		e.setId(id);
 		entityManager.persist(e);
 		return e;
 	}
 	
-	@Transactional Employer getEmployer(Integer id) {
+	@Transactional 
+	public Employer getEmployer(Integer id) {
 		Employer e = entityManager.find(Employer.class, id);
 		return e;
 	}
 	
-	@Transactional Administrator createAdministrator(Integer id) {
+	@Transactional 
+	public Administrator createAdministrator(Integer id) {
 		Administrator a = new Administrator();
 		a.setId(id);
 		entityManager.persist(a);
 		return a;
 	}
 	
-	@Transactional Administrator getAdministrator(Integer id) {
+	@Transactional 
+	public Administrator getAdministrator(Integer id) {
 		Administrator a = entityManager.find(Administrator.class, id);
 		return a;
 	}
 	
-	@Transactional Notification createNotification(Integer id, String text) {
+	@Transactional  
+	public Notification createNotification(Integer id, String text) {
 		Notification n = new Notification();
 		n.setId(id);
 		n.setText(text);
@@ -102,19 +112,22 @@ public class CooperatorRepository {
 		return n;
 	}
 	
-	@Transactional Notification getNotification(Integer id) {
+	@Transactional  
+	public Notification getNotification(Integer id) {
 		Notification n = entityManager.find(Notification.class, id);
 		return n;
 	}
 	
-	@Transactional File createFile(Integer id) {
+	@Transactional  
+	public File createFile(Integer id) {
 		File f = new File();
 		f.setId(id);
 		entityManager.persist(f);
 		return f;
 	}
 	
-	@Transactional File getFile(Integer id) {
+	@Transactional  
+	public File getFile(Integer id) {
 		File f = entityManager.find(File.class, id);
 		return f;
 	}
