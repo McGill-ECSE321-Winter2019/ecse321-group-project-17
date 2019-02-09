@@ -4,7 +4,7 @@
     <eAnnotations xmi:id="_I_BgoCymEemnC6Qs8IyScA" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_I_CHsCymEemnC6Qs8IyScA" source="codegen">
         <details xmi:id="_I_CHsSymEemnC6Qs8IyScA" key="codegenDirectory" value="/ecse321-group-project-17/Backend/src/main/java"/>
-        <details xmi:id="_r29I0CymEempnMmxnVmbDQ" key="AssociatedSourceCode" value="/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/CooperatorApplication.java;1656204671/1;/ecse321-group-project-17/Backend/src/test/java/ca/mcgill/ecse321/cooperator/CooperatorApplicationTests.java;3396004387/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Profile.java;410261369/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Notification.java;1148576773/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Administrator.java;1862103971/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Employer.java;165818089/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Coop.java;3384933753/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/File.java;3552421518/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Student.java;4071369497/1;"/>
+        <details xmi:id="_r29I0CymEempnMmxnVmbDQ" key="AssociatedSourceCode" value="/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/CooperatorApplication.java;2969206638/1;/ecse321-group-project-17/Backend/src/test/java/ca/mcgill/ecse321/cooperator/CooperatorApplicationTests.java;3775906078/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Profile.java;410261369/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Notification.java;1148576773/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Administrator.java;1862103971/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Employer.java;165818089/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Coop.java;3384933753/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/File.java;3552421518/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/model/Student.java;4071369497/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_I_GZICymEemnC6Qs8IyScA">
@@ -46,7 +46,7 @@
                 </ownedParameter>
                 <language>java</language>
                 <body>SpringApplication.run(CooperatorApplication.class, args);&#xD;
-   	</body>
+      	</body>
               </ownedBehavior>
               <ownedOperation xmi:id="_I_KDgCymEemnC6Qs8IyScA" name="main" isStatic="true" method="_JAECcCymEemnC6Qs8IyScA">
                 <ownedParameter xmi:id="_I_KqkCymEemnC6Qs8IyScA" name="args">
@@ -192,7 +192,35 @@
     <packagedElement xmi:type="uml:Association" xmi:id="_jWZAgCynEempnMmxnVmbDQ" name="" memberEnd="_jWaOoCynEempnMmxnVmbDQ _jWaOoyynEempnMmxnVmbDQ"/>
     <packagedElement xmi:type="uml:Association" xmi:id="_jrSScCynEempnMmxnVmbDQ" name="" memberEnd="_jrS5gCynEempnMmxnVmbDQ _jrUHoCynEempnMmxnVmbDQ"/>
     <packagedElement xmi:type="uml:Association" xmi:id="_j746QCynEempnMmxnVmbDQ" name="" memberEnd="_j746QSynEempnMmxnVmbDQ _j75hUiynEempnMmxnVmbDQ"/>
-    <packagedElement xmi:type="uml:DataType" xmi:id="_AG1tECyoEempnMmxnVmbDQ" name="Int"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_v5W1ACyrEempnMmxnVmbDQ" name="org">
+      <packagedElement xmi:type="uml:Package" xmi:id="_v5XcECyrEempnMmxnVmbDQ" name="springframework">
+        <packagedElement xmi:type="uml:Package" xmi:id="_v5XcESyrEempnMmxnVmbDQ" name="boot">
+          <packagedElement xmi:type="uml:Package" xmi:id="_v5ZRQCyrEempnMmxnVmbDQ" name="autoconfigure">
+            <packagedElement xmi:type="uml:Class" xmi:id="_v5xEsSyrEempnMmxnVmbDQ" name="SpringBootApplication"/>
+          </packagedElement>
+          <packagedElement xmi:type="uml:Class" xmi:id="_v5h0ICyrEempnMmxnVmbDQ" name="SpringApplication"/>
+          <packagedElement xmi:type="uml:Package" xmi:id="_xs4BECyrEempnMmxnVmbDQ" name="test">
+            <packagedElement xmi:type="uml:Package" xmi:id="_xs4BESyrEempnMmxnVmbDQ" name="context">
+              <packagedElement xmi:type="uml:Class" xmi:id="_xttukSyrEempnMmxnVmbDQ" name="SpringBootTest"/>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Package" xmi:id="_xs4BEiyrEempnMmxnVmbDQ" name="test">
+          <packagedElement xmi:type="uml:Package" xmi:id="_xs4oICyrEempnMmxnVmbDQ" name="context">
+            <packagedElement xmi:type="uml:Package" xmi:id="_xs4oISyrEempnMmxnVmbDQ" name="junit4">
+              <packagedElement xmi:type="uml:Class" xmi:id="_xt570CyrEempnMmxnVmbDQ" name="SpringRunner"/>
+            </packagedElement>
+          </packagedElement>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_xs2y8CyrEempnMmxnVmbDQ" name="junit">
+        <packagedElement xmi:type="uml:Package" xmi:id="_xs3aACyrEempnMmxnVmbDQ" name="runner">
+          <packagedElement xmi:type="uml:Class" xmi:id="_xtjWgSyrEempnMmxnVmbDQ" name="RunWith"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_xtNYQCyrEempnMmxnVmbDQ" name="Test"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_xtXwUSyrEempnMmxnVmbDQ" name="Assert"/>
+      </packagedElement>
+    </packagedElement>
     <profileApplication xmi:id="_I-4WsCymEemnC6Qs8IyScA">
       <eAnnotations xmi:id="_I-_rcCymEemnC6Qs8IyScA" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
@@ -228,7 +256,7 @@
   <UMLLabProfile:TargetLanguage xmi:id="_Wia0MCymEemnC6Qs8IyScA" base_Package="_Ip6zUCymEemnC6Qs8IyScA">
     <languageName>java</languageName>
   </UMLLabProfile:TargetLanguage>
-  <UMLLabProfile:UnresolvedElement xmi:id="_AG5-gCyoEempnMmxnVmbDQ" base_Element="_AG1tECyoEempnMmxnVmbDQ"/>
+  <UMLLabProfile:UnresolvedElement xmi:id="_AG5-gCyoEempnMmxnVmbDQ"/>
   <Persistency:PrimaryKey xmi:id="_Z5zU0CyoEempnMmxnVmbDQ" base_Property="_4MoPkCynEempnMmxnVmbDQ"/>
   <Persistency:PrimaryKey xmi:id="_aggIcCyoEempnMmxnVmbDQ" base_Property="_89kPACynEempnMmxnVmbDQ"/>
   <Persistency:PrimaryKey xmi:id="_bFwKkCyoEempnMmxnVmbDQ" base_Property="_5m08sCynEempnMmxnVmbDQ"/>
@@ -236,4 +264,11 @@
   <Persistency:PrimaryKey xmi:id="_dE70ECyoEempnMmxnVmbDQ" base_Property="_AGz34CyoEempnMmxnVmbDQ"/>
   <Persistency:PrimaryKey xmi:id="_ddSCoCyoEempnMmxnVmbDQ" base_Property="_6T0lkCynEempnMmxnVmbDQ"/>
   <Persistency:PrimaryKey xmi:id="_d-ocMCyoEempnMmxnVmbDQ" base_Property="_7Auu4CynEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_v5xEsCyrEempnMmxnVmbDQ" base_Element="_v5h0ICyrEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_v5_HICyrEempnMmxnVmbDQ" base_Element="_v5xEsSyrEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_xtXwUCyrEempnMmxnVmbDQ" base_Element="_xtNYQCyrEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_xtjWgCyrEempnMmxnVmbDQ" base_Element="_xtXwUSyrEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_xttukCyrEempnMmxnVmbDQ" base_Element="_xtjWgSyrEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_xt5UwCyrEempnMmxnVmbDQ" base_Element="_xttukSyrEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_xuJMYCyrEempnMmxnVmbDQ" base_Element="_xt570CyrEempnMmxnVmbDQ"/>
 </xmi:XMI>
