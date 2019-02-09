@@ -108,6 +108,9 @@
               <ownedAttribute xmi:id="_4MoPkCynEempnMmxnVmbDQ" name="id">
                 <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
               </ownedAttribute>
+              <ownedAttribute xmi:id="_I6xHMCywEempnMmxnVmbDQ" name="text">
+                <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+              </ownedAttribute>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_VYdGACynEempnMmxnVmbDQ" name="Administrator">
               <generalization xmi:id="_h7_fECynEempnMmxnVmbDQ" general="_P8-UwCynEempnMmxnVmbDQ"/>

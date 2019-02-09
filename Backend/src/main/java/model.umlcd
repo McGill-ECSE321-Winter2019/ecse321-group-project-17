@@ -340,38 +340,6 @@
       </type>
     </attributes>
   </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_bMjyoCynEempnMmxnVmbDQ" containment="_lj4y0CynEempnMmxnVmbDQ" name="Notification" package="_JuXdcCynEempnMmxnVmbDQ" associationsIn="_xjNrkCynEempnMmxnVmbDQ" associationsOut="_j7_A4CynEempnMmxnVmbDQ">
-    <modelElement href="model.uml#_bMhWYCynEempnMmxnVmbDQ"/>
-    <visualProperties xmi:id="_bMkZsCynEempnMmxnVmbDQ" position="100.0,550.0" size="-1.0,-1.0"/>
-    <visibility xmi:id="_bMkZsSynEempnMmxnVmbDQ" label="+"/>
-    <attributes xmi:id="_j8CrQCynEempnMmxnVmbDQ" name="profile">
-      <modelElement href="model.uml#_j75hUiynEempnMmxnVmbDQ"/>
-      <visibility xmi:id="_j8CrQSynEempnMmxnVmbDQ" label="+"/>
-      <cardinality xmi:id="_j8DSUCynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
-      <type xmi:id="_j8DSUSynEempnMmxnVmbDQ" name="Profile">
-        <modelElement href="model.uml#_P8-UwCynEempnMmxnVmbDQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_xjR9ACynEempnMmxnVmbDQ" name="profile1">
-      <modelElement href="model.uml#_xjAQMCynEempnMmxnVmbDQ"/>
-      <visibility xmi:id="_xjR9ASynEempnMmxnVmbDQ" label="+"/>
-      <cardinality xmi:id="_xjR9AiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
-      <type xmi:id="_xjR9AyynEempnMmxnVmbDQ" name="Profile">
-        <modelElement href="model.uml#_P8-UwCynEempnMmxnVmbDQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_4MpdsCynEempnMmxnVmbDQ" name="id">
-      <modelElement href="model.uml#_4MoPkCynEempnMmxnVmbDQ"/>
-      <stereotypes xmi:id="_Z56CgCyoEempnMmxnVmbDQ" name="PrimaryKey">
-        <modelElement href="model.uml#_Z5zU0CyoEempnMmxnVmbDQ"/>
-      </stereotypes>
-      <visibility xmi:id="_4MpdsSynEempnMmxnVmbDQ" label="+"/>
-      <cardinality xmi:id="_4MpdsiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
-      <type xmi:id="_4MpdsyynEempnMmxnVmbDQ" name="Integer">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </type>
-    </attributes>
-  </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_P9AJ8CynEempnMmxnVmbDQ" containment="_lRnXECynEempnMmxnVmbDQ" name="Profile" package="_JuXdcCynEempnMmxnVmbDQ" associationsIn="_j7_A4CynEempnMmxnVmbDQ" associationsOut="_xjNrkCynEempnMmxnVmbDQ" subclassedBy="_httygCynEempnMmxnVmbDQ _h8BUQCynEempnMmxnVmbDQ _iOHw4CynEempnMmxnVmbDQ">
     <modelElement href="model.uml#_P8-UwCynEempnMmxnVmbDQ"/>
     <visualProperties xmi:id="_P9AJ8SynEempnMmxnVmbDQ" position="417.0,494.0" size="-1.0,-1.0"/>
@@ -441,6 +409,46 @@
       <cardinality xmi:id="_45CpoyynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
       <type xmi:id="_45CppCynEempnMmxnVmbDQ" name="Integer">
         <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </type>
+    </attributes>
+  </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_bMjyoCynEempnMmxnVmbDQ" containment="_lj4y0CynEempnMmxnVmbDQ" name="Notification" package="_JuXdcCynEempnMmxnVmbDQ" associationsIn="_xjNrkCynEempnMmxnVmbDQ" associationsOut="_j7_A4CynEempnMmxnVmbDQ">
+    <modelElement href="model.uml#_bMhWYCynEempnMmxnVmbDQ"/>
+    <visualProperties xmi:id="_bMkZsCynEempnMmxnVmbDQ" position="100.0,550.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_bMkZsSynEempnMmxnVmbDQ" label="+"/>
+    <attributes xmi:id="_j8CrQCynEempnMmxnVmbDQ" name="profile">
+      <modelElement href="model.uml#_j75hUiynEempnMmxnVmbDQ"/>
+      <visibility xmi:id="_j8CrQSynEempnMmxnVmbDQ" label="+"/>
+      <cardinality xmi:id="_j8DSUCynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
+      <type xmi:id="_j8DSUSynEempnMmxnVmbDQ" name="Profile">
+        <modelElement href="model.uml#_P8-UwCynEempnMmxnVmbDQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_xjR9ACynEempnMmxnVmbDQ" name="profile1">
+      <modelElement href="model.uml#_xjAQMCynEempnMmxnVmbDQ"/>
+      <visibility xmi:id="_xjR9ASynEempnMmxnVmbDQ" label="+"/>
+      <cardinality xmi:id="_xjR9AiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
+      <type xmi:id="_xjR9AyynEempnMmxnVmbDQ" name="Profile">
+        <modelElement href="model.uml#_P8-UwCynEempnMmxnVmbDQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_4MpdsCynEempnMmxnVmbDQ" name="id">
+      <modelElement href="model.uml#_4MoPkCynEempnMmxnVmbDQ"/>
+      <stereotypes xmi:id="_Z56CgCyoEempnMmxnVmbDQ" name="PrimaryKey">
+        <modelElement href="model.uml#_Z5zU0CyoEempnMmxnVmbDQ"/>
+      </stereotypes>
+      <visibility xmi:id="_4MpdsSynEempnMmxnVmbDQ" label="+"/>
+      <cardinality xmi:id="_4MpdsiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
+      <type xmi:id="_4MpdsyynEempnMmxnVmbDQ" name="Integer">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_I664MCywEempnMmxnVmbDQ" name="text">
+      <modelElement href="model.uml#_I6xHMCywEempnMmxnVmbDQ"/>
+      <visibility xmi:id="_I67fQCywEempnMmxnVmbDQ" label="+"/>
+      <cardinality xmi:id="_I67fQSywEempnMmxnVmbDQ" label="1" max="1" min="1"/>
+      <type xmi:id="_I67fQiywEempnMmxnVmbDQ" name="String">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
       </type>
     </attributes>
   </nodes>

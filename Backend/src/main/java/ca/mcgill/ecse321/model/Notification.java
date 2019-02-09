@@ -37,4 +37,12 @@ public void setId(Integer value) {
 public Integer getId() {
     return this.id;
 }
+private String text;
+
+public void setText(String value) {
+    this.text = value;
+}
+public String getText() {
+    return this.text;
+}
 }
