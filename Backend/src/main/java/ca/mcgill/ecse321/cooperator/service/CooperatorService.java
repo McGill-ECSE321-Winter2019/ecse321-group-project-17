@@ -15,14 +15,13 @@ import ca.mcgill.ecse321.cooperator.dao.FileRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
-import ca.mcgill.ecse321.model.Administrator;
-import ca.mcgill.ecse321.model.Coop;
-import ca.mcgill.ecse321.model.Employer;
-import ca.mcgill.ecse321.model.File;
-import ca.mcgill.ecse321.model.Notification;
-import ca.mcgill.ecse321.model.Profile;
-import ca.mcgill.ecse321.model.Student;
-
+import ca.mcgill.ecse321.cooperator.model.Administrator;
+import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.Employer;
+import ca.mcgill.ecse321.cooperator.model.File;
+import ca.mcgill.ecse321.cooperator.model.Notification;
+import ca.mcgill.ecse321.cooperator.model.Profile;
+import ca.mcgill.ecse321.cooperator.model.Student;
 @Service
 public class CooperatorService {
 
