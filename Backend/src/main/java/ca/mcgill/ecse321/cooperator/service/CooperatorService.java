@@ -42,11 +42,12 @@ public class CooperatorService {
 	AdministratorRepository administratorRepository;
 
 	@Transactional
-	public Profile createProfile(String email, String name, String password, String phone) {
-		Profile p = new Profile();
+	public Profile createStudent(String email, String name, String password, String phone, int id) {
+		Student p = new Student();
+		
 		String error = "";
 		if(name == null || name.trim().length() == 0) {
-			error = "Profile name cannot be empty! ";
+			error = "Student name cannot be empty! ";
 			//throw new IllegalArgumentException("Profile name cannot be empty!");
 		}
 		if(email == null || email.trim().length() == 0) {
@@ -58,7 +59,11 @@ public class CooperatorService {
 			//throw new IllegalArgumentException("Password cannot be empty!");
 		}
 		if(phone == null || phone.trim().length() == 0) {
-			error =  error + "Phone cannot be empty!";
+			error =  error + "Phone cannot be empty! ";
+			//throw new IllegalArgumentException("Phone cannot be empty!");
+		}
+		if(id < 0) {
+			error =  error + "ID is invalid!";
 			//throw new IllegalArgumentException("Phone cannot be empty!");
 		}
 		if(error.length() != 0) {
@@ -71,6 +76,79 @@ public class CooperatorService {
 		profileRepository.save(p);
 		return p;
 	}
+	
+	@Transactional
+	public Profile createEmployer(String email, String name, String password, String phone, int id) {
+		Employer e = new Employer();
+		
+		String error = "";
+		if(name == null || name.trim().length() == 0) {
+			error = "Employer name cannot be empty! ";
+			//throw new IllegalArgumentException("Profile name cannot be empty!");
+		}
+		if(email == null || email.trim().length() == 0) {
+			error =  error + "Email cannot be empty! ";
+			//throw new IllegalArgumentException("Email cannot be empty!");
+		}
+		if(password == null || password.trim().length() == 0) {
+			error =  error + "Password cannot be empty! ";
+			//throw new IllegalArgumentException("Password cannot be empty!");
+		}
+		if(phone == null || phone.trim().length() == 0) {
+			error =  error + "Phone cannot be empty! ";
+			//throw new IllegalArgumentException("Phone cannot be empty!");
+		}
+		if(id < 0) {
+			error =  error + "ID is invalid!";
+			//throw new IllegalArgumentException("Phone cannot be empty!");
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
+		}
+		e.setEmail(email);
+		e.setName(name);
+		e.setPassword(password);
+		e.setPhone(phone);
+		profileRepository.save(e);
+		return e;
+	}
+	
+	@Transactional
+	public Profile createAdmin(String email, String name, String password, String phone, int id) {
+		Administrator a = new Administrator();
+		
+		String error = "";
+		if(name == null || name.trim().length() == 0) {
+			error = "Employer name cannot be empty! ";
+			//throw new IllegalArgumentException("Profile name cannot be empty!");
+		}
+		if(email == null || email.trim().length() == 0) {
+			error =  error + "Email cannot be empty! ";
+			//throw new IllegalArgumentException("Email cannot be empty!");
+		}
+		if(password == null || password.trim().length() == 0) {
+			error =  error + "Password cannot be empty! ";
+			//throw new IllegalArgumentException("Password cannot be empty!");
+		}
+		if(phone == null || phone.trim().length() == 0) {
+			error =  error + "Phone cannot be empty! ";
+			//throw new IllegalArgumentException("Phone cannot be empty!");
+		}
+		if(id < 0) {
+			error =  error + "ID is invalid!";
+			//throw new IllegalArgumentException("Phone cannot be empty!");
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
+		}
+		a.setEmail(email);
+		a.setName(name);
+		a.setPassword(password);
+		a.setPhone(phone);
+		profileRepository.save(a);
+		return a;
+	}
+	
 	
 	@Transactional 
 	public Profile getProfile(String email) {
@@ -156,13 +234,14 @@ public class CooperatorService {
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());
+		
 	}
 	
 	@Transactional 
-	public Student createStudent(Integer id, Integer status) {
+	public Student updateStudent(Integer id, boolean status) {
 		Student s = new Student();
 		s.setId(id);
-		s.setStatus(status);
+		s.setProblematic(status);
 		studentRepository.save(s);
 		return s;
 	}
@@ -180,9 +259,9 @@ public class CooperatorService {
 	public List<Student> getAllStudents() {
 		return toList(studentRepository.findAll());
 	}
-	
+	/*
 	@Transactional 
-	public Employer createEmployer(Integer id) {
+	public Employer updateEmployer(Integer id) {
 		if(id == null || id < 0) {
 			throw new IllegalArgumentException("ID is invalid!");
 		}
@@ -191,7 +270,7 @@ public class CooperatorService {
 		employerRepository.save(e);
 		return e;
 	}
-	
+	*/
 	@Transactional 
 	public Employer getEmployer(String name) {
 		if(name == null || name.trim().length() == 0) {
@@ -291,5 +370,7 @@ public class CooperatorService {
 		}
 		return resultList;
 	}
+
+	
 	
 }

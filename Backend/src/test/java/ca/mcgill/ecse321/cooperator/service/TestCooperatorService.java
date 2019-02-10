@@ -63,16 +63,17 @@ public class TestCooperatorService {
 	}
 	
 	@Test
-	public void testCreateProfile() {
+	public void testCreateStudent() {
 		assertEquals(0, cs.getAllProfiles().size());
 
 		String email = "paul.hooley@gmail.com";
 		String name = "Paul Hooley";
 		String password = "frisbyislife";
+		int id = 3;
 		String phone = "6047862815";
 
 		try {
-			cs.createProfile(email, name, password, phone);
+			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -86,17 +87,19 @@ public class TestCooperatorService {
 
 	
 	@Test
-	public void testCreateProfileNull() {
+	public void testCreateStudentNull() {
 		assertEquals(0, cs.getAllProfiles().size());
 		
 		String email = null;
 		String name = null;
 		String password = null;
 		String phone = null;
+		int id = 0;
 		String error = null;
 
 		try {
-			cs.createProfile(email, name, password, phone);
+			cs.createStudent
+			(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -111,17 +114,18 @@ public class TestCooperatorService {
 	}
 
 	@Test
-	public void testCreateProfileEmpty() {
+	public void testCreateStudentEmpty() {
 		assertEquals(0, cs.getAllProfiles().size());
 
 		String email = "";
 		String name = "";
 		String password = "";
 		String phone = "";
+		int id = 0;
 		String error = null;
 
 		try {
-			cs.createProfile(email, name, password, phone);
+			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -137,24 +141,25 @@ public class TestCooperatorService {
 	}
 
 	@Test
-	public void testCreateProfileSpaces() {
+	public void testCreateStudentSpaces() {
 		assertEquals(0, cs.getAllProfiles().size());
 
 		String email = " ";
 		String name = " ";
 		String password = " ";
 		String phone = " ";
+		int id = -1;
 		String error = null;
 	
 		try {
-			cs.createProfile(email, name, password, phone);
+			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
 		assertEquals("Profile name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty!", error);
+				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
@@ -199,6 +204,8 @@ public class TestCooperatorService {
 	@Test
 	public void testRegister() {
 		assertEquals(0, cs.getAllCoops().size());
+		
+		
 		
 		Integer studentID = 260706395;
 		Integer studentStatus = 0;
@@ -406,10 +413,11 @@ public class TestCooperatorService {
 		String name = "Emma Eagles";
 		String password = "12341234";
 		String phone = " ";
+		int id = 31231234;
 		String error = null;
 	
 		try {
-			cs.createProfile(email, name, password, phone);
+			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -428,10 +436,11 @@ public class TestCooperatorService {
 		String name = "Emma Eagles";
 		String password = "12341234";
 		String phone = "5061231234";
+		int id = 31231234;
 		String error = null;
 	
 		try {
-			cs.createProfile(email, name, password, phone);
+			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -486,11 +495,15 @@ public class TestCooperatorService {
 	public void testCreateEmployerNegative() {
 		assertEquals(0, cs.getAllEmployers().size());
 
-		int id = -1;
+		String email = "";
+		String name = "Emma Eagles";
+		String password = "12341234";
+		String phone = "5061231234";
+		int id = 31231234;
 		String error = null;
 	
 		try {
-			cs.createEmployer(id);
+			cs.createEmployer(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
