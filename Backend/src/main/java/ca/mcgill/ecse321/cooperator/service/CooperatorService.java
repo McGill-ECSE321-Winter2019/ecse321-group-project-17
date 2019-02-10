@@ -63,8 +63,20 @@ public class CooperatorService {
 		return toList(profileRepository.findAll());
 	}
 	
+	@Transactional
+	public Coop register(Student student, Employer employer) {
+		Coop coop = new Coop();
+		coop.setId(student.getName().hashCode() * employer.getName().hashCode());
+		coop.setEmployer(employer);
+		coop.setStudent(student);
+
+		coopRepository.save(coop);
+
+		return coop;
+	}
+
 	@Transactional 
-	public Coop createCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek, Employer employer) {
+	public Coop createCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
 		Coop c = new Coop();
 		c.setId(id);
 		c.setTitle(title);
@@ -73,7 +85,6 @@ public class CooperatorService {
 		c.setStatus(status);
 		c.setSalarayPerHour(salaryPerHour);
 		c.setHoursPerWeek(hoursPerWeek);
-		c.setEmployer(employer);
 		coopRepository.save(c);
 		return c;
 	}
@@ -82,6 +93,11 @@ public class CooperatorService {
 	public Coop getCoop(Employer employer) {
 		Coop c = coopRepository.findCoopByEmployer(employer);
 		return c;
+	}
+	
+	@Transactional
+	public List<Coop> getAllCoops() {
+		return toList(coopRepository.findAll());
 	}
 	
 	@Transactional 
@@ -99,6 +115,11 @@ public class CooperatorService {
 		return s;
 	}
 	
+	@Transactional
+	public List<Student> getAllStudents() {
+		return toList(studentRepository.findAll());
+	}
+	
 	@Transactional 
 	public Employer createEmployer(Integer id) {
 		Employer e = new Employer();
@@ -113,6 +134,11 @@ public class CooperatorService {
 		return e;
 	}
 	
+	@Transactional
+	public List<Employer> getAllEmployers() {
+		return toList(employerRepository.findAll());
+	}
+	
 	@Transactional 
 	public Administrator createAdministrator(Integer id) {
 		Administrator a = new Administrator();
@@ -125,6 +151,11 @@ public class CooperatorService {
 	public Optional<Administrator> getAdministrator(Integer id) {
 		Optional<Administrator> a = administratorRepository.findById(id);
 		return a;
+	}
+	
+	@Transactional
+	public List<Administrator> getAllAdministrators() {
+		return toList(administratorRepository.findAll());
 	}
 	
 	@Transactional  
@@ -142,6 +173,11 @@ public class CooperatorService {
 		return n;
 	}
 	
+	@Transactional
+	public List<Notification> getAllNotifications() {
+		return toList(notificationRepository.findAll());
+	}
+	
 	@Transactional  
 	public File createFile(Integer id) {
 		File f = new File();
@@ -154,6 +190,11 @@ public class CooperatorService {
 	public Optional<File> getFile(Integer id) {
 		Optional<File> f = fileRepository.findById(id);
 		return f;
+	}
+	
+	@Transactional
+	public List<File> getAllFiles() {
+		return toList(fileRepository.findAll());
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){

@@ -24,7 +24,10 @@ import ca.mcgill.ecse321.cooperator.dao.FileRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
+import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Profile;
+import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -75,323 +78,319 @@ public class TestCooperatorService {
 			fail();
 		}
 
-		List<Profile> allPersons = cs.getAllProfiles();
+		List<Profile> allProfiles = cs.getAllProfiles();
 
-		assertEquals(1, allPersons.size());
-		assertEquals(name, allPersons.get(0).getName());
+		assertEquals(1, allProfiles.size());
+		assertEquals(name, allProfiles.get(0).getName());
 	}
 
-	/*
+	
 	@Test
-	public void testCreatePersonNull() {
-		assertEquals(0, erc.getAllPersons().size());
+	public void testCreateProfileNull() {
+		assertEquals(0, cs.getAllProfiles().size());
 		
+		String email = null;
 		String name = null;
+		String password = null;
+		String phone = null;
 		String error = null;
 
 		try {
-			erc.createPerson(name);
+			cs.createProfile(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Person name cannot be empty!", error);
+		assertEquals("Profile name cannot be empty!", error);
 
 		// check no change in memory
-		assertEquals(0, erc.getAllPersons().size());
+		assertEquals(0, cs.getAllProfiles().size());
 
 	}
 
 	@Test
-	public void testCreatePersonEmpty() {
-		assertEquals(0, erc.getAllPersons().size());
+	public void testCreateProfileEmpty() {
+		assertEquals(0, cs.getAllProfiles().size());
 
+		String email = "";
 		String name = "";
+		String password = "";
+		String phone = "";
 		String error = null;
 
 		try {
-			erc.createPerson(name);
+			cs.createProfile(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Person name cannot be empty!", error);
+		assertEquals("Profile name cannot be empty!", error);
 
 		// check no change in memory
-		assertEquals(0, erc.getAllPersons().size());
+		assertEquals(0, cs.getAllProfiles().size());
 
 	}
 
 	@Test
-	public void testCreatePersonSpaces() {
-		assertEquals(0, erc.getAllPersons().size());
+	public void testCreateProfileSpaces() {
+		assertEquals(0, cs.getAllProfiles().size());
 
+		String email = " ";
 		String name = " ";
+		String password = " ";
+		String phone = " ";
 		String error = null;
 	
 		try {
-			erc.createPerson(name);
+			cs.createProfile(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Person name cannot be empty!", error);
+		assertEquals("Profile name cannot be empty!", error);
 
 		// check no change in memory
-		assertEquals(0, erc.getAllPersons().size());
+		assertEquals(0, cs.getAllProfiles().size());
 
 	}
 
 	@Test
-	public void testCreateEvent() {
-		assertEquals(0, erc.getAllEvents().size());
+	public void testCreateCoop() {
+		assertEquals(0, cs.getAllCoops().size());
 		
-		String name = "Soccer Game";
-		Calendar c = Calendar.getInstance();
-		c.set(2017, Calendar.MARCH, 16, 9, 0, 0);
-		Date eventDate = new Date(c.getTimeInMillis());
-		LocalTime startTime = LocalTime.parse("09:00");
-		c.set(2017, Calendar.MARCH, 16, 10, 30, 0);
-		LocalTime endTime = LocalTime.parse("10:30");
+		Integer id = 0;
+		String title = "NASA";
+		Date startDate = Date.valueOf("2019-01-01");
+		Date endDate = Date.valueOf("2019-04-30");
+		Integer status = 0;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
 
 		try {
-			erc.createEvent(name, eventDate, Time.valueOf(startTime) , Time.valueOf(endTime));
+			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 
-		checkResultEvent(name, eventDate, startTime, endTime);
+		checkResultCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 	}
 
-	private void checkResultEvent(String name, Date eventDate, LocalTime startTime, LocalTime endTime) {
-		assertEquals(0, erc.getAllPersons().size());
-		assertEquals(1, erc.getAllEvents().size());
-		assertEquals(name, erc.getAllEvents().get(0).getName());
-		assertEquals(eventDate.toString(), erc.getAllEvents().get(0).getDate().toString());
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-		assertEquals(startTime.format(formatter).toString(), erc.getAllEvents().get(0).getStartTime().toString());
-		assertEquals(endTime.format(formatter).toString(), erc.getAllEvents().get(0).getEndTime().toString());
-		assertEquals(0, erc.getAllRegistrations().size());
+	private void checkResultCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek){
+		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(1, cs.getAllCoops().size());
+		assertEquals(id, cs.getAllCoops().get(0).getId());
+		assertEquals(title, cs.getAllCoops().get(0).getTitle());
+		assertEquals(startDate, cs.getAllCoops().get(0).getStartDate());
+		assertEquals(endDate, cs.getAllCoops().get(0).getEndDate());
+		assertEquals(status, cs.getAllCoops().get(0).getStatus());
+		assertEquals(salaryPerHour, cs.getAllCoops().get(0).getSalarayPerHour());
+		assertEquals(hoursPerWeek, cs.getAllCoops().get(0).getHoursPerWeek());
+		assertEquals(0, cs.getAllFiles().size());
 	}
 
 	
 	@Test
 	public void testRegister() {
-		assertEquals(0, erc.getAllRegistrations().size());
-
-		String nameP = "Oscar";
+		assertEquals(0, cs.getAllCoops().size());
 		
-		Person person = erc.createPerson(nameP);
+		Integer studentID = 260706395;
+		Integer studentStatus = 0;
 		
-		assertEquals(1, erc.getAllPersons().size());
+		Student Student = cs.createStudent(studentID, studentStatus);
+		
+		assertEquals(1, cs.getAllProfiles().size());
 
-		String nameE = "Soccer Game";
-		Calendar c = Calendar.getInstance();
-		c.set(2017, Calendar.MARCH, 16, 9, 0, 0);
-		Date eventDate = new Date(c.getTimeInMillis());
-		Time startTime = new Time(c.getTimeInMillis());
-		c.set(2017, Calendar.MARCH, 16, 10, 30, 0);
-		Time endTime = new Time(c.getTimeInMillis());
-		Event event = erc.createEvent(nameE, eventDate, startTime, endTime);
-		assertEquals(1, erc.getAllEvents().size());
+		Integer employerID = 23;
+		
+		Employer Employer = cs.createEmployer(employerID);
+		assertEquals(1, cs.getAllEmployers().size());
 
 		try {
-			erc.register(person, event);
+			cs.register(Student, Employer);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
 
-		checkResultRegister(nameP, nameE, eventDate, startTime, endTime);
+		checkResultCoop(studentID, studentStatus, employerID);
 	}
 
-	private void checkResultRegister(String nameP, String nameE, Date eventDate, Time startTime, Time endTime) {
-		assertEquals(1, erc.getAllPersons().size());
-		assertEquals(nameP, erc.getAllPersons().get(0).getName());
-		assertEquals(1, erc.getAllEvents().size());
-		assertEquals(nameE, erc.getAllEvents().get(0).getName());
-		assertEquals(eventDate.toString(), erc.getAllEvents().get(0).getDate().toString());
-		assertEquals(startTime.toString(), erc.getAllEvents().get(0).getStartTime().toString());
-		assertEquals(endTime.toString(), erc.getAllEvents().get(0).getEndTime().toString());
-		assertEquals(1, erc.getAllRegistrations().size());
-		// Need to assert by ID (in this case: name)
-		assertEquals(erc.getAllEvents().get(0).getName(), erc.getAllRegistrations().get(0).getEvent().getName());
-		// Need to assert by ID (in this case: name)
-		assertEquals(erc.getAllPersons().get(0).getName(), erc.getAllRegistrations().get(0).getPerson().getName());
+	private void checkResultCoop(Integer studentID, Integer studentStatus, Integer employerID) {
+		assertEquals(1, cs.getAllStudents().size());
+		assertEquals(studentID, cs.getAllStudents().get(0).getId());
+		assertEquals(1, cs.getAllEmployers().size());
+		assertEquals(employerID, cs.getAllEmployers().get(0).getId());
+		assertEquals(studentStatus, cs.getAllCoops().get(0).getStudent().getStatus());
 	}
 
 
 	@Test
-	public void testCreateEventNull() {
-		assertEquals(0, erc.getAllRegistrations().size());
+	public void testcreateCoopNull() {
+		assertEquals(0, cs.getAllCoops().size());
 
-		String name = null;
-		Date eventDate = null;
-		Time startTime = null;
-		Time endTime = null;
+		Integer id = null;
+		String title = null;
+		Date startDate = null;
+		Date endDate = null;
+		Integer status = null;
+		Integer salaryPerHour = null;
+		Integer hoursPerWeek = null;
 
 		String error = null;
 		try {
-			erc.createEvent(name, eventDate, startTime, endTime);
+			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
 		assertEquals(
-				"Event name cannot be empty! Event date cannot be empty! Event start time cannot be empty! Event end time cannot be empty!",
+				"Coop id cannot be empty! Coop title cannot be empty! Coop start date cannot be empty! Coop end date"
+				+ " cannot be empty! Coop status cannot be empty! Coop salaryPerHour cannot be empty!  Coop "
+				+ "hoursPerWeek cannot be empty!",
 				error);
 		// check model in memory
-		assertEquals(0, erc.getAllEvents().size());
+		assertEquals(0, cs.getAllCoops().size());
 	}
 
 	@Test
-	public void testCreateEventEmpty() {
-		assertEquals(0, erc.getAllEvents().size());
+	public void testcreateCoopEmpty() {
+		assertEquals(0, cs.getAllCoops().size());
 
-		String name = "";
-		Calendar c = Calendar.getInstance();
-		c.set(2017, Calendar.FEBRUARY, 16, 10, 00, 0);
-		Date eventDate = new Date(c.getTimeInMillis());
-		LocalTime startTime = LocalTime.parse("10:00");
-		c.set(2017, Calendar.FEBRUARY, 16, 11, 30, 0);
-		LocalTime endTime = LocalTime.parse("11:30");
+		Integer id = 0;
+		String title = "";
+		Date startDate = Date.valueOf("2019-01-01");
+		Date endDate = Date.valueOf("2019-04-30");
+		Integer status = 0;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
 
 		String error = null;
 		try {
-			erc.createEvent(name, eventDate, Time.valueOf(startTime), Time.valueOf(endTime));
+			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Event name cannot be empty!", error);
+		assertEquals("Coop title cannot be empty!", error);
 		// check model in memory
-		assertEquals(0, erc.getAllEvents().size());
+		assertEquals(0, cs.getAllCoops().size());
 	}
 
 	@Test
-	public void testCreateEventSpaces() {
-		assertEquals(0, erc.getAllEvents().size());
+	public void testcreateCoopSpaces() {
+		assertEquals(0, cs.getAllCoops().size());
 
-		String name = " ";
-		Calendar c = Calendar.getInstance();
-		c.set(2016, Calendar.OCTOBER, 16, 9, 00, 0);
-		Date eventDate = new Date(c.getTimeInMillis());
-		LocalTime startTime = LocalTime.parse("09:00");
-		c.set(2016, Calendar.OCTOBER, 16, 10, 30, 0);
-		LocalTime endTime = LocalTime.parse("10:30");
+		Integer id = 0;
+		String title = " ";
+		Date startDate = Date.valueOf("2019-01-01");
+		Date endDate = Date.valueOf("2019-04-30");
+		Integer status = 0;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
 
 		String error = null;
 		try {
-			erc.createEvent(name, eventDate, Time.valueOf(startTime), Time.valueOf(endTime));
+			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		// check error
-		assertEquals("Event name cannot be empty!", error);
+		assertEquals("Coop title cannot be empty!", error);
 		// check model in memory
-		assertEquals(0, erc.getAllEvents().size());
+		assertEquals(0, cs.getAllCoops().size());
 
 	}
 
 	@Test
-	public void testCreateEventEndTimeBeforeStartTime() {
-		assertEquals(0, erc.getAllEvents().size());
+	public void testcreateCoopEndDateBeforeStartDate() {
+		assertEquals(0, cs.getAllCoops().size());
 
-		String name = "Soccer Game";
-		Calendar c = Calendar.getInstance();
-		c.set(2016, Calendar.OCTOBER, 16, 9, 00, 0);
-		Date eventDate = new Date(c.getTimeInMillis());
-		LocalTime startTime = LocalTime.parse("09:00");
-		c.set(2016, Calendar.OCTOBER, 16, 8, 59, 59);
-		LocalTime endTime = LocalTime.parse("08:59");
+		Integer id = 0;
+		String title = "NASA";
+		Date startDate = Date.valueOf("2019-04-30");
+		Date endDate = Date.valueOf("2019-01-01");
+		Integer status = 0;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
 
 		String error = null;
 		try {
-			erc.createEvent(name, eventDate, Time.valueOf(startTime), Time.valueOf(endTime));
+			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Event end time cannot be before event start time!", error);
+		assertEquals("Coop end time cannot be before Coop start time!", error);
 
 		// check model in memory
-		assertEquals(0, erc.getAllEvents().size());
-
+		assertEquals(0, cs.getAllCoops().size());
 	}
 
 	@Test
 	public void testRegisterNull() {
-		assertEquals(0, erc.getAllRegistrations().size());
+		assertEquals(0, cs.getAllCoops().size());
 
-		Person Person = null;
-		assertEquals(0, erc.getAllPersons().size());
+		Student student = null;
+		assertEquals(0, cs.getAllStudents().size());
 
-		Event event = null;
-		assertEquals(0, erc.getAllEvents().size());
+		Employer employer = null;
+		assertEquals(0, cs.getAllEmployers().size());
 
 		String error = null;
 		try {
-			erc.register(Person, event);
+			cs.register(student, employer);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Person needs to be selected for registration! Event needs to be selected for registration!",
+		assertEquals("Student needs to be selected for registration! Employer needs to be selected for registration!",
 				error);
 
 		// check model in memory
-		assertEquals(0, erc.getAllRegistrations().size());
-		assertEquals(0, erc.getAllPersons().size());
-		assertEquals(0, erc.getAllEvents().size());
-
+		assertEquals(0, cs.getAllCoops().size());
+		assertEquals(0, cs.getAllStudents().size());
+		assertEquals(0, cs.getAllEmployers().size());
 	}
 
 	@Test
-	public void testRegisterPersonAndEventDoNotExist() {
-		assertEquals(0, erc.getAllRegistrations().size());
+	public void testRegisterProfileAndCoopDoNotExist() {
+		assertEquals(0, cs.getAllCoops().size());
 
-		String nameP = "Oscar";
-		Person person = new Person();
-		person.setName(nameP);
-		assertEquals(0, erc.getAllPersons().size());
+		String email = "paul.hooley@gmail.com";
+		String name = "Paul Hooley";
+		String password = "frisbyislife";
+		String phone = "6047862815";
+		
+		Student Student = new Student();
+		Student.setName(name);
+		Student.setEmail(email);
+		Student.setPassword(password);
+		Student.setPhone(phone);
+		assertEquals(0, cs.getAllStudents().size());
 
-		String nameE = "Soccer Game";
-		Calendar c = Calendar.getInstance();
-		c.set(2016, Calendar.OCTOBER, 16, 9, 00, 0);
-		Date eventDate = new Date(c.getTimeInMillis());
-		Time startTime = new Time(c.getTimeInMillis());
-		c.set(2016, Calendar.OCTOBER, 16, 10, 30, 0);
-		Time endTime = new Time(c.getTimeInMillis());
-		Event event = new Event();
-		event.setName(nameE);
-		event.setDate(eventDate);
-		event.setStartTime(startTime);
-		event.setEndTime(endTime);
-		assertEquals(0, erc.getAllEvents().size());
+		Employer Employer = new Employer();
+		Employer.setId(23);;
+		assertEquals(0, cs.getAllEmployers().size());
 
 		String error = null;
 		try {
-			erc.register(person, event);
+			cs.register(Student, Employer);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Person does not exist! Event does not exist!", error);
+		assertEquals("Student does not exist! Employer does not exist!", error);
 
 		// check model in memory
-		assertEquals(0, erc.getAllRegistrations().size());
-		assertEquals(0, erc.getAllPersons().size());
-		assertEquals(0, erc.getAllEvents().size());
-
+		assertEquals(0, cs.getAllCoops().size());
+		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getAllCoops().size());
 	}
-	*/
-
-
 }

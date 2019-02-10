@@ -54,7 +54,7 @@
     </sourceRole>
     <targetRole xmi:id="_jWegFiynEempnMmxnVmbDQ" aggregationKind="NONE" name="employer" navigable="true">
       <modelElement href="model.uml#_jWaOoyynEempnMmxnVmbDQ"/>
-      <visualProperties xmi:id="_jaQz4SynEempnMmxnVmbDQ" position="39.0,-50.0"/>
+      <visualProperties xmi:id="_jaQz4SynEempnMmxnVmbDQ" position="0.0,36.0"/>
       <visibility xmi:id="_jWegFyynEempnMmxnVmbDQ" label="+"/>
       <cardinality xmi:id="_jWegGCynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
     </targetRole>
@@ -67,7 +67,7 @@
     </nameVisual>
     <sourceRole xmi:id="_jrcqgyynEempnMmxnVmbDQ" aggregationKind="NONE" name="coop" navigable="true">
       <modelElement href="model.uml#_jrS5gCynEempnMmxnVmbDQ"/>
-      <visualProperties xmi:id="_jwzroCynEempnMmxnVmbDQ" position="-83.0,1.0"/>
+      <visualProperties xmi:id="_jwzroCynEempnMmxnVmbDQ" position="-86.0,13.0"/>
       <visibility xmi:id="_jrcqhCynEempnMmxnVmbDQ" label="+"/>
       <cardinality xmi:id="_jrcqhSynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
     </sourceRole>
