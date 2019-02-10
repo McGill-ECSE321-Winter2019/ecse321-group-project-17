@@ -183,6 +183,9 @@ public class CooperatorService {
 	
 	@Transactional 
 	public Employer createEmployer(Integer id) {
+		if(id == null || id < 0) {
+			throw new IllegalArgumentException("ID is invalid!");
+		}
 		Employer e = new Employer();
 		//e.setId(id);
 		employerRepository.save(e);
@@ -225,6 +228,17 @@ public class CooperatorService {
 	
 	@Transactional  
 	public Notification createNotification(Integer id, String text) {
+		String error = "";
+		if(id == null || id < 0) {
+			error = "ID is invalid! ";
+		}
+		if(text == null || text.trim().length() == 0) {
+			error = error + "Text is invalid!";
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
+		}
+		
 		Notification n = new Notification();
 		n.setId(id);
 		n.setText(text);
@@ -250,6 +264,9 @@ public class CooperatorService {
 	
 	@Transactional  
 	public File createFile(Integer id) {
+		if(id == null || id < 0) {
+			throw new IllegalArgumentException("ID is invalid!");
+		}
 		File f = new File();
 		f.setId(id);
 		fileRepository.save(f);

@@ -442,4 +442,63 @@ public class TestCooperatorService {
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
 	}
+	@Test
+	public void testCreateFileNegative() {
+		assertEquals(0, cs.getAllFiles().size());
+
+		int id = -1;
+		String error = null;
+	
+		try {
+			cs.createFile(id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("ID is invalid!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllFiles().size());
+	}
+	
+	@Test
+	public void testCreateNotificationNegative() {
+		assertEquals(0, cs.getAllNotifications().size());
+
+		int id = -1;
+		String text = "    ";
+		String error = null;
+	
+		try {
+			cs.createNotification(id, text);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("ID is invalid! Text is invalid!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllNotifications().size());
+	}
+	@Test
+	public void testCreateEmployerNegative() {
+		assertEquals(0, cs.getAllEmployers().size());
+
+		int id = -1;
+		String error = null;
+	
+		try {
+			cs.createEmployer(id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("ID is invalid!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllEmployers().size());
+	}
 }
