@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.cooperator.model;
 import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.OneToMany;
-import javax.persistence.Id;
 
 @Entity
 public class Student extends Profile{
@@ -18,15 +17,14 @@ public class Student extends Profile{
       this.coop = coops;
    }
    
-//   private Integer id;
+   private Integer id;
 
-//public void setId(Integer value) {
-//    this.id = value;
-//}
-//@Id
-//public Integer getId() {
-//    return this.id;
-//}
+public void setId(Integer value) {
+    this.id = value;
+}
+public Integer getId() {
+    return this.id;
+}
 private Integer status;
 
 public void setStatus(Integer value) {
