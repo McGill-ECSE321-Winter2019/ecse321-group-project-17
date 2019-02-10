@@ -1,12 +1,14 @@
 package ca.mcgill.ecse321.cooperator.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
 
 @Entity
-public class Profile{
+public abstract class Profile{
    private Set<Notification> received;
    
    @OneToMany(mappedBy="profile" )
@@ -51,6 +53,8 @@ private String password;
 public void setPassword(String value) {
     this.password = value;
 }
+@NotNull
+@NotEmpty
 public String getPassword() {
     return this.password;
 }

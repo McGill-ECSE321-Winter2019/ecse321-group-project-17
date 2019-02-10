@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.cooperator.model;
 
+import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Id;
@@ -42,6 +43,7 @@ private String text;
 public void setText(String value) {
     this.text = value;
 }
+@NotNull
 public String getText() {
     return this.text;
 }

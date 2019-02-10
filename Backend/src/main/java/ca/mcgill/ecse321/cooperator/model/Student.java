@@ -25,12 +25,20 @@ public void setId(Integer value) {
 public Integer getId() {
     return this.id;
 }
-private Integer status;
+private Integer coopsCompleted;
 
-public void setStatus(Integer value) {
-    this.status = value;
+public void setCoopsCompleted(Integer value) {
+    this.coopsCompleted = value;
 }
-public Integer getStatus() {
-    return this.status;
+public Integer getCoopsCompleted() {
+    return this.coopsCompleted;
+}
+private Boolean problematic;
+
+public void setProblematic(Boolean value) {
+    this.problematic = value;
+}
+public Boolean getProblematic() {
+    return this.problematic;
 }
 }
