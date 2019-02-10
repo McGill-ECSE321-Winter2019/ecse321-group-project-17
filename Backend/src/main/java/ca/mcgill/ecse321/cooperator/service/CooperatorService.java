@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.cooperator.service;
 
-import static org.hamcrest.CoreMatchers.nullValue;
-
 import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
