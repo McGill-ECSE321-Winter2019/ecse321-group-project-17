@@ -18,15 +18,15 @@ public class Student extends Profile{
       this.coop = coops;
    }
    
-   private Integer id;
+//   private Integer id;
 
-public void setId(Integer value) {
-    this.id = value;
-}
-@Id
-public Integer getId() {
-    return this.id;
-}
+//public void setId(Integer value) {
+//    this.id = value;
+//}
+//@Id
+//public Integer getId() {
+//    return this.id;
+//}
 private Integer status;
 
 public void setStatus(Integer value) {

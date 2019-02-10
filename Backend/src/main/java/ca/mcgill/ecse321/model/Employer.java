@@ -18,13 +18,13 @@ public class Employer extends Profile{
       this.coop = coops;
    }
    
-   private Integer id;
-
-public void setId(Integer value) {
-    this.id = value;
-}
-@Id
-public Integer getId() {
-    return this.id;
-}
+//   private Integer id;
+//
+//public void setId(Integer value) {
+//    this.id = value;
+//}
+//@Id
+//public Integer getId() {
+//    return this.id;
+//}
 }

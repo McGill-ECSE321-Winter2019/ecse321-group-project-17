@@ -82,7 +82,7 @@ public class CooperatorService {
 	@Transactional 
 	public Student createStudent(Integer id, Integer status) {
 		Student s = new Student();
-		s.setId(id);
+		//s.setId(id);
 		s.setStatus(status);
 		studentRepository.save(s);
 		return s;
@@ -97,7 +97,7 @@ public class CooperatorService {
 	@Transactional 
 	public Employer createEmployer(Integer id) {
 		Employer e = new Employer();
-		e.setId(id);
+		//e.setId(id);
 		employerRepository.save(e);
 		return e;
 	}
@@ -111,7 +111,7 @@ public class CooperatorService {
 	@Transactional 
 	public Administrator createAdministrator(Integer id) {
 		Administrator a = new Administrator();
-		a.setId(id);
+		//a.setId(id);
 		administratorRepository.save(a);
 		return a;
 	}
