@@ -44,6 +44,18 @@ public class CooperatorService {
 	@Transactional
 	public Profile createProfile(String email, String name, String password, String phone) {
 		Profile p = new Profile();
+		if(name == null || name.trim().length() == 0) {
+			throw new IllegalArgumentException("Profile name cannot be empty!");
+		}
+		if(email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Email cannot be empty!");
+		}
+		if(password == null || password.trim().length() == 0) {
+			throw new IllegalArgumentException("Password cannot be empty!");
+		}
+		if(phone == null || phone.trim().length() == 0) {
+			throw new IllegalArgumentException("Phone cannot be empty!");
+		}
 		p.setEmail(email);
 		p.setName(name);
 		p.setPassword(password);
@@ -54,6 +66,9 @@ public class CooperatorService {
 	
 	@Transactional 
 	public Profile getProfile(String email) {
+		if(email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Email cannot be empty!");
+		}
 		Profile p = profileRepository.findProfileByEmail(email);
 		return p;
 	}
@@ -111,6 +126,9 @@ public class CooperatorService {
 	
 	@Transactional 
 	public Student getStudent(String name) {
+		if(name == null || name.trim().length() == 0) {
+			throw new IllegalArgumentException("Person name cannot be empty!");
+		}
 		Student s = studentRepository.findStudentByName(name);
 		return s;
 	}
@@ -130,6 +148,10 @@ public class CooperatorService {
 	
 	@Transactional 
 	public Employer getEmployer(String name) {
+		if(name == null || name.trim().length() == 0) {
+			throw new IllegalArgumentException("Person name cannot be empty!");
+		}
+		
 		Employer e = employerRepository.findEmployerByName(name);
 		return e;
 	}
@@ -169,8 +191,13 @@ public class CooperatorService {
 	
 	@Transactional  
 	public List<Notification> getNotifications(Profile profile) {
-		List<Notification> n = notificationRepository.findByProfile(profile);
-		return n;
+		if(profile == null) {
+			throw new IllegalArgumentException("Profile cannot be null!");
+		}
+		else {
+			List<Notification> n = notificationRepository.findByProfile(profile);
+			return n;
+		}
 	}
 	
 	@Transactional
