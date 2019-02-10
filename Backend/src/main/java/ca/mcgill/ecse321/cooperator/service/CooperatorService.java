@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.cooperator.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,11 @@ public class CooperatorService {
 	public Profile getProfile(String email) {
 		Profile p = profileRepository.findProfileByEmail(email);
 		return p;
+	}
+	
+	@Transactional
+	public List<Profile> getAllProfiles() {
+		return toList(profileRepository.findAll());
 	}
 	
 	@Transactional 
@@ -148,6 +154,14 @@ public class CooperatorService {
 	public Optional<File> getFile(Integer id) {
 		Optional<File> f = fileRepository.findById(id);
 		return f;
+	}
+	
+	private <T> List<T> toList(Iterable<T> iterable){
+		List<T> resultList = new ArrayList<T>();
+		for (T t : iterable) {
+			resultList.add(t);
+		}
+		return resultList;
 	}
 	
 }
