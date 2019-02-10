@@ -102,7 +102,8 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Profile name cannot be empty!", error);
+		assertEquals("Profile name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
@@ -126,7 +127,9 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Profile name cannot be empty!", error);
+		assertEquals("Profile name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty!", error);
+
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
@@ -150,7 +153,8 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Profile name cannot be empty!", error);
+		assertEquals("Profile name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
@@ -248,7 +252,7 @@ public class TestCooperatorService {
 		// check error
 		assertEquals(
 				"Coop id cannot be empty! Coop title cannot be empty! Coop start date cannot be empty! Coop end date"
-				+ " cannot be empty! Coop status cannot be empty! Coop salaryPerHour cannot be empty!  Coop "
+				+ " cannot be empty! Coop status cannot be empty! Coop salaryPerHour cannot be empty! Coop "
 				+ "hoursPerWeek cannot be empty!",
 				error);
 		// check model in memory
@@ -275,7 +279,7 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Coop title cannot be empty!", error);
+		assertEquals("Coop title cannot be empty! ", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 	}
@@ -299,7 +303,7 @@ public class TestCooperatorService {
 			error = e.getMessage();
 		}
 		// check error
-		assertEquals("Coop title cannot be empty!", error);
+		assertEquals("Coop title cannot be empty! ", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 
@@ -392,5 +396,50 @@ public class TestCooperatorService {
 		assertEquals(0, cs.getAllCoops().size());
 		assertEquals(0, cs.getAllProfiles().size());
 		assertEquals(0, cs.getAllCoops().size());
+	}
+	
+	@Test
+	public void testCreateProfileNoPhone() {
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "emma.eagles@mail.mcgill.ca ";
+		String name = "Emma Eagles";
+		String password = "12341234";
+		String phone = " ";
+		String error = null;
+	
+		try {
+			cs.createProfile(email, name, password, phone);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Phone cannot be empty!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+	}
+	@Test
+	public void testCreateProfileNoEmail() {
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "";
+		String name = "Emma Eagles";
+		String password = "12341234";
+		String phone = "5061231234";
+		String error = null;
+	
+		try {
+			cs.createProfile(email, name, password, phone);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Email cannot be empty! ", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
 	}
 }

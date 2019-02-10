@@ -44,17 +44,25 @@ public class CooperatorService {
 	@Transactional
 	public Profile createProfile(String email, String name, String password, String phone) {
 		Profile p = new Profile();
+		String error = "";
 		if(name == null || name.trim().length() == 0) {
-			throw new IllegalArgumentException("Profile name cannot be empty!");
+			error = "Profile name cannot be empty! ";
+			//throw new IllegalArgumentException("Profile name cannot be empty!");
 		}
 		if(email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Email cannot be empty!");
+			error =  error + "Email cannot be empty! ";
+			//throw new IllegalArgumentException("Email cannot be empty!");
 		}
 		if(password == null || password.trim().length() == 0) {
-			throw new IllegalArgumentException("Password cannot be empty!");
+			error =  error + "Password cannot be empty! ";
+			//throw new IllegalArgumentException("Password cannot be empty!");
 		}
 		if(phone == null || phone.trim().length() == 0) {
-			throw new IllegalArgumentException("Phone cannot be empty!");
+			error =  error + "Phone cannot be empty!";
+			//throw new IllegalArgumentException("Phone cannot be empty!");
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
 		}
 		p.setEmail(email);
 		p.setName(name);
@@ -93,6 +101,41 @@ public class CooperatorService {
 	@Transactional 
 	public Coop createCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
 		Coop c = new Coop();
+		String error = "";
+		if(id == null) {
+			error = "Coop id cannot be empty! ";
+			//throw new IllegalArgumentException("Coop id cannot be empty!");
+		}
+		if(title == null || title.trim().length() == 0) {
+			error = error + "Coop title cannot be empty! ";
+			//throw new IllegalArgumentException("Coop title cannot be empty!");
+		}
+		if(startDate == null) {
+			error = error + "Coop start date cannot be empty! ";
+			//throw new IllegalArgumentException("Coop start date cannot be empty!");
+		}
+		if(endDate == null) {
+			error = error + "Coop end date cannot be empty! ";
+			//throw new IllegalArgumentException("Coop end date cannot be empty!");
+		}
+		if(status == null) {
+			error = error + "Coop status cannot be empty! ";
+			//throw new IllegalArgumentException("Coop status cannot be empty!");
+		}
+		if(salaryPerHour == null) {
+			error = error + "Coop salaryPerHour cannot be empty! ";
+			//throw new IllegalArgumentException("Coop salaryPerHour cannot be empty!");
+		}
+		if(hoursPerWeek == null) {
+			error = error + "Coop hoursPerWeek cannot be empty!";
+			//throw new IllegalArgumentException("Coop hoursPerWeek cannot be empty!");
+		}
+		if(error.length()!= 0) {
+			throw new IllegalArgumentException(error);
+		}
+		if(startDate.after(endDate)) {
+			throw new IllegalArgumentException("Coop end time cannot be before Coop start time!");
+		}
 		c.setId(id);
 		c.setTitle(title);
 		c.setStartDate(startDate);
@@ -118,7 +161,7 @@ public class CooperatorService {
 	@Transactional 
 	public Student createStudent(Integer id, Integer status) {
 		Student s = new Student();
-		//s.setId(id);
+		s.setId(id);
 		s.setStatus(status);
 		studentRepository.save(s);
 		return s;
