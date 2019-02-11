@@ -73,7 +73,7 @@ public class CooperatorService {
 		p.setName(name);
 		p.setPassword(password);
 		p.setPhone(phone);
-		profileRepository.save(p);
+		studentRepository.save(p);
 		return p;
 	}
 	
@@ -109,7 +109,7 @@ public class CooperatorService {
 		e.setName(name);
 		e.setPassword(password);
 		e.setPhone(phone);
-		profileRepository.save(e);
+		employerRepository.save(e);
 		return e;
 	}
 	
@@ -145,7 +145,7 @@ public class CooperatorService {
 		a.setName(name);
 		a.setPassword(password);
 		a.setPhone(phone);
-		profileRepository.save(a);
+		administratorRepository.save(a);
 		return a;
 	}
 	
@@ -208,13 +208,15 @@ public class CooperatorService {
 			throw new IllegalArgumentException("Coop end time cannot be before Coop start time!");
 		}
 		c.setId(id);
+		c.setEmployer(employer);
+		c.setStudent(student);
 		c.setTitle(title);
 		c.setStartDate(startDate);
 		c.setEndDate(endDate);
 		c.setStatus(status);
 		c.setSalarayPerHour(salaryPerHour);
 		c.setHoursPerWeek(hoursPerWeek);
-		//coopRepository.save(c);
+		coopRepository.save(c);
 		return c;
 	}
 	
@@ -335,12 +337,13 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public File createFile(Integer id) {
+	public File createFile(Integer id, Coop c) {
 		if(id == null || id < 0) {
 			throw new IllegalArgumentException("ID is invalid!");
 		}
 		File f = new File();
 		f.setId(id);
+		f.setCoop(c);
 		fileRepository.save(f);
 		return f;
 	}

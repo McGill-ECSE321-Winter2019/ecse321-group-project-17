@@ -9,7 +9,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +26,7 @@ import ca.mcgill.ecse321.cooperator.dao.FileRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
+import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Profile;
@@ -52,6 +55,7 @@ public class TestCooperatorService {
 	private StudentRepository studentRepository;
 
 	@Before
+	@After
 	public void clearDatabase() {
 		fileRepository.deleteAll();
 		notificationRepository.deleteAll();
@@ -79,10 +83,12 @@ public class TestCooperatorService {
 			fail();
 		}
 
-		List<Profile> allProfiles = cs.getAllProfiles();
+		List<Student> allStudents = cs.getAllStudents();
 
-		assertEquals(1, allProfiles.size());
-		assertEquals(name, allProfiles.get(0).getName());
+		assertEquals(1, allStudents.size());
+		assertEquals(name, allStudents.get(0).getName());
+		
+		//assertEquals("Paul Hooley", studentRepository.findStudentByName(name));
 	}
 
 	
@@ -111,7 +117,7 @@ public class TestCooperatorService {
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
-
+		
 	}
 
 	@Test
@@ -170,7 +176,7 @@ public class TestCooperatorService {
 	}
 	
 	@Test
-	public void testCreateEmployee() {
+	public void testCreateEmployer() {
 		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 
@@ -187,15 +193,19 @@ public class TestCooperatorService {
 			fail();
 		}
 
-		List<Profile> allProfiles = cs.getAllProfiles();
+		List<Employer> allEmployers = cs.getAllEmployers();
 
-		assertEquals(1, allProfiles.size());
-		assertEquals(name, allProfiles.get(0).getName());
+		assertEquals(1, allEmployers.size());
+		assertEquals(name, allEmployers.get(0).getName());
+		 
+		assertEquals("Paul Hooley", employerRepository.findEmployerByName(name).getName());
+		assertEquals(null, employerRepository.findEmployerByName("Emma Eagles"));
+		
 	}
 
 	
 	@Test
-	public void testCreateEmployeeNull() {
+	public void testCreateEmployerNull() {
 		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 		
@@ -250,7 +260,7 @@ public class TestCooperatorService {
 	}
 
 	@Test
-	public void testCreateEmployeeSpaces() {
+	public void testCreateEmployerSpaces() {
 		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 
@@ -274,7 +284,6 @@ public class TestCooperatorService {
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
 	}
-
 	
 	@Test
 	public void testCreateAdmin() {
@@ -294,12 +303,15 @@ public class TestCooperatorService {
 			fail();
 		}
 
-		List<Profile> allProfiles = cs.getAllProfiles();
+		List<Administrator> allAdmins = cs.getAllAdministrators();
 
-		assertEquals(1, allProfiles.size());
-		assertEquals(name, allProfiles.get(0).getName());
+		assertEquals(1, allAdmins.size());
+		assertEquals(name, allAdmins.get(0).getName());
+		
+		assertEquals("Paul Hooley", administratorRepository.findAdministratorByName(name).getName());
+		assertEquals(null, administratorRepository.findAdministratorByName("Albert Kragl"));
+		
 	}
-
 	
 	@Test
 	public void testCreateAdminNull() {
@@ -349,7 +361,6 @@ public class TestCooperatorService {
 		// check error
 		assertEquals("Administrator name cannot be empty! Email cannot be empty! "
 				+"Password cannot be empty! Phone cannot be empty! ", error);
-
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
@@ -418,7 +429,7 @@ public class TestCooperatorService {
 		
 		try {
 			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
-		}catch(Exception e) {
+		} catch(Exception e) {
 			error = e.getMessage();
 		}
 		
@@ -428,18 +439,26 @@ public class TestCooperatorService {
 
 	private void checkResultCoop(Integer studentID, Integer employerID, String title,
 			Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
-		assertEquals(1, cs.getAllStudents().size());
-		assertEquals(studentID, cs.getAllStudents().get(0).getId());
-		assertEquals(1, cs.getAllEmployers().size());
-		assertEquals(employerID, cs.getAllEmployers().get(0).getId());
-		assertEquals(1, cs.getAllCoops().size());
-		assertEquals(title, cs.getAllCoops().get(0).getTitle());
-		assertEquals(startDate, cs.getAllCoops().get(0).getStartDate());
-		assertEquals(endDate, cs.getAllCoops().get(0).getEndDate());
-		assertEquals(status, cs.getAllCoops().get(0).getStatus());
-		assertEquals(salaryPerHour, cs.getAllCoops().get(0).getSalarayPerHour());
-		assertEquals(hoursPerWeek, cs.getAllCoops().get(0).getHoursPerWeek());
+		List<Student> allStudents = cs.getAllStudents();
+		List<Employer> allEmployers = cs.getAllEmployers();
+		List<Coop> allCoops = cs.getAllCoops();
+		
+		assertEquals(1, allStudents.size());
+//		assertEquals(studentID, allStudents.get(0).getId());
+		
+		assertEquals(1, allEmployers.size());
+//		assertEquals(employerID, allEmployers.get(0).getId());
+//		
+		assertEquals(1, allCoops.size());
+		assertEquals(title, allCoops.get(0).getTitle());
+		assertEquals(startDate, allCoops.get(0).getStartDate());
+		assertEquals(endDate, allCoops.get(0).getEndDate());
+		assertEquals(status, allCoops.get(0).getStatus());
+		assertEquals(salaryPerHour, allCoops.get(0).getSalarayPerHour());
+		assertEquals(hoursPerWeek, allCoops.get(0).getHoursPerWeek());
+		
 		assertEquals(0, cs.getAllFiles().size()); 
+		
 	}
 
 	@Test
@@ -600,9 +619,9 @@ public class TestCooperatorService {
 
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
+		
 	}
 
-	
 	@Test
 	public void testCreateProfileNoPhone() {
 		clearDatabase();
@@ -651,6 +670,55 @@ public class TestCooperatorService {
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
 	}
+	
+	@Test
+	public void testCreateFile() {
+		clearDatabase();
+		assertEquals(0, cs.getAllFiles().size());
+		
+		String emailS = "paul.hooley@gmail.com";
+		String nameS = "qwefqwefq";
+		String passwordS = "frisbyislife";
+		int idS = 3;
+		String phoneS = "6047862815";
+		Student s;
+		
+		s = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		
+		String emailE = "emma.eagles@mail.mcgill.ca";
+		String nameE = "Emma Eagles";
+		String passwordE = "12341234";
+		String phoneE = "254334";
+		int idE = 31231234;
+		Employer emp;
+		
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		
+		String title = "Developer";
+		Date startDate = Date.valueOf("2019-01-01");
+		Date endDate = Date.valueOf("2019-04-30");
+		Integer status = 0;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
+		Integer idC = 45;
+		Coop c;
+
+		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+
+		int id = 1;
+		String error = null;
+	
+		try {
+			cs.createFile(id, c);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertEquals(null, error);
+
+		assertEquals(1, cs.getAllFiles().size());
+	}
+	
 	@Test
 	public void testCreateFileNegative() {
 		clearDatabase();
@@ -660,7 +728,7 @@ public class TestCooperatorService {
 		String error = null;
 	
 		try {
-			cs.createFile(id);
+			cs.createFile(id, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
