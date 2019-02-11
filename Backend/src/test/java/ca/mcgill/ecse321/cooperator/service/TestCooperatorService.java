@@ -88,6 +88,7 @@ public class TestCooperatorService {
 	
 	@Test
 	public void testCreateStudentNull() {
+		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 		
 		String email = null;
@@ -105,8 +106,8 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Profile name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty!", error);
+		assertEquals("Student name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
@@ -115,6 +116,7 @@ public class TestCooperatorService {
 
 	@Test
 	public void testCreateStudentEmpty() {
+		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 
 		String email = "";
@@ -131,8 +133,8 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Profile name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty!", error);
+		assertEquals("Student name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ", error);
 
 
 		// check no change in memory
@@ -142,6 +144,7 @@ public class TestCooperatorService {
 
 	@Test
 	public void testCreateStudentSpaces() {
+		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 
 		String email = " ";
@@ -158,8 +161,60 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Profile name cannot be empty! Email cannot be empty! "
+		assertEquals("Student name cannot be empty! Email cannot be empty! "
 				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+
+	}
+	
+	@Test
+	public void testCreateEmployee() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "paul.hooley@gmail.com";
+		String name = "Paul Hooley";
+		String password = "frisbyislife";
+		int id = 3;
+		String phone = "6047862815";
+
+		try {
+			cs.createEmployer(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+
+		List<Profile> allProfiles = cs.getAllProfiles();
+
+		assertEquals(1, allProfiles.size());
+		assertEquals(name, allProfiles.get(0).getName());
+	}
+
+	
+	@Test
+	public void testCreateEmployeeNull() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
+		
+		String email = null;
+		String name = null;
+		String password = null;
+		String phone = null;
+		int id = 0;
+		String error = null;
+
+		try {
+			cs.createEmployer(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Employer name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
@@ -167,30 +222,213 @@ public class TestCooperatorService {
 	}
 
 	@Test
-	public void testCreateCoop() {
-		assertEquals(0, cs.getAllCoops().size());
+	public void testCreateEmployerEmpty() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "";
+		String name = "";
+		String password = "";
+		String phone = "";
+		int id = 0;
+		String error = null;
+
+		try {
+			cs.createEmployer(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Employer name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ", error);
+
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+
+	}
+
+	@Test
+	public void testCreateEmployeeSpaces() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = " ";
+		String name = " ";
+		String password = " ";
+		String phone = " ";
+		int id = -1;
+		String error = null;
+	
+		try {
+			cs.createEmployer(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Employer name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+	}
+
+	
+	@Test
+	public void testCreateAdmin() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "paul.hooley@gmail.com";
+		String name = "Paul Hooley";
+		String password = "frisbyislife";
+		int id = 3;
+		String phone = "6047862815";
+
+		try {
+			cs.createAdmin(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+
+		List<Profile> allProfiles = cs.getAllProfiles();
+
+		assertEquals(1, allProfiles.size());
+		assertEquals(name, allProfiles.get(0).getName());
+	}
+
+	
+	@Test
+	public void testCreateAdminNull() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
 		
-		Integer id = 0;
-		String title = "NASA";
+		String email = null;
+		String name = null;
+		String password = null;
+		String phone = null;
+		int id = 1;
+		String error = null;
+
+		try {
+			cs.createAdmin(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Administrator name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+
+	}
+
+	@Test
+	public void testCreateAdminEmpty() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "";
+		String name = "";
+		String password = "";
+		String phone = "";
+		int id = 0;
+		String error = null;
+
+		try {
+			cs.createAdmin(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Administrator name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ", error);
+
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+
+	}
+
+	@Test
+	public void testCreateAdminSpaces() {
+		clearDatabase();
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = " ";
+		String name = " ";
+		String password = " ";
+		String phone = " ";
+		int id = -1;
+		String error = null;
+	
+		try {
+			cs.createAdmin(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Administrator name cannot be empty! Email cannot be empty! "
+				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+
+	}
+	
+	@Test
+	public void testCreateCoop() {
+		clearDatabase();
+		assertEquals(0, cs.getAllCoops().size());		
+		assertEquals(0, cs.getAllProfiles().size());
+	
+		String emailS = "paul.hooley@gmail.com";
+		String nameS = "Paul Hooley";
+		String passwordS = "frisbyislife";
+		int idS = 3;
+		String phoneS = "6047862815";
+		Student s;
+		
+		s = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		
+		String emailE = "emma.eagles@mail.mcgill.ca ";
+		String nameE = "Emma Eagles";
+		String passwordE = "12341234";
+		String phoneE = " ";
+		int idE = 31231234;
+		Employer emp;
+		
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		
+		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
 		Integer status = 0;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-
+		
 		try {
-			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			fail();
 		}
-
-		checkResultCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+		checkResultCoop(idS, idE, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 	}
 
-	private void checkResultCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek){
-		assertEquals(0, cs.getAllProfiles().size());
+	private void checkResultCoop(Integer studentID, Integer employerID, String title,
+			Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
+		assertEquals(1, cs.getAllStudents().size());
+		assertEquals(studentID, cs.getAllStudents().get(0).getId());
+		assertEquals(1, cs.getAllEmployers().size());
+		assertEquals(employerID, cs.getAllEmployers().get(0).getId());
 		assertEquals(1, cs.getAllCoops().size());
-		assertEquals(id, cs.getAllCoops().get(0).getId());
 		assertEquals(title, cs.getAllCoops().get(0).getTitle());
 		assertEquals(startDate, cs.getAllCoops().get(0).getStartDate());
 		assertEquals(endDate, cs.getAllCoops().get(0).getEndDate());
@@ -200,77 +438,55 @@ public class TestCooperatorService {
 		assertEquals(0, cs.getAllFiles().size());
 	}
 
-	
 	@Test
-	public void testRegister() {
-		assertEquals(0, cs.getAllCoops().size());
-		
-		
-		
-		Integer studentID = 260706395;
-		Integer studentStatus = 0;
-		
-		Student Student = cs.createStudent(studentID, studentStatus);
-		
-		assertEquals(1, cs.getAllProfiles().size());
-
-		Integer employerID = 23;
-		
-		Employer Employer = cs.createEmployer(employerID);
-		assertEquals(1, cs.getAllEmployers().size());
-
-		try {
-			cs.register(Student, Employer);
-		} catch (IllegalArgumentException e) {
-			fail();
-		}
-
-		checkResultCoop(studentID, studentStatus, employerID);
-	}
-
-	private void checkResultCoop(Integer studentID, Integer studentStatus, Integer employerID) {
-		assertEquals(1, cs.getAllStudents().size());
-		assertEquals(studentID, cs.getAllStudents().get(0).getId());
-		assertEquals(1, cs.getAllEmployers().size());
-		assertEquals(employerID, cs.getAllEmployers().get(0).getId());
-		assertEquals(studentStatus, cs.getAllCoops().get(0).getStudent().getStatus());
-	}
-
-
-	@Test
-	public void testcreateCoopNull() {
+	public void testcreateCoopNullStudentEmployer() {
+		clearDatabase();
 		assertEquals(0, cs.getAllCoops().size());
 
-		Integer id = null;
-		String title = null;
-		Date startDate = null;
-		Date endDate = null;
-		Integer status = null;
-		Integer salaryPerHour = null;
-		Integer hoursPerWeek = null;
-
+		String title = "Developer";
+		Date startDate = Date.valueOf("2019-01-01");
+		Date endDate = Date.valueOf("2019-04-30");
+		Integer status = 0;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
 		String error = null;
+		
 		try {
-			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(null, null, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
 		assertEquals(
-				"Coop id cannot be empty! Coop title cannot be empty! Coop start date cannot be empty! Coop end date"
-				+ " cannot be empty! Coop status cannot be empty! Coop salaryPerHour cannot be empty! Coop "
-				+ "hoursPerWeek cannot be empty!",
-				error);
+				"Student is null! Employer is null!", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 	}
 
 	@Test
 	public void testcreateCoopEmpty() {
+		clearDatabase();
 		assertEquals(0, cs.getAllCoops().size());
 
-		Integer id = 0;
+		String emailS = "paul.hooley@gmail.com";
+		String nameS = "Paul Hooley";
+		String passwordS = "frisbyislife";
+		int idS = 3;
+		String phoneS = "6047862815";
+		Student stu;
+		
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		
+		String emailE = "emma.eagles@mail.mcgill.ca ";
+		String nameE = "Emma Eagles";
+		String passwordE = "12341234";
+		String phoneE = "4567687";
+		int idE = 31231234;
+		Employer emp;
+		
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+
 		String title = "";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
@@ -280,7 +496,7 @@ public class TestCooperatorService {
 
 		String error = null;
 		try {
-			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -292,11 +508,29 @@ public class TestCooperatorService {
 	}
 
 	@Test
-	public void testcreateCoopSpaces() {
+	public void testCreateCoopSpaces() {
+		clearDatabase();
 		assertEquals(0, cs.getAllCoops().size());
-
-		Integer id = 0;
-		String title = " ";
+		
+		String emailS = "emma.eagles@mail.mcgill.ca ";
+		String nameS = "Emma Eagles";
+		String passwordS = "12341234";
+		String phoneS = "23452452";
+		int idS = 31231234;
+		Student stu;
+		
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		
+		String emailE = "paul.hooley@gmail.com";
+		String nameE = "Paul Hooley";
+		String passwordE = "frisbyislife";
+		int idE = 3;
+		String phoneE = "6047862815";
+		Employer emp;
+		
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		
+		String title = "   ";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
 		Integer status = 0;
@@ -305,7 +539,7 @@ public class TestCooperatorService {
 
 		String error = null;
 		try {
-			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -318,9 +552,27 @@ public class TestCooperatorService {
 
 	@Test
 	public void testcreateCoopEndDateBeforeStartDate() {
+		clearDatabase();
 		assertEquals(0, cs.getAllCoops().size());
+		
+		String emailS = "emma.eagles@mail.mcgill.ca ";
+		String nameS = "Emma Eagles";
+		String passwordS = "12341234";
+		String phoneS = "50409342345";
+		int idS = 31231234;
+		Student stu;
+		
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		
+		String emailE = "paul.hooley@gmail.com";
+		String nameE = "Paul Hooley";
+		String passwordE = "frisbyislife";
+		int idE = 3;
+		String phoneE = "6047862815";
+		Employer emp;
+		
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
 
-		Integer id = 0;
 		String title = "NASA";
 		Date startDate = Date.valueOf("2019-04-30");
 		Date endDate = Date.valueOf("2019-01-01");
@@ -330,7 +582,7 @@ public class TestCooperatorService {
 
 		String error = null;
 		try {
-			cs.createCoop(id, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -342,71 +594,10 @@ public class TestCooperatorService {
 		assertEquals(0, cs.getAllCoops().size());
 	}
 
-	@Test
-	public void testRegisterNull() {
-		assertEquals(0, cs.getAllCoops().size());
-
-		Student student = null;
-		assertEquals(0, cs.getAllStudents().size());
-
-		Employer employer = null;
-		assertEquals(0, cs.getAllEmployers().size());
-
-		String error = null;
-		try {
-			cs.register(student, employer);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		// check error
-		assertEquals("Student needs to be selected for registration! Employer needs to be selected for registration!",
-				error);
-
-		// check model in memory
-		assertEquals(0, cs.getAllCoops().size());
-		assertEquals(0, cs.getAllStudents().size());
-		assertEquals(0, cs.getAllEmployers().size());
-	}
-
-	@Test
-	public void testRegisterProfileAndCoopDoNotExist() {
-		assertEquals(0, cs.getAllCoops().size());
-
-		String email = "paul.hooley@gmail.com";
-		String name = "Paul Hooley";
-		String password = "frisbyislife";
-		String phone = "6047862815";
-		
-		Student Student = new Student();
-		Student.setName(name);
-		Student.setEmail(email);
-		Student.setPassword(password);
-		Student.setPhone(phone);
-		assertEquals(0, cs.getAllStudents().size());
-
-		Employer Employer = new Employer();
-		Employer.setId(23);;
-		assertEquals(0, cs.getAllEmployers().size());
-
-		String error = null;
-		try {
-			cs.register(Student, Employer);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		// check error
-		assertEquals("Student does not exist! Employer does not exist!", error);
-
-		// check model in memory
-		assertEquals(0, cs.getAllCoops().size());
-		assertEquals(0, cs.getAllProfiles().size());
-		assertEquals(0, cs.getAllCoops().size());
-	}
 	
 	@Test
 	public void testCreateProfileNoPhone() {
+		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 
 		String email = "emma.eagles@mail.mcgill.ca ";
@@ -423,13 +614,14 @@ public class TestCooperatorService {
 		}
 
 		// check error
-		assertEquals("Phone cannot be empty!", error);
+		assertEquals("Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllProfiles().size());
 	}
 	@Test
 	public void testCreateProfileNoEmail() {
+		clearDatabase();
 		assertEquals(0, cs.getAllProfiles().size());
 
 		String email = "";
@@ -453,6 +645,7 @@ public class TestCooperatorService {
 	}
 	@Test
 	public void testCreateFileNegative() {
+		clearDatabase();
 		assertEquals(0, cs.getAllFiles().size());
 
 		int id = -1;
@@ -473,6 +666,7 @@ public class TestCooperatorService {
 	
 	@Test
 	public void testCreateNotificationNegative() {
+		clearDatabase();
 		assertEquals(0, cs.getAllNotifications().size());
 
 		int id = -1;
@@ -493,13 +687,14 @@ public class TestCooperatorService {
 	}
 	@Test
 	public void testCreateEmployerNegative() {
+		clearDatabase();
 		assertEquals(0, cs.getAllEmployers().size());
 
-		String email = "";
+		String email = "emma.eagles@mail.mcgill.ca";
 		String name = "Emma Eagles";
 		String password = "12341234";
 		String phone = "5061231234";
-		int id = 31231234;
+		int id = -9;
 		String error = null;
 	
 		try {

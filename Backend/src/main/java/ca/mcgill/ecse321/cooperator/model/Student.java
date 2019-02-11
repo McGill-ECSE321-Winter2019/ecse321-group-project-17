@@ -33,7 +33,7 @@ public void setCoopsCompleted(Integer value) {
 public Integer getCoopsCompleted() {
     return this.coopsCompleted;
 }
-private Boolean problematic;
+private Boolean problematic = false;
 
 public void setProblematic(Boolean value) {
     this.problematic = value;
@@ -41,4 +41,5 @@ public void setProblematic(Boolean value) {
 public Boolean getProblematic() {
     return this.problematic;
 }
+
 }

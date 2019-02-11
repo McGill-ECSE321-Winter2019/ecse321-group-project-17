@@ -42,7 +42,7 @@ public class CooperatorService {
 	AdministratorRepository administratorRepository;
 
 	@Transactional
-	public Profile createStudent(String email, String name, String password, String phone, int id) {
+	public Student createStudent(String email, String name, String password, String phone, int id) {
 		Student p = new Student();
 		
 		String error = "";
@@ -78,7 +78,7 @@ public class CooperatorService {
 	}
 	
 	@Transactional
-	public Profile createEmployer(String email, String name, String password, String phone, int id) {
+	public Employer createEmployer(String email, String name, String password, String phone, int id) {
 		Employer e = new Employer();
 		
 		String error = "";
@@ -119,7 +119,7 @@ public class CooperatorService {
 		
 		String error = "";
 		if(name == null || name.trim().length() == 0) {
-			error = "Employer name cannot be empty! ";
+			error = "Administrator name cannot be empty! ";
 			//throw new IllegalArgumentException("Profile name cannot be empty!");
 		}
 		if(email == null || email.trim().length() == 0) {
@@ -163,57 +163,48 @@ public class CooperatorService {
 	public List<Profile> getAllProfiles() {
 		return toList(profileRepository.findAll());
 	}
-	
-	@Transactional
-	public Coop register(Student student, Employer employer) {
-		Coop coop = new Coop();
-		coop.setId(student.getName().hashCode() * employer.getName().hashCode());
-		coop.setEmployer(employer);
-		coop.setStudent(student);
-
-		coopRepository.save(coop);
-
-		return coop;
-	}
 
 	@Transactional 
-	public Coop createCoop(Integer id, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
-		Coop c = new Coop();
+	public Coop createCoop(Student student, Employer employer, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
 		String error = "";
-		if(id == null) {
-			error = "Coop id cannot be empty! ";
-			//throw new IllegalArgumentException("Coop id cannot be empty!");
+
+		if(student == null) {
+			error = error + "Student is null! ";
 		}
-		if(title == null || title.trim().length() == 0) {
-			error = error + "Coop title cannot be empty! ";
-			//throw new IllegalArgumentException("Coop title cannot be empty!");
-		}
-		if(startDate == null) {
-			error = error + "Coop start date cannot be empty! ";
-			//throw new IllegalArgumentException("Coop start date cannot be empty!");
-		}
-		if(endDate == null) {
-			error = error + "Coop end date cannot be empty! ";
-			//throw new IllegalArgumentException("Coop end date cannot be empty!");
-		}
-		if(status == null) {
-			error = error + "Coop status cannot be empty! ";
-			//throw new IllegalArgumentException("Coop status cannot be empty!");
-		}
-		if(salaryPerHour == null) {
-			error = error + "Coop salaryPerHour cannot be empty! ";
-			//throw new IllegalArgumentException("Coop salaryPerHour cannot be empty!");
-		}
-		if(hoursPerWeek == null) {
-			error = error + "Coop hoursPerWeek cannot be empty!";
-			//throw new IllegalArgumentException("Coop hoursPerWeek cannot be empty!");
+		if(employer == null) {
+			error = error + "Employer is null!";
 		}
 		if(error.length()!= 0) {
 			throw new IllegalArgumentException(error);
 		}
+		Coop c = new Coop();
+		error = "";
+		if(title == null || title.trim().length() == 0) {
+			error = error + "Coop title cannot be empty! ";
+		}
+		if(startDate == null) {
+			error = error + "Coop start date cannot be empty! ";
+		}
+		if(endDate == null) {
+			error = error + "Coop end date cannot be empty! ";
+		}
+		if(status == null) {
+			error = error + "Coop status cannot be empty! ";
+		}
+		if(salaryPerHour == null) {
+			error = error + "Coop salaryPerHour cannot be empty! ";
+		}
+		if(hoursPerWeek == null) {
+			error = error + "Coop hoursPerWeek cannot be empty!";
+		}
+		if(error.length()!= 0) {
+			throw new IllegalArgumentException(error);
+		}
+		error = "";
 		if(startDate.after(endDate)) {
 			throw new IllegalArgumentException("Coop end time cannot be before Coop start time!");
 		}
+		int id = student.getName().hashCode() * (employer.getName().hashCode());
 		c.setId(id);
 		c.setTitle(title);
 		c.setStartDate(startDate);
