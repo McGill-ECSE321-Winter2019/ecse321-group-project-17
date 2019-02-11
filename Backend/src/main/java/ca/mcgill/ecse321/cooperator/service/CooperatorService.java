@@ -48,23 +48,18 @@ public class CooperatorService {
 		String error = "";
 		if(name == null || name.trim().length() == 0) {
 			error = "Student name cannot be empty! ";
-			//throw new IllegalArgumentException("Profile name cannot be empty!");
-		}
+	    }
 		if(email == null || email.trim().length() == 0) {
 			error =  error + "Email cannot be empty! ";
-			//throw new IllegalArgumentException("Email cannot be empty!");
 		}
 		if(password == null || password.trim().length() == 0) {
 			error =  error + "Password cannot be empty! ";
-			//throw new IllegalArgumentException("Password cannot be empty!");
 		}
 		if(phone == null || phone.trim().length() == 0) {
 			error =  error + "Phone cannot be empty! ";
-			//throw new IllegalArgumentException("Phone cannot be empty!");
 		}
 		if(id < 0) {
 			error =  error + "ID is invalid!";
-			//throw new IllegalArgumentException("Phone cannot be empty!");
 		}
 		if(error.length() != 0) {
 			throw new IllegalArgumentException(error);
@@ -84,23 +79,18 @@ public class CooperatorService {
 		String error = "";
 		if(name == null || name.trim().length() == 0) {
 			error = "Employer name cannot be empty! ";
-			//throw new IllegalArgumentException("Profile name cannot be empty!");
 		}
 		if(email == null || email.trim().length() == 0) {
 			error =  error + "Email cannot be empty! ";
-			//throw new IllegalArgumentException("Email cannot be empty!");
 		}
 		if(password == null || password.trim().length() == 0) {
 			error =  error + "Password cannot be empty! ";
-			//throw new IllegalArgumentException("Password cannot be empty!");
 		}
 		if(phone == null || phone.trim().length() == 0) {
 			error =  error + "Phone cannot be empty! ";
-			//throw new IllegalArgumentException("Phone cannot be empty!");
 		}
 		if(id < 0) {
 			error =  error + "ID is invalid!";
-			//throw new IllegalArgumentException("Phone cannot be empty!");
 		}
 		if(error.length() != 0) {
 			throw new IllegalArgumentException(error);
@@ -120,23 +110,18 @@ public class CooperatorService {
 		String error = "";
 		if(name == null || name.trim().length() == 0) {
 			error = "Administrator name cannot be empty! ";
-			//throw new IllegalArgumentException("Profile name cannot be empty!");
-		}
+			}
 		if(email == null || email.trim().length() == 0) {
 			error =  error + "Email cannot be empty! ";
-			//throw new IllegalArgumentException("Email cannot be empty!");
-		}
+			}
 		if(password == null || password.trim().length() == 0) {
 			error =  error + "Password cannot be empty! ";
-			//throw new IllegalArgumentException("Password cannot be empty!");
-		}
+			}
 		if(phone == null || phone.trim().length() == 0) {
 			error =  error + "Phone cannot be empty! ";
-			//throw new IllegalArgumentException("Phone cannot be empty!");
-		}
+			}
 		if(id < 0) {
 			error =  error + "ID is invalid!";
-			//throw new IllegalArgumentException("Phone cannot be empty!");
 		}
 		if(error.length() != 0) {
 			throw new IllegalArgumentException(error);
@@ -301,10 +286,16 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Notification createNotification(Integer id, String text) {
+	public Notification createNotification(Integer id, String text, Student s, Employer e) {
 		String error = "";
+		if(s == null) {
+			error = error + "Profile1 is null! ";
+		}
+		if(e == null) {
+			error = error + "Profile2 is null! ";
+		}
 		if(id == null || id < 0) {
-			error = "ID is invalid! ";
+			error = error + "ID is invalid! ";
 		}
 		if(text == null || text.trim().length() == 0) {
 			error = error + "Text is invalid!";
@@ -316,6 +307,8 @@ public class CooperatorService {
 		Notification n = new Notification();
 		n.setId(id);
 		n.setText(text);
+		n.setProfile(s);
+		n.setProfile1(e);
 		notificationRepository.save(n);
 		return n;
 	}

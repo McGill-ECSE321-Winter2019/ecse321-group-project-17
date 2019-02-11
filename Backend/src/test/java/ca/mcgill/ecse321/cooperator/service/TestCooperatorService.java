@@ -705,7 +705,7 @@ public class TestCooperatorService {
 
 		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 
-		int id = 1;
+		Integer id = 1;
 		String error = null;
 	
 		try {
@@ -717,6 +717,46 @@ public class TestCooperatorService {
 		assertEquals(null, error);
 
 		assertEquals(1, cs.getAllFiles().size());
+		assertEquals(id, cs.getAllFiles().get(0).getId());
+	}
+	
+	@Test
+	public void testCreateNotification() {
+		clearDatabase();
+		assertEquals(0, cs.getAllFiles().size());
+		
+		String emailS = "paul.hooley@gmail.com";
+		String nameS = "qwefqwefq";
+		String passwordS = "frisbyislife";
+		int idS = 3;
+		String phoneS = "6047862815";
+		Student stu;
+		
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		
+		String emailE = "emma.eagles@mail.mcgill.ca";
+		String nameE = "Emma Eagles";
+		String passwordE = "12341234";
+		String phoneE = "254334";
+		int idE = 31231234;
+		Employer emp;
+		
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		
+		Integer id = 34;
+		String text = "this is a notification";
+		String error = null;
+	
+		try {
+			cs.createNotification(id, text, stu, emp);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertEquals(null, error);
+
+		assertEquals(1, cs.getAllNotifications().size());
+		assertEquals(id, cs.getAllNotifications().get(0).getId());
 	}
 	
 	@Test
@@ -750,13 +790,13 @@ public class TestCooperatorService {
 		String error = null;
 	
 		try {
-			cs.createNotification(id, text);
+			cs.createNotification(id, text, null, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("ID is invalid! Text is invalid!", error);
+		assertEquals("Profile1 is null! Profile2 is null! ID is invalid! Text is invalid!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllNotifications().size());
