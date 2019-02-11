@@ -13,4 +13,4 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |Albert Kragl      |  8 hours| set up gradle, travis ci, hibernate, JUnits tests, use case: modify file                 |
 |Susan Matuszewski |  8 hours  | use case digram, use case: send notifications, requirements                              |
 |Eliott Bourachot  |  7 hours  | Class Diagram, code generation from model, Use Case: View Global Statistics, JUnit tests |
-|Matthew Kourlas   |...        |                       |
+|Matthew Kourlas   |  5 hours  | Use Case: Track Student Progress, Co-op progress flowchart                               |
