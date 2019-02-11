@@ -53,13 +53,13 @@ public class TestCooperatorService {
 
 	@Before
 	public void clearDatabase() {
+		fileRepository.deleteAll();
+		notificationRepository.deleteAll();
 		coopRepository.deleteAll();
 		studentRepository.deleteAll();
 		administratorRepository.deleteAll();
 		employerRepository.deleteAll();
 		profileRepository.deleteAll();
-		fileRepository.deleteAll();
-		notificationRepository.deleteAll();
 	}
 	
 	@Test
@@ -390,7 +390,7 @@ public class TestCooperatorService {
 		assertEquals(0, cs.getAllProfiles().size());
 	
 		String emailS = "paul.hooley@gmail.com";
-		String nameS = "Paul Hooley";
+		String nameS = "qwefqwefq";
 		String passwordS = "frisbyislife";
 		int idS = 3;
 		String phoneS = "6047862815";
@@ -398,12 +398,13 @@ public class TestCooperatorService {
 		
 		s = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
 		
-		String emailE = "emma.eagles@mail.mcgill.ca ";
+		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
-		String phoneE = " ";
+		String phoneE = "254334";
 		int idE = 31231234;
 		Employer emp;
+		String error = "";
 		
 		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
 		
@@ -413,12 +414,15 @@ public class TestCooperatorService {
 		Integer status = 0;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
+		Integer id = 45;
 		
 		try {
-			cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
-		} catch (IllegalArgumentException e) {
-			fail();
+			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+		}catch(Exception e) {
+			error = e.getMessage();
 		}
+		
+		assertEquals(1, cs.getAllCoops().size());
 		checkResultCoop(idS, idE, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 	}
 
@@ -435,7 +439,7 @@ public class TestCooperatorService {
 		assertEquals(status, cs.getAllCoops().get(0).getStatus());
 		assertEquals(salaryPerHour, cs.getAllCoops().get(0).getSalarayPerHour());
 		assertEquals(hoursPerWeek, cs.getAllCoops().get(0).getHoursPerWeek());
-		assertEquals(0, cs.getAllFiles().size());
+		assertEquals(0, cs.getAllFiles().size()); 
 	}
 
 	@Test
@@ -449,10 +453,11 @@ public class TestCooperatorService {
 		Integer status = 0;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
+		Integer id = 34;
 		String error = null;
 		
 		try {
-			cs.createCoop(null, null, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(null, null, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -481,7 +486,7 @@ public class TestCooperatorService {
 		String emailE = "emma.eagles@mail.mcgill.ca ";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
-		String phoneE = "4567687";
+		String phoneE = "4563";
 		int idE = 31231234;
 		Employer emp;
 		
@@ -493,10 +498,11 @@ public class TestCooperatorService {
 		Integer status = 0;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
+		Integer id = 23;
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -536,10 +542,11 @@ public class TestCooperatorService {
 		Integer status = 0;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
+		Integer id = 67;
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -579,10 +586,11 @@ public class TestCooperatorService {
 		Integer status = 0;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
+		Integer id = 47;
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

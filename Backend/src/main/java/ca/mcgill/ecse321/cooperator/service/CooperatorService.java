@@ -165,7 +165,7 @@ public class CooperatorService {
 	}
 
 	@Transactional 
-	public Coop createCoop(Student student, Employer employer, String title, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
+	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
 		String error = "";
 
 		if(student == null) {
@@ -173,6 +173,9 @@ public class CooperatorService {
 		}
 		if(employer == null) {
 			error = error + "Employer is null!";
+		}
+		if(id < 0) {
+			error = error + "ID is invalid!";
 		}
 		if(error.length()!= 0) {
 			throw new IllegalArgumentException(error);
@@ -204,7 +207,6 @@ public class CooperatorService {
 		if(startDate.after(endDate)) {
 			throw new IllegalArgumentException("Coop end time cannot be before Coop start time!");
 		}
-		int id = student.getName().hashCode() * (employer.getName().hashCode());
 		c.setId(id);
 		c.setTitle(title);
 		c.setStartDate(startDate);
@@ -212,7 +214,7 @@ public class CooperatorService {
 		c.setStatus(status);
 		c.setSalarayPerHour(salaryPerHour);
 		c.setHoursPerWeek(hoursPerWeek);
-		coopRepository.save(c);
+		//coopRepository.save(c);
 		return c;
 	}
 	
