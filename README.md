@@ -8,7 +8,7 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 |Team member's name|Total hours|Responsibility         |
 |------------------|-----------|-----------------------|
-|Emma Eagles       |  _x_ hours|                       |
+|Emma Eagles       |  _x_ hours| Class diagram, Requirements, Use Case: View File, JUnit Tests                   |
 |Albert Kragl      |  _y_ hours|                       |
 |Susan Matuszewski |...        |                       |
 |Eliott Bourachot  | 7 hours | Class Diagram, code generation from model, Use Case: View Global Statistics, and JUnit tests |
