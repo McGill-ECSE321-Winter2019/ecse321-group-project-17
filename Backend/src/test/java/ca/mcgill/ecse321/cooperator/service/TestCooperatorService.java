@@ -65,6 +65,55 @@ public class TestCooperatorService {
 		profileRepository.deleteAll();
 	}
 
-	//add tests here that are for multiple classes  
+	//placeholder test so this doesn't fail
+	//add tests that include mutliple classes in this file
+	
+	
+	@Test
+	public void testCreateProfileNoPhone() {
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "emma.eagles@mail.mcgill.ca ";
+		String name = "Emma Eagles";
+		String password = "12341234";
+		String phone = " ";
+		int id = 31231234;
+		String error = null;
+	
+		try {
+			cs.createStudent(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Phone cannot be empty! ", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+	}
+	@Test
+	public void testCreateProfileNoEmail() {
+		assertEquals(0, cs.getAllProfiles().size());
+
+		String email = "";
+		String name = "Emma Eagles";
+		String password = "12341234";
+		String phone = "5061231234";
+		int id = 31231234;
+		String error = null;
+	
+		try {
+			cs.createStudent(email, name, password, phone, id);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Email cannot be empty! ", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllProfiles().size());
+	}
 
 }
