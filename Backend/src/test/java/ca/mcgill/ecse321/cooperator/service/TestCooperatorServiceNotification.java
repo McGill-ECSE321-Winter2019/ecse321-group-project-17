@@ -1,15 +1,6 @@
 package ca.mcgill.ecse321.cooperator.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -26,16 +17,12 @@ import ca.mcgill.ecse321.cooperator.dao.FileRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
-import ca.mcgill.ecse321.cooperator.model.Administrator;
-import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.Employer;
-import ca.mcgill.ecse321.cooperator.model.Profile;
 import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestCooperatorService {
-
+public class TestCooperatorServiceNotification {
 	@Autowired
 	protected CooperatorService cs;
 	
@@ -64,7 +51,64 @@ public class TestCooperatorService {
 		employerRepository.deleteAll();
 		profileRepository.deleteAll();
 	}
+	
+	@Test
+	public void testCreateNotification() {
+		assertEquals(0, cs.getAllFiles().size());
+		
+		String emailS = "paul.hooley@gmail.com";
+		String nameS = "qwefqwefq";
+		String passwordS = "frisbyislife";
+		int idS = 3;
+		String phoneS = "6047862815";
+		Student stu;
+		
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		
+		String emailE = "emma.eagles@mail.mcgill.ca";
+		String nameE = "Emma Eagles";
+		String passwordE = "12341234";
+		String phoneE = "254334";
+		int idE = 31231234;
+		Employer emp;
+		
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		
+		Integer id = 34;
+		String text = "this is a notification";
+		String error = null;
+	
+		try {
+			cs.createNotification(id, text, stu, emp);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
 
-	//add tests here that are for multiple classes  
+		assertEquals(null, error);
+
+		assertEquals(1, cs.getAllNotifications().size());
+		assertEquals(id, cs.getAllNotifications().get(0).getId());
+	}
+	
+	@Test
+	public void testCreateNotificationNegative() {
+		assertEquals(0, cs.getAllNotifications().size());
+
+		int id = -1;
+		String text = "    ";
+		String error = null;
+	
+		try {
+			cs.createNotification(id, text, null, null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		// check error
+		assertEquals("Profile1 is null! Profile2 is null! ID is invalid! Text is invalid!", error);
+
+		// check no change in memory
+		assertEquals(0, cs.getAllNotifications().size());
+	}
 
 }
