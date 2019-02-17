@@ -1,11 +1,11 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
 public class FileDto {
-	private CoopDto coop;
+	
 	private Integer id;
+	private CoopDto coop;
 
 	public FileDto() {
-		
 	}
 	
 	@SuppressWarnings("unchecked")

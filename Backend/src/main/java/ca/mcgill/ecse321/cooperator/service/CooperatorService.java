@@ -199,7 +199,7 @@ public class CooperatorService {
 		c.setStartDate(startDate);
 		c.setEndDate(endDate);
 		c.setStatus(status);
-		c.setSalarayPerHour(salaryPerHour);
+		c.setSalaryPerHour(salaryPerHour);
 		c.setHoursPerWeek(hoursPerWeek);
 		coopRepository.save(c);
 		return c;

@@ -2,10 +2,10 @@ package ca.mcgill.ecse321.cooperator.dto;
 
 public class NotificationDto {
 
+		private Integer id; // primary key
+		private String text; // not null
 		private ProfileDto sender;
 		private ProfileDto receiver;
-		private Integer id;
-		private String text;
 	
 		public NotificationDto() {
 			

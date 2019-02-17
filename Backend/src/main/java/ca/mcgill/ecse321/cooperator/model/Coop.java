@@ -87,13 +87,13 @@ public void setStatus(Integer value) {
 public Integer getStatus() {
     return this.status;
 }
-private Integer salarayPerHour;
+private Integer salaryPerHour;
 
-public void setSalarayPerHour(Integer value) {
-    this.salarayPerHour = value;
+public void setSalaryPerHour(Integer value) {
+    this.salaryPerHour = value;
 }
-public Integer getSalarayPerHour() {
-    return this.salarayPerHour;
+public Integer getSalaryPerHour() {
+    return this.salaryPerHour;
 }
 private Integer hoursPerWeek;
 

@@ -4,26 +4,27 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import net.bytebuddy.utility.RandomString;
+
 public class EmployerDto {
 
+		private String email; // primary key
+		private String password; // not empty, not null
 		private String name;
 		private List<CoopDto> coops;
-		private String email;
-		private String password;
 		private String phone;
 		private Integer id;
 		private Set<NotificationDto> received;
 	
 		public EmployerDto() {
-			
 		}
 		
 		@SuppressWarnings("unchecked")
-		public EmployerDto(String name) {
-			this(name, "", 0, "", Collections.EMPTY_LIST, "", Collections.EMPTY_SET);
+		public EmployerDto(String email) {
+			this(email, RandomString.make(10), "", 0, "", Collections.EMPTY_LIST, Collections.EMPTY_SET);
 		}
 		
-		public EmployerDto(String name, String email, Integer id, String phone, List<CoopDto> list, String password, Set<NotificationDto> received) {
+		public EmployerDto(String email, String password, String name, Integer id, String phone, List<CoopDto> list, Set<NotificationDto> received) {
 			this.name = name;
 			this.email = email;
 			this.id = id;

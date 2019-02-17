@@ -1,16 +1,6 @@
 package ca.mcgill.ecse321.cooperator.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import java.sql.Date;
-import java.sql.Time;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,11 +16,6 @@ import ca.mcgill.ecse321.cooperator.dao.FileRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
-import ca.mcgill.ecse321.cooperator.model.Administrator;
-import ca.mcgill.ecse321.cooperator.model.Coop;
-import ca.mcgill.ecse321.cooperator.model.Employer;
-import ca.mcgill.ecse321.cooperator.model.Profile;
-import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
