@@ -13,7 +13,7 @@ public class StudentDto {
 		private String name;
 		private Integer id;
 		private String phone;
-		private List<CoopDto> coops;
+		private Set<CoopDto> coops;
 		private Set<NotificationDto> received;
 	
 		public StudentDto() {
@@ -21,10 +21,10 @@ public class StudentDto {
 		
 		@SuppressWarnings("unchecked")
 		public StudentDto(String email) {
-			this(email, RandomString.make(10), "", 0, "", Collections.EMPTY_LIST, Collections.EMPTY_SET);
+			this(email, RandomString.make(10), "", 0, "", Collections.EMPTY_SET, Collections.EMPTY_SET);
 		}
 		
-		public StudentDto(String email, String password, String name, Integer id, String phone, List<CoopDto> list, Set<NotificationDto> received) {
+		public StudentDto(String email, String password, String name, Integer id, String phone, Set<CoopDto> list, Set<NotificationDto> received) {
 			this.name = name;
 			this.email = email;
 			this.id = id;
@@ -70,11 +70,11 @@ public class StudentDto {
 			this.email = email;
 		}
 		
-		public List<CoopDto> getCoops() {
+		public Set<CoopDto> getCoops() {
 			return coops;
 		}
 		
-		public void setCoops(List<CoopDto> coops) {
+		public void setCoops(Set<CoopDto> coops) {
 			this.coops = coops;
 		}
 		

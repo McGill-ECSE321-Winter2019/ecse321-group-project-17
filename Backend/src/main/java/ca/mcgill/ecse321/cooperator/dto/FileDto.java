@@ -30,7 +30,7 @@ public class FileDto {
 		return coop;
 	}
 	
-	public void setID(CoopDto coop) {
+	public void setCoop(CoopDto coop) {
 		this.coop = coop;
 	}
 	

@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import ca.mcgill.ecse321.cooperator.model.File;
 import ca.mcgill.ecse321.cooperator.model.Notification;
 import ca.mcgill.ecse321.cooperator.model.Profile;
 import ca.mcgill.ecse321.cooperator.model.Student;
+
 @Service
 public class CooperatorService {
 
@@ -41,6 +43,11 @@ public class CooperatorService {
 	@Autowired
 	AdministratorRepository administratorRepository;
 
+	Integer id = 0;
+	public Integer getNewId() {
+		return(id++);
+	}
+	
 	@Transactional
 	public Student createStudent(String email, String name, String password, String phone, int id) {
 		Student p = new Student();
@@ -214,7 +221,6 @@ public class CooperatorService {
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());
-		
 	}
 	
 	@Transactional 
@@ -314,12 +320,12 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public List<Notification> getNotifications(Profile profile) {
+	public Set<Notification> getNotifications(Profile profile) {
 		if(profile == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			List<Notification> n = notificationRepository.findByProfile(profile);
+			Set<Notification> n = notificationRepository.findByProfile(profile);
 			return n;
 		}
 	}

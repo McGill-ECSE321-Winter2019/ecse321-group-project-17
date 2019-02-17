@@ -38,6 +38,28 @@
       <packagedElement xmi:type="uml:Package" xmi:id="_I-WyQCymEemnC6Qs8IyScA" name="mcgill">
         <packagedElement xmi:type="uml:Package" xmi:id="_I-WyQSymEemnC6Qs8IyScA" name="ecse321">
           <packagedElement xmi:type="uml:Package" xmi:id="_I-hKUCymEemnC6Qs8IyScA" name="cooperator">
+            <packagedElement xmi:type="uml:Package" xmi:id="_jV3L0DLYEemEg_OnGZm_1Q" name="model">
+              <packagedElement xmi:type="uml:Class" xmi:id="_jWDZEDLYEemEg_OnGZm_1Q" name="Notification">
+                <ownedAttribute xmi:id="_jX9dkDLYEemEg_OnGZm_1Q" name="profile" visibility="public" type="_P8-UwCynEempnMmxnVmbDQ" association="_jYHOkDLYEemEg_OnGZm_1Q"/>
+                <ownedAttribute xmi:id="_jX-rsDLYEemEg_OnGZm_1Q" name="profile1" type="_P8-UwCynEempnMmxnVmbDQ" association="_jYELQDLYEemEg_OnGZm_1Q"/>
+                <ownedAttribute xmi:id="_jX_SwDLYEemEg_OnGZm_1Q" name="id">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_jYAg4DLYEemEg_OnGZm_1Q" name="text">
+                  <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
+                </ownedAttribute>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_jYELQDLYEemEg_OnGZm_1Q" name="" memberEnd="_jX-rsDLYEemEg_OnGZm_1Q _jYC9IjLYEemEg_OnGZm_1Q">
+                <ownedEnd xmi:id="_jYC9IjLYEemEg_OnGZm_1Q" name="" type="_jWDZEDLYEemEg_OnGZm_1Q" association="_jYELQDLYEemEg_OnGZm_1Q">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_jYDkMDLYEemEg_OnGZm_1Q" value="*"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_jYHOkDLYEemEg_OnGZm_1Q" name="" memberEnd="_jYHOkTLYEemEg_OnGZm_1Q _jX9dkDLYEemEg_OnGZm_1Q">
+                <ownedEnd xmi:id="_jYHOkTLYEemEg_OnGZm_1Q" name="" type="_jWDZEDLYEemEg_OnGZm_1Q" association="_jYHOkDLYEemEg_OnGZm_1Q">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_lKOFYDLYEemEg_OnGZm_1Q" value="*"/>
+                </ownedEnd>
+              </packagedElement>
+            </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_I-3IkCymEemnC6Qs8IyScA" name="CooperatorApplication">
               <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_JAECcCymEemnC6Qs8IyScA" name="main" specification="_I_KDgCymEemnC6Qs8IyScA">
                 <ownedParameter xmi:id="_JAECcSymEemnC6Qs8IyScA" name="args">
@@ -232,6 +254,18 @@
         <packagedElement xmi:type="uml:Class" xmi:id="_xtXwUSyrEempnMmxnVmbDQ" name="Assert"/>
       </packagedElement>
     </packagedElement>
+    <packagedElement xmi:type="uml:Package" xmi:id="_jQlqQDLYEemEg_OnGZm_1Q" name="javax">
+      <packagedElement xmi:type="uml:Package" xmi:id="_jVweIDLYEemEg_OnGZm_1Q" name="validation">
+        <packagedElement xmi:type="uml:Package" xmi:id="_jVxFMDLYEemEg_OnGZm_1Q" name="constraints">
+          <packagedElement xmi:type="uml:Class" xmi:id="_jXZc4DLYEemEg_OnGZm_1Q" name="NotNull"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_jVxFMTLYEemEg_OnGZm_1Q" name="persistence">
+        <packagedElement xmi:type="uml:Class" xmi:id="_jXkcADLYEemEg_OnGZm_1Q" name="Entity"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_jXsX0DLYEemEg_OnGZm_1Q" name="ManyToOne"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_jXzFgTLYEemEg_OnGZm_1Q" name="Id"/>
+      </packagedElement>
+    </packagedElement>
     <profileApplication xmi:id="_I-4WsCymEemnC6Qs8IyScA">
       <eAnnotations xmi:id="_I-_rcCymEemnC6Qs8IyScA" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
@@ -284,4 +318,10 @@
   <Persistency:NotEmpty xmi:id="_W3WAoC19Eem_ZexVXb-96g" base_Property="_CDQWcCyoEempnMmxnVmbDQ"/>
   <Persistency:NotNull xmi:id="_Y85X4C19Eem_ZexVXb-96g" base_Property="_-EbwcCynEempnMmxnVmbDQ"/>
   <Persistency:NotEmpty xmi:id="_ZMO0YC19Eem_ZexVXb-96g" base_Property="_-EbwcCynEempnMmxnVmbDQ"/>
+  <UMLLabProfile:Reference xmi:id="_jXj08DLYEemEg_OnGZm_1Q" base_Element="_jXZc4DLYEemEg_OnGZm_1Q"/>
+  <UMLLabProfile:Reference xmi:id="_jXrwwDLYEemEg_OnGZm_1Q" base_Element="_jXkcADLYEemEg_OnGZm_1Q"/>
+  <UMLLabProfile:Reference xmi:id="_jXzFgDLYEemEg_OnGZm_1Q" base_Element="_jXsX0DLYEemEg_OnGZm_1Q"/>
+  <UMLLabProfile:Reference xmi:id="_jX5MIDLYEemEg_OnGZm_1Q" base_Element="_jXzFgTLYEemEg_OnGZm_1Q"/>
+  <Persistency:PrimaryKey xmi:id="_jX_50DLYEemEg_OnGZm_1Q" base_Property="_jX_SwDLYEemEg_OnGZm_1Q"/>
+  <Persistency:NotNull xmi:id="_jYBH8DLYEemEg_OnGZm_1Q" base_Property="_jYAg4DLYEemEg_OnGZm_1Q"/>
 </xmi:XMI>
