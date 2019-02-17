@@ -50,6 +50,16 @@ public class CooperatorController {
 		return studentDtos;
 	}
 	
+	// REST route for Modify File
+	// Not a true update method, this will create a new file for now
+	@PostMapping(value = { "/file/{fileId}/{coopId}", "/file/{fileId}/{coopId}" })
+	public FileDto createFile(@PathVariable("fileId") Integer fileId, @PathVariable("coopId") Integer coopId) {
+		Coop coop = service.getCoop(coopId);
+		File newFile = service.createFile(fileId, coop);
+		
+		return convertToDto(newFile);
+	}
+	
 	private AdminDto convertToDto(Administrator a) {
 		if (a == null) {
 			throw new IllegalArgumentException("There is no such Admin!");
