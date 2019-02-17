@@ -34,7 +34,7 @@ public class CooperatorController {
 
 	private CooperatorService service;
 	
-	@PostMapping(value = { "/student/{email}{password}{name}{phone}{studentId}", "/student/{email}{password}{name}{phone}{studentId}/" })
+	@PostMapping(value = { "/student/{email}/{password}/{name}/{phone}/{studentId}", "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
 	public StudentDto createStudent(@PathVariable("email") String email, @RequestParam String password, @RequestParam String name, 
 			@RequestParam String phone, @RequestParam Integer studentId) {
 		Student student = service.createStudent(email, name, password, phone, studentId);
@@ -52,7 +52,7 @@ public class CooperatorController {
 	
 	// REST route for Modify File
 	// Not a true update method, this will create a new file for now
-	@PostMapping(value = { "/file/{fileId}/{coopId}", "/file/{fileId}/{coopId}" })
+	@PostMapping(value = { "/file/{fileId}/{coopId}", "/file/{fileId}/{coopId}/" })
 	public FileDto createFile(@PathVariable("fileId") Integer fileId, @PathVariable("coopId") Integer coopId) {
 		Coop coop = service.getCoop(coopId);
 		File newFile = service.createFile(fileId, coop);
