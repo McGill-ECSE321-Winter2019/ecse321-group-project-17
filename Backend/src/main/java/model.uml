@@ -4,7 +4,7 @@
     <eAnnotations xmi:id="_I_BgoCymEemnC6Qs8IyScA" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_I_CHsCymEemnC6Qs8IyScA" source="codegen">
         <details xmi:id="_I_CHsSymEemnC6Qs8IyScA" key="codegenDirectory" value="/ecse321-group-project-17/Backend/src/main/java"/>
-        <details xmi:id="_r29I0CymEempnMmxnVmbDQ" key="AssociatedSourceCode" value="/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/CooperatorApplication.java;4049599566/1;/ecse321-group-project-17/Backend/src/test/java/ca/mcgill/ecse321/cooperator/CooperatorApplicationTests.java;2369587187/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Administrator.java;1446657097/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Employer.java;981518176/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Student.java;3885002200/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Profile.java;2607284448/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Notification.java;3829750970/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Coop.java;1385337739/1;"/>
+        <details xmi:id="_r29I0CymEempnMmxnVmbDQ" key="AssociatedSourceCode" value="/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/CooperatorApplication.java;4049599566/1;/ecse321-group-project-17/Backend/src/test/java/ca/mcgill/ecse321/cooperator/CooperatorApplicationTests.java;2369587187/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Administrator.java;1446657097/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Employer.java;981518176/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Student.java;3885002200/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Profile.java;2607284448/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Notification.java;330608976/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Coop.java;3946293928/1;/ecse321-group-project-17/Backend/src/main/java/ReportStatus.java;823527825/1;/ecse321-group-project-17/Backend/src/main/java/ReportType.java;4257602788/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Report.java;461300066/1;"/>
       </contents>
     </eAnnotations>
     <elementImport xmi:id="_I_GZICymEemnC6Qs8IyScA">
@@ -185,7 +185,7 @@
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
               </packagedElement>
-              <packagedElement xmi:type="uml:Class" xmi:id="_YkaEoCynEempnMmxnVmbDQ" name="File">
+              <packagedElement xmi:type="uml:Class" xmi:id="_YkaEoCynEempnMmxnVmbDQ" name="Report">
                 <ownedAttribute xmi:id="_jrS5gCynEempnMmxnVmbDQ" name="coop" type="_TveWACynEempnMmxnVmbDQ" association="_jrSScCynEempnMmxnVmbDQ">
                   <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_jrTgkCynEempnMmxnVmbDQ" value="1"/>
                   <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_jrTgkSynEempnMmxnVmbDQ" value="1"/>
@@ -193,6 +193,10 @@
                 <ownedAttribute xmi:id="_6T0lkCynEempnMmxnVmbDQ" name="id">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
                 </ownedAttribute>
+                <ownedAttribute xmi:id="_ZHWYYDSkEemeCPnFopV2eg" name="dueDate" type="_dE2xACynEempnMmxnVmbDQ"/>
+                <ownedAttribute xmi:id="_bWS8MDSkEemeCPnFopV2eg" name="status" type="_RuXqkDSiEemeCPnFopV2eg"/>
+                <ownedAttribute xmi:id="_nkrIIDSlEemeCPnFopV2eg" name="type" type="_dSWZMDSkEemeCPnFopV2eg"/>
+                <ownedAttribute xmi:id="_8lU3cDSlEemeCPnFopV2eg" name="file" type="_8q1CgDSlEemeCPnFopV2eg"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_SZn9YCynEempnMmxnVmbDQ" name="Student">
                 <generalization xmi:id="_iOEtkCynEempnMmxnVmbDQ" general="_P8-UwCynEempnMmxnVmbDQ"/>
@@ -211,6 +215,16 @@
                 </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_xi_pICynEempnMmxnVmbDQ" name="" memberEnd="_xjAQMCynEempnMmxnVmbDQ _xjBeUSynEempnMmxnVmbDQ"/>
+              <packagedElement xmi:type="uml:Enumeration" xmi:id="_dSWZMDSkEemeCPnFopV2eg" name="ReportType">
+                <ownedLiteral xmi:id="_fAbroDSkEemeCPnFopV2eg" name="Contract"/>
+                <ownedLiteral xmi:id="_ATqm4DSlEemeCPnFopV2eg" name="Technical"/>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Enumeration" xmi:id="_RuXqkDSiEemeCPnFopV2eg" name="ReportStatus">
+                <ownedLiteral xmi:id="_eDFIADSjEemeCPnFopV2eg" name="Unsubmitted"/>
+                <ownedLiteral xmi:id="_uWtHgDSjEemeCPnFopV2eg" name="Submitted"/>
+                <ownedLiteral xmi:id="_wYVoEDSjEemeCPnFopV2eg" name="Late"/>
+                <ownedLiteral xmi:id="_xnkbUDSjEemeCPnFopV2eg" name="Reviewed"/>
+              </packagedElement>
             </packagedElement>
           </packagedElement>
         </packagedElement>
@@ -219,6 +233,10 @@
     <packagedElement xmi:type="uml:Package" xmi:id="_eWq-MCynEempnMmxnVmbDQ" name="java">
       <packagedElement xmi:type="uml:Package" xmi:id="_eWsMUCynEempnMmxnVmbDQ" name="sql">
         <packagedElement xmi:type="uml:DataType" xmi:id="_dE2xACynEempnMmxnVmbDQ" name="Date"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_EBtJcDSmEemeCPnFopV2eg" name="File"/>
+      <packagedElement xmi:type="uml:Package" xmi:id="_JNDM8DSmEemeCPnFopV2eg" name="file">
+        <packagedElement xmi:type="uml:DataType" xmi:id="_8q1CgDSlEemeCPnFopV2eg" name="File"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Association" xmi:id="_jAoy8CynEempnMmxnVmbDQ" name="" memberEnd="_jAqBECynEempnMmxnVmbDQ _jAwuwSynEempnMmxnVmbDQ"/>
@@ -266,6 +284,7 @@
         <packagedElement xmi:type="uml:Class" xmi:id="_jXzFgTLYEemEg_OnGZm_1Q" name="Id"/>
       </packagedElement>
     </packagedElement>
+    <packagedElement xmi:type="uml:DataType" xmi:id="_8lXTsDSlEemeCPnFopV2eg" name="Fi"/>
     <profileApplication xmi:id="_I-4WsCymEemnC6Qs8IyScA">
       <eAnnotations xmi:id="_I-_rcCymEemnC6Qs8IyScA" source="http://www.eclipse.org/uml2/2.0.0/UML">
         <references xmi:type="ecore:EPackage" href="pathmap://UMLLAB_PROFILES/UMLLab.profile.uml#UMLLabProfile-Annotation_2-UMLLabProfile"/>
@@ -324,4 +343,5 @@
   <UMLLabProfile:Reference xmi:id="_jX5MIDLYEemEg_OnGZm_1Q" base_Element="_jXzFgTLYEemEg_OnGZm_1Q"/>
   <Persistency:PrimaryKey xmi:id="_jX_50DLYEemEg_OnGZm_1Q" base_Property="_jX_SwDLYEemEg_OnGZm_1Q"/>
   <Persistency:NotNull xmi:id="_jYBH8DLYEemEg_OnGZm_1Q" base_Property="_jYAg4DLYEemEg_OnGZm_1Q"/>
+  <UMLLabProfile:UnresolvedElement xmi:id="_8lmkQDSlEemeCPnFopV2eg" base_Element="_8lXTsDSlEemeCPnFopV2eg"/>
 </xmi:XMI>

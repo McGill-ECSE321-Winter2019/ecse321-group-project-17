@@ -33,14 +33,14 @@ public class Coop{
       this.employer = employer;
    }
    
-   private Set<File> file;
+   private Set<Report> file;
    
    @OneToMany(mappedBy="coop" )
-   public Set<File> getFile() {
+   public Set<Report> getFile() {
       return this.file;
    }
    
-   public void setFile(Set<File> files) {
+   public void setFile(Set<Report> files) {
       this.file = files;
    }
    
