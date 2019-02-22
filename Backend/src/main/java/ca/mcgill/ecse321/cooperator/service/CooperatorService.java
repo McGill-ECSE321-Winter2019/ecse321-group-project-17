@@ -225,6 +225,15 @@ public class CooperatorService {
 		return toList(coopRepository.findAll());
 	}
 	
+	@Transactional
+	public Set<Coop> getCoopforStudent(Student s){
+		if(s == null) {
+			throw new IllegalArgumentException("Student is null!");
+		}
+		Set<Coop> stuCoops = s.getCoop();
+		return stuCoops;
+	}
+	
 	@Transactional 
 	public Student updateStudent(Integer id, boolean status) {
 		Student s = new Student();
