@@ -60,7 +60,26 @@ public class TestCooperatorServiceReport {
 	@Test
 	public void testCreateReportNull() {
 		assertEquals(0, cs.getAllReports().size());
-		
+
+		Integer id = -1;
+		String error = null;
+		Date date = null;
+	
+		try {
+			cs.createReport(id, null, date, null, null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+
+		assertEquals("ID is invalid! Coop is null! Due date is invalid! Status is invalid! Type is invalid!", error);
+
+		assertEquals(0, cs.getAllReports().size());
+	}
+	
+	@Test
+	public void testCreateReportNegative() {
+		assertEquals(0, cs.getAllReports().size());
+
 		String emailS = "paul.hooley@gmail.com";
 		String nameS = "qwefqwefq";
 		String passwordS = "frisbyislife";
@@ -89,31 +108,13 @@ public class TestCooperatorServiceReport {
 		Coop c;
 
 		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek);
-
-		Integer id = 1;
-		String error = null;
-		Date date = null;
-	
-		try {
-			cs.createReport(id, c, date, null, null);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		assertEquals("ID is invalid! Coop is null! Due date is invalid! Status is invalid! Type is invalid!", error);
-
-		assertEquals(0, cs.getAllReports().size());
-	}
-	
-	@Test
-	public void testCreateFileNegative() {
-		assertEquals(0, cs.getAllReports().size());
-
+		
 		int id = -1;
+		Date date = Date.valueOf("2019-03-30");
 		String error = null;
 	
 		try {
-			cs.createReport(id, null, null, null, null);
+			cs.createReport(id, c, date, ReportStatus.Complete, ReportType.Contract);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
