@@ -4,4 +4,7 @@ import javax.persistence.Entity;
 
 @Entity
 public enum ReportType{
+	Contract,
+	Techinical,
+	Evaluation
 }

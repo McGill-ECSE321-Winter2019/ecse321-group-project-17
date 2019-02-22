@@ -4,7 +4,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import java.sql.Date;
@@ -33,15 +33,15 @@ public class Coop{
       this.employer = employer;
    }
    
-   private Set<Report> file;
+   private List<Report> report;
    
    @OneToMany(mappedBy="coop" )
-   public Set<Report> getFile() {
-      return this.file;
+   public List<Report> getReport() {
+      return this.report;
    }
    
-   public void setFile(Set<Report> files) {
-      this.file = files;
+   public void setReport(List<Report> report) {
+      this.report = report;
    }
    
    private Integer id;

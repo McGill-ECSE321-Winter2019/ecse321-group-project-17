@@ -54,7 +54,7 @@ public class TestCooperatorServiceNotification {
 	
 	@Test
 	public void testCreateNotification() {
-		assertEquals(0, cs.getAllFiles().size());
+		assertEquals(0, cs.getAllNotifications().size());
 		
 		String emailS = "paul.hooley@gmail.com";
 		String nameS = "qwefqwefq";

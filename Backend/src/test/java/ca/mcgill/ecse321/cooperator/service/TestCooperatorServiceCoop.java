@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.FileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
@@ -37,7 +37,7 @@ public class TestCooperatorServiceCoop {
 	@Autowired
 	private EmployerRepository employerRepository;
 	@Autowired
-	private FileRepository fileRepository;
+	private ReportRepository reportRepository;
 	@Autowired
 	private NotificationRepository notificationRepository;
 	@Autowired
@@ -47,7 +47,7 @@ public class TestCooperatorServiceCoop {
 
 	@Before @After
 	public void clearDatabase() {
-		fileRepository.deleteAll();
+		reportRepository.deleteAll();
 		notificationRepository.deleteAll();
 		coopRepository.deleteAll();
 		studentRepository.deleteAll();
@@ -117,7 +117,7 @@ public class TestCooperatorServiceCoop {
 		assertEquals(salaryPerHour, allCoops.get(0).getSalaryPerHour());
 		assertEquals(hoursPerWeek, allCoops.get(0).getHoursPerWeek());
 		
-		assertEquals(0, cs.getAllFiles().size()); 
+		assertEquals(0, cs.getAllReports().size()); 
 		
 	}
 	

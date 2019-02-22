@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
-import ca.mcgill.ecse321.cooperator.dto.FileDto;
+import ca.mcgill.ecse321.cooperator.dto.ReportDto;
 import ca.mcgill.ecse321.cooperator.dto.NotificationDto;
 import ca.mcgill.ecse321.cooperator.dto.ProfileDto;
 import ca.mcgill.ecse321.cooperator.dto.StudentDto;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.Employer;
-import ca.mcgill.ecse321.cooperator.model.File;
+import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.Notification;
 import ca.mcgill.ecse321.cooperator.model.Profile;
 import ca.mcgill.ecse321.cooperator.model.Student;
@@ -63,7 +63,7 @@ public class CooperatorController {
 		if (c == null) {
 			throw new IllegalArgumentException("There is no such Coop!");
 		}
-		CoopDto coopDto = new CoopDto(c.getId(),c.getTitle(),c.getStudent(), c.getEmployer(), c.getFile(), c.getStartDate(), c.getEndDate(), 
+		CoopDto coopDto = new CoopDto(c.getId(),c.getTitle(),c.getStudent(), c.getEmployer(), c.getReport(), c.getStartDate(), c.getEndDate(), 
 				c.getStatus(), c.getSalaryPerHour(), c.getHoursPerWeek(), c.getAddress());
 		return coopDto;
 	}
@@ -77,12 +77,12 @@ public class CooperatorController {
 		return employerDto;
 	}
 	
-	private FileDto convertToDto(File f) {
-		if (f == null) {
-			throw new IllegalArgumentException("There is no such File!");
+	private ReportDto convertToDto(Report r) {
+		if (r == null) {
+			throw new IllegalArgumentException("There is no such Report!");
 		}
-		FileDto fileDto = new FileDto(f.getId(), convertToDto(f.getCoop()));
-		return fileDto;
+		ReportDto reportDto = new ReportDto(r.getId(), convertToDto(r.getCoop()), r.getDueDate(), r.getStatus(), r.getType());
+		return reportDto;
 	}
 	
 	private NotificationDto convertToDto(Notification n) {

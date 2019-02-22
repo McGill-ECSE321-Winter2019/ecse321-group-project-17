@@ -13,14 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.FileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.Employer;
-import ca.mcgill.ecse321.cooperator.model.File;
+import ca.mcgill.ecse321.cooperator.model.Report;
+import ca.mcgill.ecse321.cooperator.model.ReportStatus;
+import ca.mcgill.ecse321.cooperator.model.ReportType;
 import ca.mcgill.ecse321.cooperator.model.Notification;
 import ca.mcgill.ecse321.cooperator.model.Profile;
 import ca.mcgill.ecse321.cooperator.model.Student;
@@ -33,7 +35,7 @@ public class CooperatorService {
 	@Autowired
 	EmployerRepository employerRepository;
 	@Autowired
-	FileRepository fileRepository;
+	ReportRepository reportRepository;
 	@Autowired
 	StudentRepository studentRepository;
 	@Autowired
@@ -336,26 +338,46 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public File createFile(Integer id, Coop c) {
+	public Report createReport(Integer id, Coop c, Date d, ReportStatus s, ReportType t) {
+		String error = "";
 		if(id == null || id < 0) {
-			throw new IllegalArgumentException("ID is invalid!");
+			error = ("ID is invalid! ");
 		}
-		File f = new File();
-		f.setId(id);
-		f.setCoop(c);
-		fileRepository.save(f);
-		return f;
+		if(c == null) {
+			error = error + "Coop is null! ";
+		}
+		if(d == null) {
+			error = error + "Due date is invalid! ";
+		}
+		if(s == null ) {
+			error = error + "Status is invalid! ";
+		}
+		if(t == null) {
+			error = error + "Type is invalid!";
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
+		}
+		
+		Report r = new Report();
+		r.setId(id);
+		r.setCoop(c);
+		r.setDueDate(d);
+		r.setStatus(s);
+		r.setType(t);
+		reportRepository.save(r);
+		return r;
 	}
 	
 	@Transactional  
-	public Optional<File> getFile(Integer id) {
-		Optional<File> f = fileRepository.findById(id);
-		return f;
+	public Optional<Report> getReport(Integer id) {
+		Optional<Report> r = reportRepository.findById(id);
+		return r;
 	}
 	
 	@Transactional
-	public List<File> getAllFiles() {
-		return toList(fileRepository.findAll());
+	public List<Report> getAllReports() {
+		return toList(reportRepository.findAll());
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){
