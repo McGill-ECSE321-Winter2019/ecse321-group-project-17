@@ -51,9 +51,8 @@ public class CooperatorService {
 	}
 	
 	@Transactional
-	public Student createStudent(String email, String name, String password, String phone, int id) {
+	public Student createStudent(String email, String name, String password, String phone, Integer id) {
 		Student p = new Student();
-		
 		String error = "";
 		if(name == null || name.trim().length() == 0) {
 			error = "Student name cannot be empty! ";

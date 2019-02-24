@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,11 +34,11 @@ import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 @RestController
 public class CooperatorController {
 
-	private CooperatorService service;
+	private CooperatorService service = new CooperatorService();
 	
-	@PostMapping(value = { "/student/{email}{password}{name}{phone}{studentId}", "/student/{email}{password}{name}{phone}{studentId}/" })
-	public StudentDto createStudent(@PathVariable("email") String email, @RequestParam String password, @RequestParam String name, 
-			@RequestParam String phone, @RequestParam Integer studentId) {
+	@PostMapping(value = { "/student/{email}/{password}/{name}/{phone}/{studentId}", "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
+	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
+			@PathVariable String phone, @PathVariable Integer studentId) {
 		Student student = service.createStudent(email, name, password, phone, studentId);
 		return convertToDto(student);
 	}
@@ -49,6 +51,34 @@ public class CooperatorController {
 		}
 		return studentDtos;
 	}
+	
+	@GetMapping(value = { "/admins", "/admins/" })
+	public List<AdminDto> getAllAdmins() {
+		List<AdminDto> adminDtos = new ArrayList<>();
+		for (Administrator admin : service.getAllAdministrators()) {
+			adminDtos.add(convertToDto(admin));
+		}
+		return adminDtos;
+	}
+	
+	@GetMapping(value = { "/employers", "/employers/" })
+	public List<EmployerDto> getAllEmployers() {
+		List<EmployerDto> employerDtos = new ArrayList<>();
+		for (Employer empl : service.getAllEmployers()) {
+			employerDtos.add(convertToDto(empl));
+		}
+		return employerDtos;
+	}
+	
+	@GetMapping(value = { "/coops", "/coops/" })
+	public List<CoopDto> getAllEvents() {
+		List<CoopDto> coopDtos = new ArrayList<>();
+		for (Coop coop : service.getAllCoops()) {
+			coopDtos.add(convertToDto(coop));
+		}
+		return coopDtos;
+	}
+
 	
 	@GetMapping(value = { "/reports/coop/student/{email}", "/reports/coop/student/{email}" })
 	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
@@ -80,6 +110,16 @@ public class CooperatorController {
 		return adminDto;
 	}
 	
+	private Administrator convertToDomainObject(AdminDto aDto) {
+		List<Administrator> allAdministrators = service.getAllAdministrators();
+		for (Administrator admin : allAdministrators) {
+			if (admin.getName().equals(aDto.getName())) {
+				return admin;
+			}
+		}
+		return null;
+	}
+	
 	private CoopDto convertToDto(Coop c) {
 		if (c == null) {
 			throw new IllegalArgumentException("There is no such Coop!");
@@ -107,6 +147,16 @@ public class CooperatorController {
 		EmployerDto employerDto = new EmployerDto(e.getEmail(), e.getPassword(), e.getName(), e.getId(), e.getPhone(), 
 				createCoopDtosForEmployer(e), createNotificationDtosForProfile(e));
 		return employerDto;
+	}
+	
+	private Employer convertToDomainObject(EmployerDto eDto) {
+		List<Employer> allEmployers = service.getAllEmployers();
+		for (Employer empl : allEmployers) {
+			if (empl.getName().equals(eDto.getName())) {
+				return empl;
+			}
+		}
+		return null;
 	}
 	
 	private ReportDto convertToDto(Report r) {
@@ -144,6 +194,16 @@ public class CooperatorController {
 		ProfileDto profileDto = new ProfileDto(p.getEmail(), p.getPassword(), p.getName(), p.getPhone(), 
 				createNotificationDtosForProfile(p), createNotificationDtosForProfile(p));
 		return profileDto;
+	}
+	
+	private Profile convertToDomainObject(ProfileDto pDto) {
+		List<Profile> all = service.getAllProfiles();
+		for (Profile p : all) {
+			if (p.getName().equals(pDto.getName())) {
+				return p;
+			}
+		}
+		return null;
 	}
 	
 	private StudentDto convertToDto(Student s) {
