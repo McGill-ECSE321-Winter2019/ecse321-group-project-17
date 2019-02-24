@@ -82,7 +82,7 @@ public class CooperatorService {
 	}
 	
 	@Transactional
-	public Employer createEmployer(String email, String name, String password, String phone, int id) {
+	public Employer createEmployer(String email, String name, String password, String phone, Integer id) {
 		Employer e = new Employer();
 		
 		String error = "";
@@ -114,7 +114,7 @@ public class CooperatorService {
 	}
 	
 	@Transactional
-	public Administrator createAdmin(String email, String name, String password, String phone, int id) {
+	public Administrator createAdmin(String email, String name, String password, String phone, Integer id) {
 		Administrator a = new Administrator();
 		
 		String error = "";

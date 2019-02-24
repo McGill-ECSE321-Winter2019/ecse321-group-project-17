@@ -44,14 +44,14 @@ public class CooperatorController {
 		return convertToDto(student);
 	}
 	
-	@PostMapping(value = { "/employer/{email}/{password}/{name}/{phone}/{studentId}", "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
+	@PostMapping(value = { "/employer/{email}/{password}/{name}/{phone}/{emplId}", "/employer/{email}/{password}/{name}/{phone}/{emplId}/" })
 	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer emplId) {
 		Employer empl = service.createEmployer(email, name, password, phone, emplId);
 		return convertToDto(empl);
 	}
 	
-	@PostMapping(value = { "/admin/{email}/{password}/{name}/{phone}/{studentId}", "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
+	@PostMapping(value = { "/admin/{email}/{password}/{name}/{phone}/{adminId}", "/admin/{email}/{password}/{name}/{phone}/{adminId}/" })
 	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer adminId) {
 		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
