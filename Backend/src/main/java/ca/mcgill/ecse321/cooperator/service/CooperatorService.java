@@ -30,19 +30,19 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 @Service
 public class CooperatorService {
 
-	@Autowired
+	@Autowired (required = true)
 	CoopRepository coopRepository;
-	@Autowired
+	@Autowired (required = true)
 	EmployerRepository employerRepository;
-	@Autowired
+	@Autowired (required = true)
 	ReportRepository reportRepository;
-	@Autowired
+	@Autowired (required = true)
 	StudentRepository studentRepository;
-	@Autowired
+	@Autowired (required = true)
 	ProfileRepository profileRepository;
-	@Autowired
+	@Autowired (required = true)
 	NotificationRepository notificationRepository;
-	@Autowired
+	@Autowired (required = true)
 	AdministratorRepository administratorRepository;
 
 	Integer id = 0;
@@ -76,6 +76,7 @@ public class CooperatorService {
 		p.setName(name);
 		p.setPassword(password);
 		p.setPhone(phone);
+		p.setId(id);
 		studentRepository.save(p);
 		return p;
 	}
@@ -107,12 +108,13 @@ public class CooperatorService {
 		e.setName(name);
 		e.setPassword(password);
 		e.setPhone(phone);
+		e.setId(id);
 		employerRepository.save(e);
 		return e;
 	}
 	
 	@Transactional
-	public Profile createAdmin(String email, String name, String password, String phone, int id) {
+	public Administrator createAdmin(String email, String name, String password, String phone, int id) {
 		Administrator a = new Administrator();
 		
 		String error = "";
@@ -138,6 +140,7 @@ public class CooperatorService {
 		a.setName(name);
 		a.setPassword(password);
 		a.setPhone(phone);
+		a.setId(id);
 		administratorRepository.save(a);
 		return a;
 	}

@@ -34,13 +34,28 @@ import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 @RestController
 public class CooperatorController {
 
-	private CooperatorService service = new CooperatorService();
+	@Autowired 
+	private CooperatorService service;
 	
 	@PostMapping(value = { "/student/{email}/{password}/{name}/{phone}/{studentId}", "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
 	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer studentId) {
 		Student student = service.createStudent(email, name, password, phone, studentId);
 		return convertToDto(student);
+	}
+	
+	@PostMapping(value = { "/employer/{email}/{password}/{name}/{phone}/{studentId}", "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
+	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
+			@PathVariable String phone, @PathVariable Integer emplId) {
+		Employer empl = service.createEmployer(email, name, password, phone, emplId);
+		return convertToDto(empl);
+	}
+	
+	@PostMapping(value = { "/admin/{email}/{password}/{name}/{phone}/{studentId}", "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
+	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
+			@PathVariable String phone, @PathVariable Integer adminId) {
+		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
+		return convertToDto(admin);
 	}
 	
 	@GetMapping(value = { "/students", "/students/" })
@@ -105,8 +120,7 @@ public class CooperatorController {
 		if (a == null) {
 			throw new IllegalArgumentException("There is no such Admin!");
 		}
-		AdminDto adminDto = new AdminDto(a.getEmail(), a.getPassword(), a.getName(), a.getId(), a.getPhone(),
-				createNotificationDtosForProfile(a), createNotificationDtosForProfile(a));
+		AdminDto adminDto = new AdminDto(a.getEmail(), a.getPassword(), a.getName(), a.getId(), a.getPhone());
 		return adminDto;
 	}
 	
@@ -144,8 +158,7 @@ public class CooperatorController {
 		if (e == null) {
 			throw new IllegalArgumentException("There is no such Employer!");
 		}
-		EmployerDto employerDto = new EmployerDto(e.getEmail(), e.getPassword(), e.getName(), e.getId(), e.getPhone(), 
-				createCoopDtosForEmployer(e), createNotificationDtosForProfile(e));
+		EmployerDto employerDto = new EmployerDto(e.getEmail(), e.getPassword(), e.getName(), e.getId(), e.getPhone());
 		return employerDto;
 	}
 	
@@ -210,8 +223,7 @@ public class CooperatorController {
 		if (s == null) {
 			throw new IllegalArgumentException("There is no such Student!");
 		}
-		StudentDto studentDto = new StudentDto(s.getEmail(), s.getPassword(), s.getName(), s.getId(), s.getPhone(), 
-				createCoopDtosForStudent(s), createNotificationDtosForProfile(s));
+		StudentDto studentDto = new StudentDto(s.getEmail(), s.getPassword(), s.getName(), s.getId(), s.getPhone());
 		return studentDto;
 	}
 	

@@ -21,16 +21,16 @@ public class StudentDto {
 		
 		@SuppressWarnings("unchecked")
 		public StudentDto(String email) {
-			this(email, RandomString.make(10), "", 0, "", Collections.EMPTY_SET, Collections.EMPTY_SET);
+			this(email, RandomString.make(10), "", 0, "");
 		}
 		
-		public StudentDto(String email, String password, String name, Integer id, String phone, Set<CoopDto> list, Set<NotificationDto> received) {
+		public StudentDto(String email, String password, String name, Integer id, String phone) {
 			this.name = name;
 			this.email = email;
 			this.id = id;
 			this.password = password;
-			this.coops = list;
-			this.received = received;
+			this.coops = null;
+			this.received = null;
 			this.phone = phone;
 		}
 		
