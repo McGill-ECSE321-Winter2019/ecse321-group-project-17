@@ -105,9 +105,10 @@ public class TestCooperatorServiceReport {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer idC = 45;
+		String address = "This is an address";
 		Coop c;
 
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		
 		int id = -1;
 		Date date = Date.valueOf("2019-03-30");
@@ -155,9 +156,10 @@ public class TestCooperatorServiceReport {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer idC = 45;
+		String address = "This is an address";
 		Coop c;
 
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 
 		Integer id = 1;
 		Date date = Date.valueOf("2019-03-30");

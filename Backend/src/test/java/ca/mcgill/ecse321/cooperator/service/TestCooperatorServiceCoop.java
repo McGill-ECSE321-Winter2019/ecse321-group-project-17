@@ -86,9 +86,10 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 45;
+		String address = "This is an address";
 		
 		try {
-			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch(Exception e) {
 			error = e.getMessage();
 		}
@@ -104,11 +105,10 @@ public class TestCooperatorServiceCoop {
 		List<Coop> allCoops = cs.getAllCoops();
 		
 		assertEquals(1, allStudents.size());
-//		assertEquals(studentID, allStudents.get(0).getId());
+		assertEquals(studentID, allStudents.get(0).getId());
 		
 		assertEquals(1, allEmployers.size());
-//		assertEquals(employerID, allEmployers.get(0).getId());
-//		
+		assertEquals(employerID, allEmployers.get(0).getId());		
 		assertEquals(1, allCoops.size());
 		assertEquals(title, allCoops.get(0).getTitle());
 		assertEquals(startDate, allCoops.get(0).getStartDate());
@@ -132,17 +132,17 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 34;
+		String address = "this is an address";
 		String error = null;
 		
 		try {
-			cs.createCoop(null, null, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(null, null, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals(
-				"Student is null! Employer is null!", error);
+		assertEquals("Student is null! Employer is null!", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 	}
@@ -170,22 +170,24 @@ public class TestCooperatorServiceCoop {
 		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
 
 		String title = "";
-		Date startDate = Date.valueOf("2019-01-01");
-		Date endDate = Date.valueOf("2019-04-30");
+		Date startDate = null;
+		Date endDate = null;
 		Integer status = 0;
-		Integer salaryPerHour = 19;
-		Integer hoursPerWeek = 40;
-		Integer id = 23;
+		Integer salaryPerHour = -1;
+		Integer hoursPerWeek = -1;
+		String address = "This is an address";
+		Integer id = -23;
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Coop title cannot be empty! ", error);
+		assertEquals("Coop title cannot be empty! ID is invalid! Coop start date cannot be empty! Coop end date cannot be empty! "
+				   + "Coop status cannot be empty! Salary per hour is invalid! Hours per week is invalid! Address cannot be empty!", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 	}
@@ -219,15 +221,16 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 67;
+		String address = "   ";
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		// check error
-		assertEquals("Coop title cannot be empty! ", error);
+		assertEquals("Coop title cannot be empty! Address cannot be empty!", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 
@@ -262,10 +265,11 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 47;
+		String address = "this is an address";
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
