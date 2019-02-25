@@ -86,9 +86,10 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 45;
+		String address = "address";
 		
 		try {
-			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch(Exception e) {
 			error = e.getMessage();
 		}
@@ -104,11 +105,10 @@ public class TestCooperatorServiceCoop {
 		List<Coop> allCoops = cs.getAllCoops();
 		
 		assertEquals(1, allStudents.size());
-//		assertEquals(studentID, allStudents.get(0).getId());
+		assertEquals(studentID, allStudents.get(0).getId());
 		
 		assertEquals(1, allEmployers.size());
-//		assertEquals(employerID, allEmployers.get(0).getId());
-//		
+		assertEquals(employerID, allEmployers.get(0).getId());		
 		assertEquals(1, allCoops.size());
 		assertEquals(title, allCoops.get(0).getTitle());
 		assertEquals(startDate, allCoops.get(0).getStartDate());
@@ -133,9 +133,10 @@ public class TestCooperatorServiceCoop {
 		Integer hoursPerWeek = 40;
 		Integer id = 34;
 		String error = null;
+		String address = "address";
 		
 		try {
-			cs.createCoop(null, null, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(null, null, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -176,16 +177,17 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 23;
+		String address = "";
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Coop title cannot be empty! ", error);
+		assertEquals("Coop title cannot be empty! Address cannot be empty!", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 	}
@@ -219,15 +221,16 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 67;
+		String address = "    ";
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		// check error
-		assertEquals("Coop title cannot be empty! ", error);
+		assertEquals("Coop title cannot be empty! Address cannot be empty!", error);
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 
@@ -262,10 +265,11 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 47;
-
+		String address = "address";
 		String error = null;
+		
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

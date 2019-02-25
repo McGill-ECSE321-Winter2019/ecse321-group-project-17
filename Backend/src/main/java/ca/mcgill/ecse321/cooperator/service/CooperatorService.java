@@ -161,7 +161,7 @@ public class CooperatorService {
 	}
 
 	@Transactional 
-	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
+	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		String error = "";
 
 		if(student == null) {
@@ -170,14 +170,13 @@ public class CooperatorService {
 		if(employer == null) {
 			error = error + "Employer is null!";
 		}
-		if(id < 0) {
-			error = error + "ID is invalid!";
-		}
 		if(error.length()!= 0) {
 			throw new IllegalArgumentException(error);
 		}
-		Coop c = new Coop();
 		error = "";
+		if(id < 0) {
+			error = error + "ID is invalid! ";
+		}
 		if(title == null || title.trim().length() == 0) {
 			error = error + "Coop title cannot be empty! ";
 		}
@@ -194,8 +193,11 @@ public class CooperatorService {
 			error = error + "Coop salaryPerHour cannot be empty! ";
 		}
 		if(hoursPerWeek == null) {
-			error = error + "Coop hoursPerWeek cannot be empty!";
+			error = error + "Coop hoursPerWeek cannot be empty !";
 		}
+		if(address == null || address.trim().length() == 0) {
+			error =  error + "Address cannot be empty!";
+			}
 		if(error.length()!= 0) {
 			throw new IllegalArgumentException(error);
 		}
@@ -203,6 +205,7 @@ public class CooperatorService {
 		if(startDate.after(endDate)) {
 			throw new IllegalArgumentException("Coop end time cannot be before Coop start time!");
 		}
+		Coop c = new Coop();
 		c.setId(id);
 		c.setEmployer(employer);
 		c.setStudent(student);
@@ -305,12 +308,12 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Notification createNotification(Integer id, String text, Student s, Employer e) {
+	public Notification createNotification(Integer id, String text, Profile p1, Profile p2) {
 		String error = "";
-		if(s == null) {
+		if(p1 == null) {
 			error = error + "Profile1 is null! ";
 		}
-		if(e == null) {
+		if(p2 == null) {
 			error = error + "Profile2 is null! ";
 		}
 		if(id == null || id < 0) {
@@ -326,8 +329,8 @@ public class CooperatorService {
 		Notification n = new Notification();
 		n.setId(id);
 		n.setText(text);
-		n.setProfile(s);
-		n.setProfile1(e);
+		n.setProfile(p1);
+		n.setProfile1(p2);
 		notificationRepository.save(n);
 		return n;
 	}

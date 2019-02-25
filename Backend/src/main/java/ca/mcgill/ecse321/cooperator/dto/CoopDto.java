@@ -26,14 +26,14 @@ public class CoopDto {
 	}
 	
 	public CoopDto(Integer id) {
-		this(id, "title "+id, null, null, null, null, null, 0, 0, 0, "");
+		this(id, "title "+id, null, null, null, null, 0, 0, 0, "");
 	}
 	
-	public CoopDto(Integer id, String title, Student student, Employer employer, List<Report> report, Date startDate, Date endDate, 
+	public CoopDto(Integer id, String title, Student student, Employer employer, Date startDate, Date endDate, 
 			Integer status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		this.student = student;
 		this.employer = employer;
-		this.report = report;
+		this.report = null;
 		this.id = id;
 		this.title = title;
 		this.startDate = startDate;
