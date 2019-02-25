@@ -7,30 +7,30 @@ import javax.persistence.Id;
 
 @Entity
 public class Notification{
-   private Profile sender;
+   private Profile profile;
    
    @ManyToOne(optional=false)
-   public Profile getSender() {
-      return this.sender;
+   public Profile getProfile() {
+      return this.profile;
    }
    
-   public void setSender(Profile profile) {
-      this.sender = profile;
+   public void setProfile(Profile profile) {
+      this.profile = profile;
    }
    
-   private Profile receiver;
+   private Profile profile1;
    
    @ManyToOne(optional=false)
-   public Profile receiver() {
-      return this.receiver;
+   public Profile profile1() {
+      return this.profile1;
    }
    
-   public void setReceiver(Profile profile2) {
-      this.receiver = profile2;
+   public void setProfile1(Profile profile1) {
+      this.profile1 = profile1;
    }
    
-   public Profile getReceiver() {
-	     return this.receiver;
+   public Profile getProfile1() {
+	     return this.profile1;
 	   }
    
    private Integer id;

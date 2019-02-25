@@ -12,6 +12,8 @@ public interface CoopRepository extends CrudRepository<Coop, Integer>{
 	
 	Coop findCoopByTitle(String title);
 	
+	Coop findCoopByid(Integer id);
+	
 	Coop findCoopByEmployer(Employer employer);
 
 }

@@ -86,7 +86,9 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 45;
-		String address = "This is an address";
+
+		String address = "address";
+
 		
 		try {
 			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
@@ -132,8 +134,8 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 34;
-		String address = "this is an address";
 		String error = null;
+		String address = "address";
 		
 		try {
 			cs.createCoop(null, null, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
@@ -173,10 +175,11 @@ public class TestCooperatorServiceCoop {
 		Date startDate = null;
 		Date endDate = null;
 		Integer status = 0;
-		Integer salaryPerHour = -1;
-		Integer hoursPerWeek = -1;
-		String address = "This is an address";
-		Integer id = -23;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
+		Integer id = 23;
+		String address = "";
+
 
 		String error = null;
 		try {
@@ -186,8 +189,9 @@ public class TestCooperatorServiceCoop {
 		}
 
 		// check error
-		assertEquals("Coop title cannot be empty! ID is invalid! Coop start date cannot be empty! Coop end date cannot be empty! "
-				   + "Coop status cannot be empty! Salary per hour is invalid! Hours per week is invalid! Address cannot be empty!", error);
+
+		assertEquals("Coop title cannot be empty! Address cannot be empty!", error);
+
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
 	}
@@ -221,7 +225,7 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 67;
-		String address = "   ";
+		String address = "    ";
 
 		String error = null;
 		try {
@@ -265,9 +269,9 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 47;
-		String address = "this is an address";
-
+		String address = "address";
 		String error = null;
+		
 		try {
 			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
