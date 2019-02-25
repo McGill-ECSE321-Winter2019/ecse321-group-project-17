@@ -13,6 +13,8 @@ public interface StudentRepository extends CrudRepository<Student, Integer>{
 	
 	Student findStudentByName(String name);
 	
+	Student findStudentByEmail(String email);
+	
 	List<Student> findByCoop(Coop coop);
 
 }

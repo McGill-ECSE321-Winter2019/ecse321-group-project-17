@@ -220,8 +220,8 @@ public class CooperatorService {
 	}
 	
 	@Transactional 
-	public Coop getCoop(Employer employer) {
-		Coop c = coopRepository.findCoopByEmployer(employer);
+	public Coop getCoop(Integer id) {
+		Coop c = coopRepository.findCoopByid(id);
 		return c;
 	}
 	
@@ -249,12 +249,21 @@ public class CooperatorService {
 	}
 	
 	@Transactional 
-	public Student getStudent(String name) {
-		if(name == null || name.trim().length() == 0) {
+	public Student getStudent(String email) {
+		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Person name cannot be empty!");
 		}
-		Student s = studentRepository.findStudentByName(name);
+		Student s = studentRepository.findStudentByEmail(email);
 		return s;
+	}
+	
+	@Transactional 
+	public Administrator getAdmin(String email) {
+		if(email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Person name cannot be empty!");
+		}
+		Administrator a = administratorRepository.findAdministratorByEmail(email);
+		return a;
 	}
 	
 	@Transactional
@@ -274,12 +283,12 @@ public class CooperatorService {
 	}
 	*/
 	@Transactional 
-	public Employer getEmployer(String name) {
-		if(name == null || name.trim().length() == 0) {
+	public Employer getEmployer(String email) {
+		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Person name cannot be empty!");
 		}
 		
-		Employer e = employerRepository.findEmployerByName(name);
+		Employer e = employerRepository.findEmployerByEmail(email);
 		return e;
 	}
 	
