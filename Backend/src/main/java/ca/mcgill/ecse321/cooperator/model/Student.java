@@ -27,7 +27,7 @@ public void setId(Integer value) {
 }
    private Integer coopsCompleted;
 
-public void setCoopsCompleted(Integer value) {
+pupublic void setCoopsCompleted(Integer value) {
       this.coopsCompleted = value;
 }
    public Integer getCoopsCompleted() {
