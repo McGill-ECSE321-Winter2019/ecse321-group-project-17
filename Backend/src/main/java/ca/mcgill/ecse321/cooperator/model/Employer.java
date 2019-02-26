@@ -25,4 +25,15 @@ public void setId(Integer value) {
 public Integer getId() {
     return this.id;
 }
-}
+   private Set<Notification> received;
+   
+   @OneToMany(mappedBy="employer" )
+   public Set<Notification> getReceived() {
+      return this.received;
+   }
+   
+   public void setReceived(Set<Notification> receiveds) {
+      this.received = receiveds;
+   }
+   
+   }

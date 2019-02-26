@@ -41,4 +41,15 @@ public void setProblematic(Boolean value) {
 public Boolean getProblematic() {
     return this.problematic;
 }
-}
+   private Set<Notification> received;
+   
+   @OneToMany(mappedBy="student" )
+   public Set<Notification> getReceived() {
+      return this.received;
+   }
+   
+   public void setReceived(Set<Notification> receiveds) {
+      this.received = receiveds;
+   }
+   
+   }

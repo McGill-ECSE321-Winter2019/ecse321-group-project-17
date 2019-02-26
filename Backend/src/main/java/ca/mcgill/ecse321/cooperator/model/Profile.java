@@ -3,34 +3,10 @@ package ca.mcgill.ecse321.cooperator.model;
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
-import java.util.Set;
-import javax.persistence.OneToMany;
 import javax.persistence.Id;
 
 @Entity
 public abstract class Profile{
-   private Set<Notification> received;
-   
-   @OneToMany(mappedBy="profile" )
-   public Set<Notification> getReceived() {
-      return this.received;
-   }
-   
-   public void setReceived(Set<Notification> receiveds) {
-      this.received = receiveds;
-   }
-   
-   private Set<Notification> sent;
-   
-   @OneToMany(mappedBy="profile1" )
-   public Set<Notification> getSent() {
-      return this.sent;
-   }
-   
-   public void setSent(Set<Notification> sents) {
-      this.sent = sents;
-   }
-   
    private String email;
 
 public void setEmail(String value) {

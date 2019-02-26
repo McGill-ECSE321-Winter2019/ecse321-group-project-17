@@ -4,8 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.util.List;
-import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import java.sql.Date;
 
@@ -31,17 +29,6 @@ public class Coop{
    
    public void setEmployer(Employer employer) {
       this.employer = employer;
-   }
-   
-   private List<Report> report;
-   
-   @OneToMany(mappedBy="coop" )
-   public List<Report> getReport() {
-      return this.report;
-   }
-   
-   public void setReport(List<Report> report) {
-      this.report = report;
    }
    
    private Integer id;
