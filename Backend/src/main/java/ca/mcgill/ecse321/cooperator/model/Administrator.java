@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Administrator extends Profile{
-   private Integer id;ty
+   private Integer id;
 public void setId(Integer value) {
       this.id = value;
 }

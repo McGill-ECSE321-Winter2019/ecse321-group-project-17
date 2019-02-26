@@ -319,13 +319,13 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Notification createNotification(Integer id, String text, Profile p1, Profile p2) {
+	public Notification createNotification(Integer id, String text, Administrator a, Student s, Employer e) {
 		String error = "";
-		if(p1 == null) {
-			error = error + "Profile1 is null! ";
+		if(a == null) {
+			error = error + "Administrator is null! ";
 		}
-		if(p2 == null) {
-			error = error + "Profile2 is null! ";
+		if(s == null && e == null) {
+			error = error + "Notification needs at least one recipient! ";
 		}
 		if(id == null || id < 0) {
 			error = error + "ID is invalid! ";
@@ -337,12 +337,12 @@ public class CooperatorService {
 			throw new IllegalArgumentException(error);
 		}
 		
-		
 		Notification n = new Notification();
 		n.setId(id);
 		n.setText(text);
-		n.setProfile(p1);
-		n.setProfile1(p2);
+		n.setSender(a);
+		n.setEmployer(e);
+		n.setStudent(s);
 		notificationRepository.save(n);
 		return n;
 	}
@@ -357,7 +357,7 @@ public class CooperatorService {
 			n = e.getReceived();
 		}
 		return n;
-	}
+	} 
 	
 	@Transactional  
 	public Set<Notification> getNotificationsStu(Student s) {
