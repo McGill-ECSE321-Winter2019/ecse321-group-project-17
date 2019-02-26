@@ -76,7 +76,6 @@ public class TestCooperatorServiceCoop {
 		String phoneE = "254334";
 		int idE = 31231234;
 		Employer emp;
-		String error = "";
 		
 		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
 		
@@ -87,7 +86,7 @@ public class TestCooperatorServiceCoop {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 45;
-
+		String error = "";
 		String address = "address";
 
 		

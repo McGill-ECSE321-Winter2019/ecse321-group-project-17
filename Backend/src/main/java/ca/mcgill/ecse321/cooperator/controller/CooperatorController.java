@@ -7,12 +7,10 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
@@ -20,7 +18,6 @@ import ca.mcgill.ecse321.cooperator.dto.CoopDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
 import ca.mcgill.ecse321.cooperator.dto.ReportDto;
 import ca.mcgill.ecse321.cooperator.dto.NotificationDto;
-import ca.mcgill.ecse321.cooperator.dto.ProfileDto;
 import ca.mcgill.ecse321.cooperator.dto.StudentDto;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
@@ -30,7 +27,6 @@ import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportType;
 import ca.mcgill.ecse321.cooperator.model.Notification;
-import ca.mcgill.ecse321.cooperator.model.Profile;
 import ca.mcgill.ecse321.cooperator.model.Student;
 import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 

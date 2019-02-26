@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import net.bytebuddy.utility.RandomString;
@@ -14,7 +12,6 @@ public class AdminDto {
 		private String phone;
 		private Integer id;
 		private Set<NotificationDto> sent;
-		private Set<NotificationDto> received;
 	
 		public AdminDto() {
 		}
@@ -30,7 +27,6 @@ public class AdminDto {
 			this.id = id;
 			this.password = password;
 			this.sent = null;
-			this.received = null;
 			this.phone = phone;
 		}
 		

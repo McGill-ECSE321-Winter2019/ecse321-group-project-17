@@ -33,6 +33,10 @@ public class NotificationDto {
 			return sender;
 		}
 		
+		public StudentDto getStudent() {
+			return student;
+		}
+		
 		public void setSender(AdminDto sender) {
 			this.sender = sender;
 		}

@@ -228,12 +228,6 @@ public class CooperatorService {
 		return c;
 	}
 	
-	@Transactional 
-	public Coop getCoop(Integer id) {
-		Optional<Coop> c = coopRepository.findById(id);
-		return c.get();
-	}
-	
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());

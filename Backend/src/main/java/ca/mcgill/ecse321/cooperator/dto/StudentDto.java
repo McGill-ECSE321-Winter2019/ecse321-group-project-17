@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.Set;
 
 import net.bytebuddy.utility.RandomString;

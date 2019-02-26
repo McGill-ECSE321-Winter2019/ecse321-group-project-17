@@ -7,7 +7,6 @@ import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.Student;
-import net.bytebuddy.utility.RandomString;
 
 public class CoopDto {
 
