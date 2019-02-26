@@ -21,17 +21,13 @@ public class Notification{
    private Profile profile1;
    
    @ManyToOne(optional=false)
-   public Profile profile1() {
+   public Profile getProfile1() {
       return this.profile1;
    }
    
    public void setProfile1(Profile profile1) {
       this.profile1 = profile1;
    }
-   
-   public Profile getProfile1() {
-	     return this.profile1;
-	   }
    
    private Integer id;
 

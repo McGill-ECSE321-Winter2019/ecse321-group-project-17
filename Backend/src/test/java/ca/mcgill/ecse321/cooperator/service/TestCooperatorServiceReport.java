@@ -105,11 +105,7 @@ public class TestCooperatorServiceReport {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer idC = 45;
-<<<<<<< HEAD
-		String address = "This is an address";
-=======
 		String address = "address";
->>>>>>> 3345420811a6306772d9baf4e3d8cc8a0ba801a2
 		Coop c;
 
 		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
@@ -160,11 +156,7 @@ public class TestCooperatorServiceReport {
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer idC = 45;
-<<<<<<< HEAD
-		String address = "This is an address";
-=======
 		String address = "address";
->>>>>>> 3345420811a6306772d9baf4e3d8cc8a0ba801a2
 		Coop c;
 
 		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);

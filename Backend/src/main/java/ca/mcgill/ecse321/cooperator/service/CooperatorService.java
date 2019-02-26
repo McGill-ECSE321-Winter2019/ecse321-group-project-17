@@ -180,9 +180,6 @@ public class CooperatorService {
 		if(title == null || title.trim().length() == 0) {
 			error = error + "Coop title cannot be empty! ";
 		}
-		if(id < 0) {
-			error = error + "ID is invalid! ";
-		}
 		if(startDate == null) {
 			error = error + "Coop start date cannot be empty! ";
 		}
@@ -190,7 +187,7 @@ public class CooperatorService {
 			error = error + "Coop end date cannot be empty! ";
 		}
 		if(status == null) {
-			error = error + "Coop status cannot be empty! ";
+			error = error + "Coop status invalid! ";
 		}
 		if(salaryPerHour <= 0 || salaryPerHour == null) {
 			error = error + "Salary per hour is invalid! ";
@@ -202,12 +199,7 @@ public class CooperatorService {
 		if(address == null || address.trim().length() ==  0) {
 			error = error + "Address cannot be empty!";
 		}
-		if(hoursPerWeek == null) {
-			error = error + "Coop hoursPerWeek cannot be empty !";
-		}
-		if(address == null || address.trim().length() == 0) {
-			error =  error + "Address cannot be empty!";
-		}
+
 		if(error.length()!= 0) {
 			throw new IllegalArgumentException(error);
 		}
