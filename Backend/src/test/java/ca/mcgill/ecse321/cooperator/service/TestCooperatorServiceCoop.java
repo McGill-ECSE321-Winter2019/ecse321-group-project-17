@@ -174,10 +174,10 @@ public class TestCooperatorServiceCoop {
 		String title = "";
 		Date startDate = null;
 		Date endDate = null;
-		Integer status = 0;
-		Integer salaryPerHour = 19;
-		Integer hoursPerWeek = 40;
-		Integer id = 23;
+		Integer status = null;
+		Integer salaryPerHour = -19;
+		Integer hoursPerWeek = -40;
+		Integer id = -23;
 		String address = "";
 
 
@@ -189,8 +189,7 @@ public class TestCooperatorServiceCoop {
 		}
 
 		// check error
-
-		assertEquals("Coop title cannot be empty! Address cannot be empty!", error);
+		assertEquals("ID is invalid! Coop title cannot be empty! Coop start date cannot be empty! Coop end date cannot be empty! Coop status invalid! Salary per hour is invalid! Hours per week is invalid! Address cannot be empty!", error);
 
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
