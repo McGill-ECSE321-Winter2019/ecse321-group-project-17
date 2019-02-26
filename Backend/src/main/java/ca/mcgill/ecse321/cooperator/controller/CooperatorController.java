@@ -228,8 +228,7 @@ public class CooperatorController {
 	 * CONVERSION METHODS
 	 * 
 	 */
-	
- 	
+  
 	private AdminDto convertToDto(Administrator a) {
 		if (a == null) {
 			throw new IllegalArgumentException("There is no such Admin!");

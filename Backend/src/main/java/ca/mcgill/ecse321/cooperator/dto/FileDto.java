@@ -34,5 +34,4 @@ public class FileDto {
 		this.coop = coop;
 	}
 	
-	
 }
