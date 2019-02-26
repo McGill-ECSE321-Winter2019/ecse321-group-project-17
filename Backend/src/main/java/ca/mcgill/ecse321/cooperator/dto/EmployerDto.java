@@ -6,7 +6,7 @@ import java.util.Set;
 
 import net.bytebuddy.utility.RandomString;
 
-public class EmployerDto {
+public class EmployerDto extends ProfileDto{
 
 		private String email; // primary key
 		private String password; // not empty, not null

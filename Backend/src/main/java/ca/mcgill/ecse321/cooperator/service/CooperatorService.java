@@ -337,6 +337,7 @@ public class CooperatorService {
 			throw new IllegalArgumentException(error);
 		}
 		
+		
 		Notification n = new Notification();
 		n.setId(id);
 		n.setText(text);
@@ -347,14 +348,39 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Set<Notification> getNotifications(Profile profile) {
-		if(profile == null) {
+	public Set<Notification> getNotificationsEmp(Employer e) {
+		Set<Notification> n = null;
+		if(e == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			Set<Notification> n = notificationRepository.findByProfile(profile);
-			return n;
+			n = e.getReceived();
 		}
+		return n;
+	}
+	
+	@Transactional  
+	public Set<Notification> getNotificationsStu(Student s) {
+		Set<Notification> n = null;
+		if(s == null) {
+			throw new IllegalArgumentException("Profile cannot be null!");
+		}
+		else {
+			n = s.getReceived();
+		}
+		return n;
+	}
+	
+	@Transactional  
+	public Set<Notification> getNotificationsAdm(Administrator a) {
+		Set<Notification> n = null;
+		if(a == null) {
+			throw new IllegalArgumentException("Profile cannot be null!");
+		}
+		else {
+			n = a.getSent();
+		}
+		return n;
 	}
 	
 	@Transactional

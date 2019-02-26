@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.cooperator.service;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,6 +22,7 @@ import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.Employer;
+import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportType;
 import ca.mcgill.ecse321.cooperator.model.Student;
@@ -176,6 +178,9 @@ public class TestCooperatorServiceReport {
 
 		assertEquals(1, cs.getAllReports().size());
 		assertEquals(id, cs.getAllReports().get(0).getId());
+		Optional<Report> r = cs.getReport(id);
+		assertEquals(c.getAddress(),r.get().getCoop().getAddress());
+		
 	}
 
 }

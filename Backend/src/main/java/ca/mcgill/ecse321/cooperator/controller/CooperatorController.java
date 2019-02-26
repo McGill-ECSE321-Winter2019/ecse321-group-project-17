@@ -51,7 +51,7 @@ public class CooperatorController {
 	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer studentId) {
 		Student student = service.createStudent(email, name, password, phone, studentId);
-		return convertToDto(student);
+		return convertToDtoS(student);
 	}
 	
 	@PostMapping(value = { "/employer/{email}/{password}/{name}/{phone}/{emplId}",  
@@ -59,7 +59,7 @@ public class CooperatorController {
 	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer emplId) {
 		Employer empl = service.createEmployer(email, name, password, phone, emplId);
-		return convertToDto(empl);
+		return convertToDtoE(empl);
 	}
 	
 	@PostMapping(value = { "/admin/{email}/{password}/{name}/{phone}/{adminId}",  
@@ -67,7 +67,7 @@ public class CooperatorController {
 	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer adminId) {
 		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
-		return convertToDto(admin);
+		return convertToDtoA(admin);
 	}
 	
 	@PostMapping(value = { "/coop/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}",  
@@ -84,7 +84,7 @@ public class CooperatorController {
 		Coop coop = service.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		return convertToDto(coop);
 	} 
-	
+	/*
 	@PostMapping(value = { "/notification/{id}/{text}/{sender}/{receiver}", 
 						   "/notification/{id}/{text}/{sender}/{receiver}/" })
 	public NotificationDto createNotif(@PathVariable("id") Integer id, @PathVariable String text, 
@@ -94,7 +94,7 @@ public class CooperatorController {
 		Notification notif = service.createNotification(id, text, p1, p2);
 		return convertToDto(notif);
 	}
-	
+	*/
 	@PostMapping(value = { "/notification/{id}/{coopID}/{date}/{status}/{type}", 
 	   					   "/notification/{id}/{coopID}/{date}/{status}/{type}/" })
 	public ReportDto createReport(@PathVariable("id") Integer id, @PathVariable Integer coopId, 
@@ -115,7 +115,7 @@ public class CooperatorController {
 	public StudentDto getStudent(@PathVariable("email") String email) {
 		if(service.getAllStudents().size()!=0) {
 			Student stu = service.getStudent(email);
-			return convertToDto(stu);
+			return convertToDtoS(stu);
 		}
 		return null;
 	}
@@ -123,13 +123,13 @@ public class CooperatorController {
 	@GetMapping(value = { "/employer/{email}", "/employer/{email}/" })
 	public EmployerDto getEmployer(@PathVariable("email") String email) {
 		Employer empl = service.getEmployer(email);
-		return convertToDto(empl);
+		return convertToDtoE(empl);
 	}
 	
 	@GetMapping(value = { "/admin/{email}", "/admin/{email}/" })
 	public AdminDto getAdmin(@PathVariable("email") String email) {
 		Administrator admin = service.getAdmin(email);
-		return convertToDto(admin);
+		return convertToDtoA(admin);
 	}
 	
 	@GetMapping(value = { "/coop/{id}", "/coop/{id}/" })
@@ -142,7 +142,7 @@ public class CooperatorController {
 	public List<StudentDto> getAllStudents() {
 		List<StudentDto> studentDtos = new ArrayList<>();
 		for (Student student : service.getAllStudents()) {
-			studentDtos.add(convertToDto(student));
+			studentDtos.add(convertToDtoS(student));
 		}
 		return studentDtos;
 	}
@@ -151,7 +151,7 @@ public class CooperatorController {
 	public List<AdminDto> getAllAdmins() {
 		List<AdminDto> adminDtos = new ArrayList<>();
 		for (Administrator admin : service.getAllAdministrators()) {
-			adminDtos.add(convertToDto(admin));
+			adminDtos.add(convertToDtoA(admin));
 		}
 		return adminDtos;
 	}
@@ -160,12 +160,11 @@ public class CooperatorController {
 	public List<EmployerDto> getAllEmployers() {
 		List<EmployerDto> employerDtos = new ArrayList<>();
 		for (Employer empl : service.getAllEmployers()) {
-			employerDtos.add(convertToDto(empl));
+			employerDtos.add(convertToDtoE(empl));
 		}
 		return employerDtos;
 	}
-	
-
+/* THIS DOESNT WORK and probs wont ever work the way it should 
 	@GetMapping(value = { "/profiles", "/profiles/" })
 	public List<ProfileDto> getAllProfiles() {
 		List<ProfileDto> profDtos = new ArrayList<>();
@@ -180,10 +179,11 @@ public class CooperatorController {
 			profiles.add(admin);
 		}
 		for(Profile p : profiles) {
-			profDtos.add(convertToDto((Profile)p));
+			profDtos.add(convertToDto(p));
 		}
 		return profDtos;
 	}
+	*/
 	
 	@GetMapping(value = { "/coops", "/coops/" })
 	public List<CoopDto> getAllEvents() {
@@ -222,7 +222,7 @@ public class CooperatorController {
 	 */
 	
  	
-	private AdminDto convertToDto(Administrator a) {
+	private AdminDto convertToDtoA(Administrator a) {
 		if (a == null) {
 			throw new IllegalArgumentException("There is no such Admin!");
 		}
@@ -260,7 +260,7 @@ public class CooperatorController {
 		return null;
 	}
 	
-	private EmployerDto convertToDto(Employer e) {
+	private EmployerDto convertToDtoE(Employer e) {
 		if (e == null) {
 			throw new IllegalArgumentException("There is no such Employer!");
 		}
@@ -297,9 +297,15 @@ public class CooperatorController {
 		return rDto;
 	}
 	
-	private NotificationDto convertToDto(Notification n) {
+	/*private NotificationDto convertToDto(Notification n) {
 		if (n == null) {
 			throw new IllegalArgumentException("There is no such Notification!");
+		}
+		Student stu;
+		Employer emp;
+		if(n.getProfile1().getClass() == stu.getClass()) {
+			NotificationDto notificationDto = new NotificationDto(n.getId(), n.getText(), convertToDtoA(n.getProfile()), 
+					convertToDtoS(n.getProfile1()));
 		}
 		NotificationDto notificationDto = new NotificationDto(n.getId(), n.getText(), convertToDto(n.getProfile()), 
 				convertToDto(n.getProfile1()));
@@ -310,11 +316,13 @@ public class CooperatorController {
 		if (p == null) {
 			throw new IllegalArgumentException("There is no such Profile!");
 		}
-		ProfileDto profileDto = new ProfileDto(p.getEmail(), p.getPassword(), p.getName(), p.getPhone(), 
-				createNotificationDtosForProfile(p), createNotificationDtosForProfile(p));
-		return profileDto;
+		else {
+			
+		}
+		
+		return (Profile);
 	}
-	
+	 */
 	private Profile convertToDomainObject(ProfileDto pDto) {
 		List<Profile> all = service.getAllProfiles();
 		for (Profile p : all) {
@@ -325,7 +333,7 @@ public class CooperatorController {
 		return null;
 	}
 	
-	private StudentDto convertToDto(Student s) {
+	private StudentDto convertToDtoS(Student s) {
 		if (s == null) {
 			throw new IllegalArgumentException("There is no such Student!");
 		}
@@ -343,16 +351,34 @@ public class CooperatorController {
 		return null;
 	}
 	
-	
-	private Set<NotificationDto> createNotificationDtosForProfile(Profile p) {
-		Set<Notification> notificationsForProfile = service.getNotifications(p);
+	/*
+	private Set<NotificationDto> createNotificationDtosForEmp(Employer e) {
+		Set<Notification> notificationsForEmp = service.getNotificationsEmp(e);
 		Set<NotificationDto> notifications = new HashSet<>();
-		for (Notification notification : notificationsForProfile) {
+		for (Notification notification : notificationsForEmp) {
 			notifications.add(convertToDto(notification));
 		}
 		return notifications;
 	}
 	
+	private Set<NotificationDto> createNotificationDtosForAdm(Administrator a) {
+		Set<Notification> notificationsForAdm = service.getNotificationsAdm(a);
+		Set<NotificationDto> notifications = new HashSet<>();
+		for (Notification notification : notificationsForAdm) {
+			notifications.add(convertToDto(notification));
+		}
+		return notifications;
+	}
+	
+	private Set<NotificationDto> createNotificationDtosForStu(Student s) {
+		Set<Notification> notificationsForStu = service.getNotificationsStu(s);
+		Set<NotificationDto> notifications = new HashSet<>();
+		for (Notification notification : notificationsForStu) {
+			notifications.add(convertToDto(notification));
+		}
+		return notifications;
+	}
+	*/
 	private Set<CoopDto> createCoopDtosForEmployer(Employer e){
 		Set<Coop> coopsForEmployer = e.getCoop();
 		Set<CoopDto> coops = new HashSet<>();
