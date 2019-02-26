@@ -41,34 +41,32 @@ public class CooperatorController {
 	 * POST METHODS
 	 * 
 	 */
-	 
-
-	@PostMapping(value = { "/student/{email}/{password}/{name}/{phone}/{studentId}", 
-						   "/student/{email}/{password}/{name}/{phone}/{studentId}/" })
+	@PostMapping(value = { "/student/create/{email}/{password}/{name}/{phone}/{studentId}", 
+						   "/student/create/{email}/{password}/{name}/{phone}/{studentId}/" })
 	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer studentId) {
 		Student student = service.createStudent(email, name, password, phone, studentId);
 		return convertToDto(student);
 	}
 	
-	@PostMapping(value = { "/employer/{email}/{password}/{name}/{phone}/{emplId}",  
-			        	   "/employer/{email}/{password}/{name}/{phone}/{emplId}/" })
+	@PostMapping(value = { "/employer/create/{email}/{password}/{name}/{phone}/{emplId}",  
+			        	   "/employer/create/{email}/{password}/{name}/{phone}/{emplId}/" })
 	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer emplId) {
 		Employer empl = service.createEmployer(email, name, password, phone, emplId);
 		return convertToDto(empl);
 	}
 	
-	@PostMapping(value = { "/admin/{email}/{password}/{name}/{phone}/{adminId}",  
-			  			   "/admin/{email}/{password}/{name}/{phone}/{adminId}/" })
+	@PostMapping(value = { "/admin/create/{email}/{password}/{name}/{phone}/{adminId}",  
+			  			   "/admin/create/{email}/{password}/{name}/{phone}/{adminId}/" })
 	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer adminId) {
 		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
 		return convertToDto(admin);
 	}
 	
-	@PostMapping(value = { "/coop/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}",  
-						   "/coop/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}/" })
+	@PostMapping(value = { "/coop/create/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}",  
+						   "/coop/create/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}/" })
 	public CoopDto createCoop(@PathVariable("id") Integer id, @PathVariable String title, @PathVariable String stuEmail, 
 								@PathVariable String empEmail, @PathVariable String start, @PathVariable String end, 
 								@PathVariable CoopStatus status,@PathVariable Integer salaryPerHour, @PathVariable Integer hoursPerWeek, 
@@ -82,8 +80,8 @@ public class CooperatorController {
 		return convertToDto(coop);
 	} 
 	
-	@PostMapping(value = { "/notification/{id}/{text}/{sender}/{student}/{employer}", 
-						   "/notification/{id}/{text}/{sender}/{receiver}/{employer}" })
+	@PostMapping(value = { "/notification/create/{id}/{text}/{sender}/{student}/{employer}", 
+						   "/notification/create/{id}/{text}/{sender}/{receiver}/{employer}" })
 	public NotificationDto createNotif(@PathVariable("id") Integer id, @PathVariable String text, 
 			@PathVariable String sender, @PathVariable String student, @PathVariable String employer) {
 		Administrator a = service.getAdmin(sender);
@@ -99,8 +97,8 @@ public class CooperatorController {
 		return convertToDto(notif);
 	}
 	
-	@PostMapping(value = { "/notification/{id}/{coopID}/{date}/{status}/{type}", 
-	   					   "/notification/{id}/{coopID}/{date}/{status}/{type}/" })
+	@PostMapping(value = { "/report/create/{id}/{coopID}/{date}/{status}/{type}", 
+	   					   "/report/create/{id}/{coopID}/{date}/{status}/{type}/" })
 	public ReportDto createReport(@PathVariable("id") Integer id, @PathVariable Integer coopId, 
 								  @PathVariable Date date, @PathVariable ReportStatus status, 
 								  @PathVariable ReportType type) {
@@ -113,8 +111,6 @@ public class CooperatorController {
 	 * GET METHODS
 	 * 
 	 */
-	
-	
 	@GetMapping(value = { "/student/{email}", "/student/{email}/" })
 	public StudentDto getStudent(@PathVariable("email") String email) {
 		if(service.getAllStudents().size()!=0) {
@@ -190,7 +186,7 @@ public class CooperatorController {
 	*/
 	
 	@GetMapping(value = { "/coops", "/coops/" })
-	public List<CoopDto> getAllEvents() {
+	public List<CoopDto> getAllCoops() {
 		List<CoopDto> coopDtos = new ArrayList<>();
 		for (Coop coop : service.getAllCoops()) {
 			coopDtos.add(convertToDto(coop));
@@ -202,7 +198,7 @@ public class CooperatorController {
 	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
 		Student s = convertToDomainObject(sDto);
 		List<ReportDto> reportDtos;
-		Set<Report> reports = null;
+		Set<Report> reports = new HashSet<>();
 		for(Coop c : service.getCoopforStudent(s)) {
 			reports.addAll(c.getReport());
 		}
@@ -224,7 +220,6 @@ public class CooperatorController {
 	 * CONVERSION METHODS
 	 * 
 	 */
-  
 	private AdminDto convertToDto(Administrator a) {
 		if (a == null) {
 			throw new IllegalArgumentException("There is no such Admin!");
