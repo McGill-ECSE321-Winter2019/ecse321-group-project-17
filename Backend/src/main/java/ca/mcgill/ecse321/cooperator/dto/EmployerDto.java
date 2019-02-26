@@ -6,7 +6,7 @@ import java.util.Set;
 
 import net.bytebuddy.utility.RandomString;
 
-public class EmployerDto {
+public class EmployerDto extends ProfileDto{
 
 		private String email; // primary key
 		private String password; // not empty, not null
@@ -21,17 +21,16 @@ public class EmployerDto {
 		
 		@SuppressWarnings("unchecked")
 		public EmployerDto(String email) {
-			this(email, RandomString.make(10), "", 0, "", Collections.EMPTY_SET, Collections.EMPTY_SET);
+			this(email, RandomString.make(10), "", 0, "");
 		}
 		
-		public EmployerDto(String email, String password, String name, Integer id, String phone, Set<CoopDto> list, 
-				Set<NotificationDto> received) {
+		public EmployerDto(String email, String password, String name, Integer id, String phone) {
 			this.name = name;
 			this.email = email;
 			this.id = id;
 			this.password = password;
-			this.coops = list;
-			this.received = received;
+			this.coops = null;
+			this.received = null;
 			this.phone = phone;
 		}
 		

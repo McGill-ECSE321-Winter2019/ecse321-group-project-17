@@ -1,10 +1,11 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
 import java.sql.Date;
-import java.util.Set;
+import java.util.List;
 
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
-import ca.mcgill.ecse321.cooperator.model.File;
+import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.Student;
 import net.bytebuddy.utility.RandomString;
 
@@ -14,10 +15,10 @@ public class CoopDto {
 	private String title; // not null, not empty
 	private Student student;
 	private Employer employer;
-	private Set<File> file;
+	private List<Report> report;
 	private Date startDate;
 	private Date endDate;
-	private Integer status;
+	private CoopStatus status;
 	private Integer salaryPerHour;
 	private Integer hoursPerWeek;
 	private String address;
@@ -26,14 +27,14 @@ public class CoopDto {
 	}
 	
 	public CoopDto(Integer id) {
-		this(id, "title "+id, null, null, null, null, null, 0, 0, 0, "");
+		this(id, "title "+id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "");
 	}
 	
-	public CoopDto(Integer id, String title, Student student, Employer employer, Set<File> file, Date startDate, Date endDate, 
-			Integer status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
+	public CoopDto(Integer id, String title, Student student, Employer employer, Date startDate, Date endDate, 
+			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		this.student = student;
 		this.employer = employer;
-		this.file = file;
+		this.report = null;
 		this.id = id;
 		this.title = title;
 		this.startDate = startDate;
@@ -60,12 +61,12 @@ public class CoopDto {
 		this.employer = employer;
 	}
 
-	public Set<File> getFile() {
-		return file;
+	public List<Report> getFile() {
+		return report;
 	}
 
-	public void setFile(Set<File> file) {
-		this.file = file;
+	public void setReport(List<Report> report) {
+		this.report = report;
 	}
 
 	public Integer getId() {
@@ -100,11 +101,11 @@ public class CoopDto {
 		this.endDate = endDate;
 	}
 
-	public Integer getStatus() {
+	public CoopStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(CoopStatus status) {
 		this.status = status;
 	}
 

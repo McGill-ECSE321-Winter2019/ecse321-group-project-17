@@ -16,9 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.FileRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Student;
 
@@ -36,24 +36,23 @@ public class TestCooperatorServiceStudent {
 	@Autowired
 	private EmployerRepository employerRepository;
 	@Autowired
-	private FileRepository fileRepository;
-	@Autowired
 	private NotificationRepository notificationRepository;
 	@Autowired
 	private ProfileRepository profileRepository;
 	@Autowired
 	private StudentRepository studentRepository;
-	
+	@Autowired
+	private ReportRepository reportRepository;
 	
 	@Before @After
 	public void clearDatabase() {
-		fileRepository.deleteAll();
 		notificationRepository.deleteAll();
 		coopRepository.deleteAll();
 		studentRepository.deleteAll();
 		administratorRepository.deleteAll();
 		employerRepository.deleteAll();
 		profileRepository.deleteAll();
+		reportRepository.deleteAll();
 	}
 	
 	@Test

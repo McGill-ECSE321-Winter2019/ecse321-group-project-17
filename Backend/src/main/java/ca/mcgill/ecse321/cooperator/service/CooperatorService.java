@@ -13,14 +13,17 @@ import org.springframework.transaction.annotation.Transactional;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.FileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
-import ca.mcgill.ecse321.cooperator.model.File;
+import ca.mcgill.ecse321.cooperator.model.Report;
+import ca.mcgill.ecse321.cooperator.model.ReportStatus;
+import ca.mcgill.ecse321.cooperator.model.ReportType;
 import ca.mcgill.ecse321.cooperator.model.Notification;
 import ca.mcgill.ecse321.cooperator.model.Profile;
 import ca.mcgill.ecse321.cooperator.model.Student;
@@ -28,19 +31,19 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 @Service
 public class CooperatorService {
 
-	@Autowired
+	@Autowired (required = true)
 	CoopRepository coopRepository;
-	@Autowired
+	@Autowired (required = true)
 	EmployerRepository employerRepository;
-	@Autowired
-	FileRepository fileRepository;
-	@Autowired
+	@Autowired (required = true)
+	ReportRepository reportRepository;
+	@Autowired (required = true)
 	StudentRepository studentRepository;
-	@Autowired
+	@Autowired (required = true)
 	ProfileRepository profileRepository;
-	@Autowired
+	@Autowired (required = true)
 	NotificationRepository notificationRepository;
-	@Autowired
+	@Autowired (required = true)
 	AdministratorRepository administratorRepository;
 
 	Integer id = 0;
@@ -49,9 +52,8 @@ public class CooperatorService {
 	}
 	
 	@Transactional
-	public Student createStudent(String email, String name, String password, String phone, int id) {
+	public Student createStudent(String email, String name, String password, String phone, Integer id) {
 		Student p = new Student();
-		
 		String error = "";
 		if(name == null || name.trim().length() == 0) {
 			error = "Student name cannot be empty! ";
@@ -75,12 +77,13 @@ public class CooperatorService {
 		p.setName(name);
 		p.setPassword(password);
 		p.setPhone(phone);
+		p.setId(id);
 		studentRepository.save(p);
 		return p;
 	}
 	
 	@Transactional
-	public Employer createEmployer(String email, String name, String password, String phone, int id) {
+	public Employer createEmployer(String email, String name, String password, String phone, Integer id) {
 		Employer e = new Employer();
 		
 		String error = "";
@@ -106,12 +109,13 @@ public class CooperatorService {
 		e.setName(name);
 		e.setPassword(password);
 		e.setPhone(phone);
+		e.setId(id);
 		employerRepository.save(e);
 		return e;
 	}
 	
 	@Transactional
-	public Profile createAdmin(String email, String name, String password, String phone, int id) {
+	public Administrator createAdmin(String email, String name, String password, String phone, Integer id) {
 		Administrator a = new Administrator();
 		
 		String error = "";
@@ -137,6 +141,7 @@ public class CooperatorService {
 		a.setName(name);
 		a.setPassword(password);
 		a.setPhone(phone);
+		a.setId(id);
 		administratorRepository.save(a);
 		return a;
 	}
@@ -157,7 +162,7 @@ public class CooperatorService {
 	}
 
 	@Transactional 
-	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
+	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		String error = "";
 
 		if(student == null) {
@@ -166,14 +171,13 @@ public class CooperatorService {
 		if(employer == null) {
 			error = error + "Employer is null!";
 		}
-		if(id < 0) {
-			error = error + "ID is invalid!";
-		}
 		if(error.length()!= 0) {
 			throw new IllegalArgumentException(error);
 		}
-		Coop c = new Coop();
 		error = "";
+		if(id < 0) {
+			error = error + "ID is invalid! ";
+		}
 		if(title == null || title.trim().length() == 0) {
 			error = error + "Coop title cannot be empty! ";
 		}
@@ -184,14 +188,19 @@ public class CooperatorService {
 			error = error + "Coop end date cannot be empty! ";
 		}
 		if(status == null) {
-			error = error + "Coop status cannot be empty! ";
+			error = error + "Coop status invalid! ";
 		}
-		if(salaryPerHour == null) {
-			error = error + "Coop salaryPerHour cannot be empty! ";
+		if(salaryPerHour <= 0 || salaryPerHour == null) {
+			error = error + "Salary per hour is invalid! ";
 		}
-		if(hoursPerWeek == null) {
-			error = error + "Coop hoursPerWeek cannot be empty!";
+		if(hoursPerWeek <= 0 || hoursPerWeek == null ) {
+			error = error + "Hours per week is invalid! ";
 		}
+
+		if(address == null || address.trim().length() ==  0) {
+			error = error + "Address cannot be empty!";
+		}
+
 		if(error.length()!= 0) {
 			throw new IllegalArgumentException(error);
 		}
@@ -199,6 +208,7 @@ public class CooperatorService {
 		if(startDate.after(endDate)) {
 			throw new IllegalArgumentException("Coop end time cannot be before Coop start time!");
 		}
+		Coop c = new Coop();
 		c.setId(id);
 		c.setEmployer(employer);
 		c.setStudent(student);
@@ -213,8 +223,8 @@ public class CooperatorService {
 	}
 	
 	@Transactional 
-	public Coop getCoop(Employer employer) {
-		Coop c = coopRepository.findCoopByEmployer(employer);
+	public Coop getCoop(Integer id) {
+		Coop c = coopRepository.findCoopByid(id);
 		return c;
 	}
 	
@@ -229,22 +239,39 @@ public class CooperatorService {
 		return toList(coopRepository.findAll());
 	}
 	
+	@Transactional
+	public Set<Coop> getCoopforStudent(Student s){
+		if(s == null) {
+			throw new IllegalArgumentException("Student is null!");
+		}
+		Set<Coop> stuCoops = s.getCoop();
+		return stuCoops;
+	}
+	
 	@Transactional 
 	public Student updateStudent(Integer id, boolean status) {
 		Student s = new Student();
 		s.setId(id);
-		s.setProblematic(status);
 		studentRepository.save(s);
 		return s;
 	}
 	
 	@Transactional 
-	public Student getStudent(String name) {
-		if(name == null || name.trim().length() == 0) {
+	public Student getStudent(String email) {
+		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Person name cannot be empty!");
 		}
-		Student s = studentRepository.findStudentByName(name);
+		Student s = studentRepository.findStudentByEmail(email);
 		return s;
+	}
+	
+	@Transactional 
+	public Administrator getAdmin(String email) {
+		if(email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Person name cannot be empty!");
+		}
+		Administrator a = administratorRepository.findAdministratorByEmail(email);
+		return a;
 	}
 	
 	@Transactional
@@ -264,12 +291,12 @@ public class CooperatorService {
 	}
 	*/
 	@Transactional 
-	public Employer getEmployer(String name) {
-		if(name == null || name.trim().length() == 0) {
+	public Employer getEmployer(String email) {
+		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Person name cannot be empty!");
 		}
 		
-		Employer e = employerRepository.findEmployerByName(name);
+		Employer e = employerRepository.findEmployerByEmail(email);
 		return e;
 	}
 	
@@ -298,13 +325,13 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Notification createNotification(Integer id, String text, Student s, Employer e) {
+	public Notification createNotification(Integer id, String text, Administrator a, Student s, Employer e) {
 		String error = "";
-		if(s == null) {
-			error = error + "Profile1 is null! ";
+		if(a == null) {
+			error = error + "Administrator is null! ";
 		}
-		if(e == null) {
-			error = error + "Profile2 is null! ";
+		if(s == null && e == null) {
+			error = error + "Notification needs at least one recipient! ";
 		}
 		if(id == null || id < 0) {
 			error = error + "ID is invalid! ";
@@ -319,21 +346,47 @@ public class CooperatorService {
 		Notification n = new Notification();
 		n.setId(id);
 		n.setText(text);
-		n.setProfile(s);
-		n.setProfile1(e);
+		n.setSender(a);
+		n.setEmployer(e);
+		n.setStudent(s);
 		notificationRepository.save(n);
 		return n;
 	}
 	
 	@Transactional  
-	public Set<Notification> getNotifications(Profile profile) {
-		if(profile == null) {
+	public Set<Notification> getNotificationsEmp(Employer e) {
+		Set<Notification> n = null;
+		if(e == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			Set<Notification> n = notificationRepository.findByProfile(profile);
-			return n;
+			n = e.getReceived();
 		}
+		return n;
+	} 
+	
+	@Transactional  
+	public Set<Notification> getNotificationsStu(Student s) {
+		Set<Notification> n = null;
+		if(s == null) {
+			throw new IllegalArgumentException("Profile cannot be null!");
+		}
+		else {
+			n = s.getReceived();
+		}
+		return n;
+	}
+	
+	@Transactional  
+	public Set<Notification> getNotificationsAdm(Administrator a) {
+		Set<Notification> n = null;
+		if(a == null) {
+			throw new IllegalArgumentException("Profile cannot be null!");
+		}
+		else {
+			n = a.getSent();
+		}
+		return n;
 	}
 	
 	@Transactional
@@ -342,26 +395,46 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public File createFile(Integer id, Coop c) {
+	public Report createReport(Integer id, Coop c, Date d, ReportStatus s, ReportType t) {
+		String error = "";
 		if(id == null || id < 0) {
-			throw new IllegalArgumentException("ID is invalid!");
+			error = ("ID is invalid! ");
 		}
-		File f = new File();
-		f.setId(id);
-		f.setCoop(c);
-		fileRepository.save(f);
-		return f;
+		if(c == null) {
+			error = error + "Coop is null! ";
+		}
+		if(d == null) {
+			error = error + "Due date is invalid! ";
+		}
+		if(s == null ) {
+			error = error + "Status is invalid! ";
+		}
+		if(t == null) {
+			error = error + "Type is invalid!";
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
+		}
+		
+		Report r = new Report();
+		r.setId(id);
+		r.setCoop(c);
+		r.setDueDate(d);
+		r.setStatus(s);
+		r.setType(t);
+		reportRepository.save(r);
+		return r;
 	}
 	
 	@Transactional  
-	public Optional<File> getFile(Integer id) {
-		Optional<File> f = fileRepository.findById(id);
-		return f;
+	public Optional<Report> getReport(Integer id) {
+		Optional<Report> r = reportRepository.findById(id);
+		return r;
 	}
 	
 	@Transactional
-	public List<File> getAllFiles() {
-		return toList(fileRepository.findAll());
+	public List<Report> getAllReports() {
+		return toList(reportRepository.findAll());
 	}
 	
 	private <T> List<T> toList(Iterable<T> iterable){

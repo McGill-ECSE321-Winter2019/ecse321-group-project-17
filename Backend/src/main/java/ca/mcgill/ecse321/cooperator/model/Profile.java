@@ -11,7 +11,7 @@ import javax.persistence.Id;
 public abstract class Profile{
    private Set<Notification> received;
    
-   @OneToMany(mappedBy="profile" )
+   @OneToMany
    public Set<Notification> getReceived() {
       return this.received;
    }
@@ -22,7 +22,7 @@ public abstract class Profile{
    
    private Set<Notification> sent;
    
-   @OneToMany(mappedBy="profile1" )
+   @OneToMany(mappedBy="sender" )
    public Set<Notification> getSent() {
       return this.sent;
    }
@@ -43,11 +43,13 @@ public String getEmail() {
 private String name;
 
 public void setName(String value) {
-    this.name = value;
+   this.name = value;
 }
+
 public String getName() {
-    return this.name;
+   return this.name;
 }
+
 private String password;
 
 public void setPassword(String value) {
@@ -58,12 +60,14 @@ public void setPassword(String value) {
 public String getPassword() {
     return this.password;
 }
-private String phone;
-
-public void setPhone(String value) {
-    this.phone = value;
-}
-public String getPhone() {
-    return this.phone;
-}
-}
+   private String phone;
+   
+   public void setPhone(String value) {
+      this.phone = value;
+   }
+   
+   public String getPhone() {
+      return this.phone;
+   }
+   
+   }

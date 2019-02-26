@@ -4,8 +4,9 @@ public class NotificationDto {
 
 		private Integer id; // primary key
 		private String text; // not null
-		private ProfileDto sender;
-		private ProfileDto receiver;
+		private AdminDto sender;
+		private StudentDto student;
+		private EmployerDto employer;
 	
 		public NotificationDto() {
 			
@@ -13,34 +14,35 @@ public class NotificationDto {
 		
 		@SuppressWarnings("unchecked")
 		public NotificationDto(Integer id) {
-			this(id, "", null, null);
+			this(id, "", null, null, null);
 		}
 		
-		public NotificationDto(Integer id, String text, ProfileDto sender, ProfileDto receiver) {
+		public NotificationDto(Integer id, String text, AdminDto admin, StudentDto student, EmployerDto employer) {
 			this.id = id;
 			this.text = text;
-			this.sender = receiver;
-			this.receiver = receiver;
+			this.sender = admin;
+			this.student = student;
+			this.employer = employer;
 		}
 		
 		public Integer getID() {
 			return id;
 		}
 		
-		public ProfileDto getSender() {
+		public AdminDto getSender() {
 			return sender;
 		}
 		
-		public void setSender(ProfileDto sender) {
+		public void setSender(AdminDto sender) {
 			this.sender = sender;
 		}
 		
-		public void setReceiver(ProfileDto receiver) {
-			this.receiver = receiver;
+		public void setStudent(StudentDto student) {
+			this.student = student;
 		}
 		
-		public ProfileDto getReceiver() {
-			return receiver;
+		public EmployerDto getEmployer() {
+			return employer;
 		}
 		
 		public String getText() {

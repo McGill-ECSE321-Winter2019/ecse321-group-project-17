@@ -4,12 +4,12 @@ import javax.persistence.Entity;
 
 @Entity
 public class Administrator extends Profile{
-   private Integer id;
-
-public void setId(Integer value) {
-    this.id = value;
+   private Integer id;
+public void setId(Integer value) {
+      this.id = value;
 }
-public Integer getId() {
-    return this.id;
+
+public Integer getId() {
+      return this.id;
 }
 }
