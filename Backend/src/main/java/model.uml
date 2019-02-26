@@ -4,7 +4,7 @@
     <eAnnotations xmi:id="_I_BgoCymEemnC6Qs8IyScA" source="http://ns.yatta.de/umllab">
       <contents xmi:type="ecore:EAnnotation" xmi:id="_I_CHsCymEemnC6Qs8IyScA" source="codegen">
         <details xmi:id="_I_CHsSymEemnC6Qs8IyScA" key="codegenDirectory" value="/ecse321-group-project-17/Backend/src/main/java"/>
-        <details xmi:id="_r29I0CymEempnMmxnVmbDQ" key="AssociatedSourceCode" value="/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/CooperatorApplication.java;447914755/1;/ecse321-group-project-17/Backend/src/test/java/ca/mcgill/ecse321/cooperator/CooperatorApplicationTests.java;3396004387/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Administrator.java;2238725118/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Employer.java;539897627/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Student.java;4013900236/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Profile.java;1243163086/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Notification.java;1730265280/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Coop.java;3704790228/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Report.java;2047392754/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/ReportType.java;4131290106/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/ReportStatus.java;2212820350/1;"/>
+        <details xmi:id="_r29I0CymEempnMmxnVmbDQ" key="AssociatedSourceCode" value="/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/CooperatorApplication.java;447914755/1;/ecse321-group-project-17/Backend/src/test/java/ca/mcgill/ecse321/cooperator/CooperatorApplicationTests.java;3396004387/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Administrator.java;1073670632/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Employer.java;1978724579/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Student.java;1599215775/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Profile.java;3779943087/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Notification.java;1730265280/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Coop.java;3704790228/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/Report.java;2047392754/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/ReportType.java;3589289799/1;/ecse321-group-project-17/Backend/src/main/java/ca/mcgill/ecse321/cooperator/model/ReportStatus.java;2212820350/1;"/>
       </contents>
       <contents xmi:type="ecore:EAnnotation" xmi:id="_HiGOMDlgEemcLNQ9C3P-Uw" source="preferences">
         <contents xmi:type="ecore:EAnnotation" xmi:id="_HiG1QDlgEemcLNQ9C3P-Uw" source="com.yattasolutions.codegen.reverse">
@@ -53,11 +53,18 @@
                 <ownedAttribute xmi:id="_jYAg4DLYEemEg_OnGZm_1Q" name="text">
                   <type xmi:type="uml:PrimitiveType" href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#String"/>
                 </ownedAttribute>
-                <ownedAttribute xmi:id="__belADliEemcLNQ9C3P-Uw" name="receiver" type="_EHE40DlgEemcLNQ9C3P-Uw" association="_jYHOkDLYEemEg_OnGZm_1Q"/>
-                <ownedAttribute xmi:id="__bjdgDliEemcLNQ9C3P-Uw" name="sender" type="_EHE40DlgEemcLNQ9C3P-Uw" association="_jYELQDLYEemEg_OnGZm_1Q"/>
+                <ownedAttribute xmi:id="__bjdgDliEemcLNQ9C3P-Uw" name="sender" type="_EGyk8DlgEemcLNQ9C3P-Uw" association="_jYELQDLYEemEg_OnGZm_1Q"/>
+                <ownedAttribute xmi:id="_N9I1oDl5EemcLNQ9C3P-Uw" name="employer" type="_EHBOcDlgEemcLNQ9C3P-Uw" association="_N9I1pjl5EemcLNQ9C3P-Uw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_N9I1oTl5EemcLNQ9C3P-Uw"/>
+                </ownedAttribute>
+                <ownedAttribute xmi:id="_N9I1ojl5EemcLNQ9C3P-Uw" name="student" type="_EHOCwDlgEemcLNQ9C3P-Uw" association="_N9I1qTl5EemcLNQ9C3P-Uw">
+                  <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_N9I1ozl5EemcLNQ9C3P-Uw"/>
+                </ownedAttribute>
               </packagedElement>
               <packagedElement xmi:type="uml:Association" xmi:id="_jYELQDLYEemEg_OnGZm_1Q" name="" memberEnd="_jYHOkTLYEemEg_OnGZm_1Q __bjdgDliEemcLNQ9C3P-Uw"/>
-              <packagedElement xmi:type="uml:Association" xmi:id="_jYHOkDLYEemEg_OnGZm_1Q" name="" memberEnd="_jYC9IjLYEemEg_OnGZm_1Q __belADliEemcLNQ9C3P-Uw"/>
+              <packagedElement xmi:type="uml:Association" xmi:id="_jYHOkDLYEemEg_OnGZm_1Q" name="" memberEnd="_jYC9IjLYEemEg_OnGZm_1Q __belADliEemcLNQ9C3P-Uw">
+                <ownedEnd xmi:id="__belADliEemcLNQ9C3P-Uw" name="" type="_EHE40DlgEemcLNQ9C3P-Uw" association="_jYHOkDLYEemEg_OnGZm_1Q"/>
+              </packagedElement>
               <packagedElement xmi:type="uml:Class" xmi:id="_DbygIDlgEemcLNQ9C3P-Uw" name="Coop">
                 <ownedAttribute xmi:id="_DdJLADlgEemcLNQ9C3P-Uw" name="student" type="_EHOCwDlgEemcLNQ9C3P-Uw" association="_DdgXYDlgEemcLNQ9C3P-Uw"/>
                 <ownedAttribute xmi:id="_DdLAMDlgEemcLNQ9C3P-Uw" name="employer" type="_EHBOcDlgEemcLNQ9C3P-Uw" association="_DdiMkDlgEemcLNQ9C3P-Uw"/>
@@ -174,6 +181,16 @@
                 <ownedLiteral xmi:id="_4CwipzlwEemcLNQ9C3P-Uw" name="EmployerEval"/>
               </packagedElement>
               <packagedElement xmi:type="uml:Enumeration" xmi:id="_RlKuQTljEemcLNQ9C3P-Uw" name="ReportStatus"/>
+              <packagedElement xmi:type="uml:Association" xmi:id="_N9I1pjl5EemcLNQ9C3P-Uw" name="" memberEnd="_N9I1oDl5EemcLNQ9C3P-Uw _N9I1pDl5EemcLNQ9C3P-Uw">
+                <ownedEnd xmi:id="_N9I1pDl5EemcLNQ9C3P-Uw" name="" type="_jWDZEDLYEemEg_OnGZm_1Q" association="_N9I1pjl5EemcLNQ9C3P-Uw">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_N9I1pTl5EemcLNQ9C3P-Uw" value="*"/>
+                </ownedEnd>
+              </packagedElement>
+              <packagedElement xmi:type="uml:Association" xmi:id="_N9I1qTl5EemcLNQ9C3P-Uw" name="" memberEnd="_N9I1ojl5EemcLNQ9C3P-Uw _N9I1pzl5EemcLNQ9C3P-Uw">
+                <ownedEnd xmi:id="_N9I1pzl5EemcLNQ9C3P-Uw" name="" type="_jWDZEDLYEemEg_OnGZm_1Q" association="_N9I1qTl5EemcLNQ9C3P-Uw">
+                  <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_N9I1qDl5EemcLNQ9C3P-Uw" value="*"/>
+                </ownedEnd>
+              </packagedElement>
             </packagedElement>
             <packagedElement xmi:type="uml:Class" xmi:id="_I-3IkCymEemnC6Qs8IyScA" name="CooperatorApplication">
               <ownedBehavior xmi:type="uml:OpaqueBehavior" xmi:id="_JAECcCymEemnC6Qs8IyScA" name="main" specification="_I_KDgCymEemnC6Qs8IyScA">
@@ -512,6 +529,4 @@
   <UMLLabProfile:StyledElement xmi:id="_IAbI8DlgEemcLNQ9C3P-Uw" base_Element="_IAah4DlgEemcLNQ9C3P-Uw"/>
   <UMLLabProfile:StyledElement xmi:id="_Q-yDsDljEemcLNQ9C3P-Uw" base_Element="_Q-xcoDljEemcLNQ9C3P-Uw"/>
   <UMLLabProfile:Reference xmi:id="_RlT4MDljEemcLNQ9C3P-Uw" base_Element="_RlKuQTljEemcLNQ9C3P-Uw"/>
-  <UMLLabProfile:LegacyStyledElement xmi:id="_6o4QUDlwEemcLNQ9C3P-Uw" base_Element="_RlCLYDljEemcLNQ9C3P-Uw"/>
-  <UMLLabProfile:Patch xmi:id="_7JylADlwEemcLNQ9C3P-Uw" base_Element="_RlCLYDljEemcLNQ9C3P-Uw" patchText="@@ -110,11 +110,70 @@&#xA; tType%7B%0D%0A&#xA;+%09Contract, Technical, TwoWeek, StudentEval, EmployerEval;%0D%0A&#xA; %7D%0D%0A&#xA;" conflicting="false"/>
 </xmi:XMI>

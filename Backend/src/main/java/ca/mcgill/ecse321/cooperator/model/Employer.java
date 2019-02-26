@@ -17,23 +17,13 @@ public class Employer extends Profile{
       this.coop = coops;
    }
    
-   private Integer id;
+   private Integer id;
 
-public void setId(Integer value) {
-    this.id = value;
+public void setId(Integer value) {
+      this.id = value;
 }
-public Integer getId() {
-    return this.id;
+   
+   public Integer getId() {
+      return this.id;
 }
-   private Set<Notification> received;
-   
-   @OneToMany(mappedBy="employer" )
-   public Set<Notification> getReceived() {
-      return this.received;
-   }
-   
-   public void setReceived(Set<Notification> receiveds) {
-      this.received = receiveds;
-   }
-   
-   }
+}
