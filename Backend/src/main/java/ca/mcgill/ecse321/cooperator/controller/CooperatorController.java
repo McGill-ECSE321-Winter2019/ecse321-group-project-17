@@ -24,6 +24,7 @@ import ca.mcgill.ecse321.cooperator.dto.ProfileDto;
 import ca.mcgill.ecse321.cooperator.dto.StudentDto;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
@@ -74,7 +75,7 @@ public class CooperatorController {
 						   "/coop/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}/" })
 	public CoopDto createCoop(@PathVariable("id") Integer id, @PathVariable String title, @PathVariable String stuEmail, 
 								@PathVariable String empEmail, @PathVariable String start, @PathVariable String end, 
-								@PathVariable Integer status,@PathVariable Integer salaryPerHour, @PathVariable Integer hoursPerWeek, 
+								@PathVariable CoopStatus status,@PathVariable Integer salaryPerHour, @PathVariable Integer hoursPerWeek, 
 								@PathVariable String address) {
 		Student stu = service.getStudent(stuEmail);
 		Employer emp = service.getEmployer(empEmail);
@@ -205,7 +206,7 @@ public class CooperatorController {
 	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
 		Student s = convertToDomainObject(sDto);
 		List<ReportDto> reportDtos;
-		List<Report> reports = null;
+		Set<Report> reports = null;
 		for(Coop c : service.getCoopforStudent(s)) {
 			reports.addAll(c.getReport());
 		}
@@ -217,7 +218,7 @@ public class CooperatorController {
 	public List<ReportDto> getAllReportsofCoop(@PathVariable("name") CoopDto cDto){
 		Coop c = convertToDomainObject(cDto);
 		List<ReportDto> reportDtos;
-		List<Report> reports = c.getReport();
+		Set<Report> reports = c.getReport();
 		reportDtos = convertToDto(reports);
 		return reportDtos;
 	}
@@ -293,7 +294,7 @@ public class CooperatorController {
 		return reportDto;
 	}
 	
-	private List<ReportDto> convertToDto(List<Report> r) {
+	private List<ReportDto> convertToDto(Set<Report> r) {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
 		}
@@ -389,7 +390,7 @@ public class CooperatorController {
 	}
 	
 	private List<ReportDto> createReportDtosForCoop(Coop c){
-		List<Report> reportsForCoop = c.getReport();
+		Set<Report> reportsForCoop = c.getReport();
 		List<ReportDto> reports = new ArrayList<>();
 		for (Report report : reportsForCoop){
 			reports.add(convertToDto(report));

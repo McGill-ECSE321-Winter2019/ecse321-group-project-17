@@ -3,6 +3,7 @@ package ca.mcgill.ecse321.cooperator.dto;
 import java.sql.Date;
 import java.util.List;
 
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.Student;
@@ -17,7 +18,7 @@ public class CoopDto {
 	private List<Report> report;
 	private Date startDate;
 	private Date endDate;
-	private Integer status;
+	private CoopStatus status;
 	private Integer salaryPerHour;
 	private Integer hoursPerWeek;
 	private String address;
@@ -26,11 +27,11 @@ public class CoopDto {
 	}
 	
 	public CoopDto(Integer id) {
-		this(id, "title "+id, null, null, null, null, 0, 0, 0, "");
+		this(id, "title "+id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "");
 	}
 	
 	public CoopDto(Integer id, String title, Student student, Employer employer, Date startDate, Date endDate, 
-			Integer status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
+			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		this.student = student;
 		this.employer = employer;
 		this.report = null;
@@ -100,11 +101,11 @@ public class CoopDto {
 		this.endDate = endDate;
 	}
 
-	public Integer getStatus() {
+	public CoopStatus getStatus() {
 		return status;
 	}
 
-	public void setStatus(Integer status) {
+	public void setStatus(CoopStatus status) {
 		this.status = status;
 	}
 

@@ -19,6 +19,7 @@ import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
@@ -161,7 +162,7 @@ public class CooperatorService {
 	}
 
 	@Transactional 
-	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
+	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		String error = "";
 
 		if(student == null) {
@@ -245,7 +246,6 @@ public class CooperatorService {
 	public Student updateStudent(Integer id, boolean status) {
 		Student s = new Student();
 		s.setId(id);
-		s.setProblematic(status);
 		studentRepository.save(s);
 		return s;
 	}

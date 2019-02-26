@@ -17,30 +17,31 @@ public class Student extends Profile{
       this.coop = coops;
    }
    
-   private Integer id;
+   private Integer id;
 
-public void setId(Integer value) {
-      this.id = value;
+public void setId(Integer value) {
+    this.id = value;
 }
-   public Integer getId() {
-      return this.id;
+public Integer getId() {
+    return this.id;
 }
-   private Integer coopsCompleted;
+private Integer coopsCompleted;
 
-pupublic void setCoopsCompleted(Integer value) {
-      this.coopsCompleted = value;
+public void setCoopsCompleted(Integer value) {
+    this.coopsCompleted = value;
 }
-   public Integer getCoopsCompleted() {
-      return this.coopsCompleted;
-}  
-   private Boolean problematic;
-
+public Integer getCoopsCompleted() {
+    return this.coopsCompleted;
+}
+   private Set<Notification> studentReceived;
    
-   public void setProblematic(Boolean value) {
-      this.problematic = value;
-}
+   @OneToMany(mappedBy="student" )
+   public Set<Notification> getStudentReceived() {
+      return this.studentReceived;
+   }
    
-   public Boolean getProblematic() {
-      return this.problematic;
-}
-}
+   public void setStudentReceived(Set<Notification> studentReceiveds) {
+      this.studentReceived = studentReceiveds;
+   }
+   
+   }

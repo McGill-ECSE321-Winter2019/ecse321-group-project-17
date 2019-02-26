@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.util.Set;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Coop{
@@ -66,12 +68,12 @@ public void setEndDate(Date value) {
 public Date getEndDate() {
     return this.endDate;
 }
-private Integer status;
+private CoopStatus status;
 
-public void setStatus(Integer value) {
+public void setStatus(CoopStatus value) {
     this.status = value;
 }
-public Integer getStatus() {
+public CoopStatus getStatus() {
     return this.status;
 }
 private Integer salaryPerHour;
@@ -98,4 +100,15 @@ public void setAddress(String value) {
 public String getAddress() {
     return this.address;
 }
-}
+   private Set<Report> report;
+   
+   @OneToMany(mappedBy="coop" )
+   public Set<Report> getReport() {
+      return this.report;
+   }
+   
+   public void setReport(Set<Report> reports) {
+      this.report = reports;
+   }
+   
+   }

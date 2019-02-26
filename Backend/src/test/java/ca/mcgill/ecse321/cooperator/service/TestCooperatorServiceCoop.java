@@ -21,6 +21,7 @@ import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Student;
 
@@ -82,7 +83,7 @@ public class TestCooperatorServiceCoop {
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
-		Integer status = 0;
+		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 45;
@@ -101,7 +102,7 @@ public class TestCooperatorServiceCoop {
 	}
 	
 	private void checkResultCoop(Integer studentID, Integer employerID, String title,
-			Date startDate, Date endDate, Integer status, Integer salaryPerHour, Integer hoursPerWeek) {
+			Date startDate, Date endDate, CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek) {
 		List<Student> allStudents = cs.getAllStudents();
 		List<Employer> allEmployers = cs.getAllEmployers();
 		List<Coop> allCoops = cs.getAllCoops();
@@ -130,7 +131,7 @@ public class TestCooperatorServiceCoop {
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
-		Integer status = 0;
+		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 34;
@@ -174,7 +175,7 @@ public class TestCooperatorServiceCoop {
 		String title = "";
 		Date startDate = null;
 		Date endDate = null;
-		Integer status = null;
+		CoopStatus status = null;
 		Integer salaryPerHour = -19;
 		Integer hoursPerWeek = -40;
 		Integer id = -23;
@@ -220,7 +221,7 @@ public class TestCooperatorServiceCoop {
 		String title = "   ";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
-		Integer status = 0;
+		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 67;
@@ -264,7 +265,7 @@ public class TestCooperatorServiceCoop {
 		String title = "NASA";
 		Date startDate = Date.valueOf("2019-04-30");
 		Date endDate = Date.valueOf("2019-01-01");
-		Integer status = 0;
+		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer id = 47;

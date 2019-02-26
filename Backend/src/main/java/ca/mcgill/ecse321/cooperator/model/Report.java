@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.sql.Date;
 import java.io.File;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Report{
@@ -48,4 +49,15 @@ public void setFile(File value) {
 public File getFile() {
     return this.file;
 }
-}
+   private Coop coop;
+   
+   @ManyToOne(optional=false)
+   public Coop getCoop() {
+      return this.coop;
+   }
+   
+   public void setCoop(Coop coop) {
+      this.coop = coop;
+   }
+   
+   }

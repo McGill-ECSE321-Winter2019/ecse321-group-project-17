@@ -21,6 +21,7 @@ import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
@@ -103,7 +104,7 @@ public class TestCooperatorServiceReport {
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
-		Integer status = 0;
+		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer idC = 45;
@@ -117,7 +118,7 @@ public class TestCooperatorServiceReport {
 		String error = null;
 	
 		try {
-			cs.createReport(id, c, date, ReportStatus.Complete, ReportType.Contract);
+			cs.createReport(id, c, date, ReportStatus.Submitted, ReportType.Contract);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -154,7 +155,7 @@ public class TestCooperatorServiceReport {
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
-		Integer status = 0;
+		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
 		Integer idC = 45;
@@ -169,7 +170,7 @@ public class TestCooperatorServiceReport {
 		
 	
 		try {
-			cs.createReport(id, c, date, ReportStatus.Complete, ReportType.Contract);
+			cs.createReport(id, c, date, ReportStatus.Submitted, ReportType.Contract);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
