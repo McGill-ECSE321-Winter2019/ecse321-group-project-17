@@ -164,6 +164,28 @@ public class CooperatorController {
 		}
 		return employerDtos;
 	}
+	
+	@GetMapping(value = { "/incompleteCoops", "/incompleteCoops/" })
+	public List<CoopDto> getIncompleteCoop() {
+		Set<Coop> all = service.getIncompleteCoop();
+		List<CoopDto> inc = null;
+		for (Coop c : all) {
+			inc.add(convertToDto(c));
+		}
+		return inc;
+	}
+	@GetMapping(value = { "/incompleteStu", "/incompleteStu/" })
+	public List<StudentDto> getIncompleteCoopStudent() {
+		Set<Student> all = service.getIncompleteCoopStudents();
+		List<StudentDto> inc = null;
+		for (Student s : all) {
+			inc.add(convertToDto(s));
+		}
+		return inc;
+	}
+	
+	
+	
 /* THIS DOESNT WORK and probs wont ever work the way it should 
 	@GetMapping(value = { "/profiles", "/profiles/" })
 	public List<ProfileDto> getAllProfiles() {

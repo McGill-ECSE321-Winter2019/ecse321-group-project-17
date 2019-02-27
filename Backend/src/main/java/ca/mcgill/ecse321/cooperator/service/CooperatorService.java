@@ -210,6 +210,30 @@ public class CooperatorService {
 		return c;
 	}
 	
+	@Transactional 
+	public Set<Coop> getIncompleteCoop(){
+		Iterable<Coop> all = coopRepository.findAll();
+		Set<Coop> incomplete = null;
+		for(Coop c : all) {
+			if(c.getStatus() == CoopStatus.Incomplete) {
+				incomplete.add(c);
+			}
+		}
+		return incomplete;
+	}
+	
+	@Transactional 
+	public Set<Student> getIncompleteCoopStudents(){
+		Iterable<Coop> all = coopRepository.findAll();
+		Set<Student> incomplete = null;
+		for(Coop c : all) {
+			if(c.getStatus() == CoopStatus.Incomplete) {
+				incomplete.add(c.getStudent());
+			}
+		}
+		return incomplete;
+	}
+	
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());

@@ -101,6 +101,8 @@ public class TestCooperatorServiceCoop {
 		assertEquals(title, cs.getCoop(id).getTitle());
 		assertEquals(1, cs.getCoopforStudent(stu).size());
 		assertEquals(address, cs.getCoop(id).getAddress());
+		assertEquals(0, cs.getIncompleteCoop().size());
+		assertEquals(0, cs.getIncompleteCoopStudents().size());
 		checkResultCoop(idS, idE, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 	}
 	
