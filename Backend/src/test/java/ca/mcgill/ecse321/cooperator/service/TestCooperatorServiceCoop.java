@@ -66,9 +66,9 @@ public class TestCooperatorServiceCoop {
 		String passwordS = "frisbyislife";
 		int idS = 3;
 		String phoneS = "6047862815";
-		Student s;
+		Student stu;
 		
-		s = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
 		
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
@@ -91,12 +91,14 @@ public class TestCooperatorServiceCoop {
 
 		
 		try {
-			cs.createCoop(s, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch(Exception e) {
 			error = e.getMessage();
 		}
 		
 		assertEquals(1, cs.getAllCoops().size());
+		assertEquals(title, cs.getCoop(id).getTitle());
+		assertEquals(1, cs.getCoopforStudent(stu).size());
 		checkResultCoop(idS, idE, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 	}
 	
@@ -240,7 +242,7 @@ public class TestCooperatorServiceCoop {
 	}
 	
 	@Test
-	public void testcreateCoopEndDateBeforeStartDate() {
+	public void testCreateCoopEndDateBeforeStartDate() {
 		assertEquals(0, cs.getAllCoops().size());
 		
 		String emailS = "emma.eagles@mail.mcgill.ca ";
@@ -279,6 +281,24 @@ public class TestCooperatorServiceCoop {
 
 		// check error
 		assertEquals("Coop end time cannot be before Coop start time!", error);
+
+		// check model in memory
+		assertEquals(0, cs.getAllCoops().size());
+		
+	}
+	
+	@Test
+	public void testGetCoopNull() {
+		assertEquals(0, cs.getAllCoops().size());
+		String error = "";
+		
+		try {
+			cs.getCoopforStudent(null);
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		// check error
+		assertEquals("Student is null!", error);
 
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());

@@ -93,13 +93,11 @@ public class TestCooperatorServiceNotification {
 		assertEquals(id, cs.getAllNotifications().get(0).getId());
 		
 		//Check to see if associated to employer
-		Set<Notification> notif = cs.getNotificationsEmp(emp);
-		assertEquals(1, notif.size());
+		assertEquals(1, cs.getNotificationsEmp(emp).size());
 		
 		//Check to see if associated to admin
-		notif = cs.getNotificationsAdm(a);
-		assertEquals(1, notif.size());
-		
+		assertEquals(1, cs.getNotificationsAdm(a).size());
+	
 	}
 	
 	@Test
@@ -137,13 +135,11 @@ public class TestCooperatorServiceNotification {
 		assertEquals(1, cs.getAllNotifications().size());
 		assertEquals(id, cs.getAllNotifications().get(0).getId());
 		
-		//Check to see if associated to employer
-		Set<Notification> notif = cs.getNotificationsAdm(adm);
-		assertEquals(1, notif.size());
+		//Check to see if associated to admin
+		assertEquals(1, cs.getNotificationsAdm(adm).size());
 		
-		//Check to see if not associated to student
-		notif = cs.getNotificationsStu(stu);
-		assertEquals(0, notif.size());
+		//Check to see if associated to student
+		assertEquals(1, cs.getNotificationsStu(stu).size());
 	}
 	
 	@Test
@@ -191,17 +187,15 @@ public class TestCooperatorServiceNotification {
 
 		assertEquals(1, cs.getAllNotifications().size());
 		assertEquals(id, cs.getAllNotifications().get(0).getId());
+		
 		//Check to see if associated to employer
-		Set<Notification> notif = cs.getNotificationsEmp(emp);
-		assertEquals(1, notif.size());
+		assertEquals(1, cs.getNotificationsEmp(emp).size());
 		
 		//Check to see if associated to admin
-		notif = cs.getNotificationsAdm(adm);
-		assertEquals(1, notif.size());
+		assertEquals(1, cs.getNotificationsAdm(adm).size());
 		
-		//Check to see if not associated to student
-		notif = cs.getNotificationsStu(stu);
-		assertEquals(0, notif.size());
+		//Check to see if associated to student
+		assertEquals(1, cs.getNotificationsStu(stu).size());
 	}
 	
 	@Test
@@ -281,7 +275,7 @@ public class TestCooperatorServiceNotification {
 		}
 
 		// check error
-		assertEquals("Profile1 is null! Profile2 is null! ID is invalid! Text is invalid!", error);
+		assertEquals("Administrator is null! Notification needs at least one recipient! ID is invalid! Text is invalid!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllNotifications().size());

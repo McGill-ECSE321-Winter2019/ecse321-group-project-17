@@ -243,14 +243,6 @@ public class CooperatorService {
 	}
 	
 	@Transactional 
-	public Student updateStudent(Integer id, boolean status) {
-		Student s = new Student();
-		s.setId(id);
-		studentRepository.save(s);
-		return s;
-	}
-	
-	@Transactional 
 	public Student getStudent(String email) {
 		if(email == null || email.trim().length() == 0) {
 			throw new IllegalArgumentException("Person name cannot be empty!");
@@ -272,18 +264,7 @@ public class CooperatorService {
 	public List<Student> getAllStudents() {
 		return toList(studentRepository.findAll());
 	}
-	/*
-	@Transactional 
-	public Employer updateEmployer(Integer id) {
-		if(id == null || id < 0) {
-			throw new IllegalArgumentException("ID is invalid!");
-		}
-		Employer e = new Employer();
-		//e.setId(id);
-		employerRepository.save(e);
-		return e;
-	}
-	*/
+	
 	@Transactional 
 	public Employer getEmployer(String email) {
 		if(email == null || email.trim().length() == 0) {
@@ -347,41 +328,40 @@ public class CooperatorService {
 		return n;
 	}
 	
-	@Transactional  
 	public Set<Notification> getNotificationsEmp(Employer e) {
-		Set<Notification> n = null;
 		if(e == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			n = e.getReceived();
+			Set<Notification> nAll = null;
+			nAll = notificationRepository.findByEmployer(e);
+			return nAll;
 		}
-		return n;
-	} 
+	}
 	
 	@Transactional  
 	public Set<Notification> getNotificationsStu(Student s) {
-		Set<Notification> n = null;
 		if(s == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			n = s.getReceived();
+			Set<Notification> nAll = null;
+			nAll = notificationRepository.findByStudent(s);
+			return nAll;
 		}
-		return n;
-	}
+	} 
 	
 	@Transactional  
 	public Set<Notification> getNotificationsAdm(Administrator a) {
-		Set<Notification> n = null;
 		if(a == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			n = a.getSent();
+			Set<Notification> nAll = null;
+			nAll = notificationRepository.findBySender(a);
+			return nAll;
 		}
-		return n;
-	}
+	} 
 	
 	@Transactional
 	public List<Notification> getAllNotifications() {
