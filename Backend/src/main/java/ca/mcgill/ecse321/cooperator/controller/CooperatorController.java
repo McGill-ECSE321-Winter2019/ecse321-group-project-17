@@ -46,7 +46,7 @@ public class CooperatorController {
 	
 	// STATISTICS METHODS
 	
-	@PostMapping(value = { "/statistics/{type}/{currentyear}/{gradyear}", "/statistcs/coop/{currentyear}/{gradyear}/" })
+	@PostMapping(value = { "/statistics/coop/{currentyear}/{gradyear}", "/statistcs/coop/{currentyear}/{gradyear}/" })
 	public CoopStatisticsDto getCoopStatistics(@PathVariable("currentyear") Integer currentyear, @PathVariable("gradyear") Integer gradyear) {
 		CoopStatisticsDto coopStatistics = new CoopStatisticsDto().generateAllCoopStatistics(currentyear, gradyear);
 		return coopStatistics;

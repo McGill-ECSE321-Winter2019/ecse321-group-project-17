@@ -1,99 +1,246 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
+import ca.mcgill.ecse321.cooperator.model.Coop;
 
 public class CoopStatisticsDto {
-	// filters
-	private Integer currentyear; // current term of the students (i.e. Year 0, Year 1, Year 2, etc...)
-	private Integer gradyear;	 // year in which the students graduate(i.e 2020)
+	@Autowired
+	CoopRepository coopRepository;
+	
+	// filters 
+	private String startTerm; 	// format: {Winter,Fall,Summer}{Year}, if empty don't apply
+	private String endTerm;		// format: {Winter,Fall,Summer}{Year}, if empty don't apply
+	private Integer coopNumber; // format: [1;max[, if 0 don't apply
 	
 	// coops
 	private Integer notStartedCoops;
 	private Integer inProgressCoops;
 	private Integer completedCoops;
-	private Integer incompleteCoops;
 	private Integer totalCoops;
 	
 	@SuppressWarnings("unchecked")
 	public CoopStatisticsDto() {
-		this(0,0,0,0,0,0,0);
+		this("","",0,0,0,0,0);
 	}
 	
-	public CoopStatisticsDto(Integer currentyear, Integer gradyear, Integer notStartedCoops, Integer inProgressCoops, Integer completedCoops,
-			Integer incompleteCoops, Integer totalCoops) {
-		this.currentyear = currentyear;
-		this.gradyear = gradyear;
+	
+	public CoopStatisticsDto(String startTerm, String endTerm, Integer coopNumber,
+			Integer notStartedCoops, Integer inProgressCoops, Integer completedCoops, Integer totalCoops) {
+		super();
+		this.startTerm = startTerm;
+		this.endTerm = endTerm;
+		this.coopNumber = coopNumber;
 		this.notStartedCoops = notStartedCoops;
 		this.inProgressCoops = inProgressCoops;
 		this.completedCoops = completedCoops;
-		this.incompleteCoops = incompleteCoops;
 		this.totalCoops = totalCoops;
 	}
-	
-	public CoopStatisticsDto generateAllCoopStatistics(Integer currentyear, Integer gradyear) {
+
+	/*
+	 * Generates statistics. Can filter by a range of terms (i.e Winter2018 to Fall2019) and/or a specific coop (i.e only students doing there 1st coop)
+	 */
+	public CoopStatisticsDto generateAllCoopStatistics(String startTerm, String endTerm, Integer coopNumber) {
 		CoopStatisticsDto csd = new CoopStatisticsDto();
-		csd.currentyear = currentyear;
-		csd.gradyear = gradyear;
-		//fill statistics
+		csd.startTerm = startTerm;
+		csd.endTerm = endTerm;
+		csd.coopNumber = coopNumber;
+		Iterable<Coop> coops = coopRepository.findAll();
+		
+		List<Coop> filter1 = new ArrayList<Coop>();
+		// filter out anything before startTerm
+		String startSeason = extractSeason(startTerm);
+		Integer startYear = extractYear(startTerm);
+		if (startSeason != "" && startYear != 0) { 
+			Date startDate = getStartDate(startSeason, startYear);
+			for(Coop coop : coops) {
+				if(coop.getStartDate().after(startDate)) { // if the coop start after the start of the term
+					filter1.add(coop);
+				}
+			}
+		}
+		
+		List<Coop> filter2 = new ArrayList<Coop>();
+		// filter out anything after the endTerm
+		String endSeason = extractSeason(endTerm);
+		Integer endYear = extractYear(endTerm);
+		if (endSeason != "" && endYear != 0) { 
+			Date endDate = getEndDate(endSeason, endYear);
+			for(Coop coop : filter1) {
+				if(coop.getStartDate().before(endDate)) { // if the coop starts before the end of the term
+					filter2.add(coop);
+				}
+			}
+		}
+		
+		List<Coop> filter3 = new ArrayList<Coop>();
+		// filter out students who aren't on their [coopNumber] coop
+		if (coopNumber != 0) {
+			for(Coop coop: filter2) {
+				if(coop.getStudent().getCoopsCompleted() == coopNumber-1) { // if the student is on there [coopNumber] coop
+					filter3.add(coop);
+				}
+			}
+		}
+		
+		// fill statistics
+		for (Coop coop: filter3) {
+			csd.totalCoops++;
+			switch(coop.getStatus()) {
+			case NotStarted:
+				csd.notStartedCoops++;
+				break;
+			case InProgress:
+				csd.inProgressCoops++;
+				break;
+			case Completed:
+				csd.completedCoops++;
+				break;
+			default:
+				break;
+			}
+		}
 		return csd;
 	}
-
-	public Integer getCurrentyear() {
-		return currentyear;
+	
+	private Date getStartDate(String season, Integer year) {
+		int day = 1;
+		int month = 0;
+		switch(season) {
+		case "winter":
+			month = 1;
+			break;
+		case "summer":
+			month = 5;
+			break;
+		case "fall":
+			month = 9;
+			break;
+		}
+		return new Date(year, month, day);
+	}
+	
+	private Date getEndDate(String season, Integer year) {
+		int month = 0, day = 0;
+		switch(season) {
+		case "winter":
+			month = 4; day = 30; 
+			break;
+		case "summer":
+			month = 8; day = 31;
+			break;
+		case "fall":
+			month = 12; day = 31;
+			break;
+		}
+		return new Date(year, month, day);
+	}
+	
+	// returns "winter", "summer", "fall", or "" 
+	private String extractSeason(String term) {
+		String stringOnly = term.replaceAll("[0-9]", "");
+		if (stringOnly.matches("[Ww]inter") || stringOnly.matches("[Ss]ummer") || stringOnly.matches("[Ff]all")) {
+			return stringOnly.toLowerCase();
+		}
+		return "";
+	}
+	
+	// returns Integer like 20XX or 0
+	private Integer extractYear(String term) {
+		String numberOnly = term.replaceAll("[^0-9]", "");
+		if(numberOnly.matches("20[0-9][0-9]")) {
+			return Integer.valueOf(numberOnly);
+		}
+		return 0;
+	}
+	
+	// Start date: 1st January; End date: 31st December
+	public boolean inYear(Date date, Integer year) {
+		boolean isBefore = date.before(new Date(year, 12, 31));
+		boolean isAfter = date.after(new Date(year, 1, 1));
+		return (isBefore && isAfter);
+	}
+	
+	// Start date: 1st September; End date: 30th August
+	public boolean inSchoolYear(Date date, Integer year) {
+		boolean isBefore = date.before(new Date(year, 8, 30));
+		boolean isAfter = date.after(new Date(year, 9, 01));
+		return (isBefore && isAfter);
 	}
 
-	public void setCurrentyear(Integer currentyear) {
-		this.currentyear = currentyear;
+	public String getStartTerm() {
+		return startTerm;
 	}
 
-	public Integer getGradyear() {
-		return gradyear;
+
+	public void setStartTerm(String startTerm) {
+		this.startTerm = startTerm;
 	}
 
-	public void setGradyear(Integer gradyear) {
-		this.gradyear = gradyear;
+
+	public String getEndTerm() {
+		return endTerm;
 	}
+
+
+	public void setEndTerm(String endTerm) {
+		this.endTerm = endTerm;
+	}
+
+
+	public Integer getCoopNumber() {
+		return coopNumber;
+	}
+
+
+	public void setCoopNumber(Integer coopNumber) {
+		this.coopNumber = coopNumber;
+	}
+
 
 	public Integer getNotStartedCoops() {
 		return notStartedCoops;
 	}
 
+
 	public void setNotStartedCoops(Integer notStartedCoops) {
 		this.notStartedCoops = notStartedCoops;
 	}
+
 
 	public Integer getInProgressCoops() {
 		return inProgressCoops;
 	}
 
+
 	public void setInProgressCoops(Integer inProgressCoops) {
 		this.inProgressCoops = inProgressCoops;
 	}
+
 
 	public Integer getCompletedCoops() {
 		return completedCoops;
 	}
 
+
 	public void setCompletedCoops(Integer completedCoops) {
 		this.completedCoops = completedCoops;
 	}
 
-	public Integer getIncompleteCoops() {
-		return incompleteCoops;
-	}
-
-	public void setIncompleteCoops(Integer incompleteCoops) {
-		this.incompleteCoops = incompleteCoops;
-	}
 
 	public Integer getTotalCoops() {
 		return totalCoops;
 	}
 
+
 	public void setTotalCoops(Integer totalCoops) {
 		this.totalCoops = totalCoops;
 	}
+
 	
 }

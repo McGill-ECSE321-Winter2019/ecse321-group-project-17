@@ -3,8 +3,9 @@ package ca.mcgill.ecse321.cooperator.dto;
 public class ReportStatisticsDto {
 	
 	// filters
-	private Integer currentyear; // current term of the students (i.e. Year 0, Year 1, Year 2, etc...)
-	private Integer gradyear;	 // year in which the students graduate(i.e 2020)
+	private String startTerm;
+	private String endTerm;
+	private Integer coopNumber;
 	
 	// reports status
 	private Integer unsubmittedReports;
@@ -23,16 +24,17 @@ public class ReportStatisticsDto {
 
 	@SuppressWarnings("unchecked")
 	public ReportStatisticsDto() {
-		this(0,0,0,0,0,0,0,0,0,0,0,0);
+		this("","",0,0,0,0,0,0,0,0,0,0,0);
 	}
 	
-	public ReportStatisticsDto(Integer currentyear, Integer gradyear, Integer unsubmittedReports,
+	public ReportStatisticsDto(String startTerm, String endTerm, Integer coopNumber, Integer unsubmittedReports,
 			Integer submittedReports, Integer lateReports, Integer reviewedReports, Integer contractReports,
 			Integer technicalReports, Integer studentEvalReports, Integer employerEvalReports, Integer twoWeekReports,
 			Integer totalReports) {
 		super();
-		this.currentyear = currentyear;
-		this.gradyear = gradyear;
+		this.startTerm = startTerm;
+		this.endTerm = endTerm;
+		this.coopNumber = coopNumber;
 		this.unsubmittedReports = unsubmittedReports;
 		this.submittedReports = submittedReports;
 		this.lateReports = lateReports;
@@ -44,7 +46,9 @@ public class ReportStatisticsDto {
 		this.twoWeekReports = twoWeekReports;
 		this.totalReports = totalReports;
 	}
-	
+
+
+
 	public ReportStatisticsDto generateAllReportStatistics(Integer currentyear, Integer gradyear) {
 		ReportStatisticsDto rsd = new ReportStatisticsDto();
 		rsd.currentyear = currentyear;
@@ -53,20 +57,28 @@ public class ReportStatisticsDto {
 		return rsd;
 	}
 
-	public Integer getCurrentyear() {
-		return currentyear;
+	public String getStartTerm() {
+		return startTerm;
 	}
 
-	public void setCurrentyear(Integer currentyear) {
-		this.currentyear = currentyear;
+	public void setStartTerm(String startTerm) {
+		this.startTerm = startTerm;
 	}
 
-	public Integer getGradyear() {
-		return gradyear;
+	public String getEndTerm() {
+		return endTerm;
 	}
 
-	public void setGradyear(Integer gradyear) {
-		this.gradyear = gradyear;
+	public void setEndTerm(String endTerm) {
+		this.endTerm = endTerm;
+	}
+
+	public Integer getCoopNumber() {
+		return coopNumber;
+	}
+
+	public void setCoopNumber(Integer coopNumber) {
+		this.coopNumber = coopNumber;
 	}
 
 	public Integer getUnsubmittedReports() {
@@ -148,6 +160,7 @@ public class ReportStatisticsDto {
 	public void setTotalReports(Integer totalReports) {
 		this.totalReports = totalReports;
 	}
+
 	
 	
 }

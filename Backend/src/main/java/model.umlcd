@@ -463,6 +463,43 @@
     <visualProperties xmi:id="_8q9lYTSlEemeCPnFopV2eg" position="990.0,549.0" size="-1.0,-1.0"/>
     <visibility xmi:id="_8q9lYjSlEemeCPnFopV2eg" label="+"/>
   </nodes>
+  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_SZpLgCynEempnMmxnVmbDQ" containment="_m3mdcCynEempnMmxnVmbDQ" name="Student" package="_JuXdcCynEempnMmxnVmbDQ" associationsIn="_EE5skDl2EemcLNQ9C3P-Uw" associationsOut="_jBegcCynEempnMmxnVmbDQ" generalizations="_iOHw4CynEempnMmxnVmbDQ">
+    <modelElement href="model.uml#_SZn9YCynEempnMmxnVmbDQ"/>
+    <visualProperties xmi:id="_SZpLgSynEempnMmxnVmbDQ" position="474.0,682.0" size="-1.0,-1.0"/>
+    <visibility xmi:id="_SZpLgiynEempnMmxnVmbDQ" label="+"/>
+    <attributes xmi:id="_jBtxACynEempnMmxnVmbDQ" name="coop">
+      <modelElement href="model.uml#_jAwuwSynEempnMmxnVmbDQ"/>
+      <visibility xmi:id="_jBtxASynEempnMmxnVmbDQ" label="+"/>
+      <cardinality xmi:id="_jBtxAiynEempnMmxnVmbDQ" label="*" max="-1"/>
+      <type xmi:id="_jBtxAyynEempnMmxnVmbDQ" name="Coop">
+        <modelElement href="model.uml#_TveWACynEempnMmxnVmbDQ"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_7Av9ACynEempnMmxnVmbDQ" name="id">
+      <modelElement href="model.uml#_7Auu4CynEempnMmxnVmbDQ"/>
+      <visibility xmi:id="_7Av9ASynEempnMmxnVmbDQ" label="+"/>
+      <cardinality xmi:id="_7Av9AiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
+      <type xmi:id="_7Av9AyynEempnMmxnVmbDQ" name="Integer">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_7uVbwCynEempnMmxnVmbDQ" name="coopsCompleted">
+      <modelElement href="model.uml#_7uU0sCynEempnMmxnVmbDQ"/>
+      <visibility xmi:id="_7uVbwSynEempnMmxnVmbDQ" label="+"/>
+      <cardinality xmi:id="_7uVbwiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
+      <type xmi:id="_7uVbwyynEempnMmxnVmbDQ" name="Integer">
+        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
+      </type>
+    </attributes>
+    <attributes xmi:id="_EFC2gjl2EemcLNQ9C3P-Uw" name="studentReceived">
+      <modelElement href="model.uml#_EEdAoDl2EemcLNQ9C3P-Uw"/>
+      <visibility xmi:id="_EFC2gzl2EemcLNQ9C3P-Uw" label="+"/>
+      <cardinality xmi:id="_EFC2hDl2EemcLNQ9C3P-Uw" label="*" max="-1"/>
+      <type xmi:id="_EFC2hTl2EemcLNQ9C3P-Uw" name="Notification">
+        <modelElement href="model.uml#_bMhWYCynEempnMmxnVmbDQ"/>
+      </type>
+    </attributes>
+  </nodes>
   <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_TvfkICynEempnMmxnVmbDQ" containment="_mo7vUCynEempnMmxnVmbDQ" name="Coop" package="_JuXdcCynEempnMmxnVmbDQ" associationsIn="_jBegcCynEempnMmxnVmbDQ" associationsOut="_jWegECynEempnMmxnVmbDQ _KYybUDoMEemg-K8oBWx8oA">
     <modelElement href="model.uml#_TveWACynEempnMmxnVmbDQ"/>
     <visualProperties xmi:id="_TvfkISynEempnMmxnVmbDQ" position="768.0,729.0" size="-1.0,-1.0"/>
@@ -562,43 +599,6 @@
       <cardinality xmi:id="_KY2FsjoMEemg-K8oBWx8oA" label="*" max="-1"/>
       <type xmi:id="_KY2FszoMEemg-K8oBWx8oA" name="Report">
         <modelElement href="model.uml#_YkaEoCynEempnMmxnVmbDQ"/>
-      </type>
-    </attributes>
-  </nodes>
-  <nodes xsi:type="com.yattasolutions.uml.diagrams.classifier:ClassifierVisual" xmi:id="_SZpLgCynEempnMmxnVmbDQ" containment="_m3mdcCynEempnMmxnVmbDQ" name="Student" package="_JuXdcCynEempnMmxnVmbDQ" associationsIn="_EE5skDl2EemcLNQ9C3P-Uw" associationsOut="_jBegcCynEempnMmxnVmbDQ" generalizations="_iOHw4CynEempnMmxnVmbDQ">
-    <modelElement href="model.uml#_SZn9YCynEempnMmxnVmbDQ"/>
-    <visualProperties xmi:id="_SZpLgSynEempnMmxnVmbDQ" position="474.0,682.0" size="-1.0,-1.0"/>
-    <visibility xmi:id="_SZpLgiynEempnMmxnVmbDQ" label="+"/>
-    <attributes xmi:id="_jBtxACynEempnMmxnVmbDQ" name="coop">
-      <modelElement href="model.uml#_jAwuwSynEempnMmxnVmbDQ"/>
-      <visibility xmi:id="_jBtxASynEempnMmxnVmbDQ" label="+"/>
-      <cardinality xmi:id="_jBtxAiynEempnMmxnVmbDQ" label="*" max="-1"/>
-      <type xmi:id="_jBtxAyynEempnMmxnVmbDQ" name="Coop">
-        <modelElement href="model.uml#_TveWACynEempnMmxnVmbDQ"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_7Av9ACynEempnMmxnVmbDQ" name="id">
-      <modelElement href="model.uml#_7Auu4CynEempnMmxnVmbDQ"/>
-      <visibility xmi:id="_7Av9ASynEempnMmxnVmbDQ" label="+"/>
-      <cardinality xmi:id="_7Av9AiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
-      <type xmi:id="_7Av9AyynEempnMmxnVmbDQ" name="Integer">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_7uVbwCynEempnMmxnVmbDQ" name="coopsCompleted">
-      <modelElement href="model.uml#_7uU0sCynEempnMmxnVmbDQ"/>
-      <visibility xmi:id="_7uVbwSynEempnMmxnVmbDQ" label="+"/>
-      <cardinality xmi:id="_7uVbwiynEempnMmxnVmbDQ" label="1" max="1" min="1"/>
-      <type xmi:id="_7uVbwyynEempnMmxnVmbDQ" name="Integer">
-        <modelElement href="pathmap://UML_LIBRARIES/UMLPrimitiveTypes.library.uml#Integer"/>
-      </type>
-    </attributes>
-    <attributes xmi:id="_EFC2gjl2EemcLNQ9C3P-Uw" name="studentReceived">
-      <modelElement href="model.uml#_EEdAoDl2EemcLNQ9C3P-Uw"/>
-      <visibility xmi:id="_EFC2gzl2EemcLNQ9C3P-Uw" label="+"/>
-      <cardinality xmi:id="_EFC2hDl2EemcLNQ9C3P-Uw" label="*" max="-1"/>
-      <type xmi:id="_EFC2hTl2EemcLNQ9C3P-Uw" name="Notification">
-        <modelElement href="model.uml#_bMhWYCynEempnMmxnVmbDQ"/>
       </type>
     </attributes>
   </nodes>
