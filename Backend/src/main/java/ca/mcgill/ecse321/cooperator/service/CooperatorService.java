@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.cooperator.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -46,11 +47,6 @@ public class CooperatorService {
 	@Autowired (required = true)
 	AdministratorRepository administratorRepository;
 
-	Integer id = 0;
-	public Integer getNewId() {
-		return(id++);
-	}
-	
 	@Transactional
 	public Student createStudent(String email, String name, String password, String phone, Integer id) {
 		Student p = new Student();
@@ -145,21 +141,6 @@ public class CooperatorService {
 		administratorRepository.save(a);
 		return a;
 	}
-	
-	
-	@Transactional 
-	public Profile getProfile(String email) {
-		if(email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Email cannot be empty!");
-		}
-		Profile p = profileRepository.findProfileByEmail(email);
-		return p;
-	}
-	
-	@Transactional
-	public List<Profile> getAllProfiles() {
-		return toList(profileRepository.findAll());
-	}
 
 	@Transactional 
 	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
@@ -218,6 +199,7 @@ public class CooperatorService {
 		c.setStatus(status);
 		c.setSalaryPerHour(salaryPerHour);
 		c.setHoursPerWeek(hoursPerWeek);
+		c.setAddress(address);
 		coopRepository.save(c);
 		return c;
 	}
@@ -238,14 +220,14 @@ public class CooperatorService {
 		if(s == null) {
 			throw new IllegalArgumentException("Student is null!");
 		}
-		Set<Coop> stuCoops = s.getCoop();
+		Set<Coop> stuCoops = coopRepository.findCoopByStudent(s);
 		return stuCoops;
 	}
 	
 	@Transactional 
 	public Student getStudent(String email) {
 		if(email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Person name cannot be empty!");
+			throw new IllegalArgumentException("Student email cannot be empty!");
 		}
 		Student s = studentRepository.findStudentByEmail(email);
 		return s;
@@ -254,7 +236,7 @@ public class CooperatorService {
 	@Transactional 
 	public Administrator getAdmin(String email) {
 		if(email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Person name cannot be empty!");
+			throw new IllegalArgumentException("Administrator email cannot be empty!");
 		}
 		Administrator a = administratorRepository.findAdministratorByEmail(email);
 		return a;
@@ -268,7 +250,7 @@ public class CooperatorService {
 	@Transactional 
 	public Employer getEmployer(String email) {
 		if(email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Person name cannot be empty!");
+			throw new IllegalArgumentException("Employer email cannot be empty!");
 		}
 		
 		Employer e = employerRepository.findEmployerByEmail(email);
@@ -280,19 +262,14 @@ public class CooperatorService {
 		return toList(employerRepository.findAll());
 	}
 	
-	@Transactional 
-	public Administrator createAdministrator(Integer id) {
-		Administrator a = new Administrator();
-		//a.setId(id);
-		administratorRepository.save(a);
-		return a;
+	@Transactional
+	public int getNumberofProfiles() {
+		int num = (int) studentRepository.count();
+		num += (int) employerRepository.count();
+		num += (int) administratorRepository.count();
+		return num;
 	}
 	
-	@Transactional 
-	public Optional<Administrator> getAdministrator(Integer id) {
-		Optional<Administrator> a = administratorRepository.findById(id);
-		return a;
-	}
 	
 	@Transactional
 	public List<Administrator> getAllAdministrators() {
@@ -324,43 +301,64 @@ public class CooperatorService {
 		n.setSender(a);
 		n.setEmployer(e);
 		n.setStudent(s);
+		
+		if (a != null) {
+			Set<Notification> notifs = a.getSent();
+			if (notifs == null) notifs = new HashSet<>();
+			notifs.add(n);
+			a.setSent(notifs);
+		}
+
+		if (e != null) {
+			Set<Notification> notifs = e.getReceived();
+			if (notifs == null) notifs = new HashSet<>();
+			notifs.add(n);
+			e.setReceived(notifs);
+		}
+		if (s != null) {
+			Set<Notification> notifs = s.getReceived();
+			if (notifs == null) notifs = new HashSet<>();
+			notifs.add(n);
+			s.setReceived(notifs);
+		}
+
 		notificationRepository.save(n);
 		return n;
 	}
 	
 	public Set<Notification> getNotificationsEmp(Employer e) {
+		Set <Notification> n = null;
 		if(e == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			Set<Notification> nAll = null;
-			nAll = notificationRepository.findByEmployer(e);
-			return nAll;
+			n = e.getReceived() == null ? new HashSet<>() : e.getReceived();
 		}
+		return n;
 	}
 	
 	@Transactional  
 	public Set<Notification> getNotificationsStu(Student s) {
+		Set <Notification> n = null;
 		if(s == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			Set<Notification> nAll = null;
-			nAll = notificationRepository.findByStudent(s);
-			return nAll;
+			n = s.getReceived() == null ? new HashSet<>() : s.getReceived();
 		}
+		return n;
 	} 
 	
 	@Transactional  
 	public Set<Notification> getNotificationsAdm(Administrator a) {
+		Set <Notification> n = null;
 		if(a == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			Set<Notification> nAll = null;
-			nAll = notificationRepository.findBySender(a);
-			return nAll;
+			n = a.getSent() == null ? new HashSet<>() : a.getSent();
 		}
+		return n;
 	} 
 	
 	@Transactional

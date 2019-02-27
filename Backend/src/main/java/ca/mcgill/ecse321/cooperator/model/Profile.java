@@ -9,17 +9,17 @@ import javax.persistence.Id;
 
 @Entity
 public abstract class Profile{
-   /*private Set<Notification> received;
+   private Set<Notification> received;
    
    @OneToMany
    public Set<Notification> getReceived() {
       return this.received;
    }
    
-   public void setReceived(Set<Notification> receiveds) {
-      this.received = receiveds;
+   public void setReceived(Set<Notification> received) {
+      this.received = received;
    }
-   
+  
    private Set<Notification> sent;
    
    @OneToMany(mappedBy="sender" )
@@ -30,7 +30,7 @@ public abstract class Profile{
    public void setSent(Set<Notification> sents) {
       this.sent = sents;
    }
-   */
+   
    private String email;
 
 public void setEmail(String value) {

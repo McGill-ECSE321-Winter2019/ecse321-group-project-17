@@ -57,9 +57,10 @@ public class TestCooperatorServiceCoop {
 		profileRepository.deleteAll();
 	}
 	
+	@Test
 	public void testCreateCoop() {
 		assertEquals(0, cs.getAllCoops().size());		
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 	
 		String emailS = "paul.hooley@gmail.com";
 		String nameS = "qwefqwefq";
@@ -99,6 +100,7 @@ public class TestCooperatorServiceCoop {
 		assertEquals(1, cs.getAllCoops().size());
 		assertEquals(title, cs.getCoop(id).getTitle());
 		assertEquals(1, cs.getCoopforStudent(stu).size());
+		assertEquals(address, cs.getCoop(id).getAddress());
 		checkResultCoop(idS, idE, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 	}
 	

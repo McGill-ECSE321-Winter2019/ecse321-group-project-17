@@ -57,7 +57,7 @@ public class TestCooperatorServiceStudent {
 	
 	@Test
 	public void testCreateStudent() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "paul.hooley@gmail.com";
 		String name = "Paul Hooley";
@@ -76,13 +76,14 @@ public class TestCooperatorServiceStudent {
 
 		assertEquals(1, allStudents.size());
 		assertEquals(name, allStudents.get(0).getName());
+		assertEquals(password, cs.getStudent(email).getPassword());
 		
 		//assertEquals("Paul Hooley", studentRepository.findStudentByName(name));
 	}
 	
 	@Test
 	public void testCreateStudentNull() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 		
 		String email = null;
 		String name = null;
@@ -103,13 +104,13 @@ public class TestCooperatorServiceStudent {
 				+"Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 		
 	}
 	
 	@Test
 	public void testCreateStudentEmpty() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "";
 		String name = "";
@@ -130,13 +131,14 @@ public class TestCooperatorServiceStudent {
 
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
+		
 
 	}
 	
 	@Test
 	public void testCreateStudentSpaces() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = " ";
 		String name = " ";
@@ -156,7 +158,16 @@ public class TestCooperatorServiceStudent {
 				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
+		assertEquals(0, cs.getAllStudents().size());
+		
+		try {
+			cs.getStudent("");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Student email cannot be empty!", error);
+
 
 	}
 

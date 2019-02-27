@@ -58,7 +58,7 @@ public class TestCooperatorServiceEmployer {
 	
 	@Test
 	public void testCreateEmployer() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "paul.hooley@gmail.com";
 		String name = "Paul Hooley";
@@ -78,14 +78,14 @@ public class TestCooperatorServiceEmployer {
 		assertEquals(1, allEmployers.size());
 		assertEquals(name, allEmployers.get(0).getName());
 		 
-		assertEquals("Paul Hooley", employerRepository.findEmployerByName(name).getName());
+		assertEquals("Paul Hooley", cs.getEmployer(email).getName());
 		assertEquals(null, employerRepository.findEmployerByName("Emma Eagles"));
 		
 	}
 	
 	@Test
 	public void testCreateEmployerNull() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 		
 		String email = null;
 		String name = null;
@@ -105,13 +105,13 @@ public class TestCooperatorServiceEmployer {
 				+"Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 	}
 	
 	@Test
 	public void testCreateEmployerEmpty() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "";
 		String name = "";
@@ -132,13 +132,13 @@ public class TestCooperatorServiceEmployer {
 
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 	}
 	
 	@Test
 	public void testCreateEmployerSpaces() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = " ";
 		String name = " ";
@@ -158,7 +158,15 @@ public class TestCooperatorServiceEmployer {
 				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
+		
+		try {
+			cs.getEmployer("");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Employer email cannot be empty!", error);
+
 	}
 	
 	@Test

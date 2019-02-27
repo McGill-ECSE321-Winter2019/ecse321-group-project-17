@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.cooperator.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.util.Set;
 
@@ -88,7 +89,8 @@ public class TestCooperatorServiceNotification {
 			error = e.getMessage();
 		}
 
-		assertEquals(null, error);
+		assertNull(error);
+		
 		assertEquals(1, cs.getAllNotifications().size());
 		assertEquals(id, cs.getAllNotifications().get(0).getId());
 		
@@ -131,7 +133,8 @@ public class TestCooperatorServiceNotification {
 			error = e.getMessage();
 		}
 
-		assertEquals(null, error);
+		assertNull(error);
+		
 		assertEquals(1, cs.getAllNotifications().size());
 		assertEquals(id, cs.getAllNotifications().get(0).getId());
 		
@@ -183,7 +186,7 @@ public class TestCooperatorServiceNotification {
 			error = e.getMessage();
 		}
 
-		assertEquals(null, error);
+		assertNull(error);
 
 		assertEquals(1, cs.getAllNotifications().size());
 		assertEquals(id, cs.getAllNotifications().get(0).getId());

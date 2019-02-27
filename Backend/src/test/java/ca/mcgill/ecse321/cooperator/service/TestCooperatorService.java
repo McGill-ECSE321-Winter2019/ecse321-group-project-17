@@ -56,7 +56,7 @@ public class TestCooperatorService {
 	
 	@Test
 	public void testCreateProfileNoPhone() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "emma.eagles@mail.mcgill.ca ";
 		String name = "Emma Eagles";
@@ -75,11 +75,11 @@ public class TestCooperatorService {
 		assertEquals("Phone cannot be empty! ", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 	}
 	@Test
 	public void testCreateProfileNoEmail() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "";
 		String name = "Emma Eagles";
@@ -98,7 +98,7 @@ public class TestCooperatorService {
 		assertEquals("Email cannot be empty! ", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 	}
 
 }

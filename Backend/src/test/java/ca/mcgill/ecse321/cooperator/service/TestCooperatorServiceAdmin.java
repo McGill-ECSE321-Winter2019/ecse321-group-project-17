@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -56,12 +58,12 @@ public class TestCooperatorServiceAdmin {
 	
 	@Test
 	public void testCreateAdmin() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "paul.hooley@gmail.com";
 		String name = "Paul Hooley";
 		String password = "frisbyislife";
-		int id = 3;
+		Integer id = 3;
 		String phone = "6047862815";
 
 		try {
@@ -76,14 +78,13 @@ public class TestCooperatorServiceAdmin {
 		assertEquals(1, allAdmins.size());
 		assertEquals(name, allAdmins.get(0).getName());
 		
-		assertEquals("Paul Hooley", administratorRepository.findAdministratorByName(name).getName());
+		assertEquals("Paul Hooley", cs.getAdmin(email).getName());
 		assertEquals(null, administratorRepository.findAdministratorByName("Albert Kragl"));
-		
 	}
 
 	@Test
 	public void testCreateAdminNull() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 		
 		String email = null;
 		String name = null;
@@ -103,13 +104,13 @@ public class TestCooperatorServiceAdmin {
 				+"Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 	}
 	
 	@Test
 	public void testCreateAdminEmpty() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = "";
 		String name = "";
@@ -129,13 +130,13 @@ public class TestCooperatorServiceAdmin {
 				+"Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 	}
 	
 	@Test
 	public void testCreateAdminSpaces() {
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
 
 		String email = " ";
 		String name = " ";
@@ -155,7 +156,14 @@ public class TestCooperatorServiceAdmin {
 				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
 
 		// check no change in memory
-		assertEquals(0, cs.getAllProfiles().size());
+		assertEquals(0, cs.getNumberofProfiles());
+		
+		try {
+			cs.getAdmin("");
+		} catch (IllegalArgumentException e) {
+			error = e.getMessage();
+		}
+		assertEquals("Administrator email cannot be empty!", error);
 
 	}
 	
