@@ -6,3 +6,8 @@ jdk:
 
 script:
   - ./gradlew build
+
+deploy:
+  provider: heroku
+  api_key: 86799e0e-7d72-481f-a32b-76920d363c2c
+  app: ecse321-group17
