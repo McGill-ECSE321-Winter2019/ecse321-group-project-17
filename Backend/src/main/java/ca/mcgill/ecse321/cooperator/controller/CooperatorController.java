@@ -66,6 +66,7 @@ public class CooperatorController {
 						   "/student/create/{email}/{password}/{name}/{phone}/{studentId}/" })
 	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer studentId) {
+		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
 		Student student = service.createStudent(email, name, password, phone, studentId);
 		return convertToDto(student);
 	}
@@ -74,6 +75,7 @@ public class CooperatorController {
 			        	   "/employer/create/{email}/{password}/{name}/{phone}/{emplId}/" })
 	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer emplId) {
+		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
 		Employer empl = service.createEmployer(email, name, password, phone, emplId);
 		return convertToDto(empl);
 	}
@@ -82,6 +84,7 @@ public class CooperatorController {
 			  			   "/admin/create/{email}/{password}/{name}/{phone}/{adminId}/" })
 	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer adminId) {
+		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
 		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
 		return convertToDto(admin);
 	}
@@ -92,6 +95,8 @@ public class CooperatorController {
 								@PathVariable String empEmail, @PathVariable String start, @PathVariable String end, 
 								@PathVariable CoopStatus status, @PathVariable Integer salaryPerHour, @PathVariable Integer hoursPerWeek, 
 								@PathVariable String address) {
+		title = title.replace('_', ' ');
+		address = address.replace('_', ' ');
 		Student stu = service.getStudent(stuEmail);
 		Employer emp = service.getEmployer(empEmail);
 		Date startDate = Date.valueOf(start);
