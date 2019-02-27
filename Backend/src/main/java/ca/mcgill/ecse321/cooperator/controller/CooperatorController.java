@@ -223,7 +223,7 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "/reports/coop/student/{email}", "/reports/coop/student/{email}" })
+	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}" })
 	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
 		Student s = convertToDomainObject(sDto);
 		List<ReportDto> reportDtos;
