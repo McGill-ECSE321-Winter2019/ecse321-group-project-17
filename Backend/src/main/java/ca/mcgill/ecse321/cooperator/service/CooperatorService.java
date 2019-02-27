@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.cooperator.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -343,6 +344,21 @@ public class CooperatorService {
 		n.setSender(a);
 		n.setEmployer(e);
 		n.setStudent(s);
+		
+		if (a != null) {
+			Set<Notification> notifs = a.getSent();
+			if (notifs == null) notifs = new HashSet<>();
+			notifs.add(n);
+			a.setSent(notifs);
+		}
+
+		if (e != null) {
+			Set<Notification> notifs = e.getReceived();
+			if (notifs == null) notifs = new HashSet<>();
+			notifs.add(n);
+			e.setReceived(notifs);
+		}
+
 		notificationRepository.save(n);
 		return n;
 	}
@@ -354,7 +370,7 @@ public class CooperatorService {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			n = e.getReceived();
+			n = e.getReceived() == null ? new HashSet<>() : e.getReceived();
 		}
 		return n;
 	} 
@@ -366,7 +382,7 @@ public class CooperatorService {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			n = s.getReceived();
+			n = s.getReceived() == null ? new HashSet<>() : s.getReceived();
 		}
 		return n;
 	}
@@ -378,7 +394,7 @@ public class CooperatorService {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		}
 		else {
-			n = a.getSent();
+			n = a.getSent() == null ? new HashSet<>() : a.getSent();
 		}
 		return n;
 	}
