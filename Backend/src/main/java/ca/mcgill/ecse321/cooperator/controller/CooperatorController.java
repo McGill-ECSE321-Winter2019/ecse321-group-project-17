@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopDto;
+import ca.mcgill.ecse321.cooperator.dto.CoopStatisticsDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
 import ca.mcgill.ecse321.cooperator.dto.ReportDto;
+import ca.mcgill.ecse321.cooperator.dto.ReportStatisticsDto;
 import ca.mcgill.ecse321.cooperator.dto.NotificationDto;
 import ca.mcgill.ecse321.cooperator.dto.StudentDto;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
@@ -41,6 +43,23 @@ public class CooperatorController {
 	 * POST METHODS
 	 * 
 	 */
+	
+	// STATISTICS METHODS
+	
+	@PostMapping(value = { "/statistics/{type}/{currentyear}/{gradyear}", "/statistcs/coop/{currentyear}/{gradyear}/" })
+	public CoopStatisticsDto getCoopStatistics(@PathVariable("currentyear") Integer currentyear, @PathVariable("gradyear") Integer gradyear) {
+		CoopStatisticsDto coopStatistics = new CoopStatisticsDto().generateAllCoopStatistics(currentyear, gradyear);
+		return coopStatistics;
+	}
+	
+	@PostMapping(value = { "/statistics/report/{currentyear}/{gradyear}", "/statistcs/report/{currentyear}/{gradyear}/" })
+	public ReportStatisticsDto getReportStatistics(@PathVariable("currentyear") Integer currentyear, @PathVariable("gradyear") Integer gradyear) {
+		ReportStatisticsDto reportStatisticsDto = new ReportStatisticsDto().generateAllReportStatistics(currentyear, gradyear);
+		return reportStatisticsDto;
+	}
+	
+	// CREATE METHODS
+	
 	@PostMapping(value = { "/student/create/{email}/{password}/{name}/{phone}/{studentId}", 
 						   "/student/create/{email}/{password}/{name}/{phone}/{studentId}/" })
 	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
