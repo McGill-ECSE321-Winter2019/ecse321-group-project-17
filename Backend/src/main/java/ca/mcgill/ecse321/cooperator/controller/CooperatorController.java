@@ -41,7 +41,7 @@ public class CooperatorController {
 	 * POST METHODS
 	 * 
 	 */
-	@PostMapping(value = { "/student/{email}/{password}/{name}/{phone}/{studentId}", 
+	@PostMapping(value = { "/student/create/{email}/{password}/{name}/{phone}/{studentId}", 
 						   "/student/create/{email}/{password}/{name}/{phone}/{studentId}/" })
 	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer studentId) {
@@ -49,7 +49,7 @@ public class CooperatorController {
 		return convertToDto(student);
 	}
 	
-	@PostMapping(value = { "/employer/{email}/{password}/{name}/{phone}/{emplId}",  
+	@PostMapping(value = { "/employer/create/{email}/{password}/{name}/{phone}/{emplId}",  
 			        	   "/employer/create/{email}/{password}/{name}/{phone}/{emplId}/" })
 	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer emplId) {
@@ -57,16 +57,16 @@ public class CooperatorController {
 		return convertToDto(empl);
 	}
 	
-	@PostMapping(value = { "/admin/{email}/{password}/{name}/{phone}/{adminId}",  
-			  			   "/admin/{email}/{password}/{name}/{phone}/{adminId}/" })
+	@PostMapping(value = { "/admin/create/{email}/{password}/{name}/{phone}/{adminId}",  
+			  			   "/admin/create/{email}/{password}/{name}/{phone}/{adminId}/" })
 	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer adminId) {
 		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
 		return convertToDto(admin);
 	}
 	
-	@PostMapping(value = { "/coop/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}",  
-						   "/coop/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}/" })
+	@PostMapping(value = { "/coop/create/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}",  
+						   "/coop/create/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}/" })
 	public CoopDto createCoop(@PathVariable("id") Integer id, @PathVariable String title, @PathVariable String stuEmail, 
 								@PathVariable String empEmail, @PathVariable String start, @PathVariable String end, 
 								@PathVariable CoopStatus status, @PathVariable Integer salaryPerHour, @PathVariable Integer hoursPerWeek, 
@@ -83,25 +83,25 @@ public class CooperatorController {
 	
 	//CAN ONLY DO THIS IF THE BACKWARDS ASSOCIATION IN CREATE NOTIFICATION IN SERVICE FILE IS COMMENTED OUT
 	//THERES A COMMENT TO SHOW WHICH TO COMMENT OUT
-	@PostMapping(value = { "/notification/{id}/{text}/{sender}/{student}/{employer}", 
-						   "/notification/{id}/{text}/{sender}/{student}/{employer}/" })
+	@PostMapping(value = { "/notification/create/{id}/{text}/{senderEmail}/{stuEmail}/{empEmail}", 
+						   "/notification/create/{id}/{text}/{senderEmail}/{stuEmail}/{empEmail}/" })
 	public NotificationDto createNotif(@PathVariable("id") Integer id, @PathVariable String text, 
-			@PathVariable String sender, @PathVariable String student, @PathVariable String employer) {
-		Administrator a = service.getAdmin(sender);
+			@PathVariable String senderEmail, @PathVariable String stuEmail, @PathVariable String empEmail) {
+		Administrator a = service.getAdmin(senderEmail);
 		Student s = null;
 		Employer e = null;
-		if(!student.equalsIgnoreCase("null")) {
-			s = service.getStudent(student);
+		if(!stuEmail.equalsIgnoreCase("null")) {
+			s = service.getStudent(stuEmail);
 		}
-		if(!employer.equalsIgnoreCase("null")) {
-			e = service.getEmployer(employer);
+		if(!empEmail.equalsIgnoreCase("null")) {
+			e = service.getEmployer(empEmail);
 		}
 		Notification notif = service.createNotification(id, text, a, s, e);
 		return convertToDto(notif);
 	}
 	
-	@PostMapping(value = { "/report/{id}/{coopID}/{date}/{status}/{type}", 
-	   					   "/report/{id}/{coopID}/{date}/{status}/{type}/" })
+	@PostMapping(value = { "/report/create/{id}/{coopID}/{date}/{status}/{type}", 
+	   					   "/report/create/{id}/{coopID}/{date}/{status}/{type}/" })
 	public ReportDto createReport(@PathVariable("id") Integer id, @PathVariable Integer coopId, 
 								  @PathVariable Date date, @PathVariable ReportStatus status, 
 								  @PathVariable ReportType type) {
