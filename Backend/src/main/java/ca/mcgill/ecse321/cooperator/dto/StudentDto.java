@@ -11,7 +11,6 @@ public class StudentDto {
 		private String name;
 		private Integer id;
 		private String phone;
-		private Set<CoopDto> coops;
 		private Set<NotificationDto> received;
 	
 		public StudentDto() {
@@ -27,7 +26,6 @@ public class StudentDto {
 			this.email = email;
 			this.id = id;
 			this.password = password;
-			this.coops = null;
 			this.received = null;
 			this.phone = phone;
 		}
@@ -66,14 +64,6 @@ public class StudentDto {
 		
 		public void setEmail(String email) {
 			this.email = email;
-		}
-		
-		public Set<CoopDto> getCoops() {
-			return coops;
-		}
-		
-		public void setCoops(Set<CoopDto> coops) {
-			this.coops = coops;
 		}
 		
 		public Set<NotificationDto> getNotifications() {

@@ -2,6 +2,7 @@ package ca.mcgill.ecse321.cooperator.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -209,31 +210,31 @@ public class CooperatorService {
 		Coop c = coopRepository.findCoopByid(id);
 		return c;
 	}
+	/* THESE NEXT TWO CAUSE NULL POINTER FROM RESTFUL */
 	
-	@Transactional 
-	public Set<Coop> getIncompleteCoop(){
-		Iterable<Coop> all = coopRepository.findAll();
-		Set<Coop> incomplete = null;
+	/*@Transactional 
+	public List<Coop> getIncompleteCoop(){
+		List<Coop> all = toList(coopRepository.findAll());
+		List<Coop> inc = null;
 		for(Coop c : all) {
 			if(c.getStatus() == CoopStatus.Incomplete) {
-				incomplete.add(c);
+				inc.add(c);
 			}
 		}
-		return incomplete;
-	}
+		return all;
+	} 
 	
 	@Transactional 
-	public Set<Student> getIncompleteCoopStudents(){
-		Iterable<Coop> all = coopRepository.findAll();
-		Set<Student> incomplete = null;
-		for(Coop c : all) {
-			if(c.getStatus() == CoopStatus.Incomplete) {
-				incomplete.add(c.getStudent());
-			}
+	public List<Student> getIncompleteCoopStudents(){
+		List<Coop> inComp = getIncompleteCoop();
+		List<Student> s = null;
+		s.add(null);
+		for(Coop c : inComp) {
+			s.add(c.getStudent());
 		}
-		return incomplete;
+		return s;
 	}
-	
+	*/
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());
@@ -325,6 +326,8 @@ public class CooperatorService {
 		n.setSender(a);
 		n.setEmployer(e);
 		n.setStudent(s);
+		
+		/* COMMENT THESE THREE IF STATEMENTS OUT FOR RESTFUL NOTIFCATION CREATE TO WORK */
 		
 		if (a != null) {
 			Set<Notification> notifs = a.getSent();

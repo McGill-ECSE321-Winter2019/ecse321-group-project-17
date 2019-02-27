@@ -4,17 +4,14 @@ import java.sql.Date;
 import java.util.List;
 
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
-import ca.mcgill.ecse321.cooperator.model.Employer;
-import ca.mcgill.ecse321.cooperator.model.Report;
-import ca.mcgill.ecse321.cooperator.model.Student;
 
 public class CoopDto {
 
 	private Integer id; // primary key
 	private String title; // not null, not empty
-	private Student student;
-	private Employer employer;
-	private List<Report> report;
+	private StudentDto student;
+	private EmployerDto employer;
+	private List<ReportDto> report;
 	private Date startDate;
 	private Date endDate;
 	private CoopStatus status;
@@ -29,7 +26,7 @@ public class CoopDto {
 		this(id, "title "+id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "");
 	}
 	
-	public CoopDto(Integer id, String title, Student student, Employer employer, Date startDate, Date endDate, 
+	public CoopDto(Integer id, String title, StudentDto student, EmployerDto employer, Date startDate, Date endDate, 
 			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		this.student = student;
 		this.employer = employer;
@@ -44,27 +41,27 @@ public class CoopDto {
 		this.address = address;
 	}
 
-	public Student getStudent() {
+	public StudentDto getStudent() {
 		return student;
 	}
 
-	public void setStudent(Student student) {
+	public void setStudentDto(StudentDto student) {
 		this.student = student;
 	}
 
-	public Employer getEmployer() {
+	public EmployerDto getEmployer() {
 		return employer;
 	}
 
-	public void setEmployer(Employer employer) {
+	public void setEmployer(EmployerDto employer) {
 		this.employer = employer;
 	}
 
-	public List<Report> getFile() {
+	public List<ReportDto> getReports() {
 		return report;
 	}
 
-	public void setReport(List<Report> report) {
+	public void setReport(List<ReportDto> report) {
 		this.report = report;
 	}
 

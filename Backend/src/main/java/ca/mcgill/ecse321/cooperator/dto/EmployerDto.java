@@ -9,7 +9,6 @@ public class EmployerDto extends ProfileDto{
 		private String email; // primary key
 		private String password; // not empty, not null
 		private String name;
-		private Set<CoopDto> coops;
 		private String phone;
 		private Integer id;
 		private Set<NotificationDto> received;
@@ -27,7 +26,6 @@ public class EmployerDto extends ProfileDto{
 			this.email = email;
 			this.id = id;
 			this.password = password;
-			this.coops = null;
 			this.received = null;
 			this.phone = phone;
 		}
@@ -66,14 +64,6 @@ public class EmployerDto extends ProfileDto{
 		
 		public void setEmail(String email) {
 			this.email = email;
-		}
-		
-		public Set<CoopDto> getCoops() {
-			return coops;
-		}
-		
-		public void setCoops(Set<CoopDto> coops) {
-			this.coops = coops;
 		}
 		
 		public Set<NotificationDto> getNotifications() {
