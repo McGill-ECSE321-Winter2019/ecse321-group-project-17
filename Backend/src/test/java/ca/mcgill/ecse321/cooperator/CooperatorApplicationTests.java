@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.json.*;
 import org.junit.Before;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -12,11 +13,13 @@ import ca.mcgill.ecse321.cooperator.controller.CooperatorController;
 import ca.mcgill.ecse321.cooperator.dao.*;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
+import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.Student;
 import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 import org.mockito.invocation.InvocationOnMock;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -27,7 +30,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.sql.Date;
 import java.util.Set;
+import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -93,13 +100,19 @@ public class CooperatorApplicationTests{
 		coop.setStartDate(new Date(2018,01,12));
 		coop.setEndDate(new Date(2018,04,29));
 		coop.setId(COOP_KEY);
-		Student student = new Student();
-		student.setName("Eliot");
-		student.setEmail("eliot@test.com");
-		coop.setStudent(student);
-		Set<Coop> coops = new HashSet<Coop>();
-		student.setCoop(coops);
+		coop.setStatus(CoopStatus.InProgress);
 		return coop;
+	  });
+	  
+	  when(coopDao.findAll()).thenAnswer( (InvocationOnMock invocation) -> {
+		Coop coop = new Coop();
+		coop.setStartDate(new Date(2018,01,12));
+		coop.setEndDate(new Date(2018,04,29));
+		coop.setId(COOP_KEY);
+		coop.setStatus(CoopStatus.InProgress);
+		Set<Coop> coops = new HashSet<Coop>();
+		coops.add(coop);
+		return coops;
 	  });
 	}
 	
@@ -120,14 +133,15 @@ public class CooperatorApplicationTests{
 	}
 	
 	@Test
-	public void testCoopAPI() throws Exception {
+	public void testCoopInRange() throws Exception {
 		String url = "http://ecse321-group17.herokuapp.com/statistics/coop/Winter2018/Winter2019/1";
 		String res = sendGet(url);
-		System.out.println("Response: "+res);
-		assertNotNull(service.getCoop(COOP_KEY));
-		//assertEquals(res, service.getCoop(COOP_KEY));
+		List<String> resList= parseResponse(res);
+		Integer serviceInProgress = service.getCoop(COOP_KEY).getStatus() == CoopStatus.InProgress ? 1 : 0;
+		Integer responseInProgress = Integer.valueOf(getParameter("inProgressCoops", resList));
+		assertEquals(serviceInProgress, responseInProgress);
 	}
-	
+
 	@Test
 	public void testMockCoopCreation() {
 		assertNotNull(coop);
@@ -190,6 +204,28 @@ public class CooperatorApplicationTests{
 		}
 		in.close();
 		return response.toString();
+	}
+	
+	private List<String> parseResponse(String resp) {
+		String delimiters = "(\")*[{}:,](\")*";
+
+	    // analyzing the string 
+	    String[] tokensVal = resp.split(delimiters);
+
+	    List<String> result = new ArrayList<String>();
+	    for (String token : tokensVal) {
+	    	result.add(token);
+	    }
+	    result.remove(0); //remove first element because it will be a space
+	    return result;
+	    
+	}
+	
+	private String getParameter(String parameter, List<String> list) {
+		for(int index=0; index<list.size(); index++) {
+			if(list.get(index).equalsIgnoreCase(parameter)) return list.get(index+1);
+		}
+		return null;
 	}
 }
 
