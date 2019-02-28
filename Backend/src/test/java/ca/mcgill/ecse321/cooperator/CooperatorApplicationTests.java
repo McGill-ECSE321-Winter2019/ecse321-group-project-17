@@ -121,7 +121,7 @@ public class CooperatorApplicationTests{
 	
 	@Test
 	public void testCoopAPI() throws Exception {
-		String url = "http://localhost:8081/statistics/coop/Winter2018/Winter2019/1";
+		String url = "http://ecse321-group17.herokuapp.com/statistics/coop/Winter2018/Winter2019/1";
 		String res = sendGet(url);
 		System.out.println("Response: "+res);
 		assertNotNull(service.getCoop(COOP_KEY));
