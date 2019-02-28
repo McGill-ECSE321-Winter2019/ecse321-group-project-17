@@ -209,7 +209,7 @@ public class CooperatorService {
 	
 	@Transactional 
 	public Coop getCoop(Integer id) {
-		Coop c = coopRepository.findCoopByid(id);
+		Coop c = coopRepository.findCoopById(id);
 		return c;
 	}
 	/* THESE NEXT TWO CAUSE NULL POINTER FROM RESTFUL */
