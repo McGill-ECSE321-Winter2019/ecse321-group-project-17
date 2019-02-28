@@ -132,14 +132,14 @@ public class CooperatorController {
 	@GetMapping(value = { "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}", "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}/" })
 	public CoopStatisticsDto getCoopStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
 			@PathVariable("coopNumber") Integer coopNumber) {
-		CoopStatisticsDto coopStatistics = new CoopStatisticsDto().generateAllCoopStatistics(startTerm, endTerm, coopNumber);
+		CoopStatisticsDto coopStatistics = service.generateAllCoopStatistics(startTerm, endTerm, coopNumber);
 		return coopStatistics;
 	}
 	
 	@GetMapping(value = { "/statistics/report/{startTerm}/{endTerm}/{coopNumber}", "/statistics/report/{startTerm}/{endTerm}/{coopNumber}/" })
 	public ReportStatisticsDto getReportStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
 			@PathVariable("coopNumber") Integer coopNumber) {
-		ReportStatisticsDto reportStatisticsDto = new ReportStatisticsDto().generateAllReportStatistics(startTerm, endTerm, coopNumber);
+		ReportStatisticsDto reportStatisticsDto = service.generateAllReportStatistics(startTerm, endTerm, coopNumber);
 		return reportStatisticsDto;
 	}
 	

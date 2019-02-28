@@ -10,8 +10,6 @@ import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 
 public class CoopStatisticsDto {
-	@Autowired
-	CoopRepository coopRepository;
 	
 	// filters 
 	private String startTerm; 	// format: {Winter,Fall,Summer}{Year}, if empty don't apply
@@ -29,7 +27,6 @@ public class CoopStatisticsDto {
 		this("","",0,0,0,0,0);
 	}
 	
-	
 	public CoopStatisticsDto(String startTerm, String endTerm, Integer coopNumber,
 			Integer notStartedCoops, Integer inProgressCoops, Integer completedCoops, Integer totalCoops) {
 		super();
@@ -41,74 +38,8 @@ public class CoopStatisticsDto {
 		this.completedCoops = completedCoops;
 		this.totalCoops = totalCoops;
 	}
-
-	/*
-	 * Generates statistics. Can filter by a range of terms (i.e Winter2018 to Fall2019) and/or a specific coop (i.e only students doing there 1st coop)
-	 */
-	public CoopStatisticsDto generateAllCoopStatistics(String startTerm, String endTerm, Integer coopNumber) {
-		CoopStatisticsDto csd = new CoopStatisticsDto();
-		csd.startTerm = startTerm;
-		csd.endTerm = endTerm;
-		csd.coopNumber = coopNumber;
-		Iterable<Coop> coops = coopRepository.findAll();
-		
-		List<Coop> filter1 = new ArrayList<Coop>();
-		// filter out anything before startTerm
-		String startSeason = extractSeason(startTerm);
-		Integer startYear = extractYear(startTerm);
-		if (startSeason != "" && startYear != 0) { 
-			Date startDate = getStartDate(startSeason, startYear);
-			for(Coop coop : coops) {
-				if(coop.getStartDate().after(startDate)) { // if the coop start after the start of the term
-					filter1.add(coop);
-				}
-			}
-		}
-		
-		List<Coop> filter2 = new ArrayList<Coop>();
-		// filter out anything after the endTerm
-		String endSeason = extractSeason(endTerm);
-		Integer endYear = extractYear(endTerm);
-		if (endSeason != "" && endYear != 0) { 
-			Date endDate = getEndDate(endSeason, endYear);
-			for(Coop coop : filter1) {
-				if(coop.getStartDate().before(endDate)) { // if the coop starts before the end of the term
-					filter2.add(coop);
-				}
-			}
-		}
-		
-		List<Coop> filter3 = new ArrayList<Coop>();
-		// filter out students who aren't on their [coopNumber] coop
-		if (coopNumber != 0) {
-			for(Coop coop: filter2) {
-				if(coop.getStudent().getCoopsCompleted() == coopNumber-1) { // if the student is on there [coopNumber] coop
-					filter3.add(coop);
-				}
-			}
-		}
-		
-		// fill statistics
-		for (Coop coop: filter3) {
-			csd.totalCoops++;
-			switch(coop.getStatus()) {
-			case NotStarted:
-				csd.notStartedCoops++;
-				break;
-			case InProgress:
-				csd.inProgressCoops++;
-				break;
-			case Completed:
-				csd.completedCoops++;
-				break;
-			default:
-				break;
-			}
-		}
-		return csd;
-	}
 	
-	private Date getStartDate(String season, Integer year) {
+	public Date getStartDate(String season, Integer year) {
 		int day = 1;
 		int month = 0;
 		switch(season) {
@@ -125,7 +56,7 @@ public class CoopStatisticsDto {
 		return new Date(year, month, day);
 	}
 	
-	private Date getEndDate(String season, Integer year) {
+	public Date getEndDate(String season, Integer year) {
 		int month = 0, day = 0;
 		switch(season) {
 		case "winter":
@@ -142,7 +73,7 @@ public class CoopStatisticsDto {
 	}
 	
 	// returns "winter", "summer", "fall", or "" 
-	private String extractSeason(String term) {
+	public String extractSeason(String term) {
 		String stringOnly = term.replaceAll("[0-9]", "");
 		if (stringOnly.matches("[Ww]inter") || stringOnly.matches("[Ss]ummer") || stringOnly.matches("[Ff]all")) {
 			return stringOnly.toLowerCase();
@@ -151,7 +82,7 @@ public class CoopStatisticsDto {
 	}
 	
 	// returns Integer like 20XX or 0
-	private Integer extractYear(String term) {
+	public Integer extractYear(String term) {
 		String numberOnly = term.replaceAll("[^0-9]", "");
 		if(numberOnly.matches("20[0-9][0-9]")) {
 			return Integer.valueOf(numberOnly);
@@ -242,5 +173,4 @@ public class CoopStatisticsDto {
 		this.totalCoops = totalCoops;
 	}
 
-	
 }
