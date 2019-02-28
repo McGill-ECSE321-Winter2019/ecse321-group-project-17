@@ -428,6 +428,20 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
+	public Report createReport(Report r) {
+		String error = "";
+		if(r == null) {
+			error = ("Report cannot be null!");
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
+		}
+
+		reportRepository.save(r);
+		return r;
+	}
+	
+	@Transactional  
 	public Optional<Report> getReport(Integer id) {
 		Optional<Report> r = reportRepository.findById(id);
 		return r;

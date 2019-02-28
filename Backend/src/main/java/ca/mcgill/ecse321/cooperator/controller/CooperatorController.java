@@ -44,8 +44,6 @@ public class CooperatorController {
 	 * 
 	 */
 	
-	
-	
 	// CREATE METHODS
 	
 	@PostMapping(value = { "/student/create/{email}/{password}/{name}/{phone}/{studentId}", 
@@ -92,7 +90,6 @@ public class CooperatorController {
 		return convertToDto(coop);
 	} 
 	
-	
 	//CAN ONLY DO THIS IF THE BACKWARDS ASSOCIATION IN CREATE NOTIFICATION IN SERVICE FILE IS COMMENTED OUT
 	//THERES A COMMENT TO SHOW WHICH TO COMMENT OUT
 	@PostMapping(value = { "/notification/create/{id}/{text}/{senderEmail}/{stuEmail}/{empEmail}", 
@@ -120,6 +117,18 @@ public class CooperatorController {
 		Coop c = service.getCoop(coopId);
 		Report report = service.createReport(id, c, date, status, type);
 		return convertToDto(report);
+	}
+	
+	/*
+	 * UNTESTED
+	 */
+	@GetMapping(value = { "/reports/update/{id}", "/reports/student/{id}" })
+	public ReportDto updateReport(@PathVariable("id") ReportDto rDto){
+		Report r = convertToDomainObject(rDto);
+
+		service.createReport(r);
+		
+		return rDto;
 	}
 
 	/*
@@ -352,6 +361,16 @@ public class CooperatorController {
 			rDto.add(convertToDto(rep));
 		}
 		return rDto;
+	}
+	
+	private Report convertToDomainObject(ReportDto rDto) {
+		List<Report> allReports = service.getAllReports();
+		for (Report r : allReports) {
+			if (r.getId().equals(rDto.getID())) {
+				return r;
+			}
+		}
+		return null;
 	}
 	
 	private NotificationDto convertToDto(Notification n) {
