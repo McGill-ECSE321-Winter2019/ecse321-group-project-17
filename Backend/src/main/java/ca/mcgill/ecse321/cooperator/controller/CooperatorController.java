@@ -44,21 +44,7 @@ public class CooperatorController {
 	 * 
 	 */
 	
-	// STATISTICS METHODS
 	
-	@PostMapping(value = { "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}", "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}/" })
-	public CoopStatisticsDto getCoopStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
-			@PathVariable("coopNumber") Integer coopNumber) {
-		CoopStatisticsDto coopStatistics = new CoopStatisticsDto().generateAllCoopStatistics(startTerm, endTerm, coopNumber);
-		return coopStatistics;
-	}
-	
-	@PostMapping(value = { "/statistics/report/{startTerm}/{endTerm}/{coopNumber}", "/statistics/report/{startTerm}/{endTerm}/{coopNumber}/" })
-	public ReportStatisticsDto getReportStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
-			@PathVariable("coopNumber") Integer coopNumber) {
-		ReportStatisticsDto reportStatisticsDto = new ReportStatisticsDto().generateAllReportStatistics(startTerm, endTerm, coopNumber);
-		return reportStatisticsDto;
-	}
 	
 	// CREATE METHODS
 	
@@ -140,10 +126,28 @@ public class CooperatorController {
 	 * GET METHODS
 	 * 
 	 */
+	
+	// STATISTICS METHODS
+	
+	@GetMapping(value = { "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}", "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}/" })
+	public CoopStatisticsDto getCoopStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
+			@PathVariable("coopNumber") Integer coopNumber) {
+		CoopStatisticsDto coopStatistics = new CoopStatisticsDto().generateAllCoopStatistics(startTerm, endTerm, coopNumber);
+		return coopStatistics;
+	}
+	
+	@GetMapping(value = { "/statistics/report/{startTerm}/{endTerm}/{coopNumber}", "/statistics/report/{startTerm}/{endTerm}/{coopNumber}/" })
+	public ReportStatisticsDto getReportStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
+			@PathVariable("coopNumber") Integer coopNumber) {
+		ReportStatisticsDto reportStatisticsDto = new ReportStatisticsDto().generateAllReportStatistics(startTerm, endTerm, coopNumber);
+		return reportStatisticsDto;
+	}
+	
 	@GetMapping(value = { "/student/{email}", "/student/{email}/" })
 	public StudentDto getStudent(@PathVariable("email") String email) {
 		if(service.getAllStudents().size()!=0) {
 			Student stu = service.getStudent(email);
+			System.out.println("Requested student: "+stu.getEmail());
 			return convertToDto(stu);
 		}
 		return null;
