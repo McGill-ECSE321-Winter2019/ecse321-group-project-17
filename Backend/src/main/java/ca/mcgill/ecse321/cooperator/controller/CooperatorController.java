@@ -69,14 +69,12 @@ public class CooperatorController {
 		return convertToDto(admin);
 	}
 	
-	@PostMapping(value = { "/coop/create/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}",  
-						   "/coop/create/{id}/{title}/{stuEmail}/{empEmail}/{start}/{end}/{status}/{salaryPerHour}/{hoursPerWeek}/{address}/" })
-	public CoopDto createCoop(@PathVariable("id") Integer id, @PathVariable String title, @PathVariable String stuEmail, 
-								@PathVariable String empEmail, @PathVariable String start, @PathVariable String end, 
-								@PathVariable CoopStatus status, @PathVariable Integer salaryPerHour, @PathVariable Integer hoursPerWeek, 
-								@PathVariable String address) {
-		title = title.replace('_', ' ');
-		address = address.replace('_', ' ');
+	@PostMapping("/coop/create")
+	public CoopDto createCoop(@RequestParam("id") Integer id, @RequestParam String title, @RequestParam String stuEmail, 
+			@RequestParam String empEmail, @RequestParam String start, @RequestParam String end, 
+			@RequestParam CoopStatus status, @RequestParam Integer salaryPerHour, @RequestParam Integer hoursPerWeek, 
+			@RequestParam String address) {
+
 		Student stu = service.getStudent(stuEmail);
 		Employer emp = service.getEmployer(empEmail);
 		Date startDate = Date.valueOf(start);
@@ -92,7 +90,7 @@ public class CooperatorController {
 	
 	//create single notification for either employer or student
 	@PostMapping("/notification/create")
-	public NotificationDto createNotif(@RequestParam Integer id, @RequestParam String text, 
+	public NotificationDto createNotif(@RequestParam ("id") Integer id, @RequestParam String text, 
 			@RequestParam String senderEmail, @RequestParam (required = false) String stuEmail, 
 			@RequestParam (required = false) String empEmail) {
 		Administrator a = service.getAdmin(senderEmail);
@@ -142,11 +140,10 @@ public class CooperatorController {
 	}
 	
 
-	@PostMapping(value = { "/report/create/{id}/{coopId}/{date}/{status}/{type}", 
-	   					   "/report/create/{id}/{coopId}/{date}/{status}/{type}/" })
-	public ReportDto createReport(@PathVariable("id") Integer id, @PathVariable Integer coopId, 
-								  @PathVariable Date date, @PathVariable ReportStatus status, 
-								  @PathVariable ReportType type) {
+	@PostMapping("/report/create")
+	public ReportDto createReport(@RequestParam("id") Integer id, @RequestParam Integer coopId, 
+			@RequestParam Date date, @RequestParam ReportStatus status, 
+			@RequestParam ReportType type) {
 		Coop c = service.getCoop(coopId);
 		Report report = service.createReport(id, c, date, status, type);
 		return convertToDto(report);
@@ -238,7 +235,7 @@ public class CooperatorController {
 	public List<CoopDto> getIncompleteCoop(@PathVariable("status") CoopStatus status) {
 		List<Coop> all = service.getCoopsByStatus(status);
 		
-		List<CoopDto> inc = null;
+		List<CoopDto> inc = new ArrayList<>();
 		for (Coop c : all) {
 			inc.add(convertToDto(c));
 		}
@@ -248,7 +245,7 @@ public class CooperatorController {
 	@GetMapping(value = { "/coopsByStatus/{status}", "/coopsByStatus/{status}/" })
 	public List<CoopDto> getCoopByStatus(@PathVariable("status") CoopStatus status) {
 		List<Coop> c = service.getCoopsByStatus(status);
-		List<CoopDto> cDto = null;
+		List<CoopDto> cDto = new ArrayList<>();
 		for(Coop coop : c) {
 			cDto.add(convertToDto(coop));
 		}
@@ -258,7 +255,7 @@ public class CooperatorController {
 	@GetMapping(value = { "/reportsByStatus/{status}", "/reportsByStatus/{status}/" })
 	public List<ReportDto> getReportByStatus(@PathVariable("status") ReportStatus status) {
 		List<Report> r = service.getReportByStatus(status);
-		List<ReportDto> rDto = null;
+		List<ReportDto> rDto = new ArrayList<>();
 		for(Report report : r) {
 			rDto.add(convertToDto(report));
 		}
@@ -268,7 +265,7 @@ public class CooperatorController {
 	@GetMapping(value = { "/reportsByType/{type}", "/reportsByType/{type}/" })
 	public List<ReportDto> getReportByStatus(@PathVariable("type") ReportType type) {
 		List<Report> r = service.getReportByType(type);
-		List<ReportDto> rDto = null;
+		List<ReportDto> rDto = new ArrayList<>();
 		for(Report report : r) {
 			rDto.add(convertToDto(report));
 		}
