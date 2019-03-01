@@ -55,20 +55,16 @@ public class CooperatorController {
 		return convertToDto(student);
 	}
 	
-	@PostMapping(value = { "/employer/create/{email}/{password}/{name}/{phone}/{emplId}",  
-			        	   "/employer/create/{email}/{password}/{name}/{phone}/{emplId}/" })
-	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
-			@PathVariable String phone, @PathVariable Integer emplId) {
-		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
+	@PostMapping("/employer/create")
+	public EmployerDto createEmployer(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
+			@RequestParam String phone, @RequestParam Integer emplId) {
 		Employer empl = service.createEmployer(email, name, password, phone, emplId);
 		return convertToDto(empl);
 	}
 	
-	@PostMapping(value = { "/admin/create/{email}/{password}/{name}/{phone}/{adminId}",  
-			  			   "/admin/create/{email}/{password}/{name}/{phone}/{adminId}/" })
-	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
-			@PathVariable String phone, @PathVariable Integer adminId) {
-		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
+	@PostMapping("/admin/create")
+	public AdminDto createAdmin(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
+			@RequestParam String phone, @RequestParam Integer adminId) {
 		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
 		return convertToDto(admin);
 	}
