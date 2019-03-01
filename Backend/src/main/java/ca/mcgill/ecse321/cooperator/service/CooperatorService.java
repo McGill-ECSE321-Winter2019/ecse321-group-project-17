@@ -461,46 +461,50 @@ public class CooperatorService {
 		csd.setStartTerm(startTerm);
 		csd.setEndTerm(endTerm);
 		csd.setCoopNumber(coopNumber);
-		Iterable<Coop> coops = coopRepository.findAll();
-		
-		List<Coop> filter1 = new ArrayList<Coop>();
+		List<Coop> coops = (List<Coop>) coopRepository.findAll();
+		List<Coop> toRemove = new ArrayList<Coop>();
 		// filter out anything before startTerm
 		String startSeason = csd.extractSeason(startTerm);
-		Integer startYear = csd.extractYear(startTerm);
-		if (startSeason != "" && startYear != 0) { 
+		String startYear = csd.extractYear(startTerm);
+		if (startSeason != "" && startYear != "") { 
 			Date startDate = csd.getStartDate(startSeason, startYear);
 			for(Coop coop : coops) {
-				if(coop.getStartDate().after(startDate)) { // if the coop start after the start of the term
-					filter1.add(coop);
+				 // if the coop starts before the start of the term
+				if(coop.getStartDate().before(startDate)  && !coop.getStartDate().equals(startDate)) {
+					toRemove.add(coop);
 				}
 			}
 		}
 		
-		List<Coop> filter2 = new ArrayList<Coop>();
 		// filter out anything after the endTerm
 		String endSeason = csd.extractSeason(endTerm);
-		Integer endYear = csd.extractYear(endTerm);
-		if (endSeason != "" && endYear != 0) { 
+		String endYear = csd.extractYear(endTerm);
+		if (endSeason != "" && endYear != "") { 
 			Date endDate = csd.getEndDate(endSeason, endYear);
-			for(Coop coop : filter1) {
-				if(coop.getStartDate().before(endDate)) { // if the coop starts before the end of the term
-					filter2.add(coop);
+			for(Coop coop : coops) {
+				// if the coop ends after the end of the term
+				if(coop.getEndDate().after(endDate) && !coop.getEndDate().equals(endDate)) { 
+					toRemove.add(coop);
 				}
 			}
 		}
 		
-		List<Coop> filter3 = new ArrayList<Coop>();
 		// filter out students who aren't on their [coopNumber] coop
 		if (coopNumber != 0) {
-			for(Coop coop: filter2) {
-				if(coop.getStudent().getCoopsCompleted() == coopNumber-1) { // if the student is on there [coopNumber] coop
-					filter3.add(coop);
+			for(Coop coop: coops) {
+				
+				int completed;
+				if(coop.getStudent().getCoopsCompleted()==null) completed=0;
+				else completed = coop.getStudent().getCoopsCompleted();
+				
+				if(!(completed == coopNumber-1)) { // if the student is on there [coopNumber] coop
+					toRemove.add(coop);
 				}
 			}
 		}
-		
 		// fill statistics
-		for (Coop coop: filter3) {
+		coops.removeAll(toRemove);
+		for (Coop coop: coops) {
 			csd.setTotalCoops(csd.getTotalCoops()+1);
 			switch(coop.getStatus()) {
 			case NotStarted:
@@ -527,46 +531,47 @@ public class CooperatorService {
 		rsd.setStartTerm(startTerm);
 		rsd.setEndTerm(endTerm);
 		rsd.setCoopNumber(coopNumber);
-		Iterable<Report> reports = reportRepository.findAll();
+		List<Report> reports = (List<Report>) reportRepository.findAll();
 		
-		List<Report> filter1 = new ArrayList<Report>();
+		List<Report> toRemove = new ArrayList<Report>();
 		// filter out anything before startTerm
 		String startSeason = rsd.extractSeason(startTerm);
-		Integer startYear = rsd.extractYear(startTerm);
-		if (startSeason != "" && startYear != 0) { 
+		String startYear = rsd.extractYear(startTerm);
+		if (startSeason != "" && startYear != "") { 
 			Date startDate = rsd.getStartDate(startSeason, startYear);
 			for(Report report : reports) {
-				if(report.getCoop().getStartDate().after(startDate)) { // if the report start after the start of the term
-					filter1.add(report);
+				// if the coop starts before the start of the term
+				if(report.getCoop().getStartDate().before(startDate) && !report.getCoop().getStartDate().equals(startDate)) {
+					toRemove.add(report);
 				}
 			}
 		}
 		
-		List<Report> filter2 = new ArrayList<Report>();
 		// filter out anything after the endTerm
 		String endSeason = rsd.extractSeason(endTerm);
-		Integer endYear = rsd.extractYear(endTerm);
-		if (endSeason != "" && endYear != 0) { 
+		String endYear = rsd.extractYear(endTerm);
+		if (endSeason != "" && endYear != "") { 
 			Date endDate = rsd.getEndDate(endSeason, endYear);
-			for(Report report : filter1) {
-				if(report.getCoop().getStartDate().before(endDate)) { // if the report starts before the end of the term
-					filter2.add(report);
+			for(Report report : reports) {
+				// if the report ends after the end of the term
+				if(report.getCoop().getEndDate().after(endDate) && !report.getCoop().getEndDate().equals(endDate)) { 
+					toRemove.add(report);
 				}
 			}
 		}
 		
-		List<Report> filter3 = new ArrayList<Report>();
-		// filter out students who aren't on their [reportNumber] report
+		// filter out students who aren't on their [coopNumber] report
 		if (coopNumber != 0) {
-			for(Report report: filter2) {
+			for(Report report: reports) {
 				if(report.getCoop().getStudent().getCoopsCompleted() == coopNumber-1) { // if the student is on there [reportNumber] report
-					filter3.add(report);
+					toRemove.add(report);
 				}
 			}
 		}
 		
 		// fill statistics
-		for (Report report: filter3) {
+		reports.removeAll(toRemove);
+		for (Report report: reports) {
 			rsd.setTotalReports(rsd.getTotalReports()+1);
 			switch(report.getStatus()) {
 			case Unsubmitted:

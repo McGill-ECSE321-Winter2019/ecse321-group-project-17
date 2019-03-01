@@ -57,37 +57,37 @@ public class ReportStatisticsDto {
 		this.totalReports = totalReports;
 	}
 	
-	public Date getStartDate(String season, Integer year) {
-		int day = 1;
-		int month = 0;
+	public Date getStartDate(String season, String year) {
+		String day = "01";
+		String month = "00";
 		switch(season) {
 		case "winter":
-			month = 1;
+			month = "01";
 			break;
 		case "summer":
-			month = 5;
+			month = "05";
 			break;
 		case "fall":
-			month = 9;
+			month = "09";
 			break;
 		}
-		return new Date(year, month, day);
+		return Date.valueOf(year+"-"+month+"-"+day);
 	}
 	
-	public Date getEndDate(String season, Integer year) {
-		int month = 0, day = 0;
+	public Date getEndDate(String season, String year) {
+		String month = "00", day = "00";
 		switch(season) {
 		case "winter":
-			month = 4; day = 30; 
+			month = "04"; day = "30"; 
 			break;
 		case "summer":
-			month = 8; day = 31;
+			month = "08"; day = "31";
 			break;
 		case "fall":
-			month = 12; day = 31;
+			month = "12"; day = "31";
 			break;
 		}
-		return new Date(year, month, day);
+		return Date.valueOf(year+"-"+month+"-"+day);
 	}
 	
 	// returns "winter", "summer", "fall", or "" 
@@ -100,12 +100,12 @@ public class ReportStatisticsDto {
 	}
 	
 	// returns Integer like 20XX or 0
-	public Integer extractYear(String term) {
+	public String extractYear(String term) {
 		String numberOnly = term.replaceAll("[^0-9]", "");
 		if(numberOnly.matches("20[0-9][0-9]")) {
-			return Integer.valueOf(numberOnly);
+			return numberOnly;
 		}
-		return 0;
+		return "";
 	}
 	
 	public String getStartTerm() {
