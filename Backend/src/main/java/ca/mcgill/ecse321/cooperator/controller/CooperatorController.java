@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopDto;
+import ca.mcgill.ecse321.cooperator.dto.CoopProgressDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopStatisticsDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
 import ca.mcgill.ecse321.cooperator.dto.ReportDto;
@@ -155,18 +156,6 @@ public class CooperatorController {
 		Coop c = service.getCoop(coopId);
 		Report report = service.createReport(id, c, date, status, type);
 		return convertToDto(report);
-	} 
-	
-	/*
-	 * UNTESTED
-	 */
-	@GetMapping(value = { "/reports/update/{id}", "/reports/student/{id}" })
-	public ReportDto updateReport(@PathVariable("id") ReportDto rDto){
-		Report r = convertToDomainObject(rDto);
-
-		service.createReport(r);
-		
-		return rDto;
 	}
 
 	/*
@@ -188,6 +177,12 @@ public class CooperatorController {
 			@PathVariable("coopNumber") Integer coopNumber) {
 		ReportStatisticsDto reportStatisticsDto = service.generateAllReportStatistics(startTerm, endTerm, coopNumber);
 		return reportStatisticsDto;
+	}
+	
+	@GetMapping(value = { "/progress/coop/{id}", "/progress/coop/{id}/" })
+	public CoopProgressDto getCoopProgress(@PathVariable("id") Integer id) {
+		Coop c = service.getCoop(id);
+		return convertToCoopProgressDto(c);
 	}
 	
 	@GetMapping(value = { "/student/{email}", "/student/{email}/" })
@@ -364,6 +359,19 @@ public class CooperatorController {
 			}
 		}
 		return null;
+	}
+	
+	private CoopProgressDto convertToCoopProgressDto(Coop c) {
+		if (c == null) {
+			throw new IllegalArgumentException("There is no such Coop!");
+		}
+		Set<Report> coopReports = c.getReport();
+		Set <ReportDto> rDtos = new HashSet<ReportDto>();
+		for(Report report : coopReports) {
+			rDtos.add(convertToDto(report));
+		}
+		CoopProgressDto coopProgressDto = new CoopProgressDto(rDtos, c.getStatus(), c.getStartDate(), c.getEndDate());
+		return coopProgressDto;
 	}
 	
 	private EmployerDto convertToDto(Employer e) {
