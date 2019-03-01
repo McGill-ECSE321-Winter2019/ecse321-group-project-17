@@ -212,31 +212,28 @@ public class CooperatorService {
 		Coop c = coopRepository.findCoopById(id);
 		return c;
 	}
-	/* THESE NEXT TWO CAUSE NULL POINTER FROM RESTFUL */
-	
-	/*@Transactional 
-	public List<Coop> getIncompleteCoop(){
-		List<Coop> all = toList(coopRepository.findAll());
-		List<Coop> inc = null;
-		for(Coop c : all) {
-			if(c.getStatus() == CoopStatus.Incomplete) {
-				inc.add(c);
-			}
-		}
-		return all;
-	} 
 	
 	@Transactional 
-	public List<Student> getIncompleteCoopStudents(){
-		List<Coop> inComp = getIncompleteCoop();
-		List<Student> s = null;
-		s.add(null);
-		for(Coop c : inComp) {
-			s.add(c.getStudent());
-		}
-		return s;
+	public List<Coop> getCoopsByStatus(CoopStatus status){
+		List<Coop> coop = toList(coopRepository.findCoopByStatus(status));
+		
+		return coop;
+	} 
+
+	@Transactional 
+	public List<Report> getReportByType(ReportType type){
+		List<Report> report = toList(reportRepository.findByType(type));
+		
+		return report;
 	}
-	*/
+	
+	@Transactional 
+	public List<Report> getReportByStatus(ReportStatus status){
+		List<Report> report = toList(reportRepository.findByStatus(status));
+		
+		return report;
+	}
+	
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());
@@ -442,8 +439,8 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Optional<Report> getReport(Integer id) {
-		Optional<Report> r = reportRepository.findById(id);
+	public Report getReport(Integer id) {
+		Report r = reportRepository.findReportByid(id);
 		return r;
 	}
 	

@@ -179,9 +179,11 @@ public class TestCooperatorServiceReport {
 
 		assertEquals(1, cs.getAllReports().size());
 		assertEquals(id, cs.getAllReports().get(0).getId());
-		Optional<Report> r = cs.getReport(id);
-		assertEquals(c.getAddress(),r.get().getCoop().getAddress());
+		Report r = cs.getReport(id);
 		
+		assertEquals(c.getAddress(),r.getCoop().getAddress());
+		assertEquals(1, cs.getReportByStatus(ReportStatus.Submitted).size());
+		assertEquals(1, cs.getReportByType(ReportType.Contract).size());
 	}
 
 }

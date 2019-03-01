@@ -90,8 +90,6 @@ public class CooperatorController {
 		return convertToDto(coop);
 	} 
 	
-	//CAN ONLY DO THIS IF THE BACKWARDS ASSOCIATION IN CREATE NOTIFICATION IN SERVICE FILE IS COMMENTED OUT
-	//THERES A COMMENT TO SHOW WHICH TO COMMENT OUT
 	@PostMapping(value = { "/notification/create/{id}/{text}/{senderEmail}/{stuEmail}/{empEmail}", 
 						   "/notification/create/{id}/{text}/{senderEmail}/{stuEmail}/{empEmail}/" })
 	public NotificationDto createNotif(@PathVariable("id") Integer id, @PathVariable String text, 
@@ -109,15 +107,15 @@ public class CooperatorController {
 		return convertToDto(notif);
 	}
 	
-	@PostMapping(value = { "/report/create/{id}/{coopID}/{date}/{status}/{type}", 
-	   					   "/report/create/{id}/{coopID}/{date}/{status}/{type}/" })
+	@PostMapping(value = { "/report/create/{id}/{coopId}/{date}/{status}/{type}", 
+	   					   "/report/create/{id}/{coopId}/{date}/{status}/{type}/" })
 	public ReportDto createReport(@PathVariable("id") Integer id, @PathVariable Integer coopId, 
 								  @PathVariable Date date, @PathVariable ReportStatus status, 
 								  @PathVariable ReportType type) {
 		Coop c = service.getCoop(coopId);
 		Report report = service.createReport(id, c, date, status, type);
 		return convertToDto(report);
-	}
+	} 
 	
 	/*
 	 * UNTESTED
@@ -207,12 +205,10 @@ public class CooperatorController {
 		return employerDtos;
 	}
 	
-	
-	/* NULL POINTER EXCEPTIONS FROM THESE TWO :(
-	
-	@GetMapping(value = { "/incompleteCoops", "/incompleteCoops/" })
-	public List<CoopDto> getIncompleteCoop() {
-		List<Coop> all = service.getIncompleteCoop();
+	@GetMapping(value = { "/coopByStatus/{status}", "/incompleteCoops/{status}/" })
+	public List<CoopDto> getIncompleteCoop(@PathVariable("status") CoopStatus status) {
+		List<Coop> all = service.getCoopsByStatus(status);
+		
 		List<CoopDto> inc = null;
 		for (Coop c : all) {
 			inc.add(convertToDto(c));
@@ -220,38 +216,35 @@ public class CooperatorController {
 		return inc;
 	}
 	
-	@GetMapping(value = { "/incompleteStu", "/incompleteStu/" })
-	public List<StudentDto> getIncompleteCoopStudent() {
-		Set<Student> all = service.getIncompleteCoopStudents();
-		List<StudentDto> inc = null;
-		for (Student s : all) {
-			inc.add(convertToDto(s));
+	@GetMapping(value = { "/coopsByStatus/{status}", "/coopsByStatus/{status}/" })
+	public List<CoopDto> getCoopByStatus(@PathVariable("status") CoopStatus status) {
+		List<Coop> c = service.getCoopsByStatus(status);
+		List<CoopDto> cDto = null;
+		for(Coop coop : c) {
+			cDto.add(convertToDto(coop));
 		}
-		return inc;
-	} */
+		return cDto;
+	} 
 	
+	@GetMapping(value = { "/reportsByStatus/{status}", "/reportsByStatus/{status}/" })
+	public List<ReportDto> getReportByStatus(@PathVariable("status") ReportStatus status) {
+		List<Report> r = service.getReportByStatus(status);
+		List<ReportDto> rDto = null;
+		for(Report report : r) {
+			rDto.add(convertToDto(report));
+		}
+		return rDto;
+	} 
 	
-	
-/* THIS DOESNT WORK and probs wont ever work the way it should 
-	@GetMapping(value = { "/profiles", "/profiles/" })
-	public List<ProfileDto> getAllProfiles() {
-		List<ProfileDto> profDtos = new ArrayList<>();
-		List<Profile> profiles = new ArrayList<>();
-		for (Employer empl : service.getAllEmployers()) {
-			profiles.add(empl);
+	@GetMapping(value = { "/reportsByType/{type}", "/reportsByType/{type}/" })
+	public List<ReportDto> getReportByStatus(@PathVariable("type") ReportType type) {
+		List<Report> r = service.getReportByType(type);
+		List<ReportDto> rDto = null;
+		for(Report report : r) {
+			rDto.add(convertToDto(report));
 		}
-		for (Student stu : service.getAllStudents()) {
-			profiles.add(stu);
-		}
-		for (Administrator admin : service.getAllAdministrators()) {
-			profiles.add(admin);
-		}
-		for(Profile p : profiles) {
-			profDtos.add(convertToDto(p));
-		}
-		return profDtos;
-	}
-	*/
+		return rDto;
+	} 
 	
 	@GetMapping(value = { "/coops", "/coops/" })
 	public List<CoopDto> getAllCoops() {
@@ -281,6 +274,13 @@ public class CooperatorController {
 		Set<Report> reports = c.getReport();
 		reportDtos = convertToDto(reports);
 		return reportDtos;
+	}
+	
+	@GetMapping(value = { "/reports/{id}", "/reports/{id}/" })
+	public ReportDto getReport(@PathVariable("id") Integer id){
+		Report r = service.getReport(id);
+		ReportDto rDto = convertToDto(r);
+		return rDto;
 	}
 	
 	
