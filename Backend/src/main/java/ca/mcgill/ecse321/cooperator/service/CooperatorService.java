@@ -494,8 +494,12 @@ public class CooperatorService {
 			for(Coop coop: coops) {
 				
 				int completed;
-				if(coop.getStudent().getCoopsCompleted()==null) completed=0;
-				else completed = coop.getStudent().getCoopsCompleted();
+				if(coop.getStudent().getCoopsCompleted()==null) {
+					completed=0;
+				}
+				else {
+					completed = coop.getStudent().getCoopsCompleted();
+				}
 				
 				if(!(completed == coopNumber-1)) { // if the student is on there [coopNumber] coop
 					toRemove.add(coop);
@@ -563,7 +567,16 @@ public class CooperatorService {
 		// filter out students who aren't on their [coopNumber] report
 		if (coopNumber != 0) {
 			for(Report report: reports) {
-				if(report.getCoop().getStudent().getCoopsCompleted() == coopNumber-1) { // if the student is on there [reportNumber] report
+				
+				int completed;
+				if(report.getCoop().getStudent().getCoopsCompleted()==null) {
+					completed=0;
+				}
+				else {
+					completed = report.getCoop().getStudent().getCoopsCompleted();
+				}
+				
+				if(!(completed == coopNumber-1)) { // if the student is on there [reportNumber] report
 					toRemove.add(report);
 				}
 			}
