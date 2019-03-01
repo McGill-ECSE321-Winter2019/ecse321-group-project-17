@@ -48,11 +48,9 @@ public class CooperatorController {
 	
 	// CREATE METHODS
 	
-	@PostMapping(value = { "/student/create/{email}/{password}/{name}/{phone}/{studentId}", 
-						   "/student/create/{email}/{password}/{name}/{phone}/{studentId}/" })
-	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
-			@PathVariable String phone, @PathVariable Integer studentId) {
-		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
+	@PostMapping("/student/create")
+	public StudentDto createStudent(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
+			@RequestParam String phone, @RequestParam Integer studentId) {
 		Student student = service.createStudent(email, name, password, phone, studentId);
 		return convertToDto(student);
 	}
