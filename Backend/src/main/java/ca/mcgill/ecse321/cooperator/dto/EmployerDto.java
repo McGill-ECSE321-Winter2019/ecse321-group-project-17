@@ -11,7 +11,6 @@ public class EmployerDto extends ProfileDto{
 		private String name;
 		private String phone;
 		private Integer id;
-		private Set<NotificationDto> received;
 	
 		public EmployerDto() {
 		}
@@ -26,7 +25,6 @@ public class EmployerDto extends ProfileDto{
 			this.email = email;
 			this.id = id;
 			this.password = password;
-			this.received = null;
 			this.phone = phone;
 		}
 		
@@ -65,13 +63,6 @@ public class EmployerDto extends ProfileDto{
 		public void setEmail(String email) {
 			this.email = email;
 		}
-		
-		public Set<NotificationDto> getNotifications() {
-			return received;
-		}
-		
-		public void setNotifications(Set<NotificationDto> received) {
-			this.received = received;
-		}
+
 }
 

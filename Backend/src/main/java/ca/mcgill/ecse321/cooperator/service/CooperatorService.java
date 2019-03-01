@@ -29,7 +29,6 @@ import ca.mcgill.ecse321.cooperator.model.Report;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportType;
 import ca.mcgill.ecse321.cooperator.model.Notification;
-import ca.mcgill.ecse321.cooperator.model.Profile;
 import ca.mcgill.ecse321.cooperator.model.Student;
 
 @Service
@@ -49,7 +48,7 @@ public class CooperatorService {
 	NotificationRepository notificationRepository;
 	@Autowired (required = true)
 	AdministratorRepository administratorRepository;
-
+	
 	@Transactional
 	public Student createStudent(String email, String name, String password, String phone, Integer id) {
 		Student p = new Student();
@@ -390,6 +389,17 @@ public class CooperatorService {
 	@Transactional
 	public List<Notification> getAllNotifications() {
 		return toList(notificationRepository.findAll());
+	}
+	
+	@Transactional
+	public Notification getNotification(Integer id) {
+		List <Notification> notifs = toList(notificationRepository.findAll());
+		for (Notification n : notifs) {
+			if (n.getId() == id) {
+				return n;
+			}
+		}
+		return null;
 	}
 	
 	@Transactional  

@@ -11,7 +11,6 @@ public class AdminDto {
 		private String name;
 		private String phone;
 		private Integer id;
-		private Set<NotificationDto> sent;
 	
 		public AdminDto() {
 		}
@@ -26,7 +25,6 @@ public class AdminDto {
 			this.email = email;
 			this.id = id;
 			this.password = password;
-			this.sent = null;
 			this.phone = phone;
 		}
 		
@@ -65,12 +63,5 @@ public class AdminDto {
 		public void setEmail(String email) {
 			this.email = email;
 		}
-		
-		public Set<NotificationDto> getNotifications() {
-			return sent;
-		}
-		
-		public void setNotifications(Set<NotificationDto> sent) {
-			this.sent = sent;
-		}
+
 }

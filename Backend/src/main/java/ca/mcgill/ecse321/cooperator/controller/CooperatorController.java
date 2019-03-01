@@ -95,6 +95,7 @@ public class CooperatorController {
 	//CAN ONLY DO THIS IF THE BACKWARDS ASSOCIATION IN CREATE NOTIFICATION IN SERVICE FILE IS COMMENTED OUT
 	//THERES A COMMENT TO SHOW WHICH TO COMMENT OUT
 	
+	//create single notification for either employer or student
 	@PostMapping("/notification/create")
 	public NotificationDto createNotif(@RequestParam Integer id, @RequestParam String text, 
 			@RequestParam String senderEmail, @RequestParam (required = false) String stuEmail, 
@@ -102,39 +103,44 @@ public class CooperatorController {
 		Administrator a = service.getAdmin(senderEmail);
 		Student s = null;
 		Employer e = null;
-		if(!stuEmail.equalsIgnoreCase("null")) {
+		if(stuEmail != null) {
 			s = service.getStudent(stuEmail);
 		}
-		if(!stuEmail.equalsIgnoreCase("null")) {
+		if(empEmail != null) {
 			e = service.getEmployer(empEmail);
 		}
+
 		Notification notif = service.createNotification(id, text, a, s, e);
 		return convertToDto(notif);
 	}
 	
+	//create a mass notification for multiple students and employers
 	@PostMapping("/notification/createMany")
 	public List <NotificationDto> createManyNotif(@RequestParam Integer id, @RequestParam String text, 
 			@RequestParam String senderEmail, @RequestParam (required = false) List <String> stuEmail, 
 			@RequestParam (required = false) List <String> empEmail) {
+		
 		List <NotificationDto> notifDtos = new ArrayList<>();
 		Administrator a = service.getAdmin(senderEmail);
 
 		for (String studentEmail : stuEmail) {
 			Student s = null;
 			Employer e = null;
-			if(!studentEmail.equalsIgnoreCase("null")) {
+			if(studentEmail != null) {
 				s = service.getStudent(studentEmail);
 			}
 			notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
+			id++;
 		}
 
 		for (String employerEmail : empEmail) {
 			Student s = null;
 			Employer e = null;
-			if(!employerEmail.equalsIgnoreCase("null")) {
+			if(employerEmail != null) {
 				e = service.getEmployer(employerEmail);
 			}
 			notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
+			id++;
 		}
 		
 		return notifDtos;
