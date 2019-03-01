@@ -2,10 +2,8 @@ package ca.mcgill.ecse321.cooperator.service;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -325,8 +323,6 @@ public class CooperatorService {
 		n.setEmployer(e);
 		n.setStudent(s);
 		
-		/* COMMENT THESE THREE IF STATEMENTS OUT FOR RESTFUL NOTIFCATION CREATE TO WORK */
-		
 		if (a != null) {
 			Set<Notification> notifs = a.getSent();
 			if (notifs == null) notifs = new HashSet<>();
@@ -389,17 +385,6 @@ public class CooperatorService {
 	@Transactional
 	public List<Notification> getAllNotifications() {
 		return toList(notificationRepository.findAll());
-	}
-	
-	@Transactional
-	public Notification getNotification(Integer id) {
-		List <Notification> notifs = toList(notificationRepository.findAll());
-		for (Notification n : notifs) {
-			if (n.getId() == id) {
-				return n;
-			}
-		}
-		return null;
 	}
 	
 	@Transactional  

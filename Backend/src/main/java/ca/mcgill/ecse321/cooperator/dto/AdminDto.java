@@ -1,7 +1,5 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
-import java.util.Set;
-
 import net.bytebuddy.utility.RandomString;
 
 public class AdminDto {
@@ -15,7 +13,6 @@ public class AdminDto {
 		public AdminDto() {
 		}
 		
-		@SuppressWarnings("unchecked")
 		public AdminDto(String email) {
 			this(email, RandomString.make(10), "", 0, "");
 		}
