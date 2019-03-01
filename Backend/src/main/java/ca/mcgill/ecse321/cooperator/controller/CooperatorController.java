@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
@@ -83,21 +84,50 @@ public class CooperatorController {
 	
 	//CAN ONLY DO THIS IF THE BACKWARDS ASSOCIATION IN CREATE NOTIFICATION IN SERVICE FILE IS COMMENTED OUT
 	//THERES A COMMENT TO SHOW WHICH TO COMMENT OUT
-	@PostMapping(value = { "/notification/create/{id}/{text}/{senderEmail}/{stuEmail}/{empEmail}", 
-						   "/notification/create/{id}/{text}/{senderEmail}/{stuEmail}/{empEmail}/" })
-	public NotificationDto createNotif(@PathVariable("id") Integer id, @PathVariable String text, 
-			@PathVariable String senderEmail, @PathVariable String stuEmail, @PathVariable String empEmail) {
+	
+	@PostMapping("/notification/create")
+	public NotificationDto createNotif(@RequestParam Integer id, @RequestParam String text, 
+			@RequestParam String senderEmail, @RequestParam (required = false) String stuEmail, 
+			@RequestParam (required = false) String empEmail) {
 		Administrator a = service.getAdmin(senderEmail);
 		Student s = null;
 		Employer e = null;
 		if(!stuEmail.equalsIgnoreCase("null")) {
 			s = service.getStudent(stuEmail);
 		}
-		if(!empEmail.equalsIgnoreCase("null")) {
+		if(!stuEmail.equalsIgnoreCase("null")) {
 			e = service.getEmployer(empEmail);
 		}
 		Notification notif = service.createNotification(id, text, a, s, e);
 		return convertToDto(notif);
+	}
+	
+	@PostMapping("/notification/createMany")
+	public List <NotificationDto> createManyNotif(@RequestParam Integer id, @RequestParam String text, 
+			@RequestParam String senderEmail, @RequestParam (required = false) List <String> stuEmail, 
+			@RequestParam (required = false) List <String> empEmail) {
+		List <NotificationDto> notifDtos = new ArrayList<>();
+		Administrator a = service.getAdmin(senderEmail);
+
+		for (String studentEmail : stuEmail) {
+			Student s = null;
+			Employer e = null;
+			if(!studentEmail.equalsIgnoreCase("null")) {
+				s = service.getStudent(studentEmail);
+			}
+			notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
+		}
+
+		for (String employerEmail : empEmail) {
+			Student s = null;
+			Employer e = null;
+			if(!employerEmail.equalsIgnoreCase("null")) {
+				e = service.getEmployer(employerEmail);
+			}
+			notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
+		}
+		
+		return notifDtos;
 	}
 	
 	@PostMapping(value = { "/report/create/{id}/{coopID}/{date}/{status}/{type}", 
