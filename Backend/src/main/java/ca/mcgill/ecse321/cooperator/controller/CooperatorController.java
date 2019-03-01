@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopDto;
+import ca.mcgill.ecse321.cooperator.dto.CoopProgressDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopStatisticsDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
 import ca.mcgill.ecse321.cooperator.dto.ReportDto;
@@ -129,6 +130,15 @@ public class CooperatorController {
 		service.createReport(r);
 		
 		return rDto;
+	}
+	
+	@GetMapping(value = { "/progress/coop/{id}", "/progress/coop/{id}/"})
+	public CoopProgressDto getCoopProgress(@PathVariable("id") Integer id) {
+		Coop c = service.getCoop(id);
+		
+		Set<Report> r = c.getReport();
+		
+		return convertToDto(c, r);
 	}
 
 	/*
@@ -324,6 +334,15 @@ public class CooperatorController {
 			}
 		}
 		return null;
+	}
+	
+	private CoopProgressDto convertToDto(Coop c, Set<Report> coopReports) {
+		Set <ReportDto> rDtos = new HashSet<ReportDto>();
+		for(Report report : coopReports) {
+			rDtos.add(convertToDto(report));
+		}
+		CoopProgressDto coopProgressDto = new CoopProgressDto(rDtos, c.getStatus(), c.getStartDate(), c.getEndDate());
+		return coopProgressDto;
 	}
 	
 	private EmployerDto convertToDto(Employer e) {
