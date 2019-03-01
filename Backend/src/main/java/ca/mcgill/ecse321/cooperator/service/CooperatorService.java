@@ -19,6 +19,8 @@ import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
+import ca.mcgill.ecse321.cooperator.dto.CoopStatisticsDto;
+import ca.mcgill.ecse321.cooperator.dto.ReportStatisticsDto;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
@@ -207,34 +209,31 @@ public class CooperatorService {
 	
 	@Transactional 
 	public Coop getCoop(Integer id) {
-		Coop c = coopRepository.findCoopByid(id);
+		Coop c = coopRepository.findCoopById(id);
 		return c;
 	}
-	/* THESE NEXT TWO CAUSE NULL POINTER FROM RESTFUL */
-	
-	/*@Transactional 
-	public List<Coop> getIncompleteCoop(){
-		List<Coop> all = toList(coopRepository.findAll());
-		List<Coop> inc = null;
-		for(Coop c : all) {
-			if(c.getStatus() == CoopStatus.Incomplete) {
-				inc.add(c);
-			}
-		}
-		return all;
-	} 
 	
 	@Transactional 
-	public List<Student> getIncompleteCoopStudents(){
-		List<Coop> inComp = getIncompleteCoop();
-		List<Student> s = null;
-		s.add(null);
-		for(Coop c : inComp) {
-			s.add(c.getStudent());
-		}
-		return s;
+	public List<Coop> getCoopsByStatus(CoopStatus status){
+		List<Coop> coop = toList(coopRepository.findCoopByStatus(status));
+		
+		return coop;
+	} 
+
+	@Transactional 
+	public List<Report> getReportByType(ReportType type){
+		List<Report> report = toList(reportRepository.findByType(type));
+		
+		return report;
 	}
-	*/
+	
+	@Transactional 
+	public List<Report> getReportByStatus(ReportStatus status){
+		List<Report> report = toList(reportRepository.findByStatus(status));
+		
+		return report;
+	}
+	
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());
@@ -426,8 +425,22 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Optional<Report> getReport(Integer id) {
-		Optional<Report> r = reportRepository.findById(id);
+	public Report createReport(Report r) {
+		String error = "";
+		if(r == null) {
+			error = ("Report cannot be null!");
+		}
+		if(error.length() != 0) {
+			throw new IllegalArgumentException(error);
+		}
+
+		reportRepository.save(r);
+		return r;
+	}
+	
+	@Transactional  
+	public Report getReport(Integer id) {
+		Report r = reportRepository.findReportByid(id);
 		return r;
 	}
 	
@@ -444,6 +457,156 @@ public class CooperatorService {
 		return resultList;
 	}
 
+	/*
+	 * Generates statistics. Can filter by a range of terms (i.e Winter2018 to Fall2019) and/or a specific coop (i.e only students doing there 1st coop)
+	 */
+	public CoopStatisticsDto generateAllCoopStatistics(String startTerm, String endTerm, Integer coopNumber) {
+		CoopStatisticsDto csd = new CoopStatisticsDto();
+		csd.setStartTerm(startTerm);
+		csd.setEndTerm(endTerm);
+		csd.setCoopNumber(coopNumber);
+		Iterable<Coop> coops = coopRepository.findAll();
+		
+		List<Coop> filter1 = new ArrayList<Coop>();
+		// filter out anything before startTerm
+		String startSeason = csd.extractSeason(startTerm);
+		Integer startYear = csd.extractYear(startTerm);
+		if (startSeason != "" && startYear != 0) { 
+			Date startDate = csd.getStartDate(startSeason, startYear);
+			for(Coop coop : coops) {
+				if(coop.getStartDate().after(startDate)) { // if the coop start after the start of the term
+					filter1.add(coop);
+				}
+			}
+		}
+		
+		List<Coop> filter2 = new ArrayList<Coop>();
+		// filter out anything after the endTerm
+		String endSeason = csd.extractSeason(endTerm);
+		Integer endYear = csd.extractYear(endTerm);
+		if (endSeason != "" && endYear != 0) { 
+			Date endDate = csd.getEndDate(endSeason, endYear);
+			for(Coop coop : filter1) {
+				if(coop.getStartDate().before(endDate)) { // if the coop starts before the end of the term
+					filter2.add(coop);
+				}
+			}
+		}
+		
+		List<Coop> filter3 = new ArrayList<Coop>();
+		// filter out students who aren't on their [coopNumber] coop
+		if (coopNumber != 0) {
+			for(Coop coop: filter2) {
+				if(coop.getStudent().getCoopsCompleted() == coopNumber-1) { // if the student is on there [coopNumber] coop
+					filter3.add(coop);
+				}
+			}
+		}
+		
+		// fill statistics
+		for (Coop coop: filter3) {
+			csd.setTotalCoops(csd.getTotalCoops()+1);
+			switch(coop.getStatus()) {
+			case NotStarted:
+				csd.setNotStartedCoops(csd.getNotStartedCoops()+1);
+				break;
+			case InProgress:
+				csd.setInProgressCoops(csd.getInProgressCoops()+1);
+				break;
+			case Completed:
+				csd.setCompletedCoops(csd.getCompletedCoops()+1);
+				break;
+			default:
+				break;
+			}
+		}
+		return csd;
+	}
 	
+	/*
+	 * Generates statistics. Can filter by a range of terms (i.e Winter2018 to Fall2019) and/or a specific report (i.e only students doing there 1st report)
+	 */
+	public ReportStatisticsDto generateAllReportStatistics(String startTerm, String endTerm, Integer coopNumber) {
+		ReportStatisticsDto rsd = new ReportStatisticsDto();
+		rsd.setStartTerm(startTerm);
+		rsd.setEndTerm(endTerm);
+		rsd.setCoopNumber(coopNumber);
+		Iterable<Report> reports = reportRepository.findAll();
+		
+		List<Report> filter1 = new ArrayList<Report>();
+		// filter out anything before startTerm
+		String startSeason = rsd.extractSeason(startTerm);
+		Integer startYear = rsd.extractYear(startTerm);
+		if (startSeason != "" && startYear != 0) { 
+			Date startDate = rsd.getStartDate(startSeason, startYear);
+			for(Report report : reports) {
+				if(report.getCoop().getStartDate().after(startDate)) { // if the report start after the start of the term
+					filter1.add(report);
+				}
+			}
+		}
+		
+		List<Report> filter2 = new ArrayList<Report>();
+		// filter out anything after the endTerm
+		String endSeason = rsd.extractSeason(endTerm);
+		Integer endYear = rsd.extractYear(endTerm);
+		if (endSeason != "" && endYear != 0) { 
+			Date endDate = rsd.getEndDate(endSeason, endYear);
+			for(Report report : filter1) {
+				if(report.getCoop().getStartDate().before(endDate)) { // if the report starts before the end of the term
+					filter2.add(report);
+				}
+			}
+		}
+		
+		List<Report> filter3 = new ArrayList<Report>();
+		// filter out students who aren't on their [reportNumber] report
+		if (coopNumber != 0) {
+			for(Report report: filter2) {
+				if(report.getCoop().getStudent().getCoopsCompleted() == coopNumber-1) { // if the student is on there [reportNumber] report
+					filter3.add(report);
+				}
+			}
+		}
+		
+		// fill statistics
+		for (Report report: filter3) {
+			rsd.setTotalReports(rsd.getTotalReports()+1);
+			switch(report.getStatus()) {
+			case Unsubmitted:
+				rsd.setUnsubmittedReports(rsd.getUnsubmittedReports()+1);
+				break;
+			case Submitted:
+				rsd.setSubmittedReports(rsd.getSubmittedReports()+1);
+				break;
+			case Late:
+				rsd.setLateReports(rsd.getLateReports()+1);
+				break;
+			case Reviewed:
+				rsd.setReviewedReports(rsd.getReviewedReports()+1);
+			default:
+				break;
+			}
+			switch(report.getType()) {
+			case Contract:
+				rsd.setContractReports(rsd.getContractReports()+1);
+				break;
+			case Technical:
+				rsd.setTechnicalReports(rsd.getTechnicalReports()+1);
+				break;
+			case TwoWeek:
+				rsd.setTwoWeekReports(rsd.getTwoWeekReports()+1);
+				break;
+			case StudentEval:
+				rsd.setStudentEvalReports(rsd.getStudentEvalReports()+1);
+				break;
+			case EmployerEval:
+				rsd.setEmployerEvalReports(rsd.getEmployerEvalReports()+1);
+			default:
+				break;
+			}
+		}
+		return rsd;
+	}
 	
 }

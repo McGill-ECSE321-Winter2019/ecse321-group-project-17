@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopDto;
+import ca.mcgill.ecse321.cooperator.dto.CoopStatisticsDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
 import ca.mcgill.ecse321.cooperator.dto.ReportDto;
+import ca.mcgill.ecse321.cooperator.dto.ReportStatisticsDto;
 import ca.mcgill.ecse321.cooperator.dto.NotificationDto;
 import ca.mcgill.ecse321.cooperator.dto.StudentDto;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
@@ -42,10 +44,14 @@ public class CooperatorController {
 	 * POST METHODS
 	 * 
 	 */
+	
+	// CREATE METHODS
+	
 	@PostMapping(value = { "/student/create/{email}/{password}/{name}/{phone}/{studentId}", 
 						   "/student/create/{email}/{password}/{name}/{phone}/{studentId}/" })
 	public StudentDto createStudent(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer studentId) {
+		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
 		Student student = service.createStudent(email, name, password, phone, studentId);
 		return convertToDto(student);
 	}
@@ -54,6 +60,7 @@ public class CooperatorController {
 			        	   "/employer/create/{email}/{password}/{name}/{phone}/{emplId}/" })
 	public EmployerDto createEmployer(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer emplId) {
+		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
 		Employer empl = service.createEmployer(email, name, password, phone, emplId);
 		return convertToDto(empl);
 	}
@@ -62,6 +69,7 @@ public class CooperatorController {
 			  			   "/admin/create/{email}/{password}/{name}/{phone}/{adminId}/" })
 	public AdminDto createAdmin(@PathVariable("email") String email, @PathVariable String password, @PathVariable String name, 
 			@PathVariable String phone, @PathVariable Integer adminId) {
+		name = name.replace('_', ' '); // Name will be separated by underscore, change it to space
 		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
 		return convertToDto(admin);
 	}
@@ -72,6 +80,8 @@ public class CooperatorController {
 								@PathVariable String empEmail, @PathVariable String start, @PathVariable String end, 
 								@PathVariable CoopStatus status, @PathVariable Integer salaryPerHour, @PathVariable Integer hoursPerWeek, 
 								@PathVariable String address) {
+		title = title.replace('_', ' ');
+		address = address.replace('_', ' ');
 		Student stu = service.getStudent(stuEmail);
 		Employer emp = service.getEmployer(empEmail);
 		Date startDate = Date.valueOf(start);
@@ -130,24 +140,55 @@ public class CooperatorController {
 		return notifDtos;
 	}
 	
-	@PostMapping(value = { "/report/create/{id}/{coopID}/{date}/{status}/{type}", 
-	   					   "/report/create/{id}/{coopID}/{date}/{status}/{type}/" })
+
+	@PostMapping(value = { "/report/create/{id}/{coopId}/{date}/{status}/{type}", 
+	   					   "/report/create/{id}/{coopId}/{date}/{status}/{type}/" })
 	public ReportDto createReport(@PathVariable("id") Integer id, @PathVariable Integer coopId, 
 								  @PathVariable Date date, @PathVariable ReportStatus status, 
 								  @PathVariable ReportType type) {
 		Coop c = service.getCoop(coopId);
 		Report report = service.createReport(id, c, date, status, type);
 		return convertToDto(report);
+	} 
+	
+	/*
+	 * UNTESTED
+	 */
+	@GetMapping(value = { "/reports/update/{id}", "/reports/student/{id}" })
+	public ReportDto updateReport(@PathVariable("id") ReportDto rDto){
+		Report r = convertToDomainObject(rDto);
+
+		service.createReport(r);
+		
+		return rDto;
 	}
 
 	/*
 	 * GET METHODS
 	 * 
 	 */
+	
+	// STATISTICS METHODS
+	
+	@GetMapping(value = { "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}", "/statistics/coop/{startTerm}/{endTerm}/{coopNumber}/" })
+	public CoopStatisticsDto getCoopStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
+			@PathVariable("coopNumber") Integer coopNumber) {
+		CoopStatisticsDto coopStatistics = service.generateAllCoopStatistics(startTerm, endTerm, coopNumber);
+		return coopStatistics;
+	}
+	
+	@GetMapping(value = { "/statistics/report/{startTerm}/{endTerm}/{coopNumber}", "/statistics/report/{startTerm}/{endTerm}/{coopNumber}/" })
+	public ReportStatisticsDto getReportStatistics(@PathVariable("startTerm") String startTerm, @PathVariable("endTerm") String endTerm, 
+			@PathVariable("coopNumber") Integer coopNumber) {
+		ReportStatisticsDto reportStatisticsDto = service.generateAllReportStatistics(startTerm, endTerm, coopNumber);
+		return reportStatisticsDto;
+	}
+	
 	@GetMapping(value = { "/student/{email}", "/student/{email}/" })
 	public StudentDto getStudent(@PathVariable("email") String email) {
 		if(service.getAllStudents().size()!=0) {
 			Student stu = service.getStudent(email);
+			System.out.println("Requested student: "+stu.getEmail());
 			return convertToDto(stu);
 		}
 		return null;
@@ -198,12 +239,10 @@ public class CooperatorController {
 		return employerDtos;
 	}
 	
-	
-	/* NULL POINTER EXCEPTIONS FROM THESE TWO :(
-	
-	@GetMapping(value = { "/incompleteCoops", "/incompleteCoops/" })
-	public List<CoopDto> getIncompleteCoop() {
-		List<Coop> all = service.getIncompleteCoop();
+	@GetMapping(value = { "/coopByStatus/{status}", "/incompleteCoops/{status}/" })
+	public List<CoopDto> getIncompleteCoop(@PathVariable("status") CoopStatus status) {
+		List<Coop> all = service.getCoopsByStatus(status);
+		
 		List<CoopDto> inc = null;
 		for (Coop c : all) {
 			inc.add(convertToDto(c));
@@ -211,38 +250,35 @@ public class CooperatorController {
 		return inc;
 	}
 	
-	@GetMapping(value = { "/incompleteStu", "/incompleteStu/" })
-	public List<StudentDto> getIncompleteCoopStudent() {
-		Set<Student> all = service.getIncompleteCoopStudents();
-		List<StudentDto> inc = null;
-		for (Student s : all) {
-			inc.add(convertToDto(s));
+	@GetMapping(value = { "/coopsByStatus/{status}", "/coopsByStatus/{status}/" })
+	public List<CoopDto> getCoopByStatus(@PathVariable("status") CoopStatus status) {
+		List<Coop> c = service.getCoopsByStatus(status);
+		List<CoopDto> cDto = null;
+		for(Coop coop : c) {
+			cDto.add(convertToDto(coop));
 		}
-		return inc;
-	} */
+		return cDto;
+	} 
 	
+	@GetMapping(value = { "/reportsByStatus/{status}", "/reportsByStatus/{status}/" })
+	public List<ReportDto> getReportByStatus(@PathVariable("status") ReportStatus status) {
+		List<Report> r = service.getReportByStatus(status);
+		List<ReportDto> rDto = null;
+		for(Report report : r) {
+			rDto.add(convertToDto(report));
+		}
+		return rDto;
+	} 
 	
-	
-/* THIS DOESNT WORK and probs wont ever work the way it should 
-	@GetMapping(value = { "/profiles", "/profiles/" })
-	public List<ProfileDto> getAllProfiles() {
-		List<ProfileDto> profDtos = new ArrayList<>();
-		List<Profile> profiles = new ArrayList<>();
-		for (Employer empl : service.getAllEmployers()) {
-			profiles.add(empl);
+	@GetMapping(value = { "/reportsByType/{type}", "/reportsByType/{type}/" })
+	public List<ReportDto> getReportByStatus(@PathVariable("type") ReportType type) {
+		List<Report> r = service.getReportByType(type);
+		List<ReportDto> rDto = null;
+		for(Report report : r) {
+			rDto.add(convertToDto(report));
 		}
-		for (Student stu : service.getAllStudents()) {
-			profiles.add(stu);
-		}
-		for (Administrator admin : service.getAllAdministrators()) {
-			profiles.add(admin);
-		}
-		for(Profile p : profiles) {
-			profDtos.add(convertToDto(p));
-		}
-		return profDtos;
-	}
-	*/
+		return rDto;
+	} 
 	
 	@GetMapping(value = { "/coops", "/coops/" })
 	public List<CoopDto> getAllCoops() {
@@ -253,7 +289,7 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "/reports/coop/student/{email}", "/reports/coop/student/{email}" })
+	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}" })
 	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
 		Student s = convertToDomainObject(sDto);
 		List<ReportDto> reportDtos;
@@ -272,6 +308,13 @@ public class CooperatorController {
 		Set<Report> reports = c.getReport();
 		reportDtos = convertToDto(reports);
 		return reportDtos;
+	}
+	
+	@GetMapping(value = { "/reports/{id}", "/reports/{id}/" })
+	public ReportDto getReport(@PathVariable("id") Integer id){
+		Report r = service.getReport(id);
+		ReportDto rDto = convertToDto(r);
+		return rDto;
 	}
 	
 	
@@ -352,6 +395,16 @@ public class CooperatorController {
 			rDto.add(convertToDto(rep));
 		}
 		return rDto;
+	}
+	
+	private Report convertToDomainObject(ReportDto rDto) {
+		List<Report> allReports = service.getAllReports();
+		for (Report r : allReports) {
+			if (r.getId().equals(rDto.getID())) {
+				return r;
+			}
+		}
+		return null;
 	}
 	
 	private NotificationDto convertToDto(Notification n) {
