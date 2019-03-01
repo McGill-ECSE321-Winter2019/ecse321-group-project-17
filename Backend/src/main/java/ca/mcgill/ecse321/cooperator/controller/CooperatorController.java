@@ -173,14 +173,10 @@ public class CooperatorController {
 		return reportStatisticsDto;
 	}
 	
-	//untested
-	@GetMapping(value = { "/progress/coop/{id}", "/progress/coop/{id}/"})
+	@GetMapping(value = { "/progress/coop/{id}", "/progress/coop/{id}/" })
 	public CoopProgressDto getCoopProgress(@PathVariable("id") Integer id) {
 		Coop c = service.getCoop(id);
-		
-		Set<Report> r = c.getReport();
-		
-		return convertToDto(c, r);
+		return convertToCoopProgressDto(c);
 	}
 	
 	@GetMapping(value = { "/student/{email}", "/student/{email}/" })
@@ -359,7 +355,11 @@ public class CooperatorController {
 		return null;
 	}
 	
-	private CoopProgressDto convertToDto(Coop c, Set<Report> coopReports) {
+	private CoopProgressDto convertToCoopProgressDto(Coop c) {
+		if (c == null) {
+			throw new IllegalArgumentException("There is no such Coop!");
+		}
+		Set<Report> coopReports = c.getReport();
 		Set <ReportDto> rDtos = new HashSet<ReportDto>();
 		for(Report report : coopReports) {
 			rDtos.add(convertToDto(report));
