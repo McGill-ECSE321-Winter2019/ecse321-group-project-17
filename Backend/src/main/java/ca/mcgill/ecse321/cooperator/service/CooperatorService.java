@@ -425,20 +425,6 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Report createReport(Report r) {
-		String error = "";
-		if(r == null) {
-			error = ("Report cannot be null!");
-		}
-		if(error.length() != 0) {
-			throw new IllegalArgumentException(error);
-		}
-
-		reportRepository.save(r);
-		return r;
-	}
-	
-	@Transactional  
 	public Report getReport(Integer id) {
 		Report r = reportRepository.findReportByid(id);
 		return r;

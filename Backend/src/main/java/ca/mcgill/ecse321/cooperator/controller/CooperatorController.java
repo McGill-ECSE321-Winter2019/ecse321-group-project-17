@@ -150,18 +150,6 @@ public class CooperatorController {
 		Report report = service.createReport(id, c, date, status, type);
 		return convertToDto(report);
 	} 
-	
-	/*
-	 * UNTESTED
-	 */
-	@GetMapping(value = { "/reports/update/{id}", "/reports/student/{id}" })
-	public ReportDto updateReport(@PathVariable("id") ReportDto rDto){
-		Report r = convertToDomainObject(rDto);
-
-		service.createReport(r);
-		
-		return rDto;
-	}
 
 	/*
 	 * GET METHODS
