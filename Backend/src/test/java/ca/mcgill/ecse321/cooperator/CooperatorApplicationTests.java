@@ -136,7 +136,7 @@ public class CooperatorApplicationTests{
 	public void testCoopInRange() throws Exception {
 		String url = "http://ecse321-group17.herokuapp.com/statistics/coop/Winter2018/Winter2019/1";
 		String res = sendGet(url);
-		List<String> resList= parseResponse(res);
+		List<String> resList = parseResponse(res);
 		Integer serviceInProgress = service.getCoop(COOP_KEY).getStatus() == CoopStatus.InProgress ? 1 : 0;
 		Integer responseInProgress = Integer.valueOf(getParameter("inProgressCoops", resList));
 		//assertEquals(serviceInProgress, responseInProgress);
@@ -146,6 +146,14 @@ public class CooperatorApplicationTests{
 	@Test
 	public void testMockCoopCreation() {
 		assertNotNull(coop);
+	}
+	
+	//API tests for local services that modify data
+	public void testCreateAdmin() throws Exception {
+		String url = "http://ecse321-group17.herokuapp.com/report/create/1/123/2019-02-29/Late/Contract";
+		sendPost(url);
+		assertNotNull(service.getAllReports());
+		service.getReport(1);
 	}
 
 	// HTTP POST request

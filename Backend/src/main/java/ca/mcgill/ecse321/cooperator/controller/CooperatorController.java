@@ -180,7 +180,6 @@ public class CooperatorController {
 	public StudentDto getStudent(@PathVariable("email") String email) {
 		if(service.getAllStudents().size()!=0) {
 			Student stu = service.getStudent(email);
-			System.out.println("Requested student: "+stu.getEmail());
 			return convertToDto(stu);
 		}
 		return null;
