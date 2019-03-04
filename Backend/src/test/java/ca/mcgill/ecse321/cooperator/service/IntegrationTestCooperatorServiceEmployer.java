@@ -19,13 +19,13 @@ import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
-import ca.mcgill.ecse321.cooperator.dto.AdminDto;
+import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-public class IntegrationTestCooperatorServiceAdmin {
+public class IntegrationTestCooperatorServiceEmployer {
 	
 	@Autowired
 	protected CooperatorService cs;
@@ -62,13 +62,13 @@ public class IntegrationTestCooperatorServiceAdmin {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void testAdminCreate(){
+    public void testEmployerCreate(){
     	
-    	AdminDto response = this.restTemplate.postForObject("http://localhost:" + port +
-    			"/admin/create?email=admin@mcgill.ca&password=pw&name=Admin+Person&phone=7781112234&adminId=2",
-    			null, AdminDto.class);
+    	EmployerDto response = this.restTemplate.postForObject("http://localhost:" + port +
+    			"/employer/create?email=employer@company.ca&password=pw&name=Employer+Person&phone=7781112234&emplId=123",
+    			null, EmployerDto.class);
     	
-    	AdminDto expected = new AdminDto("admin@mcgill.ca", "pw", "Admin Person", 2, "7781112234");
+    	EmployerDto expected = new EmployerDto("employer@company.ca", "pw", "Employer Person", 123, "7781112234");
     	
     	assertThat(response.equals(expected));
     }
