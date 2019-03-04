@@ -73,7 +73,7 @@ public class TestCooperatorControllerExternal {
 			
 			List<String> responseList = parseResponse(response);
 			Integer responseTermsRemaining = Integer.valueOf(getParameter("termsRemaining", responseList));
-			Integer expectedTermsRemaining = 1;
+			Integer expectedTermsRemaining = 0;
 			
 			//compare response from request and expected response
 			assertEquals(responseTermsRemaining, expectedTermsRemaining);
@@ -92,7 +92,7 @@ public class TestCooperatorControllerExternal {
 			String response = sendGet(url);
 			List<String> responseList = parseResponse(response);
 			Integer responseTermsFinished = Integer.valueOf(getParameter("termsFinished", responseList));
-			Integer expectedTermsFinished = 3;
+			Integer expectedTermsFinished = 0;
 			
 			//compare response from request and expected response
 			assertEquals(responseTermsFinished, expectedTermsFinished);
@@ -110,8 +110,8 @@ public class TestCooperatorControllerExternal {
 			String response = sendGet(url);
 			
 			List<String> responseList = parseResponse(response);
-			String responseName = getParameter("name", responseList);
-			String expectedName = "Ahmed";
+			String responseName = getParameter("firstName", responseList);
+			String expectedName = "saif";
 			
 			//compare response from request and expected response
 			assertEquals(responseName,  expectedName);
@@ -130,8 +130,8 @@ public class TestCooperatorControllerExternal {
 			String response = sendGet(url);
 		
 			List<String> responseList = parseResponse(response);
-			String responseCoopName = (getParameter("", responseList));
-			String expectedCoopName = "";
+			String responseCoopName = (getParameter("offers", responseList));
+			String expectedCoopName = null;
 			
 			//compare response from request and expected response
 			assertEquals(responseCoopName, expectedCoopName);
