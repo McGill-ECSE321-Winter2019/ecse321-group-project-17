@@ -147,14 +147,6 @@ public class CooperatorApplicationTests{
 	public void testMockCoopCreation() {
 		assertNotNull(coop);
 	}
-	
-	//API tests for local services that modify data
-	public void testCreateAdmin() throws Exception {
-		String url = "http://ecse321-group17.herokuapp.com/report/create/1/123/2019-02-29/Late/Contract";
-		sendPost(url);
-		assertNotNull(service.getAllReports());
-		service.getReport(1);
-	}
 
 	// HTTP POST request
 	private String sendPost(String url) throws Exception {

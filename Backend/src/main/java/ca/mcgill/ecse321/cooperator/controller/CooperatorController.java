@@ -292,6 +292,19 @@ public class CooperatorController {
 		return reportDtos;
 	}
 	
+	@GetMapping(value = { "/studentProblem", "/studentProblem/" })
+	public List<StudentDto> getProblematicStudents(){
+		List<StudentDto> s = new ArrayList<>();
+		for(Report r : service.getReportByStatus(ReportStatus.Late)) {
+			r.getCoop().getStudent();
+			s.add(convertToDto(r.getCoop().getStudent()));
+		}
+		for(Coop c : service.getCoopsByStatus(CoopStatus.Incomplete)) {
+			s.add(convertToDto(c.getStudent()));
+		}
+		return s;
+	}
+	
 	@GetMapping(value = { "/reports/coop/{id}", "/reports/coop/{id}" })
 	public List<ReportDto> getAllReportsofCoop(@PathVariable("name") CoopDto cDto){
 		Coop c = convertToDomainObject(cDto);
@@ -321,15 +334,6 @@ public class CooperatorController {
 		return adminDto;
 	}
 	
-	private Administrator convertToDomainObject(AdminDto aDto) {
-		List<Administrator> allAdministrators = service.getAllAdministrators();
-		for (Administrator admin : allAdministrators) {
-			if (admin.getName().equals(aDto.getName())) {
-				return admin;
-			}
-		}
-		return null;
-	}
 	
 	private CoopDto convertToDto(Coop c) {
 		if (c == null) {
@@ -372,16 +376,6 @@ public class CooperatorController {
 		return employerDto;
 	}
 	
-	private Employer convertToDomainObject(EmployerDto eDto) {
-		List<Employer> allEmployers = service.getAllEmployers();
-		for (Employer empl : allEmployers) {
-			if (empl.getName().equals(eDto.getName())) {
-				return empl;
-			}
-		}
-		return null;
-	}
-	
 	private ReportDto convertToDto(Report r) {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
@@ -394,21 +388,11 @@ public class CooperatorController {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
 		}
-		List<ReportDto> rDto = null;
+		List<ReportDto> rDto = new ArrayList<>();
 		for(Report rep : r) {
 			rDto.add(convertToDto(rep));
 		}
 		return rDto;
-	}
-	
-	private Report convertToDomainObject(ReportDto rDto) {
-		List<Report> allReports = service.getAllReports();
-		for (Report r : allReports) {
-			if (r.getId().equals(rDto.getID())) {
-				return r;
-			}
-		}
-		return null;
 	}
 	
 	private NotificationDto convertToDto(Notification n) {
@@ -448,61 +432,5 @@ public class CooperatorController {
 		}
 		return null;
 	}
-	
-	
-	private Set<NotificationDto> createNotificationDtosForEmp(Employer e) {
-		Set<Notification> notificationsForEmp = service.getNotificationsEmp(e);
-		Set<NotificationDto> notifications = new HashSet<>();
-		for (Notification notification : notificationsForEmp) {
-			notifications.add(convertToDto(notification));
-		}
-		return notifications;
-	}
-	
-	private Set<NotificationDto> createNotificationDtosForAdm(Administrator a) {
-		Set<Notification> notificationsForAdm = service.getNotificationsAdm(a);
-		Set<NotificationDto> notifications = new HashSet<>();
-		for (Notification notification : notificationsForAdm) {
-			notifications.add(convertToDto(notification));
-		}
-		return notifications;
-	}
-	
-	private Set<NotificationDto> createNotificationDtosForStu(Student s) {
-		Set<Notification> notificationsForStu = service.getNotificationsStu(s);
-		Set<NotificationDto> notifications = new HashSet<>();
-		for (Notification notification : notificationsForStu) {
-			notifications.add(convertToDto(notification));
-		}
-		return notifications;
-	}
-	
-	private Set<CoopDto> createCoopDtosForEmployer(Employer e){
-		Set<Coop> coopsForEmployer = e.getCoop();
-		Set<CoopDto> coops = new HashSet<>();
-		for (Coop coop : coopsForEmployer) {
-			coops.add(convertToDto(coop));
-		}
-		return coops;
-	}
-	
-	private Set<CoopDto> createCoopDtosForStudent(Student s){
-		Set<Coop> coopsForStudent = s.getCoop();
-		Set<CoopDto> coops = new HashSet<>();
-		for (Coop coop : coopsForStudent) {
-			coops.add(convertToDto(coop));
-		}
-		return coops;
-	}
-	
-	private List<ReportDto> createReportDtosForCoop(Coop c){
-		Set<Report> reportsForCoop = c.getReport();
-		List<ReportDto> reports = new ArrayList<>();
-		for (Report report : reportsForCoop){
-			reports.add(convertToDto(report));
-		}
-		return reports;
-	}
-	
 
 }

@@ -46,7 +46,6 @@ public class TestCooperatorServiceEmployer {
 	
 	@Before @After
 	public void clearDatabase() {
-		System.out.println("from student");
 		reportRepository.deleteAll();
 		notificationRepository.deleteAll();
 		coopRepository.deleteAll();

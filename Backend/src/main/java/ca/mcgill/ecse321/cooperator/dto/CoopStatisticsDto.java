@@ -1,13 +1,6 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
-import ca.mcgill.ecse321.cooperator.model.Coop;
 
 public class CoopStatisticsDto {
 	
@@ -26,7 +19,7 @@ public class CoopStatisticsDto {
 	public CoopStatisticsDto() {
 		this("","",0,0,0,0,0);
 	}
-	
+
 	public CoopStatisticsDto(String startTerm, String endTerm, Integer coopNumber,
 			Integer notStartedCoops, Integer inProgressCoops, Integer completedCoops, Integer totalCoops) {
 		super();
