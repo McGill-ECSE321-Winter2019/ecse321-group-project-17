@@ -231,17 +231,6 @@ public class CooperatorController {
 		return employerDtos;
 	}
 	
-	@GetMapping(value = { "/coopByStatus/{status}", "/incompleteCoops/{status}/" })
-	public List<CoopDto> getIncompleteCoop(@PathVariable("status") CoopStatus status) {
-		List<Coop> all = service.getCoopsByStatus(status);
-		
-		List<CoopDto> inc = new ArrayList<>();
-		for (Coop c : all) {
-			inc.add(convertToDto(c));
-		}
-		return inc;
-	}
-	
 	@GetMapping(value = { "/coopsByStatus/{status}", "/coopsByStatus/{status}/" })
 	public List<CoopDto> getCoopByStatus(@PathVariable("status") CoopStatus status) {
 		List<Coop> c = service.getCoopsByStatus(status);
@@ -263,7 +252,7 @@ public class CooperatorController {
 	} 
 	
 	@GetMapping(value = { "/reportsByType/{type}", "/reportsByType/{type}/" })
-	public List<ReportDto> getReportByStatus(@PathVariable("type") ReportType type) {
+	public List<ReportDto> getReportByType(@PathVariable("type") ReportType type) {
 		List<Report> r = service.getReportByType(type);
 		List<ReportDto> rDto = new ArrayList<>();
 		for(Report report : r) {
