@@ -2,3 +2,7 @@ task stage () {
     dependsOn ':Backend:assemble'
 }
 
+task integrationTests() {
+	dependsOn ':Backend:test'
+}
+
