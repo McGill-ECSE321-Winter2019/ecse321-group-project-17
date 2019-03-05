@@ -84,7 +84,7 @@ public class TestCooperatorController {
     @SuppressWarnings("deprecation")
 	private static final CoopDto testCoop = new CoopDto(123, "SWE Intern", testStudent0, testEmployer, new Date(2019, 01, 01), new Date(2019, 05, 01),
 			CoopStatus.NotStarted, 20, 40, "Montreal");
-    private static final NotificationDto testNotification = new NotificationDto(1, "This is a test notification", testAdmin, testStudent0, testEmployer);
+    private static final NotificationDto testNotification = new NotificationDto(1234, "This is a test notification", testAdmin, testStudent0, testEmployer);
     @SuppressWarnings("deprecation")
 	private static final ReportDto testReport = new ReportDto(456, testCoop, new Date(2019, 05, 01), ReportStatus.Submitted, ReportType.Contract);
     
@@ -130,7 +130,7 @@ public class TestCooperatorController {
     	testStudentCreate();
     	
     	NotificationDto response = this.restTemplate.postForObject("http://localhost:" + port +
-    			"/notification/create?id=1&text=This+is+a+test+notification&senderEmail=admin@mcgill.ca&stuEmail=student@mcgill.ca&empEmail=employer@company.ca",
+    			"/notification/create?id=1234&text=This+is+a+test+notification&senderEmail=admin@mcgill.ca&stuEmail=student@mcgill.ca&empEmail=employer@company.ca",
     			null, NotificationDto.class);
     	
     	NotificationDto expected = testNotification;
@@ -159,7 +159,7 @@ public class TestCooperatorController {
     		assertThat(responseStu.equals(student));
     	}
     	
-    	String url = "http://localhost:" + port + "/notification/createMany?id=1"
+    	String url = "http://localhost:" + port + "/notification/createMany?id=5678"
     			+ "&text=This+is+a+mass+test+notification&senderEmail=admin@mcgill.ca"
     			+ "&stuEmail=student1@mcgill.ca,student2@mcgill.ca,student3@mcgill.ca";
 
@@ -167,7 +167,16 @@ public class TestCooperatorController {
     	String response =  restTemplate.postForObject(url, null, String.class);
     	
     	//expected JSON
-    	String expected = "";
+    	String expected = "[{\"id\":5678,\"text\":\"This is a mass test notification\",\"sender\":{\"email\":\"admin@mcgill.ca\","
+    			+ "\"password\":\"pw1\",\"name\":\"Admin Person\",\"phone\":\"5141111111\",\"id\":1},\"student\":{\"email\":"
+    			+ "\"student1@mcgill.ca\",\"password\":\"pw2\",\"name\":\"Student1\",\"id\":260222222,\"phone\":\"5142222222\"},"
+    			+ "\"employer\":null},{\"id\":5679,\"text\":\"This is a mass test notification\",\"sender\":{\"email\":\"admin@mcgill.ca\","
+    			+ "\"password\":\"pw1\",\"name\":\"Admin Person\",\"phone\":\"5141111111\",\"id\":1},\"student\":{\"email\":"
+    			+ "\"student2@mcgill.ca\",\"password\":\"pw3\",\"name\":\"Student2\",\"id\":260333333,\"phone\":\"5143333333\"},"
+    			+ "\"employer\":null},{\"id\":5680,\"text\":\"This is a mass test notification\",\"sender\":{\"email\":\"admin@mcgill.ca\","
+    			+ "\"password\":\"pw1\",\"name\":\"Admin Person\",\"phone\":\"5141111111\",\"id\":1},\"student\":{\"email\":"
+    			+ "\"student3@mcgill.ca\",\"password\":\"pw4\",\"name\":\"Student3\",\"id\":260444444,\"phone\":\"5144444444\"},"
+    			+ "\"employer\":null}]";
     	
     	assertThat(response.contentEquals(expected));
     }
