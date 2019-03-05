@@ -1,6 +1,5 @@
 package ca.mcgill.ecse321.cooperator.controller;
 
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -9,17 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.annotation.DirtiesContext;
-import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
-import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
-import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
-import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
-import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
-import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
@@ -29,7 +19,6 @@ import ca.mcgill.ecse321.cooperator.dto.StudentDto;
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportType;
-import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -40,35 +29,7 @@ import java.util.Set;
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class TestCooperatorController {
-	
-	@Autowired
-	protected CooperatorService cs;
-	@Autowired
-	private AdministratorRepository administratorRepository;
-	@Autowired
-	private CoopRepository coopRepository;
-	@Autowired
-	private EmployerRepository employerRepository;
-	@Autowired
-	private ReportRepository reportRepository;
-	@Autowired
-	private NotificationRepository notificationRepository;
-	@Autowired
-	private ProfileRepository profileRepository;
-	@Autowired
-	private StudentRepository studentRepository;
-	
-	@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD) @After
-	public void clearDatabase() {
-		reportRepository.deleteAll();
-		notificationRepository.deleteAll();
-		coopRepository.deleteAll();
-		studentRepository.deleteAll();
-		administratorRepository.deleteAll();
-		employerRepository.deleteAll();
-		profileRepository.deleteAll();
-	}
-	
+
 	@LocalServerPort
     private int port;
 
