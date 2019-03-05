@@ -116,24 +116,27 @@ public class CooperatorController {
 		List <NotificationDto> notifDtos = new ArrayList<>();
 		Administrator a = service.getAdmin(senderEmail);
 
-		for (String studentEmail : stuEmail) {
-			Student s = null;
-			Employer e = null;
-			if(studentEmail != null) {
-				s = service.getStudent(studentEmail);
+		if (stuEmail != null) {
+			for (String studentEmail : stuEmail) {
+				Student s = null;
+				Employer e = null;
+				if(studentEmail != null) {
+					s = service.getStudent(studentEmail);
+				}
+				notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
+				id++;
 			}
-			notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
-			id++;
 		}
-
-		for (String employerEmail : empEmail) {
-			Student s = null;
-			Employer e = null;
-			if(employerEmail != null) {
-				e = service.getEmployer(employerEmail);
+		if (empEmail != null) {
+			for (String employerEmail : empEmail) {
+				Student s = null;
+				Employer e = null;
+				if(employerEmail != null) {
+					e = service.getEmployer(employerEmail);
+				}
+				notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
+				id++;
 			}
-			notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
-			id++;
 		}
 		
 		return notifDtos;
