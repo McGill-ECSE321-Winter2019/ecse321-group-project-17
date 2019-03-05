@@ -25,5 +25,5 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |Albert Kragl      |  18 hours  | Create test DB, automatic deployment to Heroku, API documentation, Software Assurance Plan, RESTful tests, modify report RESTful methods  |
 |Susan Matuszewski |  12 hours  | send notifications RESTful, integration testing for query services, integration tests gradle task |
 |Eliott Bourachot  |  12 hours  | statistics RESTful services, unit testing for service methods, Software Assurance Plan  |
-|Matthew Kourlas   |  00 hours  |                               |
+|Matthew Kourlas   |  14 hours  | co-op progress RESTful service, integration testing for data modifying services |
 
