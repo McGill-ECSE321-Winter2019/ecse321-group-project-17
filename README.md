@@ -19,11 +19,11 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 [Project Report](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-17/wiki/Project-Report:-Deliverable-2)
 
-|Team member's name|Total hours|Responsibility         |
-|------------------|-----------|-----------------------|
-|Emma Eagles       |   hours |                   |
-|Albert Kragl      |  18 hours | Create test DB, automatic deployment to Heroku, API documentation, Software Assurance Plan, RESTful tests, modify report RESTful methods  |
-|Susan Matuszewski |   12 hours | send notifications RESTful, integration testing for query services, integration tests gradle task |
-|Eliott Bourachot  |   hours  |  |
-|Matthew Kourlas   |   hours  |                               |
+|Team member's name|Total hours |Responsibility         |
+|------------------|------------|-----------------------|
+|Emma Eagles       |  00 hours  |                   |
+|Albert Kragl      |  18 hours  | Create test DB, automatic deployment to Heroku, API documentation, Software Assurance Plan, RESTful tests, modify report RESTful methods  |
+|Susan Matuszewski |  12 hours  | send notifications RESTful, integration testing for query services, integration tests gradle task |
+|Eliott Bourachot  |  12 hours  | statistics RESTful services, unit testing for service methods, Software Assurance Plan  |
+|Matthew Kourlas   |  00 hours  |                               |
 
