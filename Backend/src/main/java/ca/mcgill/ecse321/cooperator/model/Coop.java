@@ -4,10 +4,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import java.util.Set;
-import javax.persistence.OneToMany;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.util.Set;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Coop{
@@ -31,17 +31,6 @@ public class Coop{
    
    public void setEmployer(Employer employer) {
       this.employer = employer;
-   }
-   
-   private Set<File> file;
-   
-   @OneToMany(mappedBy="coop" )
-   public Set<File> getFile() {
-      return this.file;
-   }
-   
-   public void setFile(Set<File> files) {
-      this.file = files;
    }
    
    private Integer id;
@@ -79,21 +68,21 @@ public void setEndDate(Date value) {
 public Date getEndDate() {
     return this.endDate;
 }
-private Integer status;
+private CoopStatus status;
 
-public void setStatus(Integer value) {
+public void setStatus(CoopStatus value) {
     this.status = value;
 }
-public Integer getStatus() {
+public CoopStatus getStatus() {
     return this.status;
 }
-private Integer salarayPerHour;
+private Integer salaryPerHour;
 
-public void setSalarayPerHour(Integer value) {
-    this.salarayPerHour = value;
+public void setSalaryPerHour(Integer value) {
+    this.salaryPerHour = value;
 }
-public Integer getSalarayPerHour() {
-    return this.salarayPerHour;
+public Integer getSalaryPerHour() {
+    return this.salaryPerHour;
 }
 private Integer hoursPerWeek;
 
@@ -111,4 +100,15 @@ public void setAddress(String value) {
 public String getAddress() {
     return this.address;
 }
-}
+   private Set<Report> report;
+   
+   @OneToMany(mappedBy="coop" )
+   public Set<Report> getReport() {
+      return this.report;
+   }
+   
+   public void setReport(Set<Report> reports) {
+      this.report = reports;
+   }
+   
+   }

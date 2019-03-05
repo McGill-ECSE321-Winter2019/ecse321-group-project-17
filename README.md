@@ -26,4 +26,3 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |Susan Matuszewski |  15 hours  | send notifications RESTful, integration testing for query services, integration tests gradle task |
 |Eliott Bourachot  |  15 hours  | statistics RESTful services, unit testing for service methods, Software Assurance Plan  |
 |Matthew Kourlas   |  14 hours  | co-op progress RESTful service, integration testing for data modifying services |
-

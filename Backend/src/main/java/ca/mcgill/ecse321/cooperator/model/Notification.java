@@ -7,26 +7,26 @@ import javax.persistence.Id;
 
 @Entity
 public class Notification{
-   private Profile profile;
+   private Employer employer;
+   
+   @ManyToOne
+   public Employer getEmployer() {
+      return this.employer;
+   }
+   
+   public void setEmployer(Employer employer) {
+      this.employer = employer;
+   }
+   
+   private Administrator sender;
    
    @ManyToOne(optional=false)
-   public Profile getProfile() {
-      return this.profile;
+   public Administrator getSender() {
+      return this.sender;
    }
    
-   public void setProfile(Profile profile) {
-      this.profile = profile;
-   }
-   
-   private Profile profile1;
-   
-   @ManyToOne(optional=false)
-   public Profile getProfile1() {
-      return this.profile1;
-   }
-   
-   public void setProfile1(Profile profile1) {
-      this.profile1 = profile1;
+   public void setSender(Administrator sender) {
+      this.sender = sender;
    }
    
    private Integer id;
@@ -47,4 +47,15 @@ public void setText(String value) {
 public String getText() {
     return this.text;
 }
-}
+   private Student student;
+   
+   @ManyToOne
+   public Student getStudent() {
+      return this.student;
+   }
+   
+   public void setStudent(Student student) {
+      this.student = student;
+   }
+   
+   }

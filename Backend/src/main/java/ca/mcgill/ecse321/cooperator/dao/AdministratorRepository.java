@@ -8,4 +8,6 @@ public interface AdministratorRepository extends CrudRepository<Administrator, I
 	
 	Administrator findAdministratorByName(String name);
 	
+	Administrator findAdministratorByEmail(String email);
+	
 }

@@ -33,13 +33,15 @@ public void setCoopsCompleted(Integer value) {
 public Integer getCoopsCompleted() {
     return this.coopsCompleted;
 }
-private Boolean problematic = false;
-
-public void setProblematic(Boolean value) {
-    this.problematic = value;
-}
-public Boolean getProblematic() {
-    return this.problematic;
-}
-
-}
+   private Set<Notification> studentReceived;
+   
+   @OneToMany(mappedBy="student" )
+   public Set<Notification> getStudentReceived() {
+      return this.studentReceived;
+   }
+   
+   public void setStudentReceived(Set<Notification> studentReceiveds) {
+      this.studentReceived = studentReceiveds;
+   }
+   
+   }
