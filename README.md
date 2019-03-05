@@ -22,8 +22,8 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |Team member's name|Total hours|Responsibility         |
 |------------------|-----------|-----------------------|
 |Emma Eagles       |   hours |                   |
-|Albert Kragl      |   hours |                 |
-|Susan Matuszewski |   hours | send notifications RESTful, integration testing for query services, intergation tests gradle task                             |
+|Albert Kragl      |  18 hours | Create test DB, automatic deployment to Heroku, API documentation, Software Assurance Plan, RESTful tests, modify report RESTful methods  |
+|Susan Matuszewski |   hours | send notifications RESTful, integration testing for query services, integration tests gradle task |
 |Eliott Bourachot  |   hours  |  |
 |Matthew Kourlas   |   hours  |                               |
 
