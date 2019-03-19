@@ -1,5 +1,5 @@
 {
-  "name": "ecse321-group17-frontend",
+  "name": "Frontend",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "kraglalbert <albert.kragl@mail.mcgill.ca>",
@@ -10,6 +10,7 @@
     "build": "node build/build.js",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run e2e"
+    "postinstall": "cd Frontend && npm install"
   },
   "dependencies": {
     "axios": "^0.18.0",
