@@ -4,9 +4,7 @@ import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 @Entity
 public class Employer extends Profile{
@@ -27,7 +25,6 @@ public void setId(Integer value) {
     this.id = value;
 }
 
-@Id
 @GeneratedValue()
 public Integer getId() {
     return this.id;

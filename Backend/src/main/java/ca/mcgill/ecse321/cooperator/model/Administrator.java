@@ -12,7 +12,6 @@ public class Administrator extends Profile{
       this.id = value;
    }
    
-   @Id
    @GeneratedValue()
    public Integer getId() {
       return this.id;

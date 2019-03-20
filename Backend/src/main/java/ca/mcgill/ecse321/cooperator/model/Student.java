@@ -37,7 +37,6 @@ public class Student extends Profile{
 	   this.studentReceived = studentReceiveds;
    }
    
-   @Id
    public Integer getId() {
       return this.id;
    }

@@ -99,13 +99,13 @@ public String getTitle() {
       return this.endDate;
    }
    
-   private Integer status;
+   private CoopStatus status;
    
-   public void setStatus(Integer value) {
+   public void setStatus(CoopStatus value) {
       this.status = value;
    }
    
-   public Integer getStatus() {
+   public CoopStatus getStatus() {
       return this.status;
    }
    
