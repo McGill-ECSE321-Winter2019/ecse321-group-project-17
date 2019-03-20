@@ -25,8 +25,6 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
-// let studentID = this.$route.params.id;
-
 export default {
   components: {
     StudentPageInfo,
