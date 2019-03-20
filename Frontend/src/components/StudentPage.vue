@@ -2,11 +2,13 @@
 <template>
   <div class="container">
     <StudentPageInfo :student="student"/>
+    <StudentPageCoopItem/>
   </div>
 </template>
 
 <script>
 import StudentPageInfo from "./StudentPageInfo.vue";
+import StudentPageCoopItem from "./StudentPageCoopItem.vue";
 import axios from "axios";
 
 var config = require("../../config");
@@ -24,7 +26,8 @@ var AXIOS = axios.create({
 
 export default {
   components: {
-    StudentPageInfo
+    StudentPageInfo,
+    StudentPageCoopItem
   },
   props: {
     studentEmail: String

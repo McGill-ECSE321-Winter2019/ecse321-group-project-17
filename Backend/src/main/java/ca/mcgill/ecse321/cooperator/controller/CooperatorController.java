@@ -272,6 +272,17 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
+	@GetMapping(value = { "/coops/{email}", "/coops/{email}" })
+	public List<CoopDto> getAllCoopsForStudent(@PathVariable("email") String email) {
+		List<CoopDto> coopDtos = new ArrayList<>();
+		Student s = service.getStudent(email);
+		
+		for (Coop coop : s.getCoop()) {
+			coopDtos.add(convertToDto(coop));
+		}
+		return coopDtos;
+	}
+	
 	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}" })
 	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
 		Student s = convertToDomainObject(sDto);
