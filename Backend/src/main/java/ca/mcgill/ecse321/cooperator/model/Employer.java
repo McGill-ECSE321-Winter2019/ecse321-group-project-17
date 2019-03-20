@@ -3,6 +3,10 @@ package ca.mcgill.ecse321.cooperator.model;
 import javax.persistence.Entity;
 import java.util.Set;
 import javax.persistence.OneToMany;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
 public class Employer extends Profile{
@@ -17,13 +21,34 @@ public class Employer extends Profile{
       this.coop = coops;
    }
    
-   private Integer id;
+   private Integer id;
 
-public void setId(Integer value) {
-      this.id = value;
+public void setId(Integer value) {
+    this.id = value;
 }
-   
-   public Integer getId() {
-      return this.id;
+
+@Id
+@GeneratedValue()
+public Integer getId() {
+    return this.id;
+}
+private Set<Notification> employerReceived;
+
+@OneToMany(mappedBy="employer" )
+public Set<Notification> getEmployerReceived() {
+   return this.employerReceived;
+}
+
+public void setEmployerReceived(Set<Notification> employerReceiveds) {
+   this.employerReceived = employerReceiveds;
+}
+
+private String company;
+
+public void setCompany(String value) {
+    this.company = value;
+}
+public String getCompany() {
+    return this.company;
 }
 }

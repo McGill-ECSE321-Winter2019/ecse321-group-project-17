@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
 
 @Entity
 public class Notification{
@@ -34,7 +35,9 @@ public class Notification{
 public void setId(Integer value) {
     this.id = value;
 }
+
 @Id
+@GeneratedValue()
 public Integer getId() {
     return this.id;
 }

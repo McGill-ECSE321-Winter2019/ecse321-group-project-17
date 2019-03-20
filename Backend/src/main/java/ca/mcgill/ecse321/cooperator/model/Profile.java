@@ -16,10 +16,10 @@ public abstract class Profile{
       return this.received;
    }
    
-   public void setReceived(Set<Notification> received) {
-      this.received = received;
+   public void setReceived(Set<Notification> receiveds) {
+      this.received = receiveds;
    }
-  
+   
    private Set<Notification> sent;
    
    @OneToMany(mappedBy="sender" )
@@ -36,6 +36,7 @@ public abstract class Profile{
 public void setEmail(String value) {
     this.email = value;
 }
+
 @Id
 public String getEmail() {
     return this.email;
