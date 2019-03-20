@@ -1,12 +1,18 @@
 <template>
   <div id="app">
+    <LogoBar/>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import LogoBar from "./components/LogoBar.vue";
+
 export default {
-  name: "app"
+  name: "app",
+  components: {
+    LogoBar
+  }
 };
 </script>
 
@@ -17,6 +23,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
