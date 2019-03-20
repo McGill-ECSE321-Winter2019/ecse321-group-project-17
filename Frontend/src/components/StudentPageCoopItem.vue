@@ -24,6 +24,12 @@ export default {
   margin-top: 15px;
   padding: 15px;
   text-align: left;
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(53, 58, 62);
+}
+h4,
+h5,
+h6,
+p {
+  color: rgb(241, 240, 240);
 }
 </style>

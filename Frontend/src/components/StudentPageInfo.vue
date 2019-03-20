@@ -24,6 +24,6 @@ export default {
   margin: auto;
   padding: 15px;
   text-align: left;
-  background-color: rgb(218, 218, 218);
+  background-color: rgb(53, 58, 62);
 }
 </style>

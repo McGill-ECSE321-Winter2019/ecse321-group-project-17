@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-light bg-light" id="container">
+  <nav class="navbar navbar-dark bg-dark" id="container">
     <span class="navbar-brand mb-0 h1">Cooperator</span>
   </nav>
 </template>
