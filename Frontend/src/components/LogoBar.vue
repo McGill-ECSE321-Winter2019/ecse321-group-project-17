@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-dark bg-dark" id="container">
-    <span class="navbar-brand mb-0 h1">Cooperator</span>
+    <a class="navbar-brand mb-0 h1" href="/">Cooperator</a>
   </nav>
 </template>
 
