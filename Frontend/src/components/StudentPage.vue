@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <StudentPageInfo :student="student"/>
-    <StudentPageCoopItem/>
+    <StudentPageCoopItem v-for="coop in coops" :key="coop.id" :coop="coop"/>
   </div>
 </template>
 
@@ -40,14 +40,27 @@ export default {
         this.student = response.data;
       })
       .catch(e => {
-        this.errorPerson = e;
+        this.error = e;
+      });
+    // Get all coop terms for this student
+    AXIOS.get(`/coops/student1@mcgill.ca`)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.coops = response.data;
+      })
+      .catch(e => {
+        this.error = e;
       });
   },
   data() {
     return {
       student: {
         type: Object
-      }
+      },
+      coops: {
+        type: Object
+      },
+      error: ""
     };
   }
 };
