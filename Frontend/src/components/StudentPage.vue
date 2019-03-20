@@ -2,7 +2,10 @@
 <template>
   <div class="container">
     <StudentPageInfo :student="student"/>
-    <StudentPageCoopItem v-for="coop in coops" :key="coop.id" :coop="coop"/>
+    <div v-if="coops.length">
+      <StudentPageCoopItem v-for="coop in coops" :key="coop.id" :coop="coop"/>
+    </div>
+    <p v-else>Student has no co-op terms.</p>
   </div>
 </template>
 
