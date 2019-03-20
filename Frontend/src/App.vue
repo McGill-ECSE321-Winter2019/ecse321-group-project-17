@@ -19,7 +19,7 @@ export default {
 <style>
 body,
 html {
-  background-color: rgb(88, 96, 102);
+  background-color: rgb(88, 96, 102) !important;
 }
 
 #app {
