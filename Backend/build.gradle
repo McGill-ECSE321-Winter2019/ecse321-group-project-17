@@ -36,10 +36,10 @@ dependencies {
 	testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher', version: "1.3.1"
 }
 
-test {
+/*test {
     filter {
         //include all tests from package
         includeTestsMatching "ca.mcgill.ecse321.cooperator.controller.*"
 
     }
-}
+}*/

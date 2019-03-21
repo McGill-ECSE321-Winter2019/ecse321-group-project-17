@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
@@ -26,6 +27,7 @@ import ca.mcgill.ecse321.cooperator.model.Administrator;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TestCooperatorServiceAdmin {
 	@Autowired
 	protected CooperatorService cs;
@@ -63,11 +65,10 @@ public class TestCooperatorServiceAdmin {
 		String email = "paul.hooley@gmail.com";
 		String name = "Paul Hooley";
 		String password = "frisbyislife";
-		Integer id = 3;
 		String phone = "6047862815";
 
 		try {
-			cs.createAdmin(email, name, password, phone, id);
+			cs.createAdmin(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -90,11 +91,10 @@ public class TestCooperatorServiceAdmin {
 		String name = null;
 		String password = null;
 		String phone = null;
-		int id = 1;
 		String error = null;
 
 		try {
-			cs.createAdmin(email, name, password, phone, id);
+			cs.createAdmin(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -116,11 +116,10 @@ public class TestCooperatorServiceAdmin {
 		String name = "";
 		String password = "";
 		String phone = "";
-		int id = 0;
 		String error = null;
 
 		try {
-			cs.createAdmin(email, name, password, phone, id);
+			cs.createAdmin(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -142,18 +141,17 @@ public class TestCooperatorServiceAdmin {
 		String name = " ";
 		String password = " ";
 		String phone = " ";
-		int id = -1;
 		String error = null;
 	
 		try {
-			cs.createAdmin(email, name, password, phone, id);
+			cs.createAdmin(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
 		assertEquals("Administrator name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
+				+ "Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());

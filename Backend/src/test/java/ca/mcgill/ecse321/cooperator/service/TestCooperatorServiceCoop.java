@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
@@ -27,6 +28,7 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TestCooperatorServiceCoop {
 	@Autowired
 	protected CooperatorService cs;
@@ -76,10 +78,18 @@ public class TestCooperatorServiceCoop {
 		String passwordE = "12341234";
 		String phoneE = "254334";
 		String companyE = "Lightspeed";
-		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+		
+		if (emp == null) {
+			System.out.println("hi");
+		}
+		else {
+			System.out.println("bye");
+		}
+		
+		Integer idE = emp.getId();
 		
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
@@ -87,16 +97,18 @@ public class TestCooperatorServiceCoop {
 		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer id = 45;
 		String error = "";
 		String address = "address";
 
-		
+		Coop c = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+			c = cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch(Exception e) {
 			error = e.getMessage();
 		}
+		
+		int id = c.getId();
+		//int idE = emp.getId();
 		
 		assertEquals(1, cs.getAllCoops().size());
 		assertEquals(title, cs.getCoop(id).getTitle());
@@ -139,12 +151,11 @@ public class TestCooperatorServiceCoop {
 		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer id = 34;
 		String error = null;
 		String address = "address";
 		
 		try {
-			cs.createCoop(null, null, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+			cs.createCoop(null, null, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -173,10 +184,9 @@ public class TestCooperatorServiceCoop {
 		String passwordE = "12341234";
 		String phoneE = "4563";
 		String companyE = "Lightspeed";
-		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 
 		String title = "";
 		Date startDate = null;
@@ -184,19 +194,18 @@ public class TestCooperatorServiceCoop {
 		CoopStatus status = null;
 		Integer salaryPerHour = -19;
 		Integer hoursPerWeek = -40;
-		Integer id = -23;
 		String address = "";
 
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("ID is invalid! Coop title cannot be empty! Coop start date cannot be empty! Coop end date cannot be empty! Coop status invalid! Salary per hour is invalid! Hours per week is invalid! Address cannot be empty!", error);
+		assertEquals("Coop title cannot be empty! Coop start date cannot be empty! Coop end date cannot be empty! Coop status invalid! Salary per hour is invalid! Hours per week is invalid! Address cannot be empty!", error);
 
 		// check model in memory
 		assertEquals(0, cs.getAllCoops().size());
@@ -219,11 +228,10 @@ public class TestCooperatorServiceCoop {
 		String nameE = "Paul Hooley";
 		String passwordE = "frisbyislife";
 		String companyE = "CSA";
-		int idE = 3;
 		String phoneE = "6047862815";
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		
 		String title = "   ";
 		Date startDate = Date.valueOf("2019-01-01");
@@ -231,12 +239,11 @@ public class TestCooperatorServiceCoop {
 		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer id = 67;
 		String address = "    ";
 
 		String error = null;
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -263,12 +270,11 @@ public class TestCooperatorServiceCoop {
 		String emailE = "paul.hooley@gmail.com";
 		String nameE = "Paul Hooley";
 		String passwordE = "frisbyislife";
-		int idE = 3;
 		String companyE = "CSA";
 		String phoneE = "6047862815";
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 
 		String title = "NASA";
 		Date startDate = Date.valueOf("2019-04-30");
@@ -276,12 +282,11 @@ public class TestCooperatorServiceCoop {
 		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer id = 47;
 		String address = "address";
 		String error = null;
 		
 		try {
-			cs.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+			cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

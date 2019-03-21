@@ -57,20 +57,20 @@ public class CooperatorController {
 	
 	@PostMapping("/employer/create")
 	public EmployerDto createEmployer(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
-			@RequestParam String phone, @RequestParam String company, @RequestParam Integer emplId) {
-		Employer empl = service.createEmployer(email, name, password, phone, company, emplId);
+			@RequestParam String phone, @RequestParam String company) {
+		Employer empl = service.createEmployer(email, name, password, phone, company);
 		return convertToDto(empl);
 	}
 	
 	@PostMapping("/admin/create")
 	public AdminDto createAdmin(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
-			@RequestParam String phone, @RequestParam Integer adminId) {
-		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
+			@RequestParam String phone) {
+		Administrator admin = service.createAdmin(email, name, password, phone);
 		return convertToDto(admin);
 	}
 	
 	@PostMapping("/coop/create")
-	public CoopDto createCoop(@RequestParam("id") Integer id, @RequestParam String title, @RequestParam String stuEmail, 
+	public CoopDto createCoop(@RequestParam String title, @RequestParam String stuEmail, 
 			@RequestParam String empEmail, @RequestParam String start, @RequestParam String end, 
 			@RequestParam CoopStatus status, @RequestParam Integer salaryPerHour, @RequestParam Integer hoursPerWeek, 
 			@RequestParam String address) {
@@ -80,7 +80,7 @@ public class CooperatorController {
 		Date startDate = Date.valueOf(start);
 		Date endDate = Date.valueOf(end);
 		
-		Coop coop = service.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+		Coop coop = service.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		return convertToDto(coop);
 	} 
 	
@@ -90,9 +90,8 @@ public class CooperatorController {
 	
 	//create single notification for either employer or student
 	@PostMapping("/notification/create")
-	public NotificationDto createNotif(@RequestParam ("id") Integer id, @RequestParam String text, 
-			@RequestParam String senderEmail, @RequestParam (required = false) String stuEmail, 
-			@RequestParam (required = false) String empEmail) {
+	public NotificationDto createNotif(@RequestParam String text, @RequestParam String senderEmail, 
+			@RequestParam (required = false) String stuEmail, @RequestParam (required = false) String empEmail) {
 		Administrator a = service.getAdmin(senderEmail);
 		Student s = null;
 		Employer e = null;
@@ -103,13 +102,13 @@ public class CooperatorController {
 			e = service.getEmployer(empEmail);
 		}
 
-		Notification notif = service.createNotification(id, text, a, s, e);
+		Notification notif = service.createNotification(text, a, s, e);
 		return convertToDto(notif);
 	}
 	
 	//create a mass notification for multiple students and employers
 	@PostMapping("/notification/createMany")
-	public List <NotificationDto> createManyNotif(@RequestParam Integer id, @RequestParam String text, 
+	public List <NotificationDto> createManyNotif(@RequestParam String text, 
 			@RequestParam String senderEmail, @RequestParam (required = false) List <String> stuEmail, 
 			@RequestParam (required = false) List <String> empEmail) {
 		
@@ -123,8 +122,7 @@ public class CooperatorController {
 				if(studentEmail != null) {
 					s = service.getStudent(studentEmail);
 				}
-				notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
-				id++;
+				notifDtos.add(convertToDto(service.createNotification(text, a, s, e)));
 			}
 		}
 		if (empEmail != null) {
@@ -134,8 +132,7 @@ public class CooperatorController {
 				if(employerEmail != null) {
 					e = service.getEmployer(employerEmail);
 				}
-				notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
-				id++;
+				notifDtos.add(convertToDto(service.createNotification(text, a, s, e)));
 			}
 		}
 		
@@ -144,11 +141,10 @@ public class CooperatorController {
 	
 
 	@PostMapping("/report/create")
-	public ReportDto createReport(@RequestParam("id") Integer id, @RequestParam Integer coopId, 
-			@RequestParam Date date, @RequestParam ReportStatus status, 
-			@RequestParam ReportType type) {
+	public ReportDto createReport(@RequestParam Integer coopId, @RequestParam Date date, 
+			@RequestParam ReportStatus status, @RequestParam ReportType type) {
 		Coop c = service.getCoop(coopId);
-		Report report = service.createReport(id, c, date, status, type);
+		Report report = service.createReport(c, date, status, type);
 		return convertToDto(report);
 	}
 

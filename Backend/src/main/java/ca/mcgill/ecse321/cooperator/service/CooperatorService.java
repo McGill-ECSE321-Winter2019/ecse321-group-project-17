@@ -79,7 +79,7 @@ public class CooperatorService {
 	}
 	
 	@Transactional
-	public Employer createEmployer(String email, String name, String password, String phone, String company, Integer id) {
+	public Employer createEmployer(String email, String name, String password, String phone, String company) {
 		Employer e = new Employer();
 		
 		String error = "";
@@ -98,9 +98,6 @@ public class CooperatorService {
 		if(company == null || phone.trim().length() == 0) {
 			error =  error + "Company cannot be empty! ";
 		}
-		if(id < 0) {
-			error =  error + "ID is invalid!";
-		}
 		if(error.length() != 0) {
 			throw new IllegalArgumentException(error);
 		}
@@ -109,13 +106,12 @@ public class CooperatorService {
 		e.setPassword(password);
 		e.setPhone(phone);
 		e.setCompany(company);
-		e.setId(id);
 		employerRepository.save(e);
 		return e;
 	}
 	
 	@Transactional
-	public Administrator createAdmin(String email, String name, String password, String phone, Integer id) {
+	public Administrator createAdmin(String email, String name, String password, String phone) {
 		Administrator a = new Administrator();
 		
 		String error = "";
@@ -131,9 +127,6 @@ public class CooperatorService {
 		if(phone == null || phone.trim().length() == 0) {
 			error =  error + "Phone cannot be empty! ";
 			}
-		if(id < 0) {
-			error =  error + "ID is invalid!";
-		}
 		if(error.length() != 0) {
 			throw new IllegalArgumentException(error);
 		}
@@ -141,13 +134,12 @@ public class CooperatorService {
 		a.setName(name);
 		a.setPassword(password);
 		a.setPhone(phone);
-		a.setId(id);
 		administratorRepository.save(a);
 		return a;
 	}
 
 	@Transactional 
-	public Coop createCoop(Student student, Employer employer, String title, Integer id, Date startDate, Date endDate, CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
+	public Coop createCoop(Student student, Employer employer, String title, Date startDate, Date endDate, CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		String error = "";
 
 		if(student == null) {
@@ -160,9 +152,6 @@ public class CooperatorService {
 			throw new IllegalArgumentException(error);
 		}
 		error = "";
-		if(id < 0) {
-			error = error + "ID is invalid! ";
-		}
 		if(title == null || title.trim().length() == 0) {
 			error = error + "Coop title cannot be empty! ";
 		}
@@ -194,7 +183,6 @@ public class CooperatorService {
 			throw new IllegalArgumentException("Coop end time cannot be before Coop start time!");
 		}
 		Coop c = new Coop();
-		c.setId(id);
 		c.setEmployer(employer);
 		c.setStudent(student);
 		c.setTitle(title);
@@ -318,16 +306,13 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Notification createNotification(Integer id, String text, Administrator a, Student s, Employer e) {
+	public Notification createNotification(String text, Administrator a, Student s, Employer e) {
 		String error = "";
 		if(a == null) {
 			error = error + "Administrator is null! ";
 		}
 		if(s == null && e == null) {
 			error = error + "Notification needs at least one recipient! ";
-		}
-		if(id == null || id < 0) {
-			error = error + "ID is invalid! ";
 		}
 		if(text == null || text.trim().length() == 0) {
 			error = error + "Text is invalid!";
@@ -337,7 +322,6 @@ public class CooperatorService {
 		}
 		
 		Notification n = new Notification();
-		n.setId(id);
 		n.setText(text);
 		n.setSender(a);
 		n.setEmployer(e);
@@ -408,11 +392,8 @@ public class CooperatorService {
 	}
 	
 	@Transactional  
-	public Report createReport(Integer id, Coop c, Date d, ReportStatus s, ReportType t) {
+	public Report createReport(Coop c, Date d, ReportStatus s, ReportType t) {
 		String error = "";
-		if(id == null || id < 0) {
-			error = ("ID is invalid! ");
-		}
 		if(c == null) {
 			error = error + "Coop is null! ";
 		}
@@ -430,7 +411,6 @@ public class CooperatorService {
 		}
 		
 		Report r = new Report();
-		r.setId(id);
 		r.setCoop(c);
 		r.setDueDate(d);
 		r.setStatus(s);

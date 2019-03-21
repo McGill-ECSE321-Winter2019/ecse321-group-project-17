@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
@@ -31,6 +32,7 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TestCooperatorServiceStatistics {
 	@Autowired
 	protected CooperatorService cs;
@@ -77,23 +79,20 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
 		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.Completed;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Unsubmitted, ReportType.Contract);
+		cs.createReport(c, date, ReportStatus.Unsubmitted, ReportType.Contract);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -138,23 +137,20 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
 		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Submitted, ReportType.Technical);
+		cs.createReport(c, date, ReportStatus.Submitted, ReportType.Technical);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -200,22 +196,19 @@ public class TestCooperatorServiceStatistics {
 		String passwordE = "12341234";
 		String phoneE = "254334";
 		String companyE = "Lightspeed";
-		int idE = 31231234;
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Late, ReportType.StudentEval);
+		cs.createReport(c, date, ReportStatus.Late, ReportType.StudentEval);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -260,23 +253,20 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
 		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.EmployerEval);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.EmployerEval);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -322,23 +312,20 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
 		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -384,22 +371,19 @@ public class TestCooperatorServiceStatistics {
 		String passwordE = "12341234";
 		String companyE = "Lightspeed";
 		String phoneE = "254334";
-		int idE = 31231234;
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2018-01-01");
 		Date endDate = Date.valueOf("2018-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -444,23 +428,20 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
 		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2020-01-01");
 		Date endDate = Date.valueOf("2020-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -507,22 +488,19 @@ public class TestCooperatorServiceStatistics {
 		String passwordE = "12341234";
 		String companyE = "Lightspeed";
 		String phoneE = "254334";
-		int idE = 31231234;
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.Completed;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 1);
 
@@ -569,22 +547,19 @@ public class TestCooperatorServiceStatistics {
 		String passwordE = "12341234";
 		String companyE = "Lightspeed";
 		String phoneE = "254334";
-		int idE = 31231234;
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.Completed;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
 	
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 2);
 

@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
@@ -24,6 +25,7 @@ import ca.mcgill.ecse321.cooperator.model.Employer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TestCooperatorServiceEmployer {
 	@Autowired
 	private CooperatorService cs;
@@ -62,12 +64,11 @@ public class TestCooperatorServiceEmployer {
 		String email = "paul.hooley@gmail.com";
 		String name = "Paul Hooley";
 		String password = "frisbyislife";
-		int id = 3;
 		String company = "CSA";
 		String phone = "6047862815";
 
 		try {
-			cs.createEmployer(email, name, password, phone, company, id);
+			cs.createEmployer(email, name, password, phone, company);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -92,11 +93,10 @@ public class TestCooperatorServiceEmployer {
 		String password = null;
 		String phone = null;
 		String company = null;
-		int id = 0;
 		String error = null;
 
 		try {
-			cs.createEmployer(email, name, password, phone, company, id);
+			cs.createEmployer(email, name, password, phone, company);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -119,11 +119,10 @@ public class TestCooperatorServiceEmployer {
 		String password = "";
 		String phone = "";
 		String company = "";
-		int id = 0;
 		String error = null;
 
 		try {
-			cs.createEmployer(email, name, password, phone, company, id);
+			cs.createEmployer(email, name, password, phone, company);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -147,18 +146,17 @@ public class TestCooperatorServiceEmployer {
 		String password = " ";
 		String phone = " ";
 		String company = "  ";
-		int id = -1;
 		String error = null;
 	
 		try {
-			cs.createEmployer(email, name, password, phone, company, id);
+			cs.createEmployer(email, name, password, phone, company);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
 		assertEquals("Employer name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ID is invalid!", error);
+				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
@@ -171,8 +169,8 @@ public class TestCooperatorServiceEmployer {
 		assertEquals("Employer email cannot be empty!", error);
 
 	}
-	
-	@Test
+	//test no longer relevant
+	/*@Test
 	public void testCreateEmployerNegative() {
 		assertEquals(0, cs.getAllEmployers().size());
 
@@ -195,6 +193,6 @@ public class TestCooperatorServiceEmployer {
 
 		// check no change in memory
 		assertEquals(0, cs.getAllEmployers().size());
-	}
+	}*/
 
 }

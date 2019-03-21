@@ -1,5 +1,8 @@
 package ca.mcgill.ecse321.cooperator.controller;
 
+import org.json.JSONObject;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -8,8 +11,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
+import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
+import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
+import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
+import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
+import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.dto.AdminDto;
 import ca.mcgill.ecse321.cooperator.dto.CoopDto;
 import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
@@ -19,18 +30,287 @@ import ca.mcgill.ecse321.cooperator.dto.StudentDto;
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportType;
+import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TestCooperatorController {
-
+	
 	@LocalServerPort
+    private int port;
+	
+	@Autowired
+	protected CooperatorService cs;
+	
+	@Autowired
+	private AdministratorRepository administratorRepository;
+	@Autowired
+	private CoopRepository coopRepository;
+	@Autowired
+	private EmployerRepository employerRepository;
+	@Autowired
+	private ReportRepository reportRepository;
+	@Autowired
+	private NotificationRepository notificationRepository;
+	@Autowired
+	private ProfileRepository profileRepository;
+	@Autowired
+	private StudentRepository studentRepository;
+	
+	// HTTP POST request
+	private String sendPost(String url) throws Exception {
+		URL obj = new URL(url);			
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+			
+		//add request header
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+		con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+			
+		String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
+		// Send post request
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(urlParameters);
+		wr.flush();
+		wr.close();
+
+		int responseCode = con.getResponseCode();
+
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+			
+		return response.toString();
+	}
+	
+	private List<String> parseResponse(String resp) {
+		String delimiters = "(\")*[{}:,](\")*";
+
+	    // analyzing the string 
+	    String[] tokensVal = resp.split(delimiters);
+
+	    List<String> result = new ArrayList<String>();
+	    for (String token : tokensVal) {
+	    	result.add(token);
+	    }
+	    result.remove(0); //remove first element because it will be a space
+	    return result;
+	    
+	}
+	
+	private String getParameter(String parameter, List<String> list) {
+		for(int index=0; index<list.size(); index++) {
+			if(list.get(index).equalsIgnoreCase(parameter)) return list.get(index+1);
+		}
+		return null;
+	}
+	
+	/*@Before @After
+	public void clearDatabase() {
+		reportRepository.deleteAll();
+		notificationRepository.deleteAll();
+		coopRepository.deleteAll();
+		studentRepository.deleteAll();
+		administratorRepository.deleteAll();
+		employerRepository.deleteAll();
+		profileRepository.deleteAll();
+	}*/
+	
+	@Test
+	public void testAdminCreate() {
+		String email = "admin@gmail.com";
+		String password = "hello";
+		String name = "sally";
+		String phone = "6132143253";
+		String url = "http://localhost:" + port + "/admin/create?email=" + email + "&password="
+				+ password + "&name=" + name + "&phone=" + phone;
+		
+		
+		try {
+			String response = sendPost(url);
+			
+			List<String> responseList = parseResponse(response);
+			String responseEmail = getParameter("email", responseList);
+			//Integer expectedTermsRemaining = 0;
+			
+			//compare response from request and expected response
+			assertEquals(responseEmail, email);
+			assertNotNull(response);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			fail();
+		}
+		
+	}
+	
+	@Test
+	public void testStudentCreate() {
+		String email = "student@gmail.com";
+		String password = "hello";
+		String name = "travis";
+		String phone = "6132143255";
+		Integer id = 260719281;
+		String url = "http://localhost:" + port + "/student/create?email=" + email + "&password="
+				+ password + "&name=" + name + "&phone=" + phone + "&studentId=" + id;
+		
+		try {
+			String response = sendPost(url);
+			
+			List<String> responseList = parseResponse(response);
+			String responseEmail = getParameter("email", responseList);
+			//Integer expectedTermsRemaining = 0;
+			
+			//compare response from request and expected response
+			assertEquals(responseEmail, email);
+			assertNotNull(response);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			fail();
+		}
+	}
+	
+	@Test
+	public void testEmployerCreate() {
+		String email = "employer@gmail.com";
+		String password = "hello";
+		String name = "rainbow";
+		String phone = "6132143255";
+		String company = "cornflakes";
+		String url = "http://localhost:" + port + "/employer/create?email=" + email + "&password="
+				+ password + "&name=" + name + "&phone=" + phone + "&company=" + company;
+		
+		try {
+			String response = sendPost(url);
+			
+			List<String> responseList = parseResponse(response);
+			String responseEmail = getParameter("email", responseList);
+			//Integer expectedTermsRemaining = 0;
+			
+			//compare response from request and expected response
+			assertEquals(responseEmail, email);
+			assertNotNull(response);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			fail();
+		}
+	}
+	
+	@Test
+	public void testNotifCreate() {
+		String emailA = "admin@gmail.com";
+		String passwordA = "hello";
+		String nameA = "sally";
+		String phoneA = "6132143253";
+		
+		try {
+			cs.createAdmin(emailA, nameA, passwordA, phoneA);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		
+		/*String emailE = "employer@gmail.com";
+		String passwordE = "hello";
+		String nameE = "rainbow";
+		String phoneE = "6132143255";
+		String companyE = "cornflakes";
+		
+		try {
+			cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}*/
+		
+		String emailS = "student@gmail.com";
+		String passwordS = "hello";
+		String nameS = "travis";
+		String phoneS = "6132143255";
+		Integer idS = 260719281;
+		
+		try {
+			cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+		} catch (IllegalArgumentException e) {
+			// Check that no error occurred
+			fail();
+		}
+		
+		String text = "This+is+a+notification";
+		String url = "http://localhost:" + port + "/notification/create?text=" + text + "&senderEmail="
+				+ emailA + "&stuEmail=" + emailS; // + "&empEmail=" + emailE;
+		
+		
+		JSONObject jobj = null;
+		try {
+			String response = sendPost(url);
+			System.out.println(response);
+			jobj = new JSONObject(response);
+			
+			String responseSenderEmail = jobj.getJSONObject("sender").getString("email");
+			String responseStuEmail = jobj.getJSONObject("student").getString("email");
+			
+			List<String> responseList = parseResponse(response);
+			System.out.println(responseList);
+			String responseText = getParameter("text", responseList);
+			//String responseSenderEmail = getParameter("adminEmail", responseList);
+			//String responseStuEmail = getParameter("stuEmail", responseList);
+			//String responseEmpEmail = getParameter("empEmail", responseList);
+			//Integer expectedTermsRemaining = 0;
+			
+			//compare response from request and expected response
+			assertEquals(responseText, "This is a notification");
+			assertEquals(responseSenderEmail, emailA);
+			assertEquals(responseStuEmail, emailS);
+			//assertEquals(responseEmpEmail, emailE);
+			assertNotNull(response);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+			fail();
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*@LocalServerPort
     private int port;
 
     @Autowired
@@ -49,7 +329,7 @@ public class TestCooperatorController {
     @SuppressWarnings("deprecation")
 	private static final ReportDto testReport = new ReportDto(456, testCoop, new Date(2019, 05, 01), ReportStatus.Submitted, ReportType.Contract);
     
-    @Test
+    /*@Test
     public void testAdminCreate() {
     	AdminDto response = this.restTemplate.postForObject("http://localhost:" + port +
     			"/admin/create?email=admin@mcgill.ca&password=pw1&name=Admin+Person&phone=5141111111&adminId=1",
@@ -173,5 +453,5 @@ public class TestCooperatorController {
 		ReportDto expected = testReport;
     	
     	assertThat(response.equals(expected));
-    }
+    }*/
 }
