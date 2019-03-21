@@ -103,7 +103,7 @@ public class TestCooperatorServiceEmployer {
 
 		// check error
 		assertEquals("Employer name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ", error);
+				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
@@ -130,7 +130,7 @@ public class TestCooperatorServiceEmployer {
 
 		// check error
 		assertEquals("Employer name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ", error);
+				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
 
 
 		// check no change in memory
@@ -158,7 +158,7 @@ public class TestCooperatorServiceEmployer {
 
 		// check error
 		assertEquals("Employer name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
+				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ID is invalid!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
