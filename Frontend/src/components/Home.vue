@@ -1,6 +1,6 @@
 <template>
   <div id="home-container" class="card">
-    <table>
+    <table v-if="studentsLoaded && employersLoaded">
       <tr id="tr-heading">
         <td></td>
         <td></td>
@@ -14,6 +14,7 @@
       <HomeListStudentItem v-for="student in students" :key="student.id" :student="student"/>
       <HomeListEmployerItem v-for="employer in employers" :key="employer.id" :employer="employer"/>
     </table>
+    <h2 v-else id="h2-loading">Loading...</h2>
   </div>
 </template>
     
@@ -44,6 +45,7 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.students = response.data;
+        this.studentsLoaded = true;
       })
       .catch(e => {
         this.error = e;
@@ -53,6 +55,7 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.employers = response.data;
+        this.employersLoaded = true;
       })
       .catch(e => {
         this.error = e;
@@ -65,15 +68,22 @@ export default {
       },
       employers: {
         type: Object
-      }
+      },
+      studentsLoaded: false,
+      employersLoaded: false
     };
   }
 };
 </script>
 
 <style>
+h2,
 h3 {
   color: white;
+}
+
+#h2-loading {
+  text-align: center;
 }
 
 #home-container {
