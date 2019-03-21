@@ -40,12 +40,5 @@ public void setEmployerReceived(Set<Notification> employerReceiveds) {
    this.employerReceived = employerReceiveds;
 }
 
-private String company;
 
-public void setCompany(String value) {
-    this.company = value;
-}
-public String getCompany() {
-    return this.company;
-}
 }
