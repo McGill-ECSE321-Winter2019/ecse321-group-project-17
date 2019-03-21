@@ -303,7 +303,7 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "employer/coops/{email}", "/coops/{email}" })
+	@GetMapping(value = { "employer/coops/{email}", "employer/coops/{email}" })
 	public List<CoopDto> getAllCoopsForEmployer(@PathVariable("email") String email) {
 		List<CoopDto> coopDtos = new ArrayList<>();
 		Employer e = service.getEmployer(email);
