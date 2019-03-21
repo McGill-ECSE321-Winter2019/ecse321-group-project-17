@@ -35,7 +35,7 @@ export default {
   },
   created: function() {
     // Initializing with fetched student from backend
-    AXIOS.get(`/student/student1@mcgill.ca`)
+    AXIOS.get(`/student/` + this.studentEmail)
       .then(response => {
         // JSON responses are automatically parsed.
         this.student = response.data;
@@ -44,7 +44,7 @@ export default {
         this.error = e;
       });
     // Get all coop terms for this student
-    AXIOS.get(`/coops/student1@mcgill.ca`)
+    AXIOS.get(`/coops/` + this.studentEmail)
       .then(response => {
         // JSON responses are automatically parsed.
         this.coops = response.data;
