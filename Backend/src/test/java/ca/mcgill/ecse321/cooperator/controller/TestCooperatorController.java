@@ -63,7 +63,7 @@ public class TestCooperatorController {
     @Test
     public void testEmployerCreate() {
     	EmployerDto response = this.restTemplate.postForObject("http://localhost:" + port +
-    			"/employer/create?email=employer@company.ca&password=pw2&name=Employer+Person&phone=5142222222&emplId=2",
+    			"/employer/create?email=employer@company.ca&password=pw2&name=Employer+Person&phone=5142222222&&company=company&emplId=2",
     			null, EmployerDto.class);
     	
     	EmployerDto expected = testEmployer;
