@@ -10,6 +10,7 @@ public class EmployerDto extends ProfileDto{
 		private String password; // not empty, not null
 		private String name;
 		private String phone;
+		private String company;
 		private Integer id;
 	
 		public EmployerDto() {
@@ -17,19 +18,28 @@ public class EmployerDto extends ProfileDto{
 		
 		@SuppressWarnings("unchecked")
 		public EmployerDto(String email) {
-			this(email, RandomString.make(10), "", 0, "");
+			this(email, RandomString.make(10), "", 0, "", "");
 		}
 		
-		public EmployerDto(String email, String password, String name, Integer id, String phone) {
+		public EmployerDto(String email, String password, String name, Integer id, String phone, String company) {
 			this.name = name;
 			this.email = email;
 			this.id = id;
 			this.password = password;
+			this.company = company;
 			this.phone = phone;
 		}
 		
 		public String getName() {
 			return name;
+		}
+		
+		public String getCompany() {
+			return company;
+		}
+		
+		public void setCompany(String company) {
+			this.company = company;
 		}
 		
 		public Integer getID() {

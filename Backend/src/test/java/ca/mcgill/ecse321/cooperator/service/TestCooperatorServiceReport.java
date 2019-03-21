@@ -96,10 +96,11 @@ public class TestCooperatorServiceReport {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
+		String companyE = "lightspeed";
 		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 		
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
@@ -147,10 +148,11 @@ public class TestCooperatorServiceReport {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
+		String companyE = "lightspeed";
 		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 		
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");

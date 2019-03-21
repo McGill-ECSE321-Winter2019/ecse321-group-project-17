@@ -63,10 +63,11 @@ public class TestCooperatorServiceEmployer {
 		String name = "Paul Hooley";
 		String password = "frisbyislife";
 		int id = 3;
+		String company = "CSA";
 		String phone = "6047862815";
 
 		try {
-			cs.createEmployer(email, name, password, phone, id);
+			cs.createEmployer(email, name, password, phone, company, id);
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
@@ -90,11 +91,12 @@ public class TestCooperatorServiceEmployer {
 		String name = null;
 		String password = null;
 		String phone = null;
+		String company = null;
 		int id = 0;
 		String error = null;
 
 		try {
-			cs.createEmployer(email, name, password, phone, id);
+			cs.createEmployer(email, name, password, phone, company, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -116,11 +118,12 @@ public class TestCooperatorServiceEmployer {
 		String name = "";
 		String password = "";
 		String phone = "";
+		String company = "";
 		int id = 0;
 		String error = null;
 
 		try {
-			cs.createEmployer(email, name, password, phone, id);
+			cs.createEmployer(email, name, password, phone, company, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -143,11 +146,12 @@ public class TestCooperatorServiceEmployer {
 		String name = " ";
 		String password = " ";
 		String phone = " ";
+		String company = "  ";
 		int id = -1;
 		String error = null;
 	
 		try {
-			cs.createEmployer(email, name, password, phone, id);
+			cs.createEmployer(email, name, password, phone, company, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -176,11 +180,12 @@ public class TestCooperatorServiceEmployer {
 		String name = "Emma Eagles";
 		String password = "12341234";
 		String phone = "5061231234";
+		String company = "LIghtspeed";
 		int id = -9;
 		String error = null;
 	
 		try {
-			cs.createEmployer(email, name, password, phone, id);
+			cs.createEmployer(email, name, password, phone, company, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

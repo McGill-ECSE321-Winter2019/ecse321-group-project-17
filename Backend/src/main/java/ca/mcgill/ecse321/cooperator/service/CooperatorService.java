@@ -79,7 +79,7 @@ public class CooperatorService {
 	}
 	
 	@Transactional
-	public Employer createEmployer(String email, String name, String password, String phone, Integer id) {
+	public Employer createEmployer(String email, String name, String password, String phone, String company, Integer id) {
 		Employer e = new Employer();
 		
 		String error = "";
@@ -95,6 +95,9 @@ public class CooperatorService {
 		if(phone == null || phone.trim().length() == 0) {
 			error =  error + "Phone cannot be empty! ";
 		}
+		if(company == null || phone.trim().length() == 0) {
+			error =  error + "Company cannot be empty! ";
+		}
 		if(id < 0) {
 			error =  error + "ID is invalid!";
 		}
@@ -105,6 +108,7 @@ public class CooperatorService {
 		e.setName(name);
 		e.setPassword(password);
 		e.setPhone(phone);
+		e.setCompany(company);
 		e.setId(id);
 		employerRepository.save(e);
 		return e;
@@ -237,6 +241,17 @@ public class CooperatorService {
 	}
 	
 	@Transactional
+	public List<Coop> getCoopsOfCompany(String company) {
+		List<Coop> all = toList(coopRepository.findAll());
+		for(Coop c : all) {
+			if(c.getEmployer().getCompany() != company) {
+				all.remove(c);
+			}
+		}
+		return all;
+	}
+	
+	@Transactional
 	public Set<Coop> getCoopforStudent(Student s){
 		if(s == null) {
 			throw new IllegalArgumentException("Student is null!");
@@ -281,6 +296,11 @@ public class CooperatorService {
 	@Transactional
 	public List<Employer> getAllEmployers() {
 		return toList(employerRepository.findAll());
+	}
+	
+	@Transactional
+	public List<Employer> getEmployersOfCompany(String company) {
+		return toList(employerRepository.findEmployerByCompany(company));
 	}
 	
 	@Transactional

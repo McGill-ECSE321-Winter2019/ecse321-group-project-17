@@ -37,7 +37,7 @@ public class TestCooperatorController {
     private TestRestTemplate restTemplate;
     
     private static final AdminDto testAdmin = new AdminDto("admin@mcgill.ca", "pw1", "Admin Person", 1, "5141111111");
-    private static final EmployerDto testEmployer = new EmployerDto("employer@company.ca", "pw2", "Employer Person", 2, "5142222222");
+    private static final EmployerDto testEmployer = new EmployerDto("employer@company.ca", "pw2", "Employer Person", 2, "5142222222", "company");
     private static final StudentDto testStudent0 = new StudentDto("student@mcgill.ca", "pw3", "Student Person", 260260260, "5143333333");
     private static final StudentDto testStudent1 = new StudentDto("student1@mcgill.ca", "pw2", "Student1", 260222222, "5142222222");
     private static final StudentDto testStudent2 = new StudentDto("student2@mcgill.ca", "pw3", "Student2", 260333333, "5143333333");

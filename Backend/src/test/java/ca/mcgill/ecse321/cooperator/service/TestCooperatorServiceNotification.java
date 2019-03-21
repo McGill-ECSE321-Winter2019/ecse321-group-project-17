@@ -74,10 +74,11 @@ public class TestCooperatorServiceNotification {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
+		String companyE = "Lightspeed";
 		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 		
 		Integer id = 34;
 		String text = "this is a notification";
@@ -170,10 +171,11 @@ public class TestCooperatorServiceNotification {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
+		String companyE = "Lightspeed";
 		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 		
 		Integer id = 34;
 		String text = "this is a notification";
@@ -217,10 +219,11 @@ public class TestCooperatorServiceNotification {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
+		String companyE = "Lightspeed";
 		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 		
 		Integer id = 34;
 		String text = "   ";

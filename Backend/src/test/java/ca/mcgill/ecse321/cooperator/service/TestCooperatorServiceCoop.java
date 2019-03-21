@@ -75,10 +75,11 @@ public class TestCooperatorServiceCoop {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
+		String companyE = "Lightspeed";
 		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 		
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
@@ -171,10 +172,11 @@ public class TestCooperatorServiceCoop {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "4563";
+		String companyE = "Lightspeed";
 		int idE = 31231234;
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 
 		String title = "";
 		Date startDate = null;
@@ -216,11 +218,12 @@ public class TestCooperatorServiceCoop {
 		String emailE = "paul.hooley@gmail.com";
 		String nameE = "Paul Hooley";
 		String passwordE = "frisbyislife";
+		String companyE = "CSA";
 		int idE = 3;
 		String phoneE = "6047862815";
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 		
 		String title = "   ";
 		Date startDate = Date.valueOf("2019-01-01");
@@ -261,10 +264,11 @@ public class TestCooperatorServiceCoop {
 		String nameE = "Paul Hooley";
 		String passwordE = "frisbyislife";
 		int idE = 3;
+		String companyE = "CSA";
 		String phoneE = "6047862815";
 		Employer emp;
 		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE, idE);
 
 		String title = "NASA";
 		Date startDate = Date.valueOf("2019-04-30");

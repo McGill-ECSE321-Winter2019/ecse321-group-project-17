@@ -57,8 +57,8 @@ public class CooperatorController {
 	
 	@PostMapping("/employer/create")
 	public EmployerDto createEmployer(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
-			@RequestParam String phone, @RequestParam Integer emplId) {
-		Employer empl = service.createEmployer(email, name, password, phone, emplId);
+			@RequestParam String phone, @RequestParam String company, @RequestParam Integer emplId) {
+		Employer empl = service.createEmployer(email, name, password, phone, company, emplId);
 		return convertToDto(empl);
 	}
 	
@@ -243,6 +243,26 @@ public class CooperatorController {
 		return cDto;
 	} 
 	
+	@GetMapping(value = { "/coopsByCompany/{company}", "/coopsByCompany/{company}/" })
+	public List<CoopDto> getCoopByCompany(@PathVariable("company") String company) {
+		List<Coop> c = service.getCoopsOfCompany(company);
+		List<CoopDto> cDto = new ArrayList<>();
+		for(Coop coop : c) {
+			cDto.add(convertToDto(coop));
+		}
+		return cDto;
+	}
+	
+	@GetMapping(value = { "/employersByCompany/{company}", "/coopsByCompany/{company}/" })
+	public List<EmployerDto> getEmployersByCompany(@PathVariable("company") String company) {
+		List<Employer> e = service.getEmployersOfCompany(company);
+		List<EmployerDto> employerDtos = new ArrayList<>();
+		for (Employer empl : service.getAllEmployers()) {
+			employerDtos.add(convertToDto(empl));
+		}
+		return employerDtos;
+	}
+	
 	@GetMapping(value = { "/reportsByStatus/{status}", "/reportsByStatus/{status}/" })
 	public List<ReportDto> getReportByStatus(@PathVariable("status") ReportStatus status) {
 		List<Report> r = service.getReportByStatus(status);
@@ -375,7 +395,7 @@ public class CooperatorController {
 		if (e == null) {
 			throw new IllegalArgumentException("There is no such Employer!");
 		}
-		EmployerDto employerDto = new EmployerDto(e.getEmail(), e.getPassword(), e.getName(), e.getId(), e.getPhone());
+		EmployerDto employerDto = new EmployerDto(e.getEmail(), e.getPassword(), e.getName(), e.getId(), e.getPhone(), e.getCompany());
 		return employerDto;
 	}
 	
