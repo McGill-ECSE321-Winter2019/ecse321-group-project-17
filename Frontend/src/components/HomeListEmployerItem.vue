@@ -17,7 +17,7 @@
       <span>{{ employer.name }}</span>
     </td>
     <td class="td-email" v-on:click="goToEmployerPage">
-      <span>{{ employer.email}}</span>
+      <span>{{ employer.email }}</span>
     </td>
   </tr>
 </template>

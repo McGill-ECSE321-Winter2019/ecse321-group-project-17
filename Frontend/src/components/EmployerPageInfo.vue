@@ -11,7 +11,7 @@
 <script>
 export default {
   props: {
-    employer {
+    employer: {
       type: Object,
       required: true
     }
@@ -19,6 +19,11 @@ export default {
 };
 </script>
 <style>
+p,
+h4,
+h6 {
+  color: white;
+}
 #info-container {
   width: 65%;
   margin: auto;
