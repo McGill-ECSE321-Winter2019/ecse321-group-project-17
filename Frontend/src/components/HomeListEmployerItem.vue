@@ -63,7 +63,7 @@ export default {
           path: "/employer/",
           name: "EmployerPage",
           params: {
-            id: res.email,
+            urlEmail: res.email,
             employerEmail: email // Pass as prop to the EmployerPage that will be rendered
           }
         });

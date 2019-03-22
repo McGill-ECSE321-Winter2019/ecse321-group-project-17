@@ -64,7 +64,7 @@ export default {
           path: "/student/",
           name: "StudentPage",
           params: {
-            id: res.id,
+            urlEmail: res.email,
             studentEmail: email // Pass as prop to the StudentPage that will be rendered
           }
         });

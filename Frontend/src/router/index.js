@@ -14,13 +14,13 @@ export default new Router({
       component: Home
     },
     {
-      path: "/student/:id/",
+      path: "/student/:urlEmail/",
       name: "StudentPage",
       component: StudentPage,
       props: true
     },
     {
-      path: "/employer/:id/",
+      path: "/employer/:urlEmail/",
       name: "EmployerPage",
       component: EmployerPage,
       props: true
