@@ -83,6 +83,10 @@ tr {
   background-color: rgb(53, 58, 62);
 }
 
+tr:hover {
+  background-color: rgb(96, 101, 105);
+}
+
 .td-name {
   width: 30%;
   text-align: left;
