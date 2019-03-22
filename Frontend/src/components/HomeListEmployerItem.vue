@@ -13,21 +13,61 @@
     <td>
       <span class="badge badge-success">Employer</span>
     </td>
-    <td class="td-name">
+    <td class="td-name" v-on:click="goToEmployerPage">
       <span>{{ employer.name }}</span>
     </td>
-    <td class="td-email">
+    <td class="td-email" v-on:click="goToEmployerPage">
       <span>{{ employer.email}}</span>
     </td>
   </tr>
 </template>
 
 <script>
+import Router from "../router";
+import axios from "axios";
+
+var config = require("../../config");
+
+var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
+var backendUrl =
+  "https://" + config.build.backendHost + ":" + config.build.backendPort;
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl }
+});
+
+// Fetch the employer with specified email from the backend
+let getEmployer = async function(email) {
+  return await AXIOS.get(`/employer/` + email)
+    .then(response => {
+      return response.data;
+    })
+    .catch(e => {
+      this.error = e;
+    });
+};
 export default {
   props: {
     employer: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    goToEmployerPage: function() {
+      let email = this.employer.email;
+      getEmployer(this.employer.email).then(function(res) {
+        // Go to the employer's page
+        Router.push({
+          path: "/employer/",
+          name: "EmployerPage",
+          params: {
+            id: res.id,
+            employerEmail: email // Pass as prop to the EmployerPage that will be rendered
+          }
+        });
+      });
     }
   }
 };
