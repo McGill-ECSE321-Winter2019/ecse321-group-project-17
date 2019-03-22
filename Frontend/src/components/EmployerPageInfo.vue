@@ -4,8 +4,8 @@
     <p>{{ employer.name }}</p>
     <h6>Employer Email:</h6>
     <p>{{ employer.email }}</p>
-    <h6>Employer ID:</h6>
-    <p>{{ employer.id }}</p>
+   <h6>Employer Company:</h6>
+    <p>{{ employer.company }}</p>
   </div>
 </template>
 <script>
