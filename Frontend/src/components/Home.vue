@@ -11,8 +11,8 @@
           <h3>Email</h3>
         </td>
       </tr>
-      <HomeListStudentItem v-for="student in students" :key="student.id" :student="student"/>
-      <HomeListEmployerItem v-for="employer in employers" :key="employer.id" :employer="employer"/>
+      <HomeListStudentItem v-for="student in students" :key="student.email" :student="student"/>
+      <HomeListEmployerItem v-for="employer in employers" :key="employer.email" :employer="employer"/>
     </table>
     <h2 v-else id="h2-loading">Loading...</h2>
   </div>

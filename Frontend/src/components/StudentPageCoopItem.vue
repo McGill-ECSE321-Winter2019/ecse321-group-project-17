@@ -1,5 +1,7 @@
 <template>
   <div id="coop-container" class="card">
+    <span class="badge badge-info">{{ coop.status }}</span>
+    <h5> </h5>
     <h5>Coop Title: {{ coop.title }}</h5>
     <h6>Company: {{ coop.employer.name }}</h6>
     <p>Start Date: {{ coop.startDate }}, End Date: {{ coop.endDate }}</p>
