@@ -13,6 +13,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
@@ -27,9 +28,13 @@ import ca.mcgill.ecse321.cooperator.dto.EmployerDto;
 import ca.mcgill.ecse321.cooperator.dto.NotificationDto;
 import ca.mcgill.ecse321.cooperator.dto.ReportDto;
 import ca.mcgill.ecse321.cooperator.dto.StudentDto;
+import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
+import ca.mcgill.ecse321.cooperator.model.Employer;
+import ca.mcgill.ecse321.cooperator.model.Notification;
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportType;
+import ca.mcgill.ecse321.cooperator.model.Student;
 import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,11 +51,14 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+
+import javax.persistence.FetchType;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+//@DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TestCooperatorController {
 	
 	@LocalServerPort
@@ -159,6 +167,8 @@ public class TestCooperatorController {
 			//compare response from request and expected response
 			assertEquals(responseEmail, email);
 			assertNotNull(response);
+			//deleteAdmin(email);
+			administratorRepository.deleteAll();
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -187,6 +197,9 @@ public class TestCooperatorController {
 			//compare response from request and expected response
 			assertEquals(responseEmail, email);
 			assertNotNull(response);
+			System.out.println("hello");
+			cs.deleteStudent(email);
+			studentRepository.deleteAll();
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -214,6 +227,8 @@ public class TestCooperatorController {
 			//compare response from request and expected response
 			assertEquals(responseEmail, email);
 			assertNotNull(response);
+			cs.deleteEmployer(email);
+			employerRepository.deleteAll();
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -235,7 +250,7 @@ public class TestCooperatorController {
 			fail();
 		}
 		
-		/*String emailE = "employer@gmail.com";
+		String emailE = "employer@gmail.com";
 		String passwordE = "hello";
 		String nameE = "rainbow";
 		String phoneE = "6132143255";
@@ -246,7 +261,7 @@ public class TestCooperatorController {
 		} catch (IllegalArgumentException e) {
 			// Check that no error occurred
 			fail();
-		}*/
+		}
 		
 		String emailS = "student@gmail.com";
 		String passwordS = "hello";
@@ -263,7 +278,7 @@ public class TestCooperatorController {
 		
 		String text = "This+is+a+notification";
 		String url = "http://localhost:" + port + "/notification/create?text=" + text + "&senderEmail="
-				+ emailA + "&stuEmail=" + emailS; // + "&empEmail=" + emailE;
+				+ emailA + "&stuEmail=" + emailS; //+ "&empEmail=" + emailE;
 		
 		
 		JSONObject jobj = null;
@@ -274,14 +289,12 @@ public class TestCooperatorController {
 			
 			String responseSenderEmail = jobj.getJSONObject("sender").getString("email");
 			String responseStuEmail = jobj.getJSONObject("student").getString("email");
+			//String responseEmpEmail = jobj.getJSONObject("employer").getString("email");
+			Integer id = Integer.valueOf(jobj.getString("id"));
 			
 			List<String> responseList = parseResponse(response);
-			System.out.println(responseList);
+			//System.out.println(responseList);
 			String responseText = getParameter("text", responseList);
-			//String responseSenderEmail = getParameter("adminEmail", responseList);
-			//String responseStuEmail = getParameter("stuEmail", responseList);
-			//String responseEmpEmail = getParameter("empEmail", responseList);
-			//Integer expectedTermsRemaining = 0;
 			
 			//compare response from request and expected response
 			assertEquals(responseText, "This is a notification");
@@ -289,6 +302,13 @@ public class TestCooperatorController {
 			assertEquals(responseStuEmail, emailS);
 			//assertEquals(responseEmpEmail, emailE);
 			assertNotNull(response);
+			
+			
+			cs.deleteNotif(id);
+			employerRepository.deleteAll();
+			studentRepository.deleteAll();
+			administratorRepository.deleteAll();
+			//employerRepository.deleteAll();			
 		}
 		catch (Exception e) {
 			System.out.println(e.getMessage());

@@ -1,11 +1,15 @@
 package ca.mcgill.ecse321.cooperator.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.util.Set;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class Student extends Profile{
@@ -28,7 +32,7 @@ public class Student extends Profile{
    
    private Set<Notification> studentReceived;
 
-   @OneToMany(mappedBy="student" )
+   @OneToMany(mappedBy="student", fetch=FetchType.EAGER )
    public Set<Notification> getStudentReceived() {
 	   return this.studentReceived;
    }

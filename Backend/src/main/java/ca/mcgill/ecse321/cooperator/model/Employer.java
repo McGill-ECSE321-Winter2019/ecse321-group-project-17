@@ -1,6 +1,8 @@
 package ca.mcgill.ecse321.cooperator.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
@@ -31,7 +33,7 @@ public Integer getId() {
 }
 private Set<Notification> employerReceived;
 
-@OneToMany(mappedBy="employer" )
+@OneToMany(mappedBy="employer", fetch=FetchType.EAGER)
 public Set<Notification> getEmployerReceived() {
    return this.employerReceived;
 }

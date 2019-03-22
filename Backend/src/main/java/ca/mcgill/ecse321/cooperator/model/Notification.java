@@ -1,6 +1,10 @@
 package ca.mcgill.ecse321.cooperator.model;
 
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Id;
@@ -10,7 +14,7 @@ import javax.persistence.GeneratedValue;
 public class Notification{
    private Employer employer;
    
-   @ManyToOne
+   @ManyToOne 
    public Employer getEmployer() {
       return this.employer;
    }

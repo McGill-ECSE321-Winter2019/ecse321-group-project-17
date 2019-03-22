@@ -607,5 +607,107 @@ public class CooperatorService {
 		}
 		return rsd;
 	}
+	@Transactional
+	public void deleteStudent(String email) {
+		Student s = studentRepository.findStudentByEmail(email);
+		Set<Notification> notifs = s.getStudentReceived();
+		if(notifs != null) {
+			for (Notification notif : notifs) {
+				if (notif.getEmployer() == null) {
+					
+				}
+				notif.setStudent(null);
+				if (notif.getEmployer() == null) {
+					deleteNotif(notif.getId());
+				}
+				System.out.println(notif.getStudent());
+			}
+		}
+		notificationRepository.saveAll(notifs);
+		studentRepository.delete(s);
+	}
+	
+	@Transactional
+	public void deleteAdmin(String email) {
+		Administrator a = administratorRepository.findAdministratorByEmail(email);
+		Set<Notification> notifs = a.getReceived();
+		for (Notification notif : notifs) {
+			notif.setSender(null);
+		}
+		notificationRepository.saveAll(notifs);
+		administratorRepository.delete(a);
+	}
+	
+	@Transactional
+	public void deleteEmployer(String email) {
+		Employer e = employerRepository.findEmployerByEmail(email);
+		Set<Notification> notifs = e.getEmployerReceived();
+		for (Notification notif : notifs) {
+			notif.setEmployer(null);
+		}
+		notificationRepository.saveAll(notifs);
+		employerRepository.delete(e);
+	}
+	
+	@Transactional
+	public void deleteNotif(Integer id) {
+		Iterable<Student> students = studentRepository.findAll();
+		
+		Notification notifToRemove = null;
+		
+		for (Student student: students) {
+			Set<Notification> notifs = student.getReceived();
+			for (Notification notif: notifs) {
+				if(notif.getId() == id) {
+					System.out.println("hello");
+					notifToRemove = notif;
+				}
+			}
+			notifs.remove(notifToRemove);
+			student.setReceived(notifs);
+		}
+		
+		studentRepository.saveAll(students);
+		for (Student student: students) {
+			Set<Notification> notifs = student.getStudentReceived();
+			for (Notification notif: notifs) {
+				if(notif.getId() == id) {
+					System.out.println("hello");
+					notifToRemove = notif;
+				}
+			}
+			notifs.remove(notifToRemove);
+			student.setStudentReceived(notifs);
+		}
+		studentRepository.saveAll(students);
+		
+		Iterable<Administrator> admins = administratorRepository.findAll();
+		for (Administrator admin : admins) {
+			Set<Notification> notifs = admin.getSent();
+			for (Notification notif: notifs) {
+				if(notif.getId() == id) {
+					System.out.println("hello");
+					notifToRemove = notif;
+				}
+			}
+			notifs.remove(notifToRemove);
+			admin.setSent(notifs);
+		}
+		administratorRepository.saveAll(admins);
+		
+		Iterable<Employer> employers = employerRepository.findAll();
+		for (Employer employer : employers) {
+			Set<Notification> notifs = employer.getReceived();
+			for (Notification notif: notifs) {
+				if(notif.getId() == id) {
+					System.out.println("hello");
+					notifToRemove = notif;
+				}
+			}
+			notifs.remove(notifToRemove);
+			employer.setReceived(notifs);
+		}
+		notificationRepository.deleteById(id);
+	}
 	
 }

@@ -1,8 +1,12 @@
 package ca.mcgill.ecse321.cooperator.model;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+
 import java.util.Set;
 import javax.persistence.OneToMany;
 import javax.persistence.Id;
@@ -11,7 +15,7 @@ import javax.persistence.Id;
 public abstract class Profile{
    private Set<Notification> received;
    
-   @OneToMany
+   @OneToMany(fetch=FetchType.EAGER)
    public Set<Notification> getReceived() {
       return this.received;
    }
@@ -22,7 +26,7 @@ public abstract class Profile{
    
    private Set<Notification> sent;
    
-   @OneToMany(mappedBy="sender" )
+   @OneToMany(mappedBy="sender", fetch=FetchType.EAGER)
    public Set<Notification> getSent() {
       return this.sent;
    }
