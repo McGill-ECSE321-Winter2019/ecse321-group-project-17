@@ -30,6 +30,6 @@ h4,
 h5,
 h6,
 p {
-  color: rgb(241, 240, 240);
+  color: white;
 }
 </style>
