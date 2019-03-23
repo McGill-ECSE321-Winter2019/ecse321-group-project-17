@@ -8,6 +8,7 @@
         id="blankCheckbox"
         value="option1"
         aria-label="..."
+        @change="updateState"
       >
     </td>
     <td>
@@ -54,6 +55,11 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      selected: false
+    };
+  },
   methods: {
     goToEmployerPage: function() {
       let email = this.employer.email;
@@ -68,6 +74,10 @@ export default {
           }
         });
       });
+    },
+    updateState: function() {
+      this.selected = !this.selected;
+      this.$emit("clicked", this.selected, this.employer);
     }
   }
 };

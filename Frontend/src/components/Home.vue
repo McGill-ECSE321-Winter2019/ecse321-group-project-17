@@ -1,44 +1,48 @@
 <template>
-  <div id="home-container" class="card">
-    <table v-if="studentsLoaded && employersLoaded">
-      <tr id="tr-heading">
-        <td id="td-checkbox">
-          <input
-            class="form-check-input position-static checkbox"
-            type="checkbox"
-            id="blankCheckbox"
-            value="option1"
-            aria-label="..."
-          >
-        </td>
-        <td></td>
-        <td>
-          <h3>Name</h3>
-        </td>
-        <td>
-          <h3>Email</h3>
-        </td>
-      </tr>
-      <HomeListStudentItem
-        v-for="student in students"
-        :key="student.email"
-        :student="student"
-        @clicked="handleSelect"
-      />
-      <HomeListEmployerItem
-        v-for="employer in employers"
-        :key="employer.email"
-        :employer="employer"
-        @clicked="handleSelect"
-      />
-    </table>
-    <h2 v-else id="h2-loading">Loading...</h2>
+  <div>
+    <HomeFilters/>
+    <div id="home-container" class="card">
+      <table v-if="studentsLoaded && employersLoaded">
+        <tr id="tr-heading">
+          <td id="td-checkbox">
+            <input
+              class="form-check-input position-static checkbox"
+              type="checkbox"
+              id="blankCheckbox"
+              value="option1"
+              aria-label="..."
+            >
+          </td>
+          <td></td>
+          <td>
+            <h3>Name</h3>
+          </td>
+          <td>
+            <h3>Email</h3>
+          </td>
+        </tr>
+        <HomeListStudentItem
+          v-for="student in students"
+          :key="student.email"
+          :student="student"
+          @clicked="handleSelect"
+        />
+        <HomeListEmployerItem
+          v-for="employer in employers"
+          :key="employer.email"
+          :employer="employer"
+          @clicked="handleSelect"
+        />
+      </table>
+      <h2 v-else id="h2-loading">Loading...</h2>
+    </div>
   </div>
 </template>
     
 <script>
 import HomeListStudentItem from "./HomeListStudentItem.vue";
 import HomeListEmployerItem from "./HomeListEmployerItem.vue";
+import HomeFilters from "./HomeFilters.vue";
 import axios from "axios";
 
 var config = require("../../config");
@@ -64,7 +68,8 @@ let remove = function(context, person) {
 export default {
   components: {
     HomeListStudentItem,
-    HomeListEmployerItem
+    HomeListEmployerItem,
+    HomeFilters
   },
   created: function() {
     // Fetch all students from backend
@@ -126,6 +131,7 @@ h3 {
 
 #home-container {
   width: 70%;
+  min-width: 550px;
   margin: auto;
   margin-top: 15px;
   padding: 15px;
