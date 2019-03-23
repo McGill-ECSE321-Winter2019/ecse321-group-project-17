@@ -4,6 +4,7 @@ import Home from "@/components/Home";
 import StudentPage from "@/components/StudentPage";
 import EmployerPage from "@/components/EmployerPage";
 import CoopPage from "@/components/CoopPage";
+import Statistics from "@/components/Statistics";
 
 Vue.use(Router);
 
@@ -30,6 +31,12 @@ export default new Router({
       path: "/coop/:id/",
       name: "CoopPage",
       component: CoopPage,
+      props: true
+    },
+    {
+      path: "/statistics/",
+      name: "Statistics",
+      component: Statistics,
       props: true
     }
   ]

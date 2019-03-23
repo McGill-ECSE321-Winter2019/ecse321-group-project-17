@@ -33,12 +33,16 @@
       />
     </table>
     <h2 v-else id="h2-loading">Loading...</h2>
+    <h2 v-on:click="goToStatistics">
+        Generate Statistics
+    </h2>
   </div>
 </template>
     
 <script>
 import HomeListStudentItem from "./HomeListStudentItem.vue";
 import HomeListEmployerItem from "./HomeListEmployerItem.vue";
+import Router from "../router";
 import axios from "axios";
 
 var config = require("../../config");
@@ -108,6 +112,17 @@ export default {
       } else {
         remove(this, student);
       }
+    },
+    goToStatistics: function() {
+        Router.push({
+            path: "/statistics/",
+            name: "Statistics",
+            params: {
+              students: this.students,
+              employers: this.employers
+          }
+        });
+
     }
   }
 };
