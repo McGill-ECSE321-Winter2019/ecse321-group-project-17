@@ -43,9 +43,7 @@
         </table>
         <h2 v-else id="h2-loading">Loading...</h2>
       </div>
-      <div id="stats" v-on:click="goToStatistics">
-        Generate Statistics
-      </div>
+      <div id="stats" v-on:click="goToStatistics">Generate Statistics</div>
     </div>
   </div>
 </template>
@@ -127,15 +125,14 @@ export default {
       }
     },
     goToStatistics: function() {
-        Router.push({
-            path: "/statistics/",
-            name: "Statistics",
-            params: {
-              students: this.students,
-              employers: this.employers
-          }
-        });
-
+      Router.push({
+        path: "/statistics/",
+        name: "Statistics",
+        params: {
+          students: this.students,
+          employers: this.employers
+        }
+      });
     }
   }
 };
@@ -154,7 +151,7 @@ h3 {
 
 #home-container {
   width: 70%;
-  min-height: 400px;
+  max-height: 380px;
   min-width: 550px;
   margin: auto;
   margin-top: 15px;
@@ -164,7 +161,7 @@ h3 {
 }
 
 #scroll-container {
-  min-height: 400px;
+  max-height: 380px;
   overflow: auto;
 }
 
@@ -209,7 +206,7 @@ td {
 }
 
 #stats {
-  background-color: #4CAF50; /* Green */
+  background-color: #4caf50; /* Green */
   border: none;
   color: white;
   padding: 15px 32px;
@@ -217,5 +214,6 @@ td {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
+  margin-top: 10px;
 }
 </style>
