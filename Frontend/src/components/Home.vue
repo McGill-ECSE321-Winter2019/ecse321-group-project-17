@@ -154,7 +154,7 @@ h3 {
 
 #home-container {
   width: 70%;
-  max-height: 200px;
+  min-height: 400px;
   min-width: 550px;
   margin: auto;
   margin-top: 15px;
@@ -164,6 +164,7 @@ h3 {
 }
 
 #scroll-container {
+  min-height: 400px;
   overflow: auto;
 }
 
