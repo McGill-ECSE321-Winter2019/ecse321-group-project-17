@@ -1,6 +1,9 @@
 <template>
   <div id="coop-container" class="card">
-    <span class="badge badge-info">{{ coop.status }}</span>
+    <span class="badge badge-info" v-if="coop.status === 'NotStarted'">Not Started</span>
+    <span class="badge badge-warning" v-else-if="coop.status === 'InProgress'">In Progress</span>
+    <span class="badge badge-success" v-else-if="coop.status === 'Complete'">Complete</span>
+    <span class="badge badge-danger" v-else>Incomplete</span>
     <h5> </h5>
     <h5>Coop Title: {{ coop.title }}</h5>
     <h6>Company: {{ coop.employer.name }}</h6>
@@ -9,6 +12,7 @@
 </template>
 
 <script>
+
 export default {
   props: {
     coop: {
@@ -17,9 +21,11 @@ export default {
     }
   }
 };
+
 </script>
 
 <style>
+
 #coop-container {
   width: 65%;
   margin: auto;
