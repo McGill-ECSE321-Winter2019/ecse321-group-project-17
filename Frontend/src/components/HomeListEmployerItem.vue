@@ -1,7 +1,7 @@
 <template>
   <!-- tr = table row, td = table data --->
   <tr>
-    <td>
+    <td class="td-checkbox">
       <input
         class="form-check-input position-static checkbox"
         type="checkbox"
@@ -11,7 +11,7 @@
         @change="updateState"
       >
     </td>
-    <td>
+    <td class="td-badge">
       <span class="badge badge-success">Employer</span>
     </td>
     <td class="td-name" v-on:click="goToEmployerPage">
@@ -96,14 +96,26 @@ tr:hover {
   background-color: rgb(96, 101, 105);
 }
 
+.td-checkbox {
+  width: 5%;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.td-badge {
+  width: 5%;
+  text-align: left;
+  padding-left: 15px;
+}
+
 .td-name {
-  width: 30%;
+  width: 20%;
   text-align: left;
   padding-left: 15px;
 }
 
 .td-email {
-  width: 70%;
+  width: 60%;
   text-align: left;
 }
 

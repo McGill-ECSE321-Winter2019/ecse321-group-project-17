@@ -2,39 +2,47 @@
   <div>
     <HomeFilters/>
     <div id="home-container" class="card">
-      <table v-if="studentsLoaded && employersLoaded">
-        <tr id="tr-heading">
-          <td id="td-checkbox">
-            <input
-              class="form-check-input position-static checkbox"
-              type="checkbox"
-              id="blankCheckbox"
-              value="option1"
-              aria-label="..."
-            >
-          </td>
-          <td></td>
-          <td>
-            <h3>Name</h3>
-          </td>
-          <td>
-            <h3>Email</h3>
-          </td>
-        </tr>
-        <HomeListStudentItem
-          v-for="student in students"
-          :key="student.email"
-          :student="student"
-          @clicked="handleSelect"
-        />
-        <HomeListEmployerItem
-          v-for="employer in employers"
-          :key="employer.email"
-          :employer="employer"
-          @clicked="handleSelect"
-        />
-      </table>
-      <h2 v-else id="h2-loading">Loading...</h2>
+      <div>
+        <table v-if="studentsLoaded && employersLoaded">
+          <tr id="tr-heading">
+            <td class="td-checkbox">
+              <input
+                class="form-check-input position-static checkbox"
+                type="checkbox"
+                id="blankCheckbox"
+                value="option1"
+                aria-label="..."
+              >
+            </td>
+            <td class="td-badge1">
+              <span class="badge badge-light">Type</span>
+            </td>
+            <td class="td-name">
+              <h3>Name</h3>
+            </td>
+            <td class="td-email">
+              <h3>Email</h3>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div id="scroll-container">
+        <table v-if="studentsLoaded && employersLoaded">
+          <HomeListStudentItem
+            v-for="student in students"
+            :key="student.email"
+            :student="student"
+            @clicked="handleSelect"
+          />
+          <HomeListEmployerItem
+            v-for="employer in employers"
+            :key="employer.email"
+            :employer="employer"
+            @clicked="handleSelect"
+          />
+        </table>
+        <h2 v-else id="h2-loading">Loading...</h2>
+      </div>
     </div>
   </div>
 </template>
@@ -131,6 +139,7 @@ h3 {
 
 #home-container {
   width: 70%;
+  max-height: 200px;
   min-width: 550px;
   margin: auto;
   margin-top: 15px;
@@ -139,19 +148,43 @@ h3 {
   background-color: rgb(53, 58, 62);
 }
 
+#scroll-container {
+  overflow: auto;
+}
+
 #tr-heading {
   background-color: rgb(53, 58, 62);
   border-bottom: thick solid gray;
   border-bottom-color: rgb(27, 27, 27);
 }
 
-#td-checkbox {
-  text-align: left;
-}
-
 .checkbox {
   margin-left: 20px;
   margin-right: 10px;
+}
+
+.td-checkbox {
+  width: 5%;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.td-badge1 {
+  width: 5%;
+  text-align: left;
+  padding-left: 15px;
+  padding-right: 29px;
+}
+
+.td-name {
+  width: 20%;
+  text-align: left;
+  padding-left: 15px;
+}
+
+.td-email {
+  width: 60%;
+  text-align: left;
 }
 
 td {
