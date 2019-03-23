@@ -8,6 +8,7 @@
         id="blankCheckbox"
         value="option1"
         aria-label="..."
+        @change="updateState"
       >
     </td>
     <td>
@@ -55,6 +56,11 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      selected: false
+    };
+  },
   methods: {
     goToStudentPage: function() {
       let email = this.student.email;
@@ -69,6 +75,10 @@ export default {
           }
         });
       });
+    },
+    updateState: function() {
+      this.selected = !this.selected;
+      this.$emit("clicked", this.selected, this.student);
     }
   }
 };

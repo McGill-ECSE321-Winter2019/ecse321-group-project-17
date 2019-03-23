@@ -2,7 +2,15 @@
   <div id="home-container" class="card">
     <table v-if="studentsLoaded && employersLoaded">
       <tr id="tr-heading">
-        <td></td>
+        <td id="td-checkbox">
+          <input
+            class="form-check-input position-static checkbox"
+            type="checkbox"
+            id="blankCheckbox"
+            value="option1"
+            aria-label="..."
+          >
+        </td>
         <td></td>
         <td>
           <h3>Name</h3>
@@ -11,8 +19,18 @@
           <h3>Email</h3>
         </td>
       </tr>
-      <HomeListStudentItem v-for="student in students" :key="student.email" :student="student"/>
-      <HomeListEmployerItem v-for="employer in employers" :key="employer.email" :employer="employer"/>
+      <HomeListStudentItem
+        v-for="student in students"
+        :key="student.email"
+        :student="student"
+        @clicked="handleSelect"
+      />
+      <HomeListEmployerItem
+        v-for="employer in employers"
+        :key="employer.email"
+        :employer="employer"
+        @clicked="handleSelect"
+      />
     </table>
     <h2 v-else id="h2-loading">Loading...</h2>
   </div>
@@ -33,6 +51,15 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
+
+// Remove a person from the selected list
+let remove = function(context, person) {
+  for (var i = 0; i < context.selected.length; i++) {
+    if (context.selected[i].email === person.email) {
+      context.selected.splice(i, 1);
+    }
+  }
+};
 
 export default {
   components: {
@@ -70,13 +97,24 @@ export default {
         type: Object
       },
       studentsLoaded: false,
-      employersLoaded: false
+      employersLoaded: false,
+      selected: []
     };
+  },
+  methods: {
+    handleSelect: function(isSelected, student) {
+      if (isSelected) {
+        this.selected.push(student);
+      } else {
+        remove(this, student);
+      }
+    }
   }
 };
 </script>
 
 <style>
+p,
 h2,
 h3 {
   color: white;
@@ -99,6 +137,15 @@ h3 {
   background-color: rgb(53, 58, 62);
   border-bottom: thick solid gray;
   border-bottom-color: rgb(27, 27, 27);
+}
+
+#td-checkbox {
+  text-align: left;
+}
+
+.checkbox {
+  margin-left: 20px;
+  margin-right: 10px;
 }
 
 td {
