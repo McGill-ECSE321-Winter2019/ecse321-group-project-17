@@ -69,7 +69,7 @@ export default {
     orderedCoops: function () {
       return _.sortBy(this.coops, 'startDate')
     }
-  },
+  }
 };
 </script>
 

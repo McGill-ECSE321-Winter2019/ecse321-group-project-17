@@ -3,7 +3,7 @@
   <div class="container">
     <EmployerPageInfo :employer="employer"/>
     <div v-if="coops.length">
-      <EmployerPageCoopItem v-for="coop in coops" :key="coop.id" :coop="coop"/>
+      <EmployerPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
     <p v-else>Employer has no co-op terms.</p>
   </div>
@@ -63,6 +63,11 @@ export default {
       },
       error: ""
     };
+  },
+  computed: {
+    orderedCoops: function () {
+      return _.sortBy(this.coops, 'startDate')
+    }
   }
 };
 </script>
