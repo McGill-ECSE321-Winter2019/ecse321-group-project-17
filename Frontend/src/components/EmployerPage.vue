@@ -44,7 +44,7 @@ export default {
         this.error = e;
       });
     // Get all coop terms for this employer 
-    AXIOS.get(`/coops/` + this.employerEmail)
+    AXIOS.get(`/employer/coops/` + this.employerEmail)
       .then(response => {
         // JSON responses are automatically parsed.
         this.coops = response.data;

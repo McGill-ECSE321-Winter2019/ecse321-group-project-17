@@ -288,7 +288,7 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "/coops/{email}", "/coops/{email}" })
+	@GetMapping(value = { "/coops/{email}", "/coops/{email}/" })
 	public List<CoopDto> getAllCoopsForStudent(@PathVariable("email") String email) {
 		List<CoopDto> coopDtos = new ArrayList<>();
 		Student s = service.getStudent(email);
@@ -299,7 +299,7 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "employer/coops/{email}", "employer/coops/{email}" })
+	@GetMapping(value = { "employer/coops/{email}", "employer/coops/{email}/" })
 	public List<CoopDto> getAllCoopsForEmployer(@PathVariable("email") String email) {
 		List<CoopDto> coopDtos = new ArrayList<>();
 		Employer e = service.getEmployer(email);
@@ -310,7 +310,7 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}" })
+	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}/" })
 	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
 		Student s = convertToDomainObject(sDto);
 		List<ReportDto> reportDtos;
@@ -335,7 +335,7 @@ public class CooperatorController {
 		return s;
 	}
 	
-	@GetMapping(value = { "/reports/coop/{id}", "/reports/coop/{id}" })
+	@GetMapping(value = { "/reports/coop/{id}", "/reports/coop/{id}/" })
 	public List<ReportDto> getAllReportsofCoop(@PathVariable("name") CoopDto cDto){
 		Coop c = convertToDomainObject(cDto);
 		List<ReportDto> reportDtos;
