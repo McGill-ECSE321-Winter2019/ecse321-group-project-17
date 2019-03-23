@@ -77,4 +77,4 @@ export default {
 .container {
   align-items: center;
 }
-</style>
+</style> 
