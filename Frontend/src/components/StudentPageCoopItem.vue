@@ -5,9 +5,9 @@
     <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
     <span class="badge badge-danger" v-else>Incomplete</span>
     <h5> </h5>
-    <h5>Coop Title: {{ coop.title }}</h5>
-    <h6>Company: {{ coop.employer.name }}</h6>
-    <p>Start Date: {{ coop.startDate }}, End Date: {{ coop.endDate }}</p>
+    <h5><b>Coop Title: </b>{{ coop.title }}</h5>
+    <h6><b>Company: </b>{{ coop.employer.name }}</h6>
+    <p><b> Date: </b> {{ coop.startDate }}, End Date: {{ coop.endDate }}</p>
   </div>
 </template>
 

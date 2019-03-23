@@ -1,11 +1,10 @@
 <template>
   <div id="info-container" class="card">
-    <h4>Employer Name:</h4>
-    <p>{{ employer.name }}</p>
-    <h6>Employer Email:</h6>
-    <p>{{ employer.email }}</p>
-   <h6>Employer Company:</h6>
-    <p>{{ employer.company }}</p>
+    <h3><span class="badge badge-success" >Employer</span> &nbsp; &nbsp; <strong>{{ employer.name }} </strong><small>from</small>  {{ employer.company }}</h3>
+    <h3></h3>
+    <p><b>Email:</b> {{ employer.email }}</p>
+    <p><b>Phone:</b> {{ employer.phone}}</p>
+   
   </div>
 </template>
 <script>
