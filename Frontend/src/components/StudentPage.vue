@@ -56,7 +56,7 @@ export default {
   data() {
     return {
       student: {
-        type: Object
+        type: Object,
       },
       coops: {
         type: Object
