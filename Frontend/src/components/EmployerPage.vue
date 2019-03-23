@@ -3,7 +3,7 @@
   <div class="container">
     <EmployerPageInfo :employer="employer"/>
     <div v-if="coops.length">
-      <EmployerPageCoopItem v-for="coop in coops" :key="coop.id" :coop="coop"/>
+      <EmployerPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
     <p v-else>Employer has no co-op terms.</p>
   </div>
@@ -44,7 +44,7 @@ export default {
         this.error = e;
       });
     // Get all coop terms for this employer 
-    AXIOS.get(`/coops/` + this.employerEmail)
+    AXIOS.get(`/employer/coops/` + this.employerEmail)
       .then(response => {
         // JSON responses are automatically parsed.
         this.coops = response.data;
@@ -63,6 +63,11 @@ export default {
       },
       error: ""
     };
+  },
+  computed: {
+    orderedCoops: function () {
+      return _.sortBy(this.coops, 'startDate')
+    }
   }
 };
 </script>

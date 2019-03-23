@@ -29,13 +29,13 @@
       <div id="scroll-container">
         <table v-if="studentsLoaded && employersLoaded">
           <HomeListStudentItem
-            v-for="student in students"
+            v-for="student in orderedStudents"
             :key="student.email"
             :student="student"
             @clicked="handleSelect"
           />
           <HomeListEmployerItem
-            v-for="employer in employers"
+            v-for="employer in orderedEmployers"
             :key="employer.email"
             :employer="employer"
             @clicked="handleSelect"
@@ -68,6 +68,7 @@ import HomeListEmployerItem from "./HomeListEmployerItem.vue";
 import Router from "../router";
 import HomeFilters from "./HomeFilters.vue";
 import axios from "axios";
+import _ from 'lodash';
 
 var config = require("../../config");
 
@@ -129,6 +130,14 @@ export default {
       employersLoaded: false,
       selected: []
     };
+  },
+  computed: {
+    orderedStudents: function () {
+      return _.sortBy(this.students, 'name')
+    },
+    orderedEmployers: function () {
+      return _.sortBy(this.employers, 'name')
+    },
   },
   methods: {
     handleSelect: function(isSelected, student) {
