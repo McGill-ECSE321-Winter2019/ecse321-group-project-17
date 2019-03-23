@@ -3,7 +3,7 @@
   <div class="container">
     <StudentPageInfo :student="student"/>
     <div v-if="coops.length">
-      <StudentPageCoopItem v-for="coop in coops" :key="coop.id" :coop="coop"/>
+      <StudentPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
     <p v-else>Student has no co-op terms.</p>
   </div>
@@ -13,6 +13,7 @@
 import StudentPageInfo from "./StudentPageInfo.vue";
 import StudentPageCoopItem from "./StudentPageCoopItem.vue";
 import axios from "axios";
+import _ from 'lodash';
 
 var config = require("../../config");
 
@@ -56,14 +57,19 @@ export default {
   data() {
     return {
       student: {
-        type: Object,
+        type: Object
       },
       coops: {
         type: Object
       },
       error: ""
     };
-  }
+  },
+  computed: {
+    orderedCoops: function () {
+      return _.sortBy(this.coops, 'startDate')
+    }
+  },
 };
 </script>
 
