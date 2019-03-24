@@ -1,15 +1,29 @@
 <template>
   <div class="container">
     <div class="Chart">
-      <h1 style="text-align:center;">Barchart</h1>
-      <bar-chart :chartData="students.length"/>
-      Total: {{students.length}}
+      <h2 style="text-align:center;">Profiles</h2>
+      <bar-chart :chartData="this.profiles"/>
+    </div>
+    <div class="Chart" v-if="coopstatsLoaded">
+      <h2 style="text-align:center;">Coop Statistics</h2>
+      <pie-chart-coop :chartData="this.coopstats"/>
+    </div>
+    <div class="Chart" v-if="reportstatsLoaded">
+      <h2 style="text-align:center;">Report Status Statistics</h2>
+      <pie-chart-report-status :chartData="this.reportstats"/>
+    </div>
+    <div class="Chart" v-if="reportstatsLoaded">
+      <h2 style="text-align:center;">Report Type Statistics</h2>
+      <pie-chart-report-type :chartData="this.reportstats"/>
     </div>
   </div>
 </template>
 
 <script>
   import BarChart from './BarChart'
+  import PieChartCoop from './PieChartCoop'
+  import PieChartReportStatus from './PieChartReportStatus'
+  import PieChartReportType from './PieChartReportType'
   import axios from "axios";
 
   var config = require("../../config");
@@ -23,17 +37,6 @@
     headers: { "Access-Control-Allow-Origin": frontendUrl }
   });
 
-  // Fetch the student with specified email from the backend
-  let getCoopStats = async function(email) {
-    return await AXIOS.get(`/statistics/coop///`)
-      .then(response => {
-        return response.data;
-      })
-      .catch(e => {
-        this.error = e;
-      });
-  };
-
   export default {
     props: {
       students: {
@@ -43,62 +46,53 @@
       employers: {
         type: Array,
         required: true
-      },
-      notStartedCoops: {
-        type: Number 
-      },
-      inProgressCoops: {
-        type: Number
-      },
-      completedCoops: {
-        type: Number
-      },
-      totalCoops: {
-        type: Number
       }
     },
     components: {
-      BarChart
+      BarChart,
+      PieChartCoop,
+      PieChartReportStatus,
+      PieChartReportType
+    },
+    created: function() {
+      AXIOS.get(`/statistics/coop/""/""/0`)
+        .then(response => {
+            this.coopstats = response.data;
+            this.coopstatsLoaded = true;
+        })
+        .catch(e => {
+            this.error = e;
+        });
+      AXIOS.get(`/statistics/report/""/""/0`)
+        .then(response => {
+        this.reportstats = response.data;
+        this.reportstatsLoaded = true;
+      })
+      .catch(e => {
+        this.error = e;
+      });
     },
     data () {
       return {
         dataPoints: null,
-        height: 20
+        height: 20,
+        coopstats: {
+          type: Object
+        },
+        coopstatsLoaded: false,
+        reportstats: {
+          type: Object
+        },
+        reportstatsLoaded: false
       }
     },
-    mounted () {
-      setInterval(() => {
-        this.fillData()
-      }, 2000)
-    },
     methods: {
-      loadCoopStats () {
-        let email = this.student.email;
-        getCoopStats().then(function(res) {
-          this.notStartedCoops = res.notStartedCoops;
-	      this.inProgressCoops = res.inProgressCoops;
-	      this.completedCoops = res.completedCoops;
-	      this.totalCoops = res.totalCoops;
-        });
-      },
       increaseHeight () {
         this.height += 10
       },
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       },
-      fillData () {
-        this.dataPoints = {
-          labels: ['Number of students'],
-          datasets: [
-            {
-              label: 'Data One',
-              backgroundColor: '#f87979',
-              data: [1]
-            }
-          ]
-        }
-      }
     },
     computed: {
       myStyles () {
@@ -106,16 +100,22 @@
           height: `${this.height}px`,
           position: 'relative'
         }
+      },
+      profiles () {
+        return {
+            students: this.students,
+            employers: this.employers
+        } 
       }
     }
   }
 </script>
 
 <style>
-  .container {
+  /* .container {
     max-width: 800px;
     margin: 0 auto;
-  }
+  } */
   h1 {
     font-family: 'Helvetica', Arial;
     color: #464646;
@@ -125,10 +125,31 @@
     font-size: 28px;
     margin-top: 0;
   }
-  .Chart {
-    padding: 20px;
-    box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, .4);
-    border-radius: 20px;
-    margin: 50px 0;
+
+  .Chart h2 {
+    margin-top:0;
+    padding:15px 0;
+    color:rgba(255,255,255,.5);
+    border-bottom:1px solid #323d54
   }
+
+  .container { 
+      max-width:800px;
+      margin:5 auto;
+      color:#b7d7e8
+  }
+
+  .Chart { 
+    background:#212733;
+    border-radius:15px;
+    box-shadow:0 2px 15px rgba(25,25,25,.27);
+    margin:25px 0
+  }
+  
+  th, td { 
+    width:150px; 
+    text-align:center; 
+    padding:20px   
+  } 
+
 </style>
