@@ -29,13 +29,13 @@
       <div id="scroll-container">
         <table v-if="studentsLoaded && employersLoaded">
           <HomeListStudentItem
-            v-for="student in students"
+            v-for="student in orderedStudents"
             :key="student.email"
             :student="student"
             @clicked="handleSelect"
           />
           <HomeListEmployerItem
-            v-for="employer in employers"
+            v-for="employer in orderedEmployers"
             :key="employer.email"
             :employer="employer"
             @clicked="handleSelect"
@@ -43,8 +43,21 @@
         </table>
         <h2 v-else id="h2-loading">Loading...</h2>
       </div>
-      <div id="stats" v-on:click="goToStatistics">Generate Statistics</div>
     </div>
+    <div>
+        <button 
+          id="stats"
+          type="button" 
+          class="btn btn-light btn-lg"
+          v-on:click="goToStatistics">Generate Statistics
+        </button> 
+        <button 
+          id="notifs"
+          type="button" 
+          class="btn btn-light btn-lg"
+          v-on:click="goToNotifications">Create Notification 
+        </button> 
+      </div>
   </div>
 </template>
     
@@ -54,6 +67,7 @@ import HomeListEmployerItem from "./HomeListEmployerItem.vue";
 import Router from "../router";
 import HomeFilters from "./HomeFilters.vue";
 import axios from "axios";
+import _ from "lodash";
 
 var config = require("../../config");
 
@@ -116,6 +130,14 @@ export default {
       selected: []
     };
   },
+  computed: {
+    orderedStudents: function() {
+      return _.sortBy(this.students, "name");
+    },
+    orderedEmployers: function() {
+      return _.sortBy(this.employers, "name");
+    }
+  },
   methods: {
     handleSelect: function(isSelected, student) {
       if (isSelected) {
@@ -133,6 +155,12 @@ export default {
           employers: this.employers
         }
       });
+    },
+    goToNotifications: function() {
+      Router.push({
+        path: "/notifications/",
+        name: "NotificationPage"
+      });
     }
   }
 };
@@ -143,6 +171,11 @@ p,
 h2,
 h3 {
   color: white;
+}
+
+.light-button {
+  background-color: rgb(195, 201, 206);
+  border-color: rgb(129, 133, 136);
 }
 
 #h2-loading {
@@ -206,14 +239,10 @@ td {
 }
 
 #stats {
-  background-color: #4caf50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
+  margin-top: 10px;
+}
+
+#notifs {
   margin-top: 10px;
 }
 </style>

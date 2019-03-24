@@ -5,6 +5,7 @@ import StudentPage from "@/components/StudentPage";
 import EmployerPage from "@/components/EmployerPage";
 import CoopPage from "@/components/CoopPage";
 import Statistics from "@/components/Statistics";
+import NotificationPage from "@/components/NotificationPage";
 
 Vue.use(Router);
 
@@ -37,6 +38,12 @@ export default new Router({
       path: "/statistics/",
       name: "Statistics",
       component: Statistics,
+      props: true
+    },
+    {
+      path: "/notifications/",
+      name: "NotificationPage",
+      component: NotificationPage,
       props: true
     }
   ]
