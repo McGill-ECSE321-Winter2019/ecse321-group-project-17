@@ -45,6 +45,12 @@ export default new Router({
       name: "NotificationPage",
       component: NotificationPage,
       props: true
+    },
+    {
+      path: "/report/:id/",
+      name: "ReportPage",
+      component: ReportPage,
+      props: true
     }
   ]
 });
