@@ -1,10 +1,25 @@
 <! --- This component acts as a page to create a notification -->
 <template>
-    <div>
-        <span>Notification:</span>
-        <p style="white-space: pre-line;">{{ message }}</p>
-        <br>
-        <textarea v-model="message" placeholder="Enter notification message"></textarea>
+    <div id="home-container">
+        <span 
+            id="title">Notification:
+        </span>
+        <div>
+        <span 
+            id="title1">Send to:
+        </span>
+        </div>
+        <b-container fluid>
+            <b-form-textarea 
+                id="textarea-default"
+                size="lg"
+                placeholder="Enter notification message" />
+            <button
+                id="send"
+                type="button"
+                class="btn btn-light btn-lg">Send
+            </button>
+        </b-container>
     </div>
 </template>
 
@@ -22,3 +37,24 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 </script>
+
+<style>
+#title {
+    text-align: left;
+    color: white;
+    font-size: 30px;
+    padding-left: 15px;
+}
+
+#title1 {
+    text-align: left;
+    color: white;
+    font-size: 26px;
+    padding-left: 15px;
+}
+
+#send {
+    margin-top: 10px;
+    align-content: right
+}
+</style>

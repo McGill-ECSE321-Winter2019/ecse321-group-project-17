@@ -46,7 +46,7 @@
     </div>
     <div>
         <button 
-          id="stats1"
+          id="stats"
           type="button" 
           class="btn btn-light btn-lg"
           v-on:click="goToStatistics">Generate Statistics
@@ -57,7 +57,6 @@
           class="btn btn-light btn-lg"
           v-on:click="goToNotifications">Create Notification 
         </button> 
-      <!-- id="stats" v-on:click="goToStatistics">Generate Statistics</div> -->
       </div>
   </div>
 </template>
@@ -235,18 +234,6 @@ td {
 }
 
 #stats {
-  background-color: #4caf50; /* Green */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin-top: 10px;
-}
-
-#stats1 {
   margin-top: 10px;
 }
 
