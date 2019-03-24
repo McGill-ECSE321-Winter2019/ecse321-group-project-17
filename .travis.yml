@@ -1,11 +1,21 @@
-language: java
-install: true
+matrix:
+  include:
+    - language: java
+      install: true
+      jdk:
+        - oraclejdk8
+      script:
+        - ./gradlew build
 
-jdk:
-  - oraclejdk8
-
-script:
-  - ./gradlew build
+    - language: node_js
+      node_js:
+        - 4.8
+      before_install:
+        - cd Frontend
+      install:
+        - npm install
+      script:
+        - npm start
 
 deploy:
   provider: heroku
