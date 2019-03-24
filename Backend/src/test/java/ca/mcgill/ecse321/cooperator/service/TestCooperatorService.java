@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.cooperator.service;
 
 import static org.junit.Assert.assertEquals;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,19 +14,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TestCooperatorService {
 
 	@Autowired
 	protected CooperatorService cs;
-	
+
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	@Autowired
@@ -41,7 +42,8 @@ public class TestCooperatorService {
 	@Autowired
 	private StudentRepository studentRepository;
 
-	@Before @After
+	@Before
+	@After
 	public void clearDatabase() {
 		reportRepository.deleteAll();
 		notificationRepository.deleteAll();
@@ -52,10 +54,9 @@ public class TestCooperatorService {
 		profileRepository.deleteAll();
 	}
 
-	//placeholder test so this doesn't fail
-	//add tests that include mutliple classes in this file
-	
-	
+	// placeholder test so this doesn't fail
+	// add tests that include mutliple classes in this file
+
 	@Test
 	public void testCreateProfileNoPhone() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -66,7 +67,7 @@ public class TestCooperatorService {
 		String phone = " ";
 		int id = 31231234;
 		String error = null;
-	
+
 		try {
 			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
@@ -79,6 +80,7 @@ public class TestCooperatorService {
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
 	}
+
 	@Test
 	public void testCreateProfileNoEmail() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -89,7 +91,7 @@ public class TestCooperatorService {
 		String phone = "5061231234";
 		int id = 31231234;
 		String error = null;
-	
+
 		try {
 			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {

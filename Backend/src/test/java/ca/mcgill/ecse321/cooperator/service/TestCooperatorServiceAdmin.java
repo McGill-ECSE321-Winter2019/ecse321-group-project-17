@@ -4,8 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -19,19 +17,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TestCooperatorServiceAdmin {
 	@Autowired
 	protected CooperatorService cs;
-	
+
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	@Autowired
@@ -47,7 +45,8 @@ public class TestCooperatorServiceAdmin {
 	@Autowired
 	private StudentRepository studentRepository;
 
-	@Before @After
+	@Before
+	@After
 	public void clearDatabase() {
 		reportRepository.deleteAll();
 		notificationRepository.deleteAll();
@@ -57,7 +56,7 @@ public class TestCooperatorServiceAdmin {
 		employerRepository.deleteAll();
 		profileRepository.deleteAll();
 	}
-	
+
 	@Test
 	public void testCreateAdmin() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -78,7 +77,7 @@ public class TestCooperatorServiceAdmin {
 
 		assertEquals(1, allAdmins.size());
 		assertEquals(name, allAdmins.get(0).getName());
-		
+
 		assertEquals("Paul Hooley", cs.getAdmin(email).getName());
 		assertEquals(null, administratorRepository.findAdministratorByName("Albert Kragl"));
 	}
@@ -86,7 +85,7 @@ public class TestCooperatorServiceAdmin {
 	@Test
 	public void testCreateAdminNull() {
 		assertEquals(0, cs.getNumberofProfiles());
-		
+
 		String email = null;
 		String name = null;
 		String password = null;
@@ -101,13 +100,13 @@ public class TestCooperatorServiceAdmin {
 
 		// check error
 		assertEquals("Administrator name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ", error);
+				+ "Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
 
 	}
-	
+
 	@Test
 	public void testCreateAdminEmpty() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -126,13 +125,13 @@ public class TestCooperatorServiceAdmin {
 
 		// check error
 		assertEquals("Administrator name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ", error);
+				+ "Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
 
 	}
-	
+
 	@Test
 	public void testCreateAdminSpaces() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -142,7 +141,7 @@ public class TestCooperatorServiceAdmin {
 		String password = " ";
 		String phone = " ";
 		String error = null;
-	
+
 		try {
 			cs.createAdmin(email, name, password, phone);
 		} catch (IllegalArgumentException e) {
@@ -155,7 +154,7 @@ public class TestCooperatorServiceAdmin {
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
-		
+
 		try {
 			cs.getAdmin("");
 		} catch (IllegalArgumentException e) {
@@ -164,7 +163,5 @@ public class TestCooperatorServiceAdmin {
 		assertEquals("Administrator email cannot be empty!", error);
 
 	}
-	
-	
 
 }

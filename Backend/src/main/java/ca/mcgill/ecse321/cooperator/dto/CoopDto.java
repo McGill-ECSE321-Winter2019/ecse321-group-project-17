@@ -18,15 +18,15 @@ public class CoopDto {
 	private Integer salaryPerHour;
 	private Integer hoursPerWeek;
 	private String address;
-	
+
 	public CoopDto() {
 	}
-	
+
 	public CoopDto(Integer id) {
-		this(id, "title "+id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "");
+		this(id, "title " + id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "");
 	}
-	
-	public CoopDto(Integer id, String title, StudentDto student, EmployerDto employer, Date startDate, Date endDate, 
+
+	public CoopDto(Integer id, String title, StudentDto student, EmployerDto employer, Date startDate, Date endDate,
 			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
 		this.student = student;
 		this.employer = employer;
@@ -128,7 +128,5 @@ public class CoopDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
-	
+
 }
