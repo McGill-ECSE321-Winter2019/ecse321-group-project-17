@@ -26,3 +26,15 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |Susan Matuszewski |  15 hours  | send notifications RESTful, integration testing for query services, integration tests gradle task |
 |Eliott Bourachot  |  15 hours  | statistics RESTful services, unit testing for service methods, Software Assurance Plan  |
 |Matthew Kourlas   |  14 hours  | co-op progress RESTful service, integration testing for data modifying services |
+
+## Deliverable 3
+
+[Project Report](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-17/wiki/Project-Report:-Deliverable-3)
+
+|Team member's name|Total hours |Responsibility         |
+|------------------|------------|-----------------------|
+|Emma Eagles       |  XX hours  |                       |
+|Albert Kragl      |  XX hours  |                       |
+|Susan Matuszewski |  XX hours  |                       |
+|Eliott Bourachot  |  XX hours  |                       |
+|Matthew Kourlas   |  XX hours  |                       |
