@@ -240,6 +240,23 @@ public class CooperatorService {
 	}
 	
 	@Transactional
+	public void deleteReport(Report r) {
+		reportRepository.delete(r);
+	}
+	
+	@Transactional
+	public Report updateReport(Report r, ReportStatus s) {
+		r.setStatus(s);
+		return r;
+	}
+	
+	@Transactional
+	public Coop updateCoopStatus(Coop c, CoopStatus s) {
+		c.setStatus(s);
+		return c;
+	}
+	
+	@Transactional
 	public Set<Coop> getCoopforStudent(Student s){
 		if(s == null) {
 			throw new IllegalArgumentException("Student is null!");
@@ -351,6 +368,7 @@ public class CooperatorService {
 		return n;
 	}
 	
+	@Transactional
 	public Set<Notification> getNotificationsEmp(Employer e) {
 		Set <Notification> n = null;
 		if(e == null) {
