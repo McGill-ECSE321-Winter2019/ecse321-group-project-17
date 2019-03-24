@@ -13,7 +13,7 @@
 import StudentPageInfo from "./StudentPageInfo.vue";
 import StudentPageCoopItem from "./StudentPageCoopItem.vue";
 import axios from "axios";
-import _ from 'lodash';
+import _ from "lodash";
 
 var config = require("../../config");
 
@@ -66,8 +66,8 @@ export default {
     };
   },
   computed: {
-    orderedCoops: function () {
-      return _.sortBy(this.coops, 'startDate').reverse()
+    orderedCoops: function() {
+      return _.sortBy(this.coops, "startDate").reverse();
     }
   }
 };

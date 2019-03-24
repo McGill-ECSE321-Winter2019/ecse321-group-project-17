@@ -30,4 +30,6 @@ matrix:
         provider: heroku
         api_key: 86799e0e-7d72-481f-a32b-76920d363c2c
         app: ecse321-group17-frontend
-      on: travis-test
+      on:
+        repo: McGill-ECSE321-Winter2019/ecse321-group-project-17
+        branch: travis-test
