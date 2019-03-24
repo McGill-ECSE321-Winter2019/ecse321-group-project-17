@@ -14,12 +14,12 @@ export default {
   mounted () {
     // Overwriting base render method with actual data.
     this.renderChart({
-      labels: ['Students'],
+      labels: ['Students', 'Employers'],
       datasets: [
         {
-          label: 'Number',
+          label: 'Number' ,
           backgroundColor: '#f87979', //color of bars when hovering
-          data: [this.chartData]
+          data: [this.chartData.students.length, this.chartData.employers.length]
         }
       ]
     }, this.options)
