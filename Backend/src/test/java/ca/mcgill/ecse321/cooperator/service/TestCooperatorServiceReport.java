@@ -3,7 +3,6 @@ package ca.mcgill.ecse321.cooperator.service;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.Date;
-import java.util.Optional;
 
 import org.junit.After;
 import org.junit.Before;
@@ -17,9 +16,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
@@ -31,11 +30,11 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DirtiesContext(classMode=DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TestCooperatorServiceReport {
 	@Autowired
 	protected CooperatorService cs;
-	
+
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	@Autowired
@@ -51,7 +50,8 @@ public class TestCooperatorServiceReport {
 	@Autowired
 	private StudentRepository studentRepository;
 
-	@Before @After
+	@Before
+	@After
 	public void clearDatabase() {
 		reportRepository.deleteAll();
 		notificationRepository.deleteAll();
@@ -61,14 +61,14 @@ public class TestCooperatorServiceReport {
 		employerRepository.deleteAll();
 		profileRepository.deleteAll();
 	}
-	
+
 	@Test
 	public void testCreateReportNull() {
 		assertEquals(0, cs.getAllReports().size());
 
 		String error = null;
 		Date date = null;
-	
+
 		try {
 			cs.createReport(null, date, null, null);
 		} catch (IllegalArgumentException e) {
@@ -135,28 +135,29 @@ public class TestCooperatorServiceReport {
 		assertEquals(1, cs.getReportByType(ReportType.Contract).size());
 	}
 	
+
 	@Test
 	public void testDeleteReport() {
 		assertEquals(0, cs.getAllReports().size());
-		
+
 		String emailS = "paul.hooley@gmail.com";
 		String nameS = "qwefqwefq";
 		String passwordS = "frisbyislife";
 		int idS = 3;
 		String phoneS = "6047862815";
 		Student s;
-		
+
 		s = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
-		
+
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
 		String companyE = "lightspeed";
 		Employer emp;
-		
+
 		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
-		
+
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-30");
@@ -170,7 +171,7 @@ public class TestCooperatorServiceReport {
 
 		Date date = Date.valueOf("2019-03-30");
 		String error = "";
-		
+
 		Report r = null;
 		try {
 			r = cs.createReport(c, date, ReportStatus.Submitted, ReportType.Contract);

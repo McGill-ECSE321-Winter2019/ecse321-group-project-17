@@ -17,19 +17,19 @@ import org.springframework.test.context.junit4.SpringRunner;
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
 import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
 import ca.mcgill.ecse321.cooperator.dao.EmployerRepository;
-import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
+import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
 import ca.mcgill.ecse321.cooperator.model.Employer;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DirtiesContext(classMode=DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 public class TestCooperatorServiceEmployer {
 	@Autowired
 	private CooperatorService cs;
-	
+
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	@Autowired
@@ -44,9 +44,9 @@ public class TestCooperatorServiceEmployer {
 	private ProfileRepository profileRepository;
 	@Autowired
 	private StudentRepository studentRepository;
-	
-	
-	@Before @After
+
+	@Before
+	@After
 	public void clearDatabase() {
 		reportRepository.deleteAll();
 		notificationRepository.deleteAll();
@@ -56,7 +56,7 @@ public class TestCooperatorServiceEmployer {
 		employerRepository.deleteAll();
 		profileRepository.deleteAll();
 	}
-	
+
 	@Test
 	public void testCreateEmployer() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -78,16 +78,16 @@ public class TestCooperatorServiceEmployer {
 
 		assertEquals(1, allEmployers.size());
 		assertEquals(name, allEmployers.get(0).getName());
-		 
+
 		assertEquals("Paul Hooley", cs.getEmployer(email).getName());
 		assertEquals(null, employerRepository.findEmployerByName("Emma Eagles"));
-		
+
 	}
-	
+
 	@Test
 	public void testCreateEmployerNull() {
 		assertEquals(0, cs.getNumberofProfiles());
-		
+
 		String email = null;
 		String name = null;
 		String password = null;
@@ -103,13 +103,13 @@ public class TestCooperatorServiceEmployer {
 
 		// check error
 		assertEquals("Employer name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
+				+ "Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
 
 	}
-	
+
 	@Test
 	public void testCreateEmployerEmpty() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -129,14 +129,13 @@ public class TestCooperatorServiceEmployer {
 
 		// check error
 		assertEquals("Employer name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
-
+				+ "Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
 
 	}
-	
+
 	@Test
 	public void testCreateEmployerSpaces() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -147,7 +146,7 @@ public class TestCooperatorServiceEmployer {
 		String phone = " ";
 		String company = "  ";
 		String error = null;
-	
+
 		try {
 			cs.createEmployer(email, name, password, phone, company);
 		} catch (IllegalArgumentException e) {
@@ -156,11 +155,11 @@ public class TestCooperatorServiceEmployer {
 
 		// check error
 		assertEquals("Employer name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
+				+ "Password cannot be empty! Phone cannot be empty! Company cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
-		
+
 		try {
 			cs.getEmployer("");
 		} catch (IllegalArgumentException e) {
@@ -169,30 +168,21 @@ public class TestCooperatorServiceEmployer {
 		assertEquals("Employer email cannot be empty!", error);
 
 	}
-	//test no longer relevant
-	/*@Test
-	public void testCreateEmployerNegative() {
-		assertEquals(0, cs.getAllEmployers().size());
-
-		String email = "emma.eagles@mail.mcgill.ca";
-		String name = "Emma Eagles";
-		String password = "12341234";
-		String phone = "5061231234";
-		String company = "LIghtspeed";
-		int id = -9;
-		String error = null;
-	
-		try {
-			cs.createEmployer(email, name, password, phone, company, id);
-		} catch (IllegalArgumentException e) {
-			error = e.getMessage();
-		}
-
-		// check error
-		assertEquals("ID is invalid!", error);
-
-		// check no change in memory
-		assertEquals(0, cs.getAllEmployers().size());
-	}*/
+	// test no longer relevant
+	/*
+	 * @Test public void testCreateEmployerNegative() { assertEquals(0,
+	 * cs.getAllEmployers().size());
+	 * 
+	 * String email = "emma.eagles@mail.mcgill.ca"; String name = "Emma Eagles";
+	 * String password = "12341234"; String phone = "5061231234"; String company =
+	 * "LIghtspeed"; int id = -9; String error = null;
+	 * 
+	 * try { cs.createEmployer(email, name, password, phone, company, id); } catch
+	 * (IllegalArgumentException e) { error = e.getMessage(); }
+	 * 
+	 * // check error assertEquals("ID is invalid!", error);
+	 * 
+	 * // check no change in memory assertEquals(0, cs.getAllEmployers().size()); }
+	 */
 
 }
