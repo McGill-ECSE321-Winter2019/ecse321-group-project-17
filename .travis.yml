@@ -17,7 +17,17 @@ matrix:
       script:
         - npm run build
 
-deploy:
-  provider: heroku
-  api_key: 86799e0e-7d72-481f-a32b-76920d363c2c
-  app: ecse321-group17
+    - stage: deploy to backend app
+      script: skip
+      deploy:
+        provider: heroku
+        api_key: 86799e0e-7d72-481f-a32b-76920d363c2c
+        app: ecse321-group17
+
+    - stage: deploy to frontend app
+      script: skip
+      deploy:
+        provider: heroku
+        api_key: 86799e0e-7d72-481f-a32b-76920d363c2c
+        app: ecse321-group17-frontend
+      on: travis-test
