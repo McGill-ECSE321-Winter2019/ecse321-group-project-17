@@ -45,7 +45,7 @@ export default {
         this.error = e;
       });
     // Get all coop terms for this student
-    AXIOS.get(`/coops/` + this.studentEmail)
+    AXIOS.get(`/student/coops/` + this.studentEmail)
       .then(response => {
         // JSON responses are automatically parsed.
         this.coops = response.data;

@@ -192,6 +192,8 @@ public class CooperatorService {
 		c.setSalaryPerHour(salaryPerHour);
 		c.setHoursPerWeek(hoursPerWeek);
 		c.setAddress(address);
+		Set<Report> r = new HashSet<>();
+		c.setReport(r);
 		coopRepository.save(c);
 		return c;
 	}
@@ -647,9 +649,30 @@ public class CooperatorService {
 				System.out.println(notif.getStudent());
 			}
 		}
+		Set<Coop> coops = s.getCoop();
+		for(Coop c : coops) {
+			deleteCoop(c.getId());
+		}
 		notificationRepository.saveAll(notifs);
 		studentRepository.delete(s);
 	}
+	
+	@Transactional
+	public void deleteCoop(Integer id) {
+		Coop c = coopRepository.findCoopById(id);
+		Set<Report> reports = c.getReport();
+		for(Report r : reports) {
+			deleteReport(r);
+		}
+		Student s = c.getStudent();
+		s.getCoop().remove(c);
+		Employer e = c.getEmployer();
+		e.getCoop().remove(c);
+		employerRepository.save(e);
+		studentRepository.save(s);
+		coopRepository.delete(c);
+	}
+	
 	
 	@Transactional
 	public void deleteAdmin(String email) {
