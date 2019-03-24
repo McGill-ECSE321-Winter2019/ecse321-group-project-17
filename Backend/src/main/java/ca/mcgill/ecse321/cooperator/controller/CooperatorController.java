@@ -177,6 +177,13 @@ public class CooperatorController {
 		Report r = service.getReport(id);
 		service.deleteReport(r);
 	}
+	
+
+	@DeleteMapping( "/student/delete")
+	public void deleteStudent(@RequestParam String email) {
+		Student s = service.getStudent(email);
+		//service.deleteStudent(s);
+	}
 	/*
 	 * GET METHODS
 	 * 
@@ -340,9 +347,9 @@ public class CooperatorController {
 	}
 	
 	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}/" })
-	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") String email){
+	public Set<ReportDto> getAllReportsofStudent(@PathVariable("email") String email){
 		Student s = service.getStudent(email);
-		List<ReportDto> reportDtos;
+		Set<ReportDto> reportDtos;
 		Set<Report> reports = new HashSet<>();
 		for(Coop c : service.getCoopforStudent(s)) {
 			reports.addAll(c.getReport());
@@ -365,9 +372,9 @@ public class CooperatorController {
 	}
 	
 	@GetMapping(value = { "/reports/coop/{id}", "/reports/coop/{id}/" })
-	public List<ReportDto> getAllReportsofCoop(@PathVariable("name") CoopDto cDto){
+	public Set<ReportDto> getAllReportsofCoop(@PathVariable("name") CoopDto cDto){
 		Coop c = convertToDomainObject(cDto);
-		List<ReportDto> reportDtos;
+		Set<ReportDto> reportDtos;
 		Set<Report> reports = c.getReport();
 		reportDtos = convertToDto(reports);
 		return reportDtos;
@@ -398,7 +405,7 @@ public class CooperatorController {
 			throw new IllegalArgumentException("There is no such Coop!");
 		}
 		CoopDto coopDto = new CoopDto(c.getId(),c.getTitle(), convertToDto(c.getStudent()), convertToDto(c.getEmployer()), c.getStartDate(), c.getEndDate(), 
-				c.getStatus(), c.getSalaryPerHour(), c.getHoursPerWeek(), c.getAddress());
+				c.getStatus(), c.getSalaryPerHour(), c.getHoursPerWeek(), c.getAddress(), convertToDto(c.getReport()));
 		return coopDto;
 	}
 
@@ -438,19 +445,19 @@ public class CooperatorController {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
 		}
-		ReportDto reportDto = new ReportDto(r.getId(), convertToDto(r.getCoop()), r.getDueDate(), r.getStatus(), r.getType());
+		ReportDto reportDto = new ReportDto(r.getId(), r.getDueDate(), r.getStatus(), r.getType());
 		return reportDto;
 	}
 	
-	private List<ReportDto> convertToDto(Set<Report> r) {
+	private Set<ReportDto> convertToDto(Set<Report> r) {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
 		}
-		List<ReportDto> rDto = new ArrayList<>();
+		Set<ReportDto> rDto = new HashSet<>();
 		for(Report rep : r) {
 			rDto.add(convertToDto(rep));
 		}
-		return rDto;
+		return (Set<ReportDto>) rDto;
 	}
 	
 	private NotificationDto convertToDto(Notification n) {
@@ -481,14 +488,5 @@ public class CooperatorController {
 		return studentDto;
 	}
 	
-	private Student convertToDomainObject(StudentDto sDto) {
-		List<Student> allStudents = service.getAllStudents();
-		for (Student student : allStudents) {
-			if (student.getName().equals(sDto.getName())) {
-				return student;
-			}
-		}
-		return null;
-	}
 
 }
