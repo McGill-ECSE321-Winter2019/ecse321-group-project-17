@@ -32,4 +32,4 @@ matrix:
         app: ecse321-group17-frontend
         on:
           repo: McGill-ECSE321-Winter2019/ecse321-group-project-17
-          branch: travis-test
+          branch: dev
