@@ -9,7 +9,7 @@ matrix:
 
     - language: node_js
       node_js:
-        - 4.8
+        - 10.15
       before_install:
         - cd Frontend
       install:
