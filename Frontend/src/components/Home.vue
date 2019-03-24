@@ -43,8 +43,22 @@
         </table>
         <h2 v-else id="h2-loading">Loading...</h2>
       </div>
-      <div id="stats" v-on:click="goToStatistics">Generate Statistics</div>
     </div>
+    <div>
+        <button 
+          id="stats1"
+          type="button" 
+          class="btn btn-light btn-lg"
+          v-on:click="goToStatistics">Generate Statistics
+        </button> 
+        <button 
+          id="notifs"
+          type="button" 
+          class="btn btn-light btn-lg"
+          v-on:click="goToNotifications">Create Notification 
+        </button> 
+      <!-- id="stats" v-on:click="goToStatistics">Generate Statistics</div> -->
+      </div>
   </div>
 </template>
     
@@ -142,6 +156,12 @@ export default {
           employers: this.employers
         }
       });
+    },
+    goToNotifications: function() {
+      Router.push({
+        path: "/notifications/",
+        name: "NotificationPage",
+      });
     }
   }
 };
@@ -225,4 +245,13 @@ td {
   font-size: 16px;
   margin-top: 10px;
 }
+
+#stats1 {
+  margin-top: 10px;
+}
+
+#notifs {
+  margin-top: 10px;
+}
+
 </style>
