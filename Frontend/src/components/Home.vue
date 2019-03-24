@@ -49,13 +49,17 @@
           id="stats1"
           type="button" 
           class="btn btn-light btn-lg"
-          v-on:click="goToStatistics">Generate Statistics
+          v-on:click="goToStatistics">
+          Generate Statistics
+          <img src="./../assets/line-chart.png">
         </button> 
         <button 
           id="notifs"
           type="button" 
           class="btn btn-light btn-lg"
-          v-on:click="goToNotifications">Create Notification 
+          v-on:click="goToNotifications">
+          Create Notification 
+          <img src="./../assets/envelope.png">
         </button> 
       <!-- id="stats" v-on:click="goToStatistics">Generate Statistics</div> -->
       </div>

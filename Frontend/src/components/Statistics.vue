@@ -10,6 +10,29 @@
 
 <script>
   import BarChart from './BarChart'
+  import axios from "axios";
+
+  var config = require("../../config");
+
+  var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
+  var backendUrl =
+  "https://" + config.build.backendHost + ":" + config.build.backendPort;
+
+  var AXIOS = axios.create({
+    baseURL: backendUrl,
+    headers: { "Access-Control-Allow-Origin": frontendUrl }
+  });
+
+  // Fetch the student with specified email from the backend
+  let getCoopStats = async function(email) {
+    return await AXIOS.get(`/statistics/coop///`)
+      .then(response => {
+        return response.data;
+      })
+      .catch(e => {
+        this.error = e;
+      });
+  };
 
   export default {
     props: {
@@ -20,6 +43,18 @@
       employers: {
         type: Array,
         required: true
+      },
+      notStartedCoops: {
+        type: Number 
+      },
+      inProgressCoops: {
+        type: Number
+      },
+      completedCoops: {
+        type: Number
+      },
+      totalCoops: {
+        type: Number
       }
     },
     components: {
@@ -37,6 +72,15 @@
       }, 2000)
     },
     methods: {
+      loadCoopStats () {
+        let email = this.student.email;
+        getCoopStats().then(function(res) {
+          this.notStartedCoops = res.notStartedCoops;
+	      this.inProgressCoops = res.inProgressCoops;
+	      this.completedCoops = res.completedCoops;
+	      this.totalCoops = res.totalCoops;
+        });
+      },
       increaseHeight () {
         this.height += 10
       },
