@@ -67,7 +67,7 @@ export default {
   },
   computed: {
     orderedCoops: function () {
-      return _.sortBy(this.coops, 'startDate')
+      return _.sortBy(this.coops, 'startDate').reverse()
     }
   }
 };

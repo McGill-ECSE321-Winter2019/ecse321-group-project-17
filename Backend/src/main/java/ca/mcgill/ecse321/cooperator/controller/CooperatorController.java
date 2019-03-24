@@ -107,7 +107,7 @@ public class CooperatorController {
 	}
 	
 	//create a mass notification for multiple students and employers
-	@PostMapping("/notification/createMany")
+	@PostMapping("/notification/create-many")
 	public List <NotificationDto> createManyNotif(@RequestParam String text, 
 			@RequestParam String senderEmail, @RequestParam (required = false) List <String> stuEmail, 
 			@RequestParam (required = false) List <String> empEmail) {
@@ -229,7 +229,7 @@ public class CooperatorController {
 		return employerDtos;
 	}
 	
-	@GetMapping(value = { "/coopsByStatus/{status}", "/coopsByStatus/{status}/" })
+	@GetMapping(value = { "/coops-by-status/{status}", "/coops-by-status/{status}/" })
 	public List<CoopDto> getCoopByStatus(@PathVariable("status") CoopStatus status) {
 		List<Coop> c = service.getCoopsByStatus(status);
 		List<CoopDto> cDto = new ArrayList<>();
@@ -239,7 +239,7 @@ public class CooperatorController {
 		return cDto;
 	} 
 	
-	@GetMapping(value = { "/coopsByCompany/{company}", "/coopsByCompany/{company}/" })
+	@GetMapping(value = { "/coops-by-company/{company}", "/coops-by-company/{company}/" })
 	public List<CoopDto> getCoopByCompany(@PathVariable("company") String company) {
 		List<Coop> c = service.getCoopsOfCompany(company);
 		List<CoopDto> cDto = new ArrayList<>();
@@ -249,7 +249,7 @@ public class CooperatorController {
 		return cDto;
 	}
 	
-	@GetMapping(value = { "/employersByCompany/{company}", "/coopsByCompany/{company}/" })
+	@GetMapping(value = { "/employers-by-company/{company}", "/coops-by-company/{company}/" })
 	public List<EmployerDto> getEmployersByCompany(@PathVariable("company") String company) {
 		List<Employer> e = service.getEmployersOfCompany(company);
 		List<EmployerDto> employerDtos = new ArrayList<>();
@@ -259,7 +259,7 @@ public class CooperatorController {
 		return employerDtos;
 	}
 	
-	@GetMapping(value = { "/reportsByStatus/{status}", "/reportsByStatus/{status}/" })
+	@GetMapping(value = { "/reports-by-status/{status}", "/reports-by-status/{status}/" })
 	public List<ReportDto> getReportByStatus(@PathVariable("status") ReportStatus status) {
 		List<Report> r = service.getReportByStatus(status);
 		List<ReportDto> rDto = new ArrayList<>();
@@ -269,7 +269,7 @@ public class CooperatorController {
 		return rDto;
 	} 
 	
-	@GetMapping(value = { "/reportsByType/{type}", "/reportsByType/{type}/" })
+	@GetMapping(value = { "/reports-by-type/{type}", "/reports-by-type/{type}/" })
 	public List<ReportDto> getReportByType(@PathVariable("type") ReportType type) {
 		List<Report> r = service.getReportByType(type);
 		List<ReportDto> rDto = new ArrayList<>();
@@ -288,7 +288,7 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "/coops/{email}", "/coops/{email}/" })
+	@GetMapping(value = { "student/coops/{email}", "student/coops/{email}/" })
 	public List<CoopDto> getAllCoopsForStudent(@PathVariable("email") String email) {
 		List<CoopDto> coopDtos = new ArrayList<>();
 		Student s = service.getStudent(email);
@@ -322,7 +322,7 @@ public class CooperatorController {
 		return reportDtos;
 	}
 	
-	@GetMapping(value = { "/studentProblem", "/studentProblem/" })
+	@GetMapping(value = { "/problem-students", "/problem-students/" })
 	public List<StudentDto> getProblematicStudents(){
 		List<StudentDto> s = new ArrayList<>();
 		for(Report r : service.getReportByStatus(ReportStatus.Late)) {
@@ -344,7 +344,7 @@ public class CooperatorController {
 		return reportDtos;
 	}
 	
-	@GetMapping(value = { "/reports/{id}", "/reports/{id}/" })
+	@GetMapping(value = { "/report/{id}", "/report/{id}/" })
 	public ReportDto getReport(@PathVariable("id") Integer id){
 		Report r = service.getReport(id);
 		ReportDto rDto = convertToDto(r);

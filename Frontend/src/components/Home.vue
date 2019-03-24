@@ -67,7 +67,7 @@ import HomeListEmployerItem from "./HomeListEmployerItem.vue";
 import Router from "../router";
 import HomeFilters from "./HomeFilters.vue";
 import axios from "axios";
-import _ from 'lodash';
+import _ from "lodash";
 
 var config = require("../../config");
 
@@ -131,12 +131,12 @@ export default {
     };
   },
   computed: {
-    orderedStudents: function () {
-      return _.sortBy(this.students, 'name')
+    orderedStudents: function() {
+      return _.sortBy(this.students, "name");
     },
-    orderedEmployers: function () {
-      return _.sortBy(this.employers, 'name')
-    },
+    orderedEmployers: function() {
+      return _.sortBy(this.employers, "name");
+    }
   },
   methods: {
     handleSelect: function(isSelected, student) {
@@ -159,7 +159,7 @@ export default {
     goToNotifications: function() {
       Router.push({
         path: "/notifications/",
-        name: "NotificationPage",
+        name: "NotificationPage"
       });
     }
   }
@@ -171,6 +171,11 @@ p,
 h2,
 h3 {
   color: white;
+}
+
+.light-button {
+  background-color: rgb(195, 201, 206);
+  border-color: rgb(129, 133, 136);
 }
 
 #h2-loading {
@@ -240,5 +245,4 @@ td {
 #notifs {
   margin-top: 10px;
 }
-
 </style>

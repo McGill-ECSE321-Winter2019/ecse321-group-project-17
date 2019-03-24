@@ -1,8 +1,13 @@
 <template>
   <div id="coop-container" class="card">
-    <h5>Coop Title: {{ coop.title }}</h5>
-    <h6>Student Name: {{ coop.student.name }}</h6>
-    <p>Start Date: {{ coop.startDate }}, End Date: {{ coop.endDate }}</p>
+    <span class="badge badge-info" v-if="coop.status === 'NotStarted'">Not Started</span>
+    <span class="badge badge-warning" v-else-if="coop.status === 'InProgress'">In Progress</span>
+    <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
+    <span class="badge badge-danger" v-else>Incomplete</span>
+    <h5></h5>
+    <h5><b>Student:</b> {{ coop.student.name }}</h5>
+    <h6><b>Title:</b> {{ coop.title }}</h6>
+    <p><b>Dates:</b> {{ coop.startDate }} - {{ coop.endDate }}</p>
   </div>
 </template>
 

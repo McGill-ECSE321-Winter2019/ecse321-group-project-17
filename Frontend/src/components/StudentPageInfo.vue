@@ -1,11 +1,9 @@
 <template>
   <div id="info-container" class="card">
-    <h4>Student Name:</h4>
-    <p>{{ student.name }}</p>
-    <h6>Student Email:</h6>
-    <p>{{ student.email }}</p>
-    <h6>Student ID:</h6>
-    <p>{{ student.id }}</p>
+    <h3><span class="badge badge-primary" >Student</span>&nbsp; &nbsp; {{ student.name }}</h3>
+    <h3></h3>
+    <p><b>Email:</b> {{ student.email }}</p>
+    <p><b>ID:</b> {{ student.id }}</p>
   </div>
 </template>
 <script>
