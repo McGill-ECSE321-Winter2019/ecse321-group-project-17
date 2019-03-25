@@ -20,10 +20,10 @@ public class CoopDto {
 	private Integer salaryPerHour;
 	private Integer hoursPerWeek;
 	private String address;
-	
+
 	public CoopDto() {
 	}
-	
+
 	public CoopDto(Integer id) {
 		this(id, "title "+id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "", Collections.EMPTY_SET);
 	}
@@ -130,7 +130,5 @@ public class CoopDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
-	
+
 }

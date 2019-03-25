@@ -4,12 +4,12 @@ import org.springframework.data.repository.CrudRepository;
 
 import ca.mcgill.ecse321.cooperator.model.Profile;
 
-public interface ProfileRepository extends CrudRepository<Profile, Integer>{
+public interface ProfileRepository extends CrudRepository<Profile, Integer> {
 
 	Profile findProfileByEmail(String email);
-	
+
 	Profile findProfileByName(String name);
-	
+
 	Profile findProfileByPhone(String phone);
-	
+
 }

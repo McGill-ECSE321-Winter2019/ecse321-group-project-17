@@ -1,68 +1,67 @@
 package ca.mcgill.ecse321.cooperator.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Id;
-import javax.persistence.GeneratedValue;
-
 @Entity
-public class Notification{
-   private Employer employer;
-   
-   @ManyToOne 
-   public Employer getEmployer() {
-      return this.employer;
-   }
-   
-   public void setEmployer(Employer employer) {
-      this.employer = employer;
-   }
-   
-   private Administrator sender;
-   
-   @ManyToOne(optional=false)
-   public Administrator getSender() {
-      return this.sender;
-   }
-   
-   public void setSender(Administrator sender) {
-      this.sender = sender;
-   }
-   
-   private Integer id;
+public class Notification {
+	private Employer employer;
 
-public void setId(Integer value) {
-    this.id = value;
-}
+	@ManyToOne
+	public Employer getEmployer() {
+		return this.employer;
+	}
 
-@Id
-@GeneratedValue()
-public Integer getId() {
-    return this.id;
-}
-private String text;
+	public void setEmployer(Employer employer) {
+		this.employer = employer;
+	}
 
-public void setText(String value) {
-    this.text = value;
+	private Administrator sender;
+
+	@ManyToOne(optional = false)
+	public Administrator getSender() {
+		return this.sender;
+	}
+
+	public void setSender(Administrator sender) {
+		this.sender = sender;
+	}
+
+	private Integer id;
+
+	public void setId(Integer value) {
+		this.id = value;
+	}
+
+	@Id
+	@GeneratedValue()
+	public Integer getId() {
+		return this.id;
+	}
+
+	private String text;
+
+	public void setText(String value) {
+		this.text = value;
+	}
+
+	@NotNull
+	public String getText() {
+		return this.text;
+	}
+
+	private Student student;
+
+	@ManyToOne
+	public Student getStudent() {
+		return this.student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
 }
-@NotNull
-public String getText() {
-    return this.text;
-}
-   private Student student;
-   
-   @ManyToOne
-   public Student getStudent() {
-      return this.student;
-   }
-   
-   public void setStudent(Student student) {
-      this.student = student;
-   }
-   
-   }

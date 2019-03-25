@@ -13,7 +13,7 @@
 import StudentPageInfo from "./StudentPageInfo.vue";
 import StudentPageCoopItem from "./StudentPageCoopItem.vue";
 import axios from "axios";
-import _ from 'lodash';
+import _ from "lodash";
 
 var config = require("../../config");
 
@@ -45,7 +45,7 @@ export default {
         this.error = e;
       });
     // Get all coop terms for this student
-    AXIOS.get(`/coops/` + this.studentEmail)
+    AXIOS.get(`/student/coops/` + this.studentEmail)
       .then(response => {
         // JSON responses are automatically parsed.
         this.coops = response.data;
@@ -66,8 +66,8 @@ export default {
     };
   },
   computed: {
-    orderedCoops: function () {
-      return _.sortBy(this.coops, 'startDate').reverse()
+    orderedCoops: function() {
+      return _.sortBy(this.coops, "startDate").reverse();
     }
   }
 };
