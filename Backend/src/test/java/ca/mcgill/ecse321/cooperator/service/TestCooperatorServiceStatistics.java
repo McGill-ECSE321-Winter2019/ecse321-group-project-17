@@ -107,18 +107,18 @@ public class TestCooperatorServiceStatistics {
 		assertEquals(1, (int) csd.getTotalCoops());
 		assertEquals(0, (int) csd.getCoopNumber());
 
-		assertEquals(1, (int) rsd.getUnsubmittedReports());
+		assertEquals(4, (int) rsd.getUnsubmittedReports());
 		assertEquals(0, (int) rsd.getSubmittedReports());
 		assertEquals(0, (int) rsd.getLateReports());
 		assertEquals(0, (int) rsd.getReviewedReports());
 
-		assertEquals(1, (int) rsd.getContractReports());
+		assertEquals(2, (int) rsd.getContractReports());
 		assertEquals(0, (int) rsd.getTechnicalReports());
-		assertEquals(0, (int) rsd.getStudentEvalReports());
-		assertEquals(0, (int) rsd.getEmployerEvalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
 		assertEquals(0, (int) rsd.getTwoWeekReports());
 
-		assertEquals(1, (int) rsd.getTotalReports());
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -165,18 +165,18 @@ public class TestCooperatorServiceStatistics {
 		assertEquals(1, (int) csd.getTotalCoops());
 		assertEquals(0, (int) csd.getCoopNumber());
 
-		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
 		assertEquals(1, (int) rsd.getSubmittedReports());
 		assertEquals(0, (int) rsd.getLateReports());
 		assertEquals(0, (int) rsd.getReviewedReports());
 
-		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(1, (int) rsd.getContractReports());
 		assertEquals(1, (int) rsd.getTechnicalReports());
-		assertEquals(0, (int) rsd.getStudentEvalReports());
-		assertEquals(0, (int) rsd.getEmployerEvalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
 		assertEquals(0, (int) rsd.getTwoWeekReports());
 
-		assertEquals(1, (int) rsd.getTotalReports());
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -223,18 +223,18 @@ public class TestCooperatorServiceStatistics {
 		assertEquals(1, (int) csd.getTotalCoops());
 		assertEquals(0, (int) csd.getCoopNumber());
 
-		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
 		assertEquals(0, (int) rsd.getSubmittedReports());
 		assertEquals(1, (int) rsd.getLateReports());
 		assertEquals(0, (int) rsd.getReviewedReports());
 
-		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(1, (int) rsd.getContractReports());
 		assertEquals(0, (int) rsd.getTechnicalReports());
-		assertEquals(1, (int) rsd.getStudentEvalReports());
-		assertEquals(0, (int) rsd.getEmployerEvalReports());
+		assertEquals(2, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
 		assertEquals(0, (int) rsd.getTwoWeekReports());
 
-		assertEquals(1, (int) rsd.getTotalReports());
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -281,18 +281,18 @@ public class TestCooperatorServiceStatistics {
 		assertEquals(1, (int) csd.getTotalCoops());
 		assertEquals(0, (int) csd.getCoopNumber());
 
-		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
 		assertEquals(0, (int) rsd.getSubmittedReports());
 		assertEquals(0, (int) rsd.getLateReports());
 		assertEquals(1, (int) rsd.getReviewedReports());
 
-		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(1, (int) rsd.getContractReports());
 		assertEquals(0, (int) rsd.getTechnicalReports());
-		assertEquals(0, (int) rsd.getStudentEvalReports());
-		assertEquals(1, (int) rsd.getEmployerEvalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(2, (int) rsd.getEmployerEvalReports());
 		assertEquals(0, (int) rsd.getTwoWeekReports());
 
-		assertEquals(1, (int) rsd.getTotalReports());
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -339,18 +339,18 @@ public class TestCooperatorServiceStatistics {
 		assertEquals(1, (int) csd.getTotalCoops());
 		assertEquals(0, (int) csd.getCoopNumber());
 
-		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
 		assertEquals(0, (int) rsd.getSubmittedReports());
 		assertEquals(0, (int) rsd.getLateReports());
 		assertEquals(1, (int) rsd.getReviewedReports());
 
-		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(1, (int) rsd.getContractReports());
 		assertEquals(0, (int) rsd.getTechnicalReports());
-		assertEquals(0, (int) rsd.getStudentEvalReports());
-		assertEquals(0, (int) rsd.getEmployerEvalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
 		assertEquals(1, (int) rsd.getTwoWeekReports());
 
-		assertEquals(1, (int) rsd.getTotalReports());
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -507,25 +507,22 @@ public class TestCooperatorServiceStatistics {
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
 
-		assertEquals(1, (int) csd.getCompletedCoops());
+		assertEquals(0, (int) csd.getCompletedCoops());
 		assertEquals(0, (int) csd.getInProgressCoops());
 		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(1, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getTotalCoops());
 		assertEquals(1, (int) csd.getCoopNumber());
 
 		assertEquals(0, (int) rsd.getUnsubmittedReports());
 		assertEquals(0, (int) rsd.getSubmittedReports());
-		assertEquals(0, (int) rsd.getLateReports());
-		assertEquals(1, (int) rsd.getReviewedReports());
-
+		assertEquals(0, (int) rsd.getReviewedReports());
 		assertEquals(0, (int) rsd.getContractReports());
 		assertEquals(0, (int) rsd.getTechnicalReports());
 		assertEquals(0, (int) rsd.getStudentEvalReports());
 		assertEquals(0, (int) rsd.getEmployerEvalReports());
-		assertEquals(1, (int) rsd.getTwoWeekReports());
-
-		assertEquals(1, (int) rsd.getTotalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+		assertEquals(0, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -566,25 +563,26 @@ public class TestCooperatorServiceStatistics {
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
 
-		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(1, (int) csd.getCompletedCoops());
 		assertEquals(0, (int) csd.getInProgressCoops());
 		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int) csd.getTotalCoops());
+		assertEquals(1, (int) csd.getTotalCoops());
 		assertEquals(2, (int) csd.getCoopNumber());
 
-		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
 		assertEquals(0, (int) rsd.getSubmittedReports());
 		assertEquals(0, (int) rsd.getLateReports());
-		assertEquals(0, (int) rsd.getReviewedReports());
+		int num = (int) rsd.getReviewedReports();
+		assertEquals(1, (int) rsd.getReviewedReports());
 
-		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(1, (int) rsd.getContractReports());
 		assertEquals(0, (int) rsd.getTechnicalReports());
-		assertEquals(0, (int) rsd.getStudentEvalReports());
-		assertEquals(0, (int) rsd.getEmployerEvalReports());
-		assertEquals(0, (int) rsd.getTwoWeekReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
+		assertEquals(1, (int) rsd.getTwoWeekReports());
 
-		assertEquals(0, (int) rsd.getTotalReports());
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
 
 }

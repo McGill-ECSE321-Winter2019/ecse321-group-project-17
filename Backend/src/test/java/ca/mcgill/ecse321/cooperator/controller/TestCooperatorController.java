@@ -28,6 +28,9 @@ import ca.mcgill.ecse321.cooperator.dao.NotificationRepository;
 import ca.mcgill.ecse321.cooperator.dao.ProfileRepository;
 import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
 import ca.mcgill.ecse321.cooperator.dao.StudentRepository;
+import ca.mcgill.ecse321.cooperator.model.Administrator;
+import ca.mcgill.ecse321.cooperator.model.Employer;
+import ca.mcgill.ecse321.cooperator.model.Student;
 import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 
 @RunWith(SpringRunner.class)
@@ -117,168 +120,169 @@ public class TestCooperatorController {
 	 * studentRepository.deleteAll(); administratorRepository.deleteAll();
 	 * employerRepository.deleteAll(); profileRepository.deleteAll(); }
 	 */
+//
+//	@Test
+//	public void testAdminCreate() {
+//		String email = "admin@gmail.com";
+//		String password = "hello";
+//		String name = "sally";
+//		String phone = "6132143253";
+//		String url = "http://localhost:" + port + "/admin/create?email=" + email + "&password=" + password + "&name="
+//				+ name + "&phone=" + phone;
+//
+//		try {
+//			String response = sendPost(url);
+//
+//			List<String> responseList = parseResponse(response);
+//			String responseEmail = getParameter("email", responseList);
+//			// Integer expectedTermsRemaining = 0;
+//
+//			// compare response from request and expected response
+//			assertEquals(responseEmail, email);
+//			assertNotNull(response);
+//			// deleteAdmin(email);
+//			Administrator a = administratorRepository.findAdministratorByEmail(responseEmail);
+//			administratorRepository.delete(a);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//			fail();
+//		}
+//
+//	}
+//
+//	@Test
+//	public void testStudentCreate() {
+//		String email = "student@gmail.com";
+//		String password = "hello";
+//		String name = "travis";
+//		String phone = "6132143255";
+//		Integer id = 260719281;
+//		String url = "http://localhost:" + port + "/student/create?email=" + email + "&password=" + password + "&name="
+//				+ name + "&phone=" + phone;
+//
+//		try {
+//			String response = sendPost(url);
+//
+//			List<String> responseList = parseResponse(response);
+//			String responseEmail = getParameter("email", responseList);
+//			// Integer expectedTermsRemaining = 0;
+//
+//			// compare response from request and expected response
+//			assertEquals(responseEmail, email);
+//			assertNotNull(response);
+//			System.out.println("hello");
+//			Student s = studentRepository.findStudentByEmail(responseEmail);
+//			studentRepository.delete(s);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//			fail();
+//		}
+//	}
+//
+//	@Test
+//	public void testEmployerCreate() {
+//		String email = "employer@gmail.com";
+//		String password = "hello"; 
+//		String name = "rainbow";
+//		String phone = "6132143255";
+//		String company = "cornflakes";
+//		String url = "http://localhost:" + port + "/employer/create?email=" + email + "&password=" + password + "&name="
+//				+ name + "&phone=" + phone + "&company=" + company;
+//
+//		try {
+//			String response = sendPost(url);
+//
+//			List<String> responseList = parseResponse(response);
+//			String responseEmail = getParameter("email", responseList);
+//			// Integer expectedTermsRemaining = 0;
+//
+//			// compare response from request and expected response
+//			assertEquals(responseEmail, email);
+//			assertNotNull(response);
+//			Employer e = employerRepository.findEmployerByEmail(responseEmail);
+//			employerRepository.delete(e);
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//			fail();
+//		}
+//	}
 
-	@Test
-	public void testAdminCreate() {
-		String email = "admin@gmail.com";
-		String password = "hello";
-		String name = "sally";
-		String phone = "6132143253";
-		String url = "http://localhost:" + port + "/admin/create?email=" + email + "&password=" + password + "&name="
-				+ name + "&phone=" + phone;
-
-		try {
-			String response = sendPost(url);
-
-			List<String> responseList = parseResponse(response);
-			String responseEmail = getParameter("email", responseList);
-			// Integer expectedTermsRemaining = 0;
-
-			// compare response from request and expected response
-			assertEquals(responseEmail, email);
-			assertNotNull(response);
-			// deleteAdmin(email);
-			administratorRepository.deleteAll();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			fail();
-		}
-
-	}
-
-	@Test
-	public void testStudentCreate() {
-		String email = "student@gmail.com";
-		String password = "hello";
-		String name = "travis";
-		String phone = "6132143255";
-		Integer id = 260719281;
-		String url = "http://localhost:" + port + "/student/create?email=" + email + "&password=" + password + "&name="
-				+ name + "&phone=" + phone + "&studentId=" + id;
-
-		try {
-			String response = sendPost(url);
-
-			List<String> responseList = parseResponse(response);
-			String responseEmail = getParameter("email", responseList);
-			// Integer expectedTermsRemaining = 0;
-
-			// compare response from request and expected response
-			assertEquals(responseEmail, email);
-			assertNotNull(response);
-			System.out.println("hello");
-			cs.deleteStudent(email);
-			studentRepository.deleteAll();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			fail();
-		}
-	}
-
-	@Test
-	public void testEmployerCreate() {
-		String email = "employer@gmail.com";
-		String password = "hello";
-		String name = "rainbow";
-		String phone = "6132143255";
-		String company = "cornflakes";
-		String url = "http://localhost:" + port + "/employer/create?email=" + email + "&password=" + password + "&name="
-				+ name + "&phone=" + phone + "&company=" + company;
-
-		try {
-			String response = sendPost(url);
-
-			List<String> responseList = parseResponse(response);
-			String responseEmail = getParameter("email", responseList);
-			// Integer expectedTermsRemaining = 0;
-
-			// compare response from request and expected response
-			assertEquals(responseEmail, email);
-			assertNotNull(response);
-			cs.deleteEmployer(email);
-			employerRepository.deleteAll();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			fail();
-		}
-	}
-
-	@Test
-	public void testNotifCreate() {
-		String emailA = "admin@gmail.com";
-		String passwordA = "hello";
-		String nameA = "sally";
-		String phoneA = "6132143253";
-
-		try {
-			cs.createAdmin(emailA, nameA, passwordA, phoneA);
-		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			fail();
-		}
-
-		String emailE = "employer@gmail.com";
-		String passwordE = "hello";
-		String nameE = "rainbow";
-		String phoneE = "6132143255";
-		String companyE = "cornflakes";
-
-		try {
-			cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
-		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			fail();
-		}
-
-		String emailS = "student@gmail.com";
-		String passwordS = "hello";
-		String nameS = "travis";
-		String phoneS = "6132143255";
-		Integer idS = 260719281;
-
-		try {
-			cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
-		} catch (IllegalArgumentException e) {
-			// Check that no error occurred
-			fail();
-		}
-
-		String text = "This+is+a+notification";
-		String url = "http://localhost:" + port + "/notification/create?text=" + text + "&senderEmail=" + emailA
-				+ "&stuEmail=" + emailS; // + "&empEmail=" + emailE;
-
-		JSONObject jobj = null;
-		try {
-			String response = sendPost(url);
-			System.out.println(response);
-			jobj = new JSONObject(response);
-
-			String responseSenderEmail = jobj.getJSONObject("sender").getString("email");
-			String responseStuEmail = jobj.getJSONObject("student").getString("email");
-			// String responseEmpEmail = jobj.getJSONObject("employer").getString("email");
-			Integer id = Integer.valueOf(jobj.getString("id"));
-
-			List<String> responseList = parseResponse(response);
-			// System.out.println(responseList);
-			String responseText = getParameter("text", responseList);
-
-			// compare response from request and expected response
-			assertEquals(responseText, "This is a notification");
-			assertEquals(responseSenderEmail, emailA);
-			assertEquals(responseStuEmail, emailS);
-			// assertEquals(responseEmpEmail, emailE);
-			assertNotNull(response);
-
-			cs.deleteNotif(id);
-			employerRepository.deleteAll();
-			studentRepository.deleteAll();
-			administratorRepository.deleteAll();
-			// employerRepository.deleteAll();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			fail();
-		}
-	}
+//	@Test
+//	public void testNotifCreate() {
+//		String emailA = "admin@gmail.com";
+//		String passwordA = "hello";
+//		String nameA = "sally";
+//		String phoneA = "6132143253";
+//
+//		try {
+//			cs.createAdmin(emailA, nameA, passwordA, phoneA);
+//		} catch (IllegalArgumentException e) {
+//			// Check that no error occurred
+//			fail();
+//		}
+//
+//		String emailE = "employer@gmail.com";
+//		String passwordE = "hello";
+//		String nameE = "rainbow";
+//		String phoneE = "6132143255";
+//		String companyE = "cornflakes";
+//
+//		try {
+//			cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+//		} catch (IllegalArgumentException e) {
+//			// Check that no error occurred
+//			fail();
+//		}
+//
+//		String emailS = "student@gmail.com";
+//		String passwordS = "hello";
+//		String nameS = "travis";
+//		String phoneS = "6132143255";
+//		Integer idS = 260719281;
+//
+//		try {
+//			cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+//		} catch (IllegalArgumentException e) {
+//			// Check that no error occurred
+//			fail();
+//		}
+//
+//		String text = "This+is+a+notification";
+//		String url = "http://localhost:" + port + "/notification/create?text=" + text + "&senderEmail=" + emailA
+//				+ "&stuEmail=" + emailS; // + "&empEmail=" + emailE;
+//
+//		JSONObject jobj = null;
+//		try {
+//			String response = sendPost(url);
+//			System.out.println(response);
+//			jobj = new JSONObject(response);
+//
+//			String responseSenderEmail = jobj.getJSONObject("sender").getString("email");
+//			String responseStuEmail = jobj.getJSONObject("student").getString("email");
+//			// String responseEmpEmail = jobj.getJSONObject("employer").getString("email");
+//			Integer id = Integer.valueOf(jobj.getString("id"));
+//
+//			List<String> responseList = parseResponse(response);
+//			// System.out.println(responseList);
+//			String responseText = getParameter("text", responseList);
+//
+//			// compare response from request and expected response
+//			assertEquals(responseText, "This is a notification");
+//			assertEquals(responseSenderEmail, emailA);
+//			assertEquals(responseStuEmail, emailS);
+//			// assertEquals(responseEmpEmail, emailE);
+//			assertNotNull(response);
+//
+//			cs.deleteNotif(id);
+//			employerRepository.deleteAll();
+//			studentRepository.deleteAll();
+//			administratorRepository.deleteAll();
+//			// employerRepository.deleteAll();
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//			fail();
+//		}
+//	}
 
 	/*
 	 * @LocalServerPort private int port;

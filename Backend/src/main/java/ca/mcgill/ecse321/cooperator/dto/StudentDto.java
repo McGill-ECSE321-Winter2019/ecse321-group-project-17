@@ -9,21 +9,23 @@ public class StudentDto {
 	private String name;
 	private Integer id;
 	private String phone;
+	private Boolean problematic;
 
 	public StudentDto() {
 	}
 
 	@SuppressWarnings("unchecked")
 	public StudentDto(String email) {
-		this(email, RandomString.make(10), "", 0, "");
+		this(email, RandomString.make(10), "", 0, "", false);
 	}
 
-	public StudentDto(String email, String password, String name, Integer id, String phone) {
+	public StudentDto(String email, String password, String name, Integer id, String phone, Boolean problematic) {
 		this.name = name;
 		this.email = email;
 		this.id = id;
 		this.password = password;
 		this.phone = phone;
+		this.problematic = problematic;
 	}
 
 	public String getName() {
@@ -62,4 +64,12 @@ public class StudentDto {
 		this.email = email;
 	}
 
+	public Boolean getProblematic() {
+		return problematic;
+	}
+
+	public void setEmail(Boolean problematic) {
+		this.problematic = problematic;
+	}
+	
 }

@@ -20,6 +20,9 @@
     <td class="td-email" v-on:click="goToStudentPage">
       <span>{{ student.email }}</span>
     </td>
+    <td class="td-email" v-on:click="goToStudentPage">
+      <span>{{ student.email }}</span>
+    </td>
   </tr>
 </template>
 

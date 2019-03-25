@@ -182,11 +182,11 @@ public class CooperatorController {
 	public void deleteCoop(@RequestParam Integer id) {
 		service.deleteCoop(id);
 	}
-
+/*
 	@DeleteMapping( "/student/delete")
 	public void deleteStudent(@RequestParam String email) {
 		service.deleteStudent(email);
-	}
+	} */
 	/*
 	 * GET METHODS
 	 * 
@@ -487,7 +487,7 @@ public class CooperatorController {
 		if (s == null) {
 			throw new IllegalArgumentException("There is no such Student!");
 		}
-		StudentDto studentDto = new StudentDto(s.getEmail(), s.getPassword(), s.getName(), s.getId(), s.getPhone());
+		StudentDto studentDto = new StudentDto(s.getEmail(), s.getPassword(), s.getName(), s.getId(), s.getPhone(), s.getProblematic());
 		return studentDto;
 	}
 	

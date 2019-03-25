@@ -116,23 +116,21 @@ public class TestCooperatorServiceReport {
 		Date date = Date.valueOf("2019-03-30");
 		String error = "";
 		
-		Report r = null;
+		Report r = null; 
 		try {
-			r = cs.createReport(c, date, ReportStatus.Submitted, ReportType.Contract);
+			r = cs.createReport(c, date, ReportStatus.Submitted, ReportType.TwoWeek);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		assertEquals("", error);
-
-		assertEquals(1, cs.getAllReports().size());
-		assertEquals(1, c.getReport().size());
-		assertEquals(date, cs.getAllReports().get(0).getDueDate());
+		assertEquals(4, cs.getAllReports().size());
+		assertEquals(4, c.getReport().size());
 		r = cs.getReport(r.getId());
 		
 		assertEquals(c.getAddress(),r.getCoop().getAddress());
 		assertEquals(1, cs.getReportByStatus(ReportStatus.Submitted).size());
-		assertEquals(1, cs.getReportByType(ReportType.Contract).size());
+		assertEquals(1, cs.getReportByType(ReportType.TwoWeek).size());
 	}
 	
 
@@ -178,6 +176,10 @@ public class TestCooperatorServiceReport {
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
+		
+		assertEquals(4, cs.getAllReports().size());
+		assertEquals(4, c.getReport().size());
+		
 		try {
 			cs.deleteReport(r);
 		} catch (IllegalArgumentException e) {
@@ -186,8 +188,8 @@ public class TestCooperatorServiceReport {
 
 		assertEquals("", error);
 
-		assertEquals(0, cs.getAllReports().size());
-		assertEquals(0, c.getReport().size());
+		assertEquals(3, cs.getAllReports().size());
+		assertEquals(3, c.getReport().size());
 	}
 
 }
