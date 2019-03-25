@@ -32,6 +32,20 @@ export default {
           coop: this.coop // Pass as a prop to the CoopPage
         }
       });
+    },
+    goToStudentPage: function() {
+      let email = this.student.email;
+      getStudent(this.student.email).then(function(res) {
+        // Go to the student's page
+        Router.push({
+          path: "/student/",
+          name: "StudentPage",
+          params: {
+            urlEmail: res.email,
+            studentEmail: email // Pass as prop to the StudentPage that will be rendered
+          }
+        });
+      });
     }
   }
 }
