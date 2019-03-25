@@ -127,14 +127,14 @@ public class TestCooperatorServiceReport {
 
 		assertEquals("", error);
 
-		assertEquals(1, cs.getAllReports().size());
-		assertEquals(1, c.getReport().size());
-		assertEquals(date, cs.getAllReports().get(0).getDueDate());
+		assertEquals(4, cs.getAllReports().size());
+		assertEquals(4, c.getReport().size());
+		assertEquals(4, cs.getAllReports().size());
 		r = cs.getReport(r.getId());
 		
 		assertEquals(c.getAddress(),r.getCoop().getAddress());
 		assertEquals(1, cs.getReportByStatus(ReportStatus.Submitted).size());
-		assertEquals(1, cs.getReportByType(ReportType.Contract).size());
+		assertEquals(2, cs.getReportByType(ReportType.Contract).size());
 	}
 	
 
@@ -188,8 +188,8 @@ public class TestCooperatorServiceReport {
 
 		assertEquals("", error);
 
-		assertEquals(0, cs.getAllReports().size());
-		assertEquals(0, c.getReport().size());
+		assertEquals(3, cs.getAllReports().size());
+		assertEquals(3, c.getReport().size());
 	}
 
 }
