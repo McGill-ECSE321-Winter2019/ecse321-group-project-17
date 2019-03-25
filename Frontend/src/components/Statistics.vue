@@ -1,5 +1,12 @@
 <template>
   <div class="container">
+    <table class="center">
+      <tr>
+        <th>Selected Start Term: {{ this.getStartTerm() }}</th>
+        <th>Selected End Term: {{ this.getEndTerm() }}</th>
+        <th>Selected Coop Number: {{ this.getCoopNumber() }}</th>
+        </tr>
+    </table>
     <div class="Chart">
       <h2 style="text-align:center;">Profiles</h2>
       <bar-chart :chartData="this.profiles"/>
@@ -46,7 +53,11 @@
       employers: {
         type: Array,
         required: true
-      }
+      },
+      selectedProfile: "",
+      selectedStartTerm: "",
+      selectedEndTerm: "",
+      selectedCoopNumber: ""
     },
     components: {
       BarChart,
@@ -55,7 +66,7 @@
       PieChartReportType
     },
     created: function() {
-      AXIOS.get(`/statistics/coop/""/""/0`)
+      AXIOS.get(`/statistics/coop/`+this.getStartTerm()+`/`+this.getEndTerm()+`/`+this.getCoopNumber())
         .then(response => {
             this.coopstats = response.data;
             this.coopstatsLoaded = true;
@@ -63,7 +74,7 @@
         .catch(e => {
             this.error = e;
         });
-      AXIOS.get(`/statistics/report/""/""/0`)
+      AXIOS.get(`/statistics/report/`+this.getStartTerm()+`/`+this.getEndTerm()+`/`+this.getCoopNumber())
         .then(response => {
         this.reportstats = response.data;
         this.reportstatsLoaded = true;
@@ -93,6 +104,27 @@
       getRandomInt () {
         return Math.floor(Math.random() * (50 - 5 + 1)) + 5
       },
+      getEndTerm() {
+        if (!this.selectedEndTerm) {
+          return "Winter2020"
+        } else {
+          return this.selectedEndTerm
+        }
+      },
+      getStartTerm() {
+        if (!this.selectedStartTerm) {
+          return "Fall2012"
+        } else {
+          return this.selectedStartTerm
+        }
+      },
+      getCoopNumber () {
+          if (this.selectedCoopNumber == 'None' || !this.selectedCoopNumber) {
+            return 0 ;
+          } else {
+            return this.selectedCoopNumber;
+          }
+      }
     },
     computed: {
       myStyles () {
@@ -112,10 +144,6 @@
 </script>
 
 <style>
-  /* .container {
-    max-width: 800px;
-    margin: 0 auto;
-  } */
   h1 {
     font-family: 'Helvetica', Arial;
     color: #464646;
@@ -124,6 +152,11 @@
     padding-bottom: 15px;
     font-size: 28px;
     margin-top: 0;
+  }
+
+  table.center {
+    margin-left:auto; 
+    margin-right:auto;
   }
 
   .Chart h2 {
