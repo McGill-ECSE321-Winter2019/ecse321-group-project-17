@@ -55,6 +55,11 @@ export default {
   text-align: left;
   background-color: rgb(53, 58, 62);
 }
+
+#coop-container:hover {
+  background-color: rgb(66, 71, 75);
+}
+
 h4,
 h5,
 h6,

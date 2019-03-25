@@ -38,7 +38,7 @@
       {{ coop.startDate }} to {{ coop.endDate }}
     </p>
     <p>
-      <b>Address:</b>
+      <b>Location:</b>
       {{ coop.address }}
     </p>
   </div>

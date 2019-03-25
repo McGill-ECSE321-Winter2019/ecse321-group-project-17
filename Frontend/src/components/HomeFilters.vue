@@ -1,19 +1,40 @@
 <template>
   <div id="filter-container" class="card">
+    <p>List Filters:</p>
     <div class="form-group row">
-      <div class="col-md-3">
+      <div class="col-md-4">
         <select
           v-model="selectedProfile"
           class="mr-sm-2 custom-select filter-box"
           @change="updateProfile"
         >
-          <option disabled value>Profiles</option>
           <option>Students &amp; Employers</option>
           <option>Students</option>
           <option>Employers</option>
         </select>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
+        <select v-model="selectedProblematicStatus" class="mr-sm-2 custom-select filter-box">
+          <option disabled value>Problematic/Not Problematic</option>
+          <option>All Profiles</option>
+          <option>Problematic</option>
+          <option>Not Problematic</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select v-model="selectedCoopStatus" class="mr-sm-2 custom-select filter-box">
+          <option disabled value>Coop Status</option>
+          <option>All Coops</option>
+          <option>NotStarted</option>
+          <option>InProgress</option>
+          <option>Incomplete</option>
+          <option>Complete</option>
+        </select>
+      </div>
+    </div>
+    <p>Statistics Filters:</p>
+    <div class="form-group row">
+      <div class="col-md-4">
         <select
           v-model="selectedStartTerm"
           class="mr-sm-2 custom-select filter-box"
@@ -50,7 +71,7 @@
           <option>Winter2020</option>
         </select>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <select
           v-model="selectedEndTerm"
           class="mr-sm-2 custom-select filter-box"
@@ -87,7 +108,7 @@
           <option>Winter2020</option>
         </select>
       </div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <select
           v-model="selectedCoopNumber"
           class="mr-sm-2 custom-select filter-box"
@@ -110,7 +131,9 @@
 export default {
   data() {
     return {
-      selectedProfile: "",
+      selectedProfile: "Students & Employers",
+      selectedProblematicStatus: "",
+      selectedCoopStatus: "",
       selectedStartTerm: "",
       selectedEndTerm: "",
       selectedCoopNumber: ""
