@@ -16,34 +16,72 @@
         <td class="td-due-date">
             <span>{{ report.dueDate }}</span>
         </td>
+        <td class="td-view">
+            <button
+            id="view-button"
+            v-on:click="goToReportPage">
+            View/Edit
+            </button>
+        </td>
+        <td class="td-remove">
+            <button
+            id="remove-button"
+            v-on:click="deleteReport">
+            Remove
+            </button>
+        </td>
     </tr>
 </template>
 
 <script>
+import Router from "../router";
+
 export default {
-  props: {
-    report: {
-      type: Object,
-      required: true
+    props: {
+        report: {
+            type: Object,
+            required: true
+        }
+    },
+    methods: {
+        goToReportPage: function() {
+            Router.push({
+                path: "/report/",
+                name: "ReportPage",
+                params: {
+                    report: this.report
+                }
+            });
+        }
     }
-  }
-}
+};
 </script>
 
 <style>
 .td-report-type {
-  width: 35%;
+  color: white;
+  width: 20%;
   text-align: left;
   padding-left: 15px;
 }
 .td-report-status {
-  width: 35%;
+  color: white;
+  width: 20%;
   text-align: left;
   padding-left: 15px;
 }
 .td-due-date {
-  width: 30%;
+  color: white;
+  width: 20%;
   text-align: left;
   padding-left: 15px;
+}
+.td-view {
+  width: 20%;
+  text-align: center;
+}
+.td-remove {
+  width: 20%;
+  text-align: center;
 }
 </style>
