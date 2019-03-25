@@ -243,10 +243,12 @@ td {
 }
 
 #stats {
-  margin-top: 10px;
+  margin-top: 15px;
+  margin-right: 15px;
 }
 
 #notifs {
-  margin-top: 10px;
+  margin-left: 15px;
+  margin-top: 15px;
 }
 </style>

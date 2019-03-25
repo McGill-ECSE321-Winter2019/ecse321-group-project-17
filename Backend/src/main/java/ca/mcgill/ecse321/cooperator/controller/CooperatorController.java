@@ -178,11 +178,14 @@ public class CooperatorController {
 		service.deleteReport(r);
 	}
 	
+	@DeleteMapping( "/coop/delete")
+	public void deleteCoop(@RequestParam Integer id) {
+		service.deleteCoop(id);
+	}
 
 	@DeleteMapping( "/student/delete")
 	public void deleteStudent(@RequestParam String email) {
-		Student s = service.getStudent(email);
-		//service.deleteStudent(s);
+		service.deleteStudent(email);
 	}
 	/*
 	 * GET METHODS
