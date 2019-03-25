@@ -36,7 +36,6 @@ export default {
     studentEmail: String
   },
   created: function() {
-    console.log(Router.currentRoute.path);
     if (typeof this.studentEmail === "undefined") {
       // Page has been refreshed, must get student email explicitly
       let pathEmail = Router.currentRoute.path.split("/")[2];
