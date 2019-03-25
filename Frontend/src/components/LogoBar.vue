@@ -11,5 +11,6 @@
 <style scoped>
 #container {
   margin-bottom: 50px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 </style>

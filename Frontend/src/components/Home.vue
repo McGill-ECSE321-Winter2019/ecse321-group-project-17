@@ -1,6 +1,11 @@
 <template>
   <div>
-    <HomeFilters/>
+    <HomeFilters 
+      @updateCoopNumber="updateCoopNumber" 
+      @updateStartTerm="updateStartTerm"
+      @updateEndTerm="updateEndTerm"
+      @updateProfile="updateProfile"
+        />
     <div id="home-container" class="card">
       <div>
         <table v-if="studentsLoaded && employersLoaded">
@@ -131,7 +136,11 @@ export default {
       },
       studentsLoaded: false,
       employersLoaded: false,
-      selected: []
+      selected: [],
+      selectedProfile: "",
+      selectedStartTerm: "",
+      selectedEndTerm: "",
+      selectedCoopNumber: ""
     };
   },
   computed: {
@@ -143,6 +152,18 @@ export default {
     }
   },
   methods: {
+    updateProfile: function(value) {
+        this.selectedProfile = value;
+    },
+    updateCoopNumber: function(value) {
+        this.selectedCoopNumber = value;
+    },
+    updateStartTerm: function(value) {
+        this.selectedStartTerm = value;
+    },
+    updateEndTerm: function(value) {
+        this.selectedEndTerm = value;
+    },
     handleSelect: function(isSelected, student) {
       if (isSelected) {
         this.selected.push(student);
@@ -156,7 +177,11 @@ export default {
         name: "Statistics",
         params: {
           students: this.students,
-          employers: this.employers
+          employers: this.employers,
+          selectedProfile: this.selectedProfile,
+          selectedStartTerm: this.selectedStartTerm,
+          selectedEndTerm: this.selectedEndTerm,
+          selectedCoopNumber: this.selectedCoopNumber
         }
       });
     },

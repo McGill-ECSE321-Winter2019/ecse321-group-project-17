@@ -24,6 +24,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.controller.CooperatorController;
@@ -41,6 +42,7 @@ import ca.mcgill.ecse321.cooperator.service.CooperatorService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@TestPropertySource(locations="classpath:application-test.properties")
 public class CooperatorApplicationTests {
 
 	@Mock
