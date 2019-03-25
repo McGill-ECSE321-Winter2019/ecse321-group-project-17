@@ -26,7 +26,7 @@
         <td class="td-remove">
             <button
             id="remove-button"
-            v-on:click="deleteReport">
+            v-on:click="removeReport">
             Remove
             </button>
         </td>
@@ -36,6 +36,19 @@
 <script>
 import Router from "../router";
 import ReportPage from "./ReportPage.vue";
+
+import axios from "axios";
+
+var config = require("../../config");
+
+var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
+var backendUrl =
+  "https://" + config.build.backendHost + ":" + config.build.backendPort;
+
+var AXIOS = axios.create({
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl }
+});
 
 export default {
     props: {
@@ -50,9 +63,17 @@ export default {
                 path: "/report/",
                 name: "ReportPage",
                 params: {
-                    report: this.report
+                    id: this.report.id,
+                    report: this.report // Pass as a prop
                 }
             });
+        },
+        removeReport: function() {
+            AXIOS.delete('/report/delete'+report.id)
+            .catch(e=>{
+                var errMsg = e.message
+                console.log(errMsg)
+            })
         }
     }
 };

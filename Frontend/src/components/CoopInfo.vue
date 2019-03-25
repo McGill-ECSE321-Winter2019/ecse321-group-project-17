@@ -1,8 +1,8 @@
 <template>
     <div id="info-container" class="card">
-        <h4><b>Coop Info</b></h4>
+        <h3><span class="badge badge-warning">Coop</span> &nbsp; &nbsp; <strong>Coop Information</strong></h3>
         <br/>
-        <span style="color:white"><b>Coop Status:</b></span>
+        <span style="color:white"><b>{{coop.status}}</b></span>
         <span style="color:lightblue" v-if="coop.status === 'NotStarted'">Not Started</span>
         <span style="color:yellow" v-else-if="coop.status === 'InProgress'">In Progress</span>
         <span style="color:lightgreen" v-else-if="coop.status === 'Completed'">Complete</span>

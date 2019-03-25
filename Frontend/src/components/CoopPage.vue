@@ -14,8 +14,8 @@
                     <th class="td-due-date">
                         <h5>Due Date</h5>
                     </th>
-                    <th class="td-view"/>>
-                    <th class="td-remove"/>>
+                    <th class="td-view"/>
+                    <th class="td-remove"/>
                 </tr>
                 <CoopReportListItem
                     v-for="report in coop.reports"
@@ -32,13 +32,6 @@
 import CoopInfo from "./CoopInfo.vue"
 import CoopReportListItem from "./CoopReportListItem.vue"
 
-let hasReports = function(coop) {
-    if(coop.reports != null && coop.reports.length > 0) {
-        return true;
-    }
-    return false;
-}
-
 export default {
     components: {
         CoopInfo,
@@ -48,6 +41,14 @@ export default {
         coop: {
             type: Object,
             required: true
+        }
+    },
+    methods: {
+        hasReports: function(coop) {
+            if(coop.reports != null && coop.reports.length > 0) {
+                return true;
+            }
+            return false;
         }
     }
 }
@@ -59,8 +60,6 @@ export default {
 }
 #report-table {
   width: 65%;
-  max-height: 380px;
-  min-width: 550px;
   margin: auto;
   margin-top: 15px;
   padding: 15px;
