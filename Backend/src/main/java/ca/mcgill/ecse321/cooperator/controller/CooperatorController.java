@@ -318,12 +318,6 @@ public class CooperatorController {
 		return rDto;
 	}
 	
-	@GetMapping(value = { "/report/{id}", "/report/{id}/" })
-	public ReportDto getReportById(@PathVariable("id") Integer id) {
-		Report r = service.getReport(id);
-		return convertToDto(r);
-	}
-	
 	@GetMapping(value = { "/coops", "/coops/" })
 	public List<CoopDto> getAllCoops() {
 		List<CoopDto> coopDtos = new ArrayList<>();
