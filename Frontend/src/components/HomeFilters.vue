@@ -2,16 +2,24 @@
   <div id="filter-container" class="card">
     <div class="form-group row">
       <div class="col-md-3">
-        <select v-model="selectedProfile" class="mr-sm-2 custom-select filter-box" @change="updateProfile">
-          <option disabled value="">Profiles</option>
-          <option>Students & Employers</option>
-          <option>Students</option> 
+        <select
+          v-model="selectedProfile"
+          class="mr-sm-2 custom-select filter-box"
+          @change="updateProfile"
+        >
+          <option disabled value>Profiles</option>
+          <option>Students &amp; Employers</option>
+          <option>Students</option>
           <option>Employers</option>
         </select>
       </div>
       <div class="col-md-3">
-        <select v-model="selectedStartTerm" class="mr-sm-2 custom-select filter-box" @change="updateStartTerm">
-          <option disabled value="">Start Term</option>
+        <select
+          v-model="selectedStartTerm"
+          class="mr-sm-2 custom-select filter-box"
+          @change="updateStartTerm"
+        >
+          <option disabled value>Start Term</option>
           <option>None</option>
           <option>Fall2012</option>
           <option>Summer2012</option>
@@ -43,8 +51,12 @@
         </select>
       </div>
       <div class="col-md-3">
-        <select v-model="selectedEndTerm" class="mr-sm-2 custom-select filter-box" @change="updateEndTerm">
-          <option disabled value="">End Term</option>
+        <select
+          v-model="selectedEndTerm"
+          class="mr-sm-2 custom-select filter-box"
+          @change="updateEndTerm"
+        >
+          <option disabled value>End Term</option>
           <option>None</option>
           <option>Fall2012</option>
           <option>Summer2012</option>
@@ -76,8 +88,12 @@
         </select>
       </div>
       <div class="col-md-3">
-        <select v-model="selectedCoopNumber" class="mr-sm-2 custom-select filter-box" @change="updateCoopNumber">
-          <option disabled value="">Coop Number</option>
+        <select
+          v-model="selectedCoopNumber"
+          class="mr-sm-2 custom-select filter-box"
+          @change="updateCoopNumber"
+        >
+          <option disabled value>Coop Number</option>
           <option>None</option>
           <option>1</option>
           <option>2</option>
@@ -92,29 +108,30 @@
 
 <script>
 export default {
-    data() {
-      return {
-        selectedProfile: "",
-        selectedStartTerm: "",
-        selectedEndTerm: "",
-        selectedCoopNumber: ""
-      }
+  data() {
+    return {
+      selectedProfile: "",
+      selectedStartTerm: "",
+      selectedEndTerm: "",
+      selectedCoopNumber: ""
+    };
+  },
+  methods: {
+    updateProfile: function(event) {
+      this.selectedProfile = event.target.value;
+      this.$emit("updateProfile", this.selectedProfile);
     },
-    methods: {
-      updateProfile: function() {
-        this.$emit("updateProfile", this.selectedProfile);
-      },
-      updateStartTerm: function() {
-        this.$emit("updateStartTerm", this.selectedStartTerm);
-      },
-      updateEndTerm: function() {
-        this.$emit("updateEndTerm", this.selectedEndTerm);
-      },
-      updateCoopNumber: function() {
-        this.$emit("updateCoopNumber", this.selectedCoopNumber);
-      }
+    updateStartTerm: function() {
+      this.$emit("updateStartTerm", this.selectedStartTerm);
+    },
+    updateEndTerm: function() {
+      this.$emit("updateEndTerm", this.selectedEndTerm);
+    },
+    updateCoopNumber: function() {
+      this.$emit("updateCoopNumber", this.selectedCoopNumber);
     }
-}
+  }
+};
 </script>
 
 <style>
@@ -128,7 +145,7 @@ export default {
 }
 
 .filter-box {
-  margin: 10px;
+  margin: auto;
   background-color: rgb(195, 201, 206);
   border-color: rgb(129, 133, 136);
 }
