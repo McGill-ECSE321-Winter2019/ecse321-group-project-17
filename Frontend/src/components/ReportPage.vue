@@ -3,10 +3,40 @@
     <div class="container">
         <div class="card" id="edit">
             <h4><b>Modify Report Info</b></h4>
-            <span><b>Set Report Type</b></span>
+            <span style="color:white"><b>Set Report Type:</b></span>
             <select id="report-type">
-                
+                <option value="Contract">Employer Contract</option>
+                <option value="Technical">Technical Report</option>
+                <option value="StudentEval">Student Evaluation</option>
+                <option value="EmployerEval">Employer Evaluation</option>
+                <option value="TwoWeek">Biweekly Report</option>
             </select>
+            <button
+            id="report-type-button"
+            v-on:click="setReportType">
+            Set
+            </button>
+            <br/>
+            <span style="color:white"><b>Set Report Status:</b></span>
+            <select id="report-status">
+                <option value="Unsubmitted">Unsubmitted</option>
+                <option value="Submitted">Submitted</option>
+                <option value="Late">Late</option>
+                <option value="Reviewed">Reviewed</option>
+            </select>
+            <button
+            id="report-status-button"
+            v-on:click="setReportStatus">
+            Set
+            </button>
+            <br/>
+            <span style="color:white"><b>Set Due Date:</b></span>
+            <input type="date" name="due-date">
+            <button
+            id="due-date-button"
+            v-on:click="setDueDate">
+            Set
+            </button>
         </div>
         <div class="card" id="view">
             <h1>Pretend there's a file here</h1>
@@ -27,9 +57,6 @@ var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
-
-var selectedType = report.reportType;
-var reportTypes = {}
 
 export default {
     props: {

@@ -35,6 +35,7 @@
 
 <script>
 import Router from "../router";
+import ReportPage from "./ReportPage.vue";
 
 export default {
     props: {
