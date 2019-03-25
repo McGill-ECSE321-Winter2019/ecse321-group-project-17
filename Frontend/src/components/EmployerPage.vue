@@ -12,6 +12,7 @@
 <script>
 import EmployerPageInfo from "./EmployerPageInfo.vue";
 import EmployerPageCoopItem from "./EmployerPageCoopItem.vue";
+import Router from "../router";
 import axios from "axios";
 
 var config = require("../../config");
@@ -34,24 +35,45 @@ export default {
     employerEmail: String
   },
   created: function() {
-    // Initializing with fetched employer from backend
-    AXIOS.get(`/employer/` + this.employerEmail)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.employer = response.data;
-      })
-      .catch(e => {
-        this.error = e;
-      });
-    // Get all coop terms for this employer 
-    AXIOS.get(`/employer/coops/` + this.employerEmail)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.coops = response.data;
-      })
-      .catch(e => {
-        this.error = e;
-      });
+    if (typeof this.employerEmail === "undefined") {
+      // Page has been refreshed, must get employer email explicitly
+      let pathEmail = Router.currentRoute.path.split("/")[2];
+
+      // Fetch employer from backend
+      AXIOS.get(`/employer/` + pathEmail)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.employer = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+      // Get all coop terms for this employer
+      AXIOS.get(`/employer/coops/` + pathEmail)
+        .then(response => {
+          this.coops = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+    } else {
+      // Initializing with fetched employer from backend
+      AXIOS.get(`/employer/` + this.employerEmail)
+        .then(response => {
+          this.employer = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+      // Get all coop terms for this employer
+      AXIOS.get(`/employer/coops/` + this.employerEmail)
+        .then(response => {
+          this.coops = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+    }
   },
   data() {
     return {
@@ -65,8 +87,8 @@ export default {
     };
   },
   computed: {
-    orderedCoops: function () {
-      return _.sortBy(this.coops, 'startDate').reverse()
+    orderedCoops: function() {
+      return _.sortBy(this.coops, "startDate").reverse();
     }
   }
 };
