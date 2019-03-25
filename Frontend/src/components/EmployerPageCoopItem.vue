@@ -5,9 +5,18 @@
     <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
     <span class="badge badge-danger" v-else>Incomplete</span>
     <h5></h5>
-    <h5><b>Student:</b> {{ coop.student.name }}</h5>
-    <h6><b>Title:</b> {{ coop.title }}</h6>
-    <p><b>Dates:</b> {{ coop.startDate }} - {{ coop.endDate }}</p>
+    <h5>
+      <b>Student:</b>
+      {{ coop.student.name }}
+    </h5>
+    <h6>
+      <b>Title:</b>
+      {{ coop.title }}
+    </h6>
+    <p>
+      <b>Dates:</b>
+      {{ coop.startDate }} - {{ coop.endDate }}
+    </p>
   </div>
 </template>
 
@@ -47,7 +56,7 @@ export default {
       });
     }
   }
-}
+};
 </script>
 
 <style>
@@ -59,6 +68,11 @@ export default {
   text-align: left;
   background-color: rgb(53, 58, 62);
 }
+
+#coop-container:hover {
+  background-color: rgb(66, 71, 75);
+}
+
 h4,
 h5,
 h6,
