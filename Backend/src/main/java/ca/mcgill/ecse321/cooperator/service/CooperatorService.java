@@ -193,9 +193,19 @@ public class CooperatorService {
 		c.setSalaryPerHour(salaryPerHour);
 		c.setHoursPerWeek(hoursPerWeek);
 		c.setAddress(address);
-		Set<Report> r = new HashSet<>();
-		c.setReport(r);
+		
+		
 		coopRepository.save(c);
+		//create mandatory reports
+		Set<Report> mandatory = new HashSet<>();
+		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.Contract));
+		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.EmployerEval));		
+		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.StudentEval));
+		
+		c.setReport(mandatory);		
+		reportRepository.saveAll(mandatory);
+		coopRepository.save(c);
+		
 		return c;
 	}
 
