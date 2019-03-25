@@ -48,7 +48,7 @@ export default new Router({
       props: true
     },
     {
-      path: "/report/:id/",
+      path: "/report/:reportId/",
       name: "ReportPage",
       component: ReportPage,
       props: true

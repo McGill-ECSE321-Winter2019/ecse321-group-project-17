@@ -28,8 +28,7 @@ export default {
         path: "/coop/",
         name: "CoopPage",
         params: {
-          id: this.coop.id,
-          coop: this.coop // Pass as a prop to the CoopPage
+          id: this.coop.id
         }
       });
     },

@@ -1,16 +1,16 @@
 <template>
     <tr>
         <td class="td-report-type">
-            <span v-if="report.type === 'Contract'">Employer Contract</span>
-            <span v-else-if="report.type === 'Technical'">Technical Report</span>
-            <span v-else-if="report.type === 'StudentEval'">Student Evaluation</span>
-            <span v-else-if="report.type === 'EmployerEval'">Employer Evaluation</span>
+            <span v-if="report.reportType === 'Contract'">Employer Contract</span>
+            <span v-else-if="report.reportType === 'Technical'">Technical Report</span>
+            <span v-else-if="report.reportType === 'StudentEval'">Student Evaluation</span>
+            <span v-else-if="report.reportType === 'EmployerEval'">Employer Evaluation</span>
             <span v-else>Biweekly Report</span>
         </td>
         <td class="td-report-status">
-            <span style="color:yellow" v-if="report.status === 'Unsubmitted'">Unsubmitted</span>
-            <span style="color:lightblue" v-else-if="report.status === 'Submitted'">Submitted</span>
-            <span style="color:red" v-else-if="report.status === 'Late'">Late</span>
+            <span style="color:yellow" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+            <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
+            <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
             <span style="color:lightgreen" v-else>Reviewed</span>
         </td>
         <td class="td-due-date">
@@ -36,6 +36,7 @@
 <script>
 import Router from "../router";
 import ReportPage from "./ReportPage.vue";
+import Vue from "vue";
 
 import axios from "axios";
 
@@ -52,6 +53,7 @@ var AXIOS = axios.create({
 
 export default {
     props: {
+        coopId: Number,
         report: {
             type: Object,
             required: true
@@ -63,16 +65,18 @@ export default {
                 path: "/report/",
                 name: "ReportPage",
                 params: {
-                    id: this.report.id,
-                    report: this.report // Pass as a prop
+                    coopId: this.coopId,
+                    reportId: this.report.id
                 }
             });
         },
         removeReport: function() {
-            AXIOS.delete('/report/delete'+report.id)
+            AXIOS.delete('/report/delete?id='+this.report.id)
+            .then(response => {
+                Vue.$forceUpdate();
+            })
             .catch(e=>{
-                var errMsg = e.message
-                console.log(errMsg)
+                console.log(e.message)
             })
         }
     }

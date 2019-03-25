@@ -2,7 +2,7 @@
   <div id="info-container" class="card">
     <h3>
       <span class="badge badge-warning">Coop</span> &nbsp; &nbsp;
-      <strong>Coop Information</strong>
+      <strong style="color:white">Coop Information</strong>
     </h3>
     <br>
     <span style="color:white">
@@ -23,7 +23,7 @@
     </p>
     <p>
       <b>Salary per hour:</b>
-      ${{ coop.salaryPerHour }}
+      {{ coop.salaryPerHour }}
     </p>
     <p>
       <b>Hours per week:</b>

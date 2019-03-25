@@ -316,7 +316,13 @@ public class CooperatorController {
 			rDto.add(convertToDto(report));
 		}
 		return rDto;
-	} 
+	}
+	
+	@GetMapping(value = { "/report/{id}", "/report/{id}/" })
+	public ReportDto getReportById(@PathVariable("id") Integer id) {
+		Report r = service.getReport(id);
+		return convertToDto(r);
+	}
 	
 	@GetMapping(value = { "/coops", "/coops/" })
 	public List<CoopDto> getAllCoops() {

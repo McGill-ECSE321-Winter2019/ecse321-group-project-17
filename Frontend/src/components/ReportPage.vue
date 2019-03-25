@@ -2,19 +2,19 @@
 <template>
     <div class="container">
         <div class="card" id="info">
-            <h4><b>{{report.type}}</b></h4>
+            <h4><b>Report Information</b></h4>
             <br style="display:block;margin:10px0;"/>
             <span><b>Report Type:</b></span>
-            <span v-if="report.type === 'Contract'">Employer Contract</span>
-            <span v-else-if="report.type === 'Technical'">Technical Report</span>
-            <span v-else-if="report.type === 'StudentEval'">Student Evaluation</span>
-            <span v-else-if="report.type === 'EmployerEval'">Employer Evaluation</span>
+            <span v-if="report.reportType === 'Contract'">Employer Contract</span>
+            <span v-else-if="report.reportType === 'Technical'">Technical Report</span>
+            <span v-else-if="report.reportType === 'StudentEval'">Student Evaluation</span>
+            <span v-else-if="report.reportType === 'EmployerEval'">Employer Evaluation</span>
             <span v-else>Biweekly Report</span>
             <br/>
             <span><b>Report Status:</b></span>
-            <span style="color:yellow" v-if="report.status === 'Unsubmitted'">Unsubmitted</span>
-            <span style="color:lightblue" v-else-if="report.status === 'Submitted'">Submitted</span>
-            <span style="color:red" v-else-if="report.status === 'Late'">Late</span>
+            <span style="color:yellow" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+            <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
+            <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
             <span style="color:lightgreen" v-else>Reviewed</span>
             <br/>
             <span><b>Report Due Date:</b></span>
@@ -107,30 +107,37 @@ var AXIOS = axios.create({
 });
 
 export default {
-    props: {
-        report: {
-            type: Object,
-            required: true
-        }
-    },
     data() {
       return {
         selectedType: "",
         selectedStatus: "",
-        selectedDate: ""
+        selectedDate: "",
+        report: {
+            type: Object
+        }
       }
+    },
+    created: function() {
+        var reportId = parseInt(Router.currentRoute.path.split("/")[2]);
+        // Fetch coop from backend
+        AXIOS.get(`/report/` + reportId)
+        .then(response => {
+            // JSON responses are automatically parsed.
+            this.report = response.data;
+        })  
+        .catch(e => {
+            console.log(e.message);
+        });
     },
     methods: {
         setReportType: function() {
-            alert(this.report.type);
+            alert(this.report.reportType);
         },
         setReportStatus: function() {
-            AXIOS.put('/report/update?'+'id='+this.report.id+'&status='+this.report.status.toString())
+            AXIOS.put('/report/update?'+'id='+this.report.id+'&status='+this.report.reportStatus)
             .then(response => {})
-            .catch(e=>{
-                var errMsg = e.message
-                console.log(errMsg)
-                console.log('/report/update?'+'id='+this.report.id+'&status='+this.report.status.toString())
+            .catch(e => {
+                console.log(e.message)
             })
         },
         setDueDate: function() {
