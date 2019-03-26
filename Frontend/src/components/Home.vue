@@ -231,10 +231,15 @@ export default {
       });
     },
     goToNotifications: function() {
-      Router.push({
-        path: "/notifications/",
-        name: "NotificationPage"
-      });
+      if(this.selected.length != 0) {
+        Router.push({
+          path: "/notifications/",
+          name: "NotificationPage",
+          params: {
+            selected: this.selected
+          }
+        });
+      }
     }
   }
 };
