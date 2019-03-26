@@ -112,15 +112,20 @@
 <script>
 import axios from "axios";
 import Router from "../router";
+
 var config = require("../../config");
+
+// Axios config
 var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
 var frontendUrl_dev = "http://" + config.dev.host + ":" + config.dev.port;
 var backendUrl =
   "https://" + config.build.backendHost + ":" + config.build.backendPort;
+
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
+
 export default {
   data() {
     return {
@@ -163,7 +168,6 @@ export default {
       // Fetch coop from backend
       AXIOS.get(`/report/` + reportId)
         .then(response => {
-          // JSON responses are automatically parsed.
           this.report = response.data;
           this.reportLoaded = true;
         })
