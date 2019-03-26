@@ -33,8 +33,8 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 |Team member's name|Total hours |Responsibility         |
 |------------------|------------|-----------------------|
-|Emma Eagles       |  18 hours  | Added missing PUTs and DELETEs, added/edited service methods, added features to employer page, student page, home page, Architecture model/Report, Block diagram, dealt with backend issues :(                     |
-|Albert Kragl      |  XX hours  |                       |
+|Emma Eagles       |  18 hours  | Added missing PUTs and DELETEs, added/edited service methods, added features to employer page, student page, home page, Architecture model/Report, Block diagram, dealt with backend issues :( and updated API doc                    |
+|Albert Kragl      |  30 hours  | Frontend Homepage and Student Page, updated TravisCI script, Heroku things, updated RESTful API documentation |
 |Susan Matuszewski |  20 hours  | created notifications page frontend, employer page, resolved some backend issues from last week                     |
 |Eliott Bourachot  |  17 hours  | frontend statistics page, project report |
 |Matthew Kourlas   |  21 hours  | frontend coop page, frontend report page |
