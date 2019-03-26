@@ -35,6 +35,6 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |------------------|------------|-----------------------|
 |Emma Eagles       |  XX hours  |                       |
 |Albert Kragl      |  XX hours  |                       |
-|Susan Matuszewski |  XX hours  |                       |
-|Eliott Bourachot  |  XX hours  |                       |
+|Susan Matuszewski |  20 hours  | created notifications page frontend, employer page, resolved some backend issues from last week                     |
+|Eliott Bourachot  |  17 hours  | frontend statistics page, project report |
 |Matthew Kourlas   |  XX hours  |                       |
