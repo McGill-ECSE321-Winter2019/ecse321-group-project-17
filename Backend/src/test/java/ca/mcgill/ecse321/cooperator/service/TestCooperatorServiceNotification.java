@@ -3,14 +3,14 @@ package ca.mcgill.ecse321.cooperator.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-import java.util.Set;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
@@ -27,10 +27,12 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestPropertySource(locations="classpath:application-test.properties")
 public class TestCooperatorServiceNotification {
 	@Autowired
 	protected CooperatorService cs;
-	
+
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	@Autowired
@@ -46,7 +48,8 @@ public class TestCooperatorServiceNotification {
 	@Autowired
 	private ReportRepository reportRepository;
 
-	@Before @After
+	@Before
+	@After
 	public void clearDatabase() {
 		notificationRepository.deleteAll();
 		coopRepository.deleteAll();
@@ -56,56 +59,54 @@ public class TestCooperatorServiceNotification {
 		profileRepository.deleteAll();
 		reportRepository.deleteAll();
 	}
-	
+
 	@Test
 	public void testCreateNotificationEmployer() {
 		assertEquals(0, cs.getAllNotifications().size());
-		
+
 		String emailA = "paul.hooley@gmail.com";
 		String nameA = "qwefqwefq";
 		String passwordA = "frisbyislife";
-		int idA = 3;
 		String phoneA = "6047862815";
 		Administrator a;
-		
-		a = cs.createAdmin(emailA, nameA, passwordA, phoneA, idA);
-		
+
+		a = cs.createAdmin(emailA, nameA, passwordA, phoneA);
+
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
-		
-		Integer id = 34;
+
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+
 		String text = "this is a notification";
 		String error = null;
-	
+
 		try {
-			cs.createNotification(id, text, a, null, emp);
+			cs.createNotification(text, a, null, emp);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		assertNull(error);
-		
+
 		assertEquals(1, cs.getAllNotifications().size());
-		assertEquals(id, cs.getAllNotifications().get(0).getId());
-		
-		//Check to see if associated to employer
+		assertEquals(text, cs.getAllNotifications().get(0).getText());
+
+		// Check to see if associated to employer
 		assertEquals(1, cs.getNotificationsEmp(emp).size());
-		
-		//Check to see if associated to admin
+
+		// Check to see if associated to admin
 		assertEquals(1, cs.getNotificationsAdm(a).size());
-	
+
 	}
-	
+
 	@Test
 	public void testCreateNotificationStudent() {
 		assertEquals(0, cs.getAllNotifications().size());
-		
+
 		String emailS = "susan@gmail.com";
 		String nameS = "susan";
 		String passwordS = "iloveC";
@@ -113,42 +114,40 @@ public class TestCooperatorServiceNotification {
 		String phoneS = "6043242815";
 		Student stu;
 		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
-		
+
 		String emailA = "paul.hooley@gmail.com";
 		String nameA = "qwefqwefq";
 		String passwordA = "frisbyislife";
-		int idA = 3;
 		String phoneA = "6047862815";
 		Administrator adm;
-		
-		adm = cs.createAdmin(emailA, nameA, passwordA, phoneA, idA);
-		
-		Integer id = 34;
+
+		adm = cs.createAdmin(emailA, nameA, passwordA, phoneA);
+
 		String text = "this is a notification";
 		String error = null;
-	
+
 		try {
-			cs.createNotification(id, text, adm, stu, null);
+			cs.createNotification(text, adm, stu, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		assertNull(error);
-		
+
 		assertEquals(1, cs.getAllNotifications().size());
-		assertEquals(id, cs.getAllNotifications().get(0).getId());
-		
-		//Check to see if associated to admin
+		assertEquals(text, cs.getAllNotifications().get(0).getText());
+
+		// Check to see if associated to admin
 		assertEquals(1, cs.getNotificationsAdm(adm).size());
-		
-		//Check to see if associated to student
+
+		// Check to see if associated to student
 		assertEquals(1, cs.getNotificationsStu(stu).size());
 	}
-	
+
 	@Test
 	public void testCreateNotificationBoth() {
 		assertEquals(0, cs.getAllNotifications().size());
-		
+
 		String emailS = "susan@gmail.com";
 		String nameS = "susan";
 		String passwordS = "iloveC";
@@ -156,32 +155,30 @@ public class TestCooperatorServiceNotification {
 		String phoneS = "6043242815";
 		Student stu;
 		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
-		
+
 		String emailA = "paul.hooley@gmail.com";
 		String nameA = "qwefqwefq";
 		String passwordA = "frisbyislife";
-		int idA = 3;
 		String phoneA = "6047862815";
 		Administrator adm;
-		
-		adm = cs.createAdmin(emailA, nameA, passwordA, phoneA, idA);
-		
+
+		adm = cs.createAdmin(emailA, nameA, passwordA, phoneA);
+
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
-		
-		Integer id = 34;
+
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+
 		String text = "this is a notification";
 		String error = null;
 		Notification n;
-	
+
 		try {
-			n = cs.createNotification(id, text, adm, stu, emp);
+			n = cs.createNotification(text, adm, stu, emp);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -189,22 +186,22 @@ public class TestCooperatorServiceNotification {
 		assertNull(error);
 
 		assertEquals(1, cs.getAllNotifications().size());
-		assertEquals(id, cs.getAllNotifications().get(0).getId());
-		
-		//Check to see if associated to employer
+		assertEquals(text, cs.getAllNotifications().get(0).getText());
+
+		// Check to see if associated to employer
 		assertEquals(1, cs.getNotificationsEmp(emp).size());
-		
-		//Check to see if associated to admin
+
+		// Check to see if associated to admin
 		assertEquals(1, cs.getNotificationsAdm(adm).size());
-		
-		//Check to see if associated to student
+
+		// Check to see if associated to student
 		assertEquals(1, cs.getNotificationsStu(stu).size());
 	}
-	
+
 	@Test
 	public void testCreateNotificationAdminNull() {
 		assertEquals(0, cs.getAllNotifications().size());
-		
+
 		String emailS = "susan@gmail.com";
 		String nameS = "susan";
 		String passwordS = "iloveC";
@@ -212,22 +209,21 @@ public class TestCooperatorServiceNotification {
 		String phoneS = "6043242815";
 		Student stu;
 		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
-		
+
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
-		
-		Integer id = 34;
+
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+
 		String text = "   ";
 		String error = null;
-	
+
 		try {
-			cs.createNotification(id, text, null, stu, emp);
+			cs.createNotification(text, null, stu, emp);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -235,61 +231,58 @@ public class TestCooperatorServiceNotification {
 		assertEquals("Administrator is null! Text is invalid!", error);
 		assertEquals(0, cs.getAllNotifications().size());
 	}
-	
+
 	@Test
 	public void testCreateNotificationBothNull() {
 		assertEquals(0, cs.getAllNotifications().size());
-		
+
 		String emailA = "paul.hooley@gmail.com";
 		String nameA = "qwefqwefq";
 		String passwordA = "frisbyislife";
-		int idA = 3;
 		String phoneA = "6047862815";
 		Administrator adm;
-		
-		adm = cs.createAdmin(emailA, nameA, passwordA, phoneA, idA);
-		
-		Integer id = 34;
+
+		adm = cs.createAdmin(emailA, nameA, passwordA, phoneA);
+
 		String text = "this is a notification";
 		String error = null;
-	
+
 		try {
-			cs.createNotification(id, text, adm, null, null);
+			cs.createNotification(text, adm, null, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		assertEquals("Notification needs at least one recipient! ", error);
-		assertEquals(0, cs.getAllNotifications().size());	
+		assertEquals(0, cs.getAllNotifications().size());
 	}
-	
+
 	@Test
 	public void testCreateNotificationNegative() {
 		assertEquals(0, cs.getAllNotifications().size());
 
-		int id = -1;
 		String text = "    ";
 		String error = null;
-	
+
 		try {
-			cs.createNotification(id, text, null, null, null);
+			cs.createNotification(text, null, null, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
-		assertEquals("Administrator is null! Notification needs at least one recipient! ID is invalid! Text is invalid!", error);
+		assertEquals("Administrator is null! Notification needs at least one recipient! Text is invalid!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getAllNotifications().size());
 	}
-	
+
 	@Test
 	public void testGetNotifNullProfile() {
 		assertEquals(0, cs.getAllNotifications().size());
-	
+
 		String error = "";
-		//check employer
+		// check employer
 		try {
 			cs.getNotificationsEmp(null);
 		} catch (IllegalArgumentException e) {
@@ -297,8 +290,8 @@ public class TestCooperatorServiceNotification {
 		}
 		// check error
 		assertEquals("Profile cannot be null!", error);
-		
-		//check student
+
+		// check student
 		try {
 			cs.getNotificationsStu(null);
 		} catch (IllegalArgumentException e) {
@@ -306,8 +299,8 @@ public class TestCooperatorServiceNotification {
 		}
 		// check error
 		assertEquals("Profile cannot be null!", error);
-		
-		//check admin
+
+		// check admin
 		try {
 			cs.getNotificationsAdm(null);
 		} catch (IllegalArgumentException e) {
@@ -319,7 +312,5 @@ public class TestCooperatorServiceNotification {
 		// check no change in memory
 		assertEquals(0, cs.getAllNotifications().size());
 	}
-	
-	
 
 }

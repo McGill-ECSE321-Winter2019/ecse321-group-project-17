@@ -1,7 +1,9 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
 import java.sql.Date;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
 
@@ -11,26 +13,26 @@ public class CoopDto {
 	private String title; // not null, not empty
 	private StudentDto student;
 	private EmployerDto employer;
-	private List<ReportDto> report;
+	private Set<ReportDto> report;
 	private Date startDate;
 	private Date endDate;
 	private CoopStatus status;
 	private Integer salaryPerHour;
 	private Integer hoursPerWeek;
 	private String address;
-	
+
 	public CoopDto() {
 	}
-	
+
 	public CoopDto(Integer id) {
-		this(id, "title "+id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "");
+		this(id, "title "+id, null, null, null, null, CoopStatus.NotStarted, 0, 0, "", Collections.EMPTY_SET);
 	}
 	
 	public CoopDto(Integer id, String title, StudentDto student, EmployerDto employer, Date startDate, Date endDate, 
-			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
+			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address, Set<ReportDto> r) {
 		this.student = student;
 		this.employer = employer;
-		this.report = null;
+		this.report = r;
 		this.id = id;
 		this.title = title;
 		this.startDate = startDate;
@@ -57,11 +59,11 @@ public class CoopDto {
 		this.employer = employer;
 	}
 
-	public List<ReportDto> getReports() {
+	public Set<ReportDto> getReports() {
 		return report;
 	}
 
-	public void setReport(List<ReportDto> report) {
+	public void setReport(Set<ReportDto> report) {
 		this.report = report;
 	}
 
@@ -128,7 +130,5 @@ public class CoopDto {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
-	
-	
+
 }

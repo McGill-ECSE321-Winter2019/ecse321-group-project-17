@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
@@ -24,11 +26,13 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestPropertySource(locations="classpath:application-test.properties")
 public class TestCooperatorServiceStudent {
-	
+
 	@Autowired
 	private CooperatorService cs;
-	
+
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	@Autowired
@@ -43,8 +47,9 @@ public class TestCooperatorServiceStudent {
 	private StudentRepository studentRepository;
 	@Autowired
 	private ReportRepository reportRepository;
-	
-	@Before @After
+
+	@Before
+	@After
 	public void clearDatabase() {
 		notificationRepository.deleteAll();
 		coopRepository.deleteAll();
@@ -54,7 +59,7 @@ public class TestCooperatorServiceStudent {
 		profileRepository.deleteAll();
 		reportRepository.deleteAll();
 	}
-	
+
 	@Test
 	public void testCreateStudent() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -77,14 +82,14 @@ public class TestCooperatorServiceStudent {
 		assertEquals(1, allStudents.size());
 		assertEquals(name, allStudents.get(0).getName());
 		assertEquals(password, cs.getStudent(email).getPassword());
-		
-		//assertEquals("Paul Hooley", studentRepository.findStudentByName(name));
+
+		// assertEquals("Paul Hooley", studentRepository.findStudentByName(name));
 	}
-	
+
 	@Test
 	public void testCreateStudentNull() {
 		assertEquals(0, cs.getNumberofProfiles());
-		
+
 		String email = null;
 		String name = null;
 		String password = null;
@@ -93,21 +98,20 @@ public class TestCooperatorServiceStudent {
 		String error = null;
 
 		try {
-			cs.createStudent
-			(email, name, password, phone, id);
+			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 
 		// check error
 		assertEquals("Student name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ", error);
+				+ "Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
-		
+
 	}
-	
+
 	@Test
 	public void testCreateStudentEmpty() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -127,15 +131,13 @@ public class TestCooperatorServiceStudent {
 
 		// check error
 		assertEquals("Student name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ", error);
-
+				+ "Password cannot be empty! Phone cannot be empty! ", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
-		
 
 	}
-	
+
 	@Test
 	public void testCreateStudentSpaces() {
 		assertEquals(0, cs.getNumberofProfiles());
@@ -146,7 +148,7 @@ public class TestCooperatorServiceStudent {
 		String phone = " ";
 		int id = -1;
 		String error = null;
-	
+
 		try {
 			cs.createStudent(email, name, password, phone, id);
 		} catch (IllegalArgumentException e) {
@@ -155,19 +157,18 @@ public class TestCooperatorServiceStudent {
 
 		// check error
 		assertEquals("Student name cannot be empty! Email cannot be empty! "
-				+"Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
+				+ "Password cannot be empty! Phone cannot be empty! ID is invalid!", error);
 
 		// check no change in memory
 		assertEquals(0, cs.getNumberofProfiles());
 		assertEquals(0, cs.getAllStudents().size());
-		
+
 		try {
 			cs.getStudent("");
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
 		assertEquals("Student email cannot be empty!", error);
-
 
 	}
 

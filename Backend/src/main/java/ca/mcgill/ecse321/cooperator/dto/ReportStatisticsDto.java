@@ -1,42 +1,34 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
-import ca.mcgill.ecse321.cooperator.dao.CoopRepository;
-import ca.mcgill.ecse321.cooperator.dao.ReportRepository;
-import ca.mcgill.ecse321.cooperator.model.Report;
 
 public class ReportStatisticsDto {
-	
+
 	// filters
 	private String startTerm;
 	private String endTerm;
 	private Integer coopNumber;
-	
+
 	// reports status
 	private Integer unsubmittedReports;
 	private Integer submittedReports;
 	private Integer lateReports;
 	private Integer reviewedReports;
-	
+
 	// reports type
 	private Integer contractReports;
 	private Integer technicalReports;
 	private Integer studentEvalReports;
 	private Integer employerEvalReports;
 	private Integer twoWeekReports;
-	
+
 	private Integer totalReports;
 
 	@SuppressWarnings("unchecked")
 	public ReportStatisticsDto() {
-		this("","",0,0,0,0,0,0,0,0,0,0,0);
+		this("", "", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	}
-	
+
 	public ReportStatisticsDto(String startTerm, String endTerm, Integer coopNumber, Integer unsubmittedReports,
 			Integer submittedReports, Integer lateReports, Integer reviewedReports, Integer contractReports,
 			Integer technicalReports, Integer studentEvalReports, Integer employerEvalReports, Integer twoWeekReports,
@@ -56,11 +48,11 @@ public class ReportStatisticsDto {
 		this.twoWeekReports = twoWeekReports;
 		this.totalReports = totalReports;
 	}
-	
+
 	public Date getStartDate(String season, String year) {
 		String day = "01";
 		String month = "00";
-		switch(season) {
+		switch (season) {
 		case "winter":
 			month = "01";
 			break;
@@ -71,26 +63,29 @@ public class ReportStatisticsDto {
 			month = "09";
 			break;
 		}
-		return Date.valueOf(year+"-"+month+"-"+day);
+		return Date.valueOf(year + "-" + month + "-" + day);
 	}
-	
+
 	public Date getEndDate(String season, String year) {
 		String month = "00", day = "00";
-		switch(season) {
+		switch (season) {
 		case "winter":
-			month = "04"; day = "30"; 
+			month = "04";
+			day = "30";
 			break;
 		case "summer":
-			month = "08"; day = "31";
+			month = "08";
+			day = "31";
 			break;
 		case "fall":
-			month = "12"; day = "31";
+			month = "12";
+			day = "31";
 			break;
 		}
-		return Date.valueOf(year+"-"+month+"-"+day);
+		return Date.valueOf(year + "-" + month + "-" + day);
 	}
-	
-	// returns "winter", "summer", "fall", or "" 
+
+	// returns "winter", "summer", "fall", or ""
 	public String extractSeason(String term) {
 		String stringOnly = term.replaceAll("[0-9]", "");
 		if (stringOnly.matches("[Ww]inter") || stringOnly.matches("[Ss]ummer") || stringOnly.matches("[Ff]all")) {
@@ -98,16 +93,16 @@ public class ReportStatisticsDto {
 		}
 		return "";
 	}
-	
+
 	// returns Integer like 20XX or 0
 	public String extractYear(String term) {
 		String numberOnly = term.replaceAll("[^0-9]", "");
-		if(numberOnly.matches("20[0-9][0-9]")) {
+		if (numberOnly.matches("20[0-9][0-9]")) {
 			return numberOnly;
 		}
 		return "";
 	}
-	
+
 	public String getStartTerm() {
 		return startTerm;
 	}
@@ -123,15 +118,15 @@ public class ReportStatisticsDto {
 	public void setEndTerm(String endTerm) {
 		this.endTerm = endTerm;
 	}
-	
+
 	public Integer getCoopNumber() {
 		return coopNumber;
-	}	
+	}
 
 	public void setCoopNumber(Integer coopNumber) {
 		this.coopNumber = coopNumber;
-	}	
-	
+	}
+
 	public Integer getUnsubmittedReports() {
 		return unsubmittedReports;
 	}
@@ -211,5 +206,5 @@ public class ReportStatisticsDto {
 	public void setTotalReports(Integer totalReports) {
 		this.totalReports = totalReports;
 	}
-	
+
 }

@@ -1,7 +1,6 @@
 package ca.mcgill.ecse321.cooperator.service;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 import java.sql.Date;
 
@@ -11,6 +10,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import ca.mcgill.ecse321.cooperator.dao.AdministratorRepository;
@@ -31,10 +32,12 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@TestPropertySource(locations="classpath:application-test.properties")
 public class TestCooperatorServiceStatistics {
 	@Autowired
 	protected CooperatorService cs;
-	
+
 	@Autowired
 	private AdministratorRepository administratorRepository;
 	@Autowired
@@ -49,8 +52,9 @@ public class TestCooperatorServiceStatistics {
 	private ProfileRepository profileRepository;
 	@Autowired
 	private StudentRepository studentRepository;
-	
-	@Before @After
+
+	@Before
+	@After
 	public void clearDatabase() {
 		reportRepository.deleteAll();
 		notificationRepository.deleteAll();
@@ -60,8 +64,7 @@ public class TestCooperatorServiceStatistics {
 		employerRepository.deleteAll();
 		profileRepository.deleteAll();
 	}
-	
-	
+
 	@Test
 	public void testCompletedCoopUnsubmittedContractReportStatistics() {
 		assertEquals(true, cs.getAllReports().isEmpty());
@@ -77,51 +80,49 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.Completed;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Unsubmitted, ReportType.Contract);
-	
+		cs.createReport(c, date, ReportStatus.Unsubmitted, ReportType.Contract);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 0);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(1, (int)csd.getCompletedCoops());
-		assertEquals(0, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(1, (int)csd.getTotalCoops());
-		assertEquals(0, (int)csd.getCoopNumber());
 
-		assertEquals(1, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(0, (int)rsd.getReviewedReports());
+		assertEquals(1, (int) csd.getCompletedCoops());
+		assertEquals(0, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(1, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(0, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(1, (int)rsd.getTotalReports());
+		assertEquals(1, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getCoopNumber());
+
+		assertEquals(4, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(0, (int) rsd.getReviewedReports());
+
+		assertEquals(2, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
-	
+
 	@Test
 	public void testInProgressCoopSubmittedTechnicalReportStatistics() {
 		assertEquals(true, cs.getAllReports().isEmpty());
@@ -137,51 +138,49 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Submitted, ReportType.Technical);
-	
+		cs.createReport(c, date, ReportStatus.Submitted, ReportType.Technical);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 0);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(0, (int)csd.getCompletedCoops());
-		assertEquals(1, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(1, (int)csd.getTotalCoops());
-		assertEquals(0, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(1, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(0, (int)rsd.getReviewedReports());
+		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(1, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(1, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(0, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(1, (int)rsd.getTotalReports());
+		assertEquals(1, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getCoopNumber());
+
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
+		assertEquals(1, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(0, (int) rsd.getReviewedReports());
+
+		assertEquals(1, (int) rsd.getContractReports());
+		assertEquals(1, (int) rsd.getTechnicalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
-	
+
 	@Test
 	public void testNotStartedCoopLateStudentEvalReportStatistics() {
 		assertEquals(true, cs.getAllReports().isEmpty());
@@ -197,49 +196,47 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.NotStarted;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Late, ReportType.StudentEval);
-	
+		cs.createReport(c, date, ReportStatus.Late, ReportType.StudentEval);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 0);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(0, (int)csd.getCompletedCoops());
-		assertEquals(0, (int)csd.getInProgressCoops());
-		assertEquals(1, (int)csd.getNotStartedCoops());
-		
-		assertEquals(1, (int)csd.getTotalCoops());
-		assertEquals(0, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(1, (int)rsd.getLateReports());
-		assertEquals(0, (int)rsd.getReviewedReports());
+		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(0, (int) csd.getInProgressCoops());
+		assertEquals(1, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(1, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(0, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(1, (int)rsd.getTotalReports());
+		assertEquals(1, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getCoopNumber());
+
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(1, (int) rsd.getLateReports());
+		assertEquals(0, (int) rsd.getReviewedReports());
+
+		assertEquals(1, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(2, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -257,51 +254,48 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.EmployerEval);
-	
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.EmployerEval);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 0);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(0, (int)csd.getCompletedCoops());
-		assertEquals(1, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(1, (int)csd.getTotalCoops());
-		assertEquals(0, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(1, (int)rsd.getReviewedReports());
+		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(1, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(1, (int)rsd.getEmployerEvalReports());
-		assertEquals(0, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(1, (int)rsd.getTotalReports());
+		assertEquals(1, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getCoopNumber());
+
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(1, (int) rsd.getReviewedReports());
+
+		assertEquals(1, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(2, (int) rsd.getEmployerEvalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
-	
 
 	@Test
 	public void testInProgressCoopReviewedTwoWeekReportStatistics() {
@@ -318,51 +312,49 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
-	
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 0);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(0, (int)csd.getCompletedCoops());
-		assertEquals(1, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(1, (int)csd.getTotalCoops());
-		assertEquals(0, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(1, (int)rsd.getReviewedReports());
+		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(1, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(1, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(1, (int)rsd.getTotalReports());
+		assertEquals(1, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getCoopNumber());
+
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(1, (int) rsd.getReviewedReports());
+
+		assertEquals(1, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
+		assertEquals(1, (int) rsd.getTwoWeekReports());
+
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
-	
+
 	@Test
 	public void testCoopAndReportStatisticsWithPastCoop() {
 		assertEquals(true, cs.getAllReports().isEmpty());
@@ -377,50 +369,48 @@ public class TestCooperatorServiceStatistics {
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
+		String companyE = "Lightspeed";
 		String phoneE = "254334";
-		int idE = 31231234;
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2018-01-01");
 		Date endDate = Date.valueOf("2018-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
-	
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 0);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(0, (int)csd.getCompletedCoops());
-		assertEquals(0, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(0, (int)csd.getTotalCoops());
-		assertEquals(0, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(0, (int)rsd.getReviewedReports());
+		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(0, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(0, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(0, (int)rsd.getTotalReports());
+		assertEquals(0, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getCoopNumber());
+
+		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(0, (int) rsd.getReviewedReports());
+
+		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(0, (int) rsd.getStudentEvalReports());
+		assertEquals(0, (int) rsd.getEmployerEvalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+
+		assertEquals(0, (int) rsd.getTotalReports());
 	}
 
 	@Test
@@ -438,51 +428,49 @@ public class TestCooperatorServiceStatistics {
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
 		String phoneE = "254334";
-		int idE = 31231234;
+		String companyE = "Lightspeed";
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2020-01-01");
 		Date endDate = Date.valueOf("2020-04-29");
 		CoopStatus status = CoopStatus.InProgress;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
-	
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 0);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(0, (int)csd.getCompletedCoops());
-		assertEquals(0, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(0, (int)csd.getTotalCoops());
-		assertEquals(0, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(0, (int)rsd.getReviewedReports());
+		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(0, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(0, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(0, (int)rsd.getTotalReports());
+		assertEquals(0, (int) csd.getTotalCoops());
+		assertEquals(0, (int) csd.getCoopNumber());
+
+		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(0, (int) rsd.getReviewedReports());
+
+		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(0, (int) rsd.getStudentEvalReports());
+		assertEquals(0, (int) rsd.getEmployerEvalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+
+		assertEquals(0, (int) rsd.getTotalReports());
 	}
-	
+
 	@Test
 	public void testCoopAndReportStatisticsWithCorrectCoopNumber() {
 		assertEquals(true, cs.getAllReports().isEmpty());
@@ -498,52 +486,50 @@ public class TestCooperatorServiceStatistics {
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
+		String companyE = "Lightspeed";
 		String phoneE = "254334";
-		int idE = 31231234;
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.Completed;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
-	
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 1);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 1);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(1, (int)csd.getCompletedCoops());
-		assertEquals(0, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(1, (int)csd.getTotalCoops());
-		assertEquals(1, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(1, (int)rsd.getReviewedReports());
+		assertEquals(1, (int) csd.getCompletedCoops());
+		assertEquals(0, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(1, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(1, (int)rsd.getTotalReports());
+		assertEquals(1, (int) csd.getTotalCoops());
+		assertEquals(1, (int) csd.getCoopNumber());
+
+		assertEquals(3, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(1, (int) rsd.getReviewedReports());
+
+		assertEquals(1, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(1, (int) rsd.getStudentEvalReports());
+		assertEquals(1, (int) rsd.getEmployerEvalReports());
+		assertEquals(1, (int) rsd.getTwoWeekReports());
+
+		assertEquals(4, (int) rsd.getTotalReports());
 	}
-	
+
 	@Test
 	public void testCoopAndReportStatisticsWithIncorrectCoopNumber() {
 		assertEquals(true, cs.getAllReports().isEmpty());
@@ -559,50 +545,48 @@ public class TestCooperatorServiceStatistics {
 		String emailE = "emma.eagles@mail.mcgill.ca";
 		String nameE = "Emma Eagles";
 		String passwordE = "12341234";
+		String companyE = "Lightspeed";
 		String phoneE = "254334";
-		int idE = 31231234;
 		Employer emp;
-		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, idE);
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
 		String title = "Developer";
 		Date startDate = Date.valueOf("2019-01-01");
 		Date endDate = Date.valueOf("2019-04-29");
 		CoopStatus status = CoopStatus.Completed;
 		Integer salaryPerHour = 19;
 		Integer hoursPerWeek = 40;
-		Integer idC = 45;
 		String address = "address";
 		Coop c;
-		c = cs.createCoop(s, emp, title, idC, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
-		Integer id = 1;
+		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(id, c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
-	
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 2);
 
 		CoopStatisticsDto csd = cs.generateAllCoopStatistics("Winter2019", "Winter2019", 2);
-		
+
 		assertEquals("Winter2019", csd.getStartTerm());
 		assertEquals("Winter2019", csd.getEndTerm());
-		
-		assertEquals(0, (int)csd.getCompletedCoops());
-		assertEquals(0, (int)csd.getInProgressCoops());
-		assertEquals(0, (int)csd.getNotStartedCoops());
-		
-		assertEquals(0, (int)csd.getTotalCoops());
-		assertEquals(2, (int)csd.getCoopNumber());
 
-		assertEquals(0, (int)rsd.getUnsubmittedReports());
-		assertEquals(0, (int)rsd.getSubmittedReports());
-		assertEquals(0, (int)rsd.getLateReports());
-		assertEquals(0, (int)rsd.getReviewedReports());
+		assertEquals(0, (int) csd.getCompletedCoops());
+		assertEquals(0, (int) csd.getInProgressCoops());
+		assertEquals(0, (int) csd.getNotStartedCoops());
 
-		assertEquals(0, (int)rsd.getContractReports());
-		assertEquals(0, (int)rsd.getTechnicalReports());
-		assertEquals(0, (int)rsd.getStudentEvalReports());
-		assertEquals(0, (int)rsd.getEmployerEvalReports());
-		assertEquals(0, (int)rsd.getTwoWeekReports());
-		
-		assertEquals(0, (int)rsd.getTotalReports());
+		assertEquals(0, (int) csd.getTotalCoops());
+		assertEquals(2, (int) csd.getCoopNumber());
+
+		assertEquals(0, (int) rsd.getUnsubmittedReports());
+		assertEquals(0, (int) rsd.getSubmittedReports());
+		assertEquals(0, (int) rsd.getLateReports());
+		assertEquals(0, (int) rsd.getReviewedReports());
+
+		assertEquals(0, (int) rsd.getContractReports());
+		assertEquals(0, (int) rsd.getTechnicalReports());
+		assertEquals(0, (int) rsd.getStudentEvalReports());
+		assertEquals(0, (int) rsd.getEmployerEvalReports());
+		assertEquals(0, (int) rsd.getTwoWeekReports());
+
+		assertEquals(0, (int) rsd.getTotalReports());
 	}
-	
+
 }

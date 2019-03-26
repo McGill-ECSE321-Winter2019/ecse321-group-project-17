@@ -9,11 +9,12 @@ import ca.mcgill.ecse321.cooperator.model.Employer;
 import ca.mcgill.ecse321.cooperator.model.Notification;
 import ca.mcgill.ecse321.cooperator.model.Student;
 
-public interface NotificationRepository extends CrudRepository<Notification, Integer>{
-	
+public interface NotificationRepository extends CrudRepository<Notification, Integer> {
+
 	Set<Notification> findByEmployer(Employer employer);
-	Set<Notification> findByStudent(Student student);	
+
+	Set<Notification> findByStudent(Student student);
+
 	Set<Notification> findBySender(Administrator sender);
-	
 
 }

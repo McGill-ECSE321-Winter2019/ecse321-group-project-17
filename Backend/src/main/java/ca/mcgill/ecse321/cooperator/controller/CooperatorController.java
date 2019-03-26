@@ -8,9 +8,11 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,20 +59,20 @@ public class CooperatorController {
 	
 	@PostMapping("/employer/create")
 	public EmployerDto createEmployer(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
-			@RequestParam String phone, @RequestParam Integer emplId) {
-		Employer empl = service.createEmployer(email, name, password, phone, emplId);
+			@RequestParam String phone, @RequestParam String company) {
+		Employer empl = service.createEmployer(email, name, password, phone, company);
 		return convertToDto(empl);
 	}
 	
 	@PostMapping("/admin/create")
 	public AdminDto createAdmin(@RequestParam("email") String email, @RequestParam String password, @RequestParam String name, 
-			@RequestParam String phone, @RequestParam Integer adminId) {
-		Administrator admin = service.createAdmin(email, name, password, phone, adminId);
+			@RequestParam String phone) {
+		Administrator admin = service.createAdmin(email, name, password, phone);
 		return convertToDto(admin);
 	}
 	
 	@PostMapping("/coop/create")
-	public CoopDto createCoop(@RequestParam("id") Integer id, @RequestParam String title, @RequestParam String stuEmail, 
+	public CoopDto createCoop(@RequestParam String title, @RequestParam String stuEmail, 
 			@RequestParam String empEmail, @RequestParam String start, @RequestParam String end, 
 			@RequestParam CoopStatus status, @RequestParam Integer salaryPerHour, @RequestParam Integer hoursPerWeek, 
 			@RequestParam String address) {
@@ -80,19 +82,14 @@ public class CooperatorController {
 		Date startDate = Date.valueOf(start);
 		Date endDate = Date.valueOf(end);
 		
-		Coop coop = service.createCoop(stu, emp, title, id, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+		Coop coop = service.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		return convertToDto(coop);
 	} 
 	
-	
-	//CAN ONLY DO THIS IF THE BACKWARDS ASSOCIATION IN CREATE NOTIFICATION IN SERVICE FILE IS COMMENTED OUT
-	//THERES A COMMENT TO SHOW WHICH TO COMMENT OUT
-	
 	//create single notification for either employer or student
 	@PostMapping("/notification/create")
-	public NotificationDto createNotif(@RequestParam ("id") Integer id, @RequestParam String text, 
-			@RequestParam String senderEmail, @RequestParam (required = false) String stuEmail, 
-			@RequestParam (required = false) String empEmail) {
+	public NotificationDto createNotif(@RequestParam String text, @RequestParam String senderEmail, 
+			@RequestParam (required = false) String stuEmail, @RequestParam (required = false) String empEmail) {
 		Administrator a = service.getAdmin(senderEmail);
 		Student s = null;
 		Employer e = null;
@@ -103,13 +100,13 @@ public class CooperatorController {
 			e = service.getEmployer(empEmail);
 		}
 
-		Notification notif = service.createNotification(id, text, a, s, e);
+		Notification notif = service.createNotification(text, a, s, e);
 		return convertToDto(notif);
 	}
 	
 	//create a mass notification for multiple students and employers
-	@PostMapping("/notification/createMany")
-	public List <NotificationDto> createManyNotif(@RequestParam Integer id, @RequestParam String text, 
+	@PostMapping("/notification/create-many")
+	public List <NotificationDto> createManyNotif(@RequestParam String text, 
 			@RequestParam String senderEmail, @RequestParam (required = false) List <String> stuEmail, 
 			@RequestParam (required = false) List <String> empEmail) {
 		
@@ -123,8 +120,7 @@ public class CooperatorController {
 				if(studentEmail != null) {
 					s = service.getStudent(studentEmail);
 				}
-				notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
-				id++;
+				notifDtos.add(convertToDto(service.createNotification(text, a, s, e)));
 			}
 		}
 		if (empEmail != null) {
@@ -134,8 +130,7 @@ public class CooperatorController {
 				if(employerEmail != null) {
 					e = service.getEmployer(employerEmail);
 				}
-				notifDtos.add(convertToDto(service.createNotification(id, text, a, s, e)));
-				id++;
+				notifDtos.add(convertToDto(service.createNotification(text, a, s, e)));
 			}
 		}
 		
@@ -144,14 +139,54 @@ public class CooperatorController {
 	
 
 	@PostMapping("/report/create")
-	public ReportDto createReport(@RequestParam("id") Integer id, @RequestParam Integer coopId, 
-			@RequestParam Date date, @RequestParam ReportStatus status, 
-			@RequestParam ReportType type) {
+	public ReportDto createReport(@RequestParam Integer coopId, @RequestParam Date date, 
+			@RequestParam ReportStatus status, @RequestParam ReportType type) {
 		Coop c = service.getCoop(coopId);
-		Report report = service.createReport(id, c, date, status, type);
+		Report report = service.createReport(c, date, status, type);
 		return convertToDto(report);
 	}
+	
+	/*
+	 * PUT METHODS
+	 * 
+	 */
+	
+	@PutMapping("/report/update")
+	public ReportDto updateReportStatus(@RequestParam Integer id, @RequestParam ReportStatus status){
+		Report r = service.getReport(id);
+		r = service.updateReport(r, status);
+		ReportDto rDto = convertToDto(r);
+		return rDto;
+	}
+	
+	@PutMapping("/coop/update")
+	public CoopDto updateCoopStatus(@RequestParam Integer id, @RequestParam CoopStatus status){
+		Coop c = service.getCoop(id);
+		c = service.updateCoopStatus(c, status);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
+	
+	/*
+	 * DELETE METHODS
+	 * 
+	 */
+	
+	@DeleteMapping( "/report/delete")
+	public void deleteReport(@RequestParam Integer id) {
+		Report r = service.getReport(id);
+		service.deleteReport(r);
+	}
+	
+	@DeleteMapping( "/coop/delete")
+	public void deleteCoop(@RequestParam Integer id) {
+		service.deleteCoop(id);
+	}
 
+	@DeleteMapping( "/student/delete")
+	public void deleteStudent(@RequestParam String email) {
+		service.deleteStudent(email);
+	}
 	/*
 	 * GET METHODS
 	 * 
@@ -233,7 +268,7 @@ public class CooperatorController {
 		return employerDtos;
 	}
 	
-	@GetMapping(value = { "/coopsByStatus/{status}", "/coopsByStatus/{status}/" })
+	@GetMapping(value = { "/coops-by-status/{status}", "/coops-by-status/{status}/" })
 	public List<CoopDto> getCoopByStatus(@PathVariable("status") CoopStatus status) {
 		List<Coop> c = service.getCoopsByStatus(status);
 		List<CoopDto> cDto = new ArrayList<>();
@@ -243,7 +278,27 @@ public class CooperatorController {
 		return cDto;
 	} 
 	
-	@GetMapping(value = { "/reportsByStatus/{status}", "/reportsByStatus/{status}/" })
+	@GetMapping(value = { "/coops-by-company/{company}", "/coops-by-company/{company}/" })
+	public List<CoopDto> getCoopByCompany(@PathVariable("company") String company) {
+		List<Coop> c = service.getCoopsOfCompany(company);
+		List<CoopDto> cDto = new ArrayList<>();
+		for(Coop coop : c) {
+			cDto.add(convertToDto(coop));
+		}
+		return cDto;
+	}
+	
+	@GetMapping(value = { "/employers-by-company/{company}", "/coops-by-company/{company}/" })
+	public List<EmployerDto> getEmployersByCompany(@PathVariable("company") String company) {
+		List<Employer> e = service.getEmployersOfCompany(company);
+		List<EmployerDto> employerDtos = new ArrayList<>();
+		for (Employer empl : service.getAllEmployers()) {
+			employerDtos.add(convertToDto(empl));
+		}
+		return employerDtos;
+	}
+	
+	@GetMapping(value = { "/reports-by-status/{status}", "/reports-by-status/{status}/" })
 	public List<ReportDto> getReportByStatus(@PathVariable("status") ReportStatus status) {
 		List<Report> r = service.getReportByStatus(status);
 		List<ReportDto> rDto = new ArrayList<>();
@@ -253,7 +308,7 @@ public class CooperatorController {
 		return rDto;
 	} 
 	
-	@GetMapping(value = { "/reportsByType/{type}", "/reportsByType/{type}/" })
+	@GetMapping(value = { "/reports-by-type/{type}", "/reports-by-type/{type}/" })
 	public List<ReportDto> getReportByType(@PathVariable("type") ReportType type) {
 		List<Report> r = service.getReportByType(type);
 		List<ReportDto> rDto = new ArrayList<>();
@@ -261,7 +316,7 @@ public class CooperatorController {
 			rDto.add(convertToDto(report));
 		}
 		return rDto;
-	} 
+	}
 	
 	@GetMapping(value = { "/coops", "/coops/" })
 	public List<CoopDto> getAllCoops() {
@@ -272,10 +327,32 @@ public class CooperatorController {
 		return coopDtos;
 	}
 	
-	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}" })
-	public List<ReportDto> getAllReportsofStudent(@PathVariable("email") StudentDto sDto){
-		Student s = convertToDomainObject(sDto);
-		List<ReportDto> reportDtos;
+	@GetMapping(value = { "student/coops/{email}", "student/coops/{email}/" })
+	public List<CoopDto> getAllCoopsForStudent(@PathVariable("email") String email) {
+		List<CoopDto> coopDtos = new ArrayList<>();
+		Student s = service.getStudent(email);
+		
+		for (Coop coop : s.getCoop()) {
+			coopDtos.add(convertToDto(coop));
+		}
+		return coopDtos;
+	}
+	
+	@GetMapping(value = { "employer/coops/{email}", "employer/coops/{email}/" })
+	public List<CoopDto> getAllCoopsForEmployer(@PathVariable("email") String email) {
+		List<CoopDto> coopDtos = new ArrayList<>();
+		Employer e = service.getEmployer(email);
+		
+		for (Coop coop : e.getCoop()) {
+			coopDtos.add(convertToDto(coop));
+		}
+		return coopDtos;
+	}
+	
+	@GetMapping(value = { "/reports/student/{email}", "/reports/student/{email}/" })
+	public Set<ReportDto> getAllReportsofStudent(@PathVariable("email") String email){
+		Student s = service.getStudent(email);
+		Set<ReportDto> reportDtos;
 		Set<Report> reports = new HashSet<>();
 		for(Coop c : service.getCoopforStudent(s)) {
 			reports.addAll(c.getReport());
@@ -284,7 +361,7 @@ public class CooperatorController {
 		return reportDtos;
 	}
 	
-	@GetMapping(value = { "/studentProblem", "/studentProblem/" })
+	@GetMapping(value = { "/problem-students", "/problem-students/" })
 	public List<StudentDto> getProblematicStudents(){
 		List<StudentDto> s = new ArrayList<>();
 		for(Report r : service.getReportByStatus(ReportStatus.Late)) {
@@ -297,23 +374,22 @@ public class CooperatorController {
 		return s;
 	}
 	
-	@GetMapping(value = { "/reports/coop/{id}", "/reports/coop/{id}" })
-	public List<ReportDto> getAllReportsofCoop(@PathVariable("name") CoopDto cDto){
+	@GetMapping(value = { "/reports/coop/{id}", "/reports/coop/{id}/" })
+	public Set<ReportDto> getAllReportsofCoop(@PathVariable("name") CoopDto cDto){
 		Coop c = convertToDomainObject(cDto);
-		List<ReportDto> reportDtos;
+		Set<ReportDto> reportDtos;
 		Set<Report> reports = c.getReport();
 		reportDtos = convertToDto(reports);
 		return reportDtos;
 	}
 	
-	@GetMapping(value = { "/reports/{id}", "/reports/{id}/" })
+	@GetMapping(value = { "/report/{id}", "/report/{id}/" })
 	public ReportDto getReport(@PathVariable("id") Integer id){
 		Report r = service.getReport(id);
 		ReportDto rDto = convertToDto(r);
 		return rDto;
 	}
-	
-	
+
 	/*
 	 * CONVERSION METHODS
 	 * 
@@ -332,7 +408,7 @@ public class CooperatorController {
 			throw new IllegalArgumentException("There is no such Coop!");
 		}
 		CoopDto coopDto = new CoopDto(c.getId(),c.getTitle(), convertToDto(c.getStudent()), convertToDto(c.getEmployer()), c.getStartDate(), c.getEndDate(), 
-				c.getStatus(), c.getSalaryPerHour(), c.getHoursPerWeek(), c.getAddress());
+				c.getStatus(), c.getSalaryPerHour(), c.getHoursPerWeek(), c.getAddress(), convertToDto(c.getReport()));
 		return coopDto;
 	}
 
@@ -364,7 +440,7 @@ public class CooperatorController {
 		if (e == null) {
 			throw new IllegalArgumentException("There is no such Employer!");
 		}
-		EmployerDto employerDto = new EmployerDto(e.getEmail(), e.getPassword(), e.getName(), e.getId(), e.getPhone());
+		EmployerDto employerDto = new EmployerDto(e.getEmail(), e.getPassword(), e.getName(), e.getId(), e.getPhone(), e.getCompany());
 		return employerDto;
 	}
 	
@@ -372,19 +448,19 @@ public class CooperatorController {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
 		}
-		ReportDto reportDto = new ReportDto(r.getId(), convertToDto(r.getCoop()), r.getDueDate(), r.getStatus(), r.getType());
+		ReportDto reportDto = new ReportDto(r.getId(), r.getDueDate(), r.getStatus(), r.getType());
 		return reportDto;
 	}
 	
-	private List<ReportDto> convertToDto(Set<Report> r) {
+	private Set<ReportDto> convertToDto(Set<Report> r) {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
 		}
-		List<ReportDto> rDto = new ArrayList<>();
+		Set<ReportDto> rDto = new HashSet<>();
 		for(Report rep : r) {
 			rDto.add(convertToDto(rep));
 		}
-		return rDto;
+		return (Set<ReportDto>) rDto;
 	}
 	
 	private NotificationDto convertToDto(Notification n) {
@@ -415,14 +491,5 @@ public class CooperatorController {
 		return studentDto;
 	}
 	
-	private Student convertToDomainObject(StudentDto sDto) {
-		List<Student> allStudents = service.getAllStudents();
-		for (Student student : allStudents) {
-			if (student.getName().equals(sDto.getName())) {
-				return student;
-			}
-		}
-		return null;
-	}
 
 }
