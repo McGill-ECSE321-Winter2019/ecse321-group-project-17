@@ -36,6 +36,7 @@
 <script>
 import Router from "../router";
 import ReportPage from "./ReportPage.vue";
+import CoopPage from "./CoopPage.vue";
 
 import axios from "axios";
 
@@ -70,12 +71,12 @@ export default {
         removeReport: function() {
             AXIOS.delete('/report/delete?id='+this.report.id)
             .then(response => {
-
+                CoopPage.methods.fetchCoop();
             })
             .catch(e=>{
                 console.log(e.message)
             })
-        }
+        },
     }
 };
 </script>

@@ -3,7 +3,7 @@
     <div class="container">
         <CoopInfo :coop="coop"/>
         <div id="report-table" class="card">
-            <table>
+            <table v-cloak>
                 <tr id="tr-heading">
                     <th class="td-report-type">
                         <h5>Report Type</h5>
@@ -18,7 +18,7 @@
                     <th class="td-remove"/>
                 </tr>
                 <CoopReportListItem
-                    v-for="report in coop.reports"
+                    v-for="report in this.orderedReports"
                     :key="report.id"
                     :report="report"
                 />
@@ -33,6 +33,7 @@ import CoopInfo from "./CoopInfo.vue"
 import CoopReportListItem from "./CoopReportListItem.vue"
 import Router from "../router";
 import axios from "axios";
+import _ from "lodash";
 
 var config = require("../../config");
 
@@ -51,21 +52,15 @@ export default {
         CoopReportListItem
     },
     created: function() {
-        var coopId = parseInt(Router.currentRoute.path.split("/")[2]);
-        // Fetch coop from backend
-        AXIOS.get(`/coop/` + coopId)
-        .then(response => {
-            // JSON responses are automatically parsed.
-            this.coop = response.data;
-        })  
-        .catch(e => {
-            console.log(e.message);
-        });
+        this.fetchCoop();
     },
     data() {
         return {
             coop: {
                 type: Object
+            },
+            orderedReports: {
+                type: Array
             }
         }
     },
@@ -75,6 +70,19 @@ export default {
                 return true;
             }
             return false;
+        },
+        fetchCoop: function() {
+            var coopId = parseInt(Router.currentRoute.path.split("/")[2]);
+            // Fetch coop from backend
+            AXIOS.get(`/coop/` + coopId)
+            .then(response => {
+                // JSON responses are automatically parsed.
+                this.coop = response.data;
+                this.orderedReports = _.sortBy(this.coop.reports, "dueDate");
+            })  
+            .catch(e => {
+                console.log(e.message);
+            });
         },
     }
 }

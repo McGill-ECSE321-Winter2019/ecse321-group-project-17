@@ -120,17 +120,7 @@ export default {
       }
     },
     created: function() {
-        var reportId = parseInt(Router.currentRoute.path.split("/")[2]);
-        // Fetch coop from backend
-        AXIOS.get(`/report/` + reportId)
-        .then(response => {
-            // JSON responses are automatically parsed.
-            this.report = response.data;
-            this.reportLoaded = true;
-        })  
-        .catch(e => {
-            console.log(e.message);
-        });
+        this.fetchReport();
     },
     methods: {
         setReportType: function() {
@@ -138,13 +128,28 @@ export default {
         },
         setReportStatus: function() {
             AXIOS.put('/report/update?'+'id='+this.report.id+'&status='+this.selectedStatus)
-            .then(response => {})
+            .then(response => {
+                this.fetchReport();
+            })
             .catch(e => {
                 console.log(e.message)
             })
         },
         setDueDate: function() {
             alert("This function has not been implemented yet.");
+        },
+        fetchReport: function(){
+            var reportId = parseInt(Router.currentRoute.path.split("/")[2]);
+            // Fetch coop from backend
+            AXIOS.get(`/report/` + reportId)
+            .then(response => {
+                // JSON responses are automatically parsed.
+                this.report = response.data;
+                this.reportLoaded = true;
+            })  
+            .catch(e => {
+                console.log(e.message);
+            });
         }
     }
 };
