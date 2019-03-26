@@ -139,7 +139,7 @@ public class TestCooperatorServiceCoop {
 		assertEquals(salaryPerHour, allCoops.get(0).getSalaryPerHour());
 		assertEquals(hoursPerWeek, allCoops.get(0).getHoursPerWeek());
 
-		assertEquals(0, cs.getAllReports().size());
+		assertEquals(3, cs.getAllReports().size());
 
 	}
 

@@ -1,9 +1,18 @@
 <template>
   <div id="info-container" class="card">
-    <h3><span class="badge badge-primary" >Student</span>&nbsp; &nbsp; {{ student.name }}</h3>
+    <h3>
+      <span class="badge badge-primary">Student</span>
+      &nbsp; &nbsp; {{ student.name }}
+    </h3>
     <h3></h3>
-    <p><b>Email:</b> {{ student.email }}</p>
-    <p><b>ID:</b> {{ student.id }}</p>
+    <p>
+      <b>Email:</b>
+      {{ student.email }}
+    </p>
+    <p>
+      <b>ID:</b>
+      {{ student.id }}
+    </p>
   </div>
 </template>
 <script>
@@ -18,6 +27,7 @@ export default {
 </script>
 <style>
 p,
+h3,
 h4,
 h6 {
   color: white;

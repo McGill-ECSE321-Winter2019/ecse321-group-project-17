@@ -12,6 +12,7 @@
 <script>
 import StudentPageInfo from "./StudentPageInfo.vue";
 import StudentPageCoopItem from "./StudentPageCoopItem.vue";
+import Router from "../router";
 import axios from "axios";
 import _ from "lodash";
 
@@ -35,24 +36,45 @@ export default {
     studentEmail: String
   },
   created: function() {
-    // Initializing with fetched student from backend
-    AXIOS.get(`/student/` + this.studentEmail)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.student = response.data;
-      })
-      .catch(e => {
-        this.error = e;
-      });
-    // Get all coop terms for this student
-    AXIOS.get(`/student/coops/` + this.studentEmail)
-      .then(response => {
-        // JSON responses are automatically parsed.
-        this.coops = response.data;
-      })
-      .catch(e => {
-        this.error = e;
-      });
+    if (typeof this.studentEmail === "undefined") {
+      // Page has been refreshed, must get student email explicitly
+      let pathEmail = Router.currentRoute.path.split("/")[2];
+
+      // Fetch student from backend
+      AXIOS.get(`/student/` + pathEmail)
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.student = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+      // Get all coop terms for this student
+      AXIOS.get(`/student/coops/` + pathEmail)
+        .then(response => {
+          this.coops = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+    } else {
+      // Initializing with fetched student from backend
+      AXIOS.get(`/student/` + this.studentEmail)
+        .then(response => {
+          this.student = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+      // Get all coop terms for this student
+      AXIOS.get(`/student/coops/` + this.studentEmail)
+        .then(response => {
+          this.coops = response.data;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+    }
   },
   data() {
     return {

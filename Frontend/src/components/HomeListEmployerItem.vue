@@ -9,6 +9,7 @@
         value="option1"
         aria-label="..."
         @change="updateState"
+        v-model="selected"
       >
     </td>
     <td class="td-badge">
@@ -76,9 +77,15 @@ export default {
       });
     },
     updateState: function() {
-      this.selected = !this.selected;
-      this.$emit("clicked", this.selected, this.employer);
+      this.$emit("child-clicked", this.selected, this.employer);
+    },
+    setSelectedState: function(state) {
+      this.selected = state;
+      this.$emit("child-clicked", this.selected, this.employer);
     }
+  },
+  mounted() {
+    this.$eventHub.$on("setAllSelectedState", this.setSelectedState);
   }
 };
 </script>

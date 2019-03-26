@@ -1,5 +1,5 @@
 <template>
-  <div id="coop-container" class="card">
+  <div id="coop-container" class="card" @click="goToCoopPage">
     <span class="badge badge-info" v-if="coop.status === 'NotStarted'">Not Started</span>
     <span class="badge badge-warning" v-else-if="coop.status === 'InProgress'">In Progress</span>
     <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
@@ -21,11 +21,25 @@
 </template>
 
 <script>
+import Router from "../router";
+
 export default {
   props: {
     coop: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    goToCoopPage: function() {
+      // Go to the coop page
+      Router.push({
+        path: "/coop/",
+        name: "CoopPage",
+        params: {
+          id: this.coop.id
+        }
+      });
     }
   }
 };
@@ -40,6 +54,11 @@ export default {
   text-align: left;
   background-color: rgb(53, 58, 62);
 }
+
+#coop-container:hover {
+  background-color: rgb(66, 71, 75);
+}
+
 h4,
 h5,
 h6,

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <HomeFilters 
-      @updateCoopNumber="updateCoopNumber" 
+    <HomeFilters
+      @updateCoopNumber="updateCoopNumber"
       @updateStartTerm="updateStartTerm"
       @updateEndTerm="updateEndTerm"
       @updateProfile="updateProfile"
-        />
+    />
     <div id="home-container" class="card">
       <div>
         <table v-if="studentsLoaded && employersLoaded">
@@ -17,6 +17,7 @@
                 id="blankCheckbox"
                 value="option1"
                 aria-label="..."
+                @change="updateAllSelectedState"
               >
             </td>
             <td class="td-badge1">
@@ -37,36 +38,28 @@
             v-for="student in orderedStudents"
             :key="student.email"
             :student="student"
-            @clicked="handleSelect"
+            @child-clicked="handleSelect"
           />
           <HomeListEmployerItem
             v-for="employer in orderedEmployers"
             :key="employer.email"
             :employer="employer"
-            @clicked="handleSelect"
+            @child-clicked="handleSelect"
           />
         </table>
         <h2 v-else id="h2-loading">Loading...</h2>
       </div>
     </div>
     <div>
-        <button 
-          id="stats"
-          type="button" 
-          class="btn btn-light btn-lg"
-          v-on:click="goToStatistics">
-          Generate Statistics
-          <img src="./../assets/line-chart.png">
-        </button> 
-        <button 
-          id="notifs"
-          type="button" 
-          class="btn btn-light btn-lg"
-          v-on:click="goToNotifications">
-          Create Notification 
-          <img src="./../assets/envelope.png">
-        </button> 
-      </div>
+      <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics">
+        Generate Statistics
+        <img src="./../assets/line-chart.png">
+      </button>
+      <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications">
+        Create Notification
+        <img src="./../assets/envelope.png">
+      </button>
+    </div>
   </div>
 </template>
     
@@ -136,6 +129,7 @@ export default {
       },
       studentsLoaded: false,
       employersLoaded: false,
+      allSelected: false,
       selected: [],
       selectedProfile: "",
       selectedStartTerm: "",
@@ -153,23 +147,74 @@ export default {
   },
   methods: {
     updateProfile: function(value) {
-        this.selectedProfile = value;
+      if (this.selectedProfile === value) return; // Nothing to update
+
+      this.studentsLoaded = false;
+      this.employersLoaded = false;
+      this.selectedProfile = value;
+
+      if (this.selectedProfile === "Students & Employers") {
+        AXIOS.get(`/students`)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.students = response.data;
+            this.studentsLoaded = true;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        // Fetch all employers from backend
+        AXIOS.get(`/employers`)
+          .then(response => {
+            this.employers = response.data;
+            this.employersLoaded = true;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+      } else if (this.selectedProfile === "Students") {
+        AXIOS.get(`/students`)
+          .then(response => {
+            this.students = response.data;
+            this.studentsLoaded = true;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        this.employers = [];
+        this.employersLoaded = true;
+      } else if (this.selectedProfile === "Employers") {
+        AXIOS.get(`/employers`)
+          .then(response => {
+            this.employers = response.data;
+            this.employersLoaded = true;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        this.students = [];
+        this.studentsLoaded = true;
+      }
     },
     updateCoopNumber: function(value) {
-        this.selectedCoopNumber = value;
+      this.selectedCoopNumber = value;
     },
     updateStartTerm: function(value) {
-        this.selectedStartTerm = value;
+      this.selectedStartTerm = value;
     },
     updateEndTerm: function(value) {
-        this.selectedEndTerm = value;
+      this.selectedEndTerm = value;
     },
-    handleSelect: function(isSelected, student) {
+    handleSelect: function(isSelected, person) {
       if (isSelected) {
-        this.selected.push(student);
+        this.selected.push(person);
       } else {
-        remove(this, student);
+        remove(this, person);
       }
+    },
+    updateAllSelectedState: function() {
+      this.allSelected = !this.allSelected;
+      this.$eventHub.$emit("setAllSelectedState", this.allSelected);
     },
     goToStatistics: function() {
       Router.push({

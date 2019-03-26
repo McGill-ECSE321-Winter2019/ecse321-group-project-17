@@ -1,10 +1,20 @@
 <template>
   <div id="info-container" class="card">
-    <h3><span class="badge badge-success" >Employer</span> &nbsp; &nbsp; <strong>{{ employer.name }} </strong><small>from</small>  {{ employer.company }}</h3>
+    <h3>
+      <span class="badge badge-success">Employer</span> &nbsp; &nbsp;
+      <strong>{{ employer.name }}</strong>
+      <small>from</small>
+      {{ employer.company }}
+    </h3>
     <h3></h3>
-    <p><b>Email:</b> {{ employer.email }}</p>
-    <p><b>Phone:</b> {{ employer.phone}}</p>
-   
+    <p>
+      <b>Email:</b>
+      {{ employer.email }}
+    </p>
+    <p>
+      <b>Phone:</b>
+      {{ employer.phone}}
+    </p>
   </div>
 </template>
 <script>
@@ -19,6 +29,7 @@ export default {
 </script>
 <style>
 p,
+h3,
 h4,
 h6 {
   color: white;

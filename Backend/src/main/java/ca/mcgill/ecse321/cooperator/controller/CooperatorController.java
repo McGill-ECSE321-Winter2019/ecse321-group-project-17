@@ -316,7 +316,7 @@ public class CooperatorController {
 			rDto.add(convertToDto(report));
 		}
 		return rDto;
-	} 
+	}
 	
 	@GetMapping(value = { "/coops", "/coops/" })
 	public List<CoopDto> getAllCoops() {
