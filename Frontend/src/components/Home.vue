@@ -17,6 +17,7 @@
                 id="blankCheckbox"
                 value="option1"
                 aria-label="..."
+                @change="updateAllSelectedState"
               >
             </td>
             <td class="td-badge1">
@@ -37,13 +38,13 @@
             v-for="student in orderedStudents"
             :key="student.email"
             :student="student"
-            @clicked="handleSelect"
+            @child-clicked="handleSelect"
           />
           <HomeListEmployerItem
             v-for="employer in orderedEmployers"
             :key="employer.email"
             :employer="employer"
-            @clicked="handleSelect"
+            @child-clicked="handleSelect"
           />
         </table>
         <h2 v-else id="h2-loading">Loading...</h2>
@@ -128,6 +129,7 @@ export default {
       },
       studentsLoaded: false,
       employersLoaded: false,
+      allSelected: false,
       selected: [],
       selectedProfile: "",
       selectedStartTerm: "",
@@ -164,7 +166,6 @@ export default {
         // Fetch all employers from backend
         AXIOS.get(`/employers`)
           .then(response => {
-            // JSON responses are automatically parsed.
             this.employers = response.data;
             this.employersLoaded = true;
           })
@@ -174,7 +175,6 @@ export default {
       } else if (this.selectedProfile === "Students") {
         AXIOS.get(`/students`)
           .then(response => {
-            // JSON responses are automatically parsed.
             this.students = response.data;
             this.studentsLoaded = true;
           })
@@ -186,7 +186,6 @@ export default {
       } else if (this.selectedProfile === "Employers") {
         AXIOS.get(`/employers`)
           .then(response => {
-            // JSON responses are automatically parsed.
             this.employers = response.data;
             this.employersLoaded = true;
           })
@@ -206,12 +205,16 @@ export default {
     updateEndTerm: function(value) {
       this.selectedEndTerm = value;
     },
-    handleSelect: function(isSelected, student) {
+    handleSelect: function(isSelected, person) {
       if (isSelected) {
-        this.selected.push(student);
+        this.selected.push(person);
       } else {
-        remove(this, student);
+        remove(this, person);
       }
+    },
+    updateAllSelectedState: function() {
+      this.allSelected = !this.allSelected;
+      this.$eventHub.$emit("setAllSelectedState", this.allSelected);
     },
     goToStatistics: function() {
       Router.push({
