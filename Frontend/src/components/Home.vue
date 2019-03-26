@@ -10,9 +10,9 @@
       <div>
         <table v-if="studentsLoaded && employersLoaded">
           <tr id="tr-heading">
-            <td class="td-checkbox">
+            <td id="td-checkbox">
               <input
-                class="form-check-input position-static checkbox"
+                class="form-check-input position-static home-checkbox"
                 type="checkbox"
                 id="blankCheckbox"
                 value="option1"
@@ -20,13 +20,13 @@
                 @change="updateAllSelectedState"
               >
             </td>
-            <td class="td-badge1">
+            <td id="td-badge1">
               <span class="badge badge-light">Type</span>
             </td>
-            <td class="td-name">
+            <td id="td-name">
               <h3>Name</h3>
             </td>
-            <td class="td-email">
+            <td id="td-email">
               <h3>Email</h3>
             </td>
           </tr>
@@ -231,7 +231,7 @@ export default {
       });
     },
     goToNotifications: function() {
-      if(this.selected.length != 0) {
+      if (this.selected.length != 0) {
         Router.push({
           path: "/notifications/",
           name: "NotificationPage",
@@ -283,31 +283,31 @@ h3 {
   border-bottom-color: rgb(27, 27, 27);
 }
 
-.checkbox {
+.home-checkbox {
   margin-left: 20px;
   margin-right: 10px;
 }
 
-.td-checkbox {
+#td-checkbox {
   width: 5%;
   text-align: left;
   padding-left: 15px;
 }
 
-.td-badge1 {
+#td-badge1 {
   width: 5%;
   text-align: left;
   padding-left: 15px;
   padding-right: 29px;
 }
 
-.td-name {
+#td-name {
   width: 20%;
   text-align: left;
   padding-left: 15px;
 }
 
-.td-email {
+#td-email {
   width: 60%;
   text-align: left;
 }
