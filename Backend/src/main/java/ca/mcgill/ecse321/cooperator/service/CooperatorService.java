@@ -262,12 +262,14 @@ public class CooperatorService {
 	@Transactional
 	public Report updateReport(Report r, ReportStatus s) {
 		r.setStatus(s);
+		reportRepository.save(r);
 		return r;
 	}
 	
 	@Transactional
 	public Coop updateCoopStatus(Coop c, CoopStatus s) {
 		c.setStatus(s);
+		coopRepository.save(c);
 		return c;
 	}
 	

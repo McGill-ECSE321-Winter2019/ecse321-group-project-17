@@ -110,13 +110,17 @@ public class TestCooperatorServiceCoop {
 		}
 
 		int id = c.getId();
-		// int idE = emp.getId();
-
+		assertEquals(1, cs.getEmployersOfCompany(companyE).size());
 		assertEquals(1, cs.getAllCoops().size());
 		assertEquals(title, cs.getCoop(id).getTitle());
 		assertEquals(1, cs.getCoopforStudent(stu).size());
 		assertEquals(address, cs.getCoop(id).getAddress());
 		assertEquals(1, cs.getCoopsByStatus(CoopStatus.NotStarted).size());
+		
+		cs.updateCoopStatus(c, CoopStatus.InProgress);
+		assertEquals(0, cs.getCoopsByStatus(CoopStatus.NotStarted).size());
+		assertEquals(0, cs.getCoopsByStatus(CoopStatus.Completed).size());
+		
 		checkResultCoop(idS, idE, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
 	}
 
@@ -135,11 +139,12 @@ public class TestCooperatorServiceCoop {
 		assertEquals(title, allCoops.get(0).getTitle());
 		assertEquals(startDate, allCoops.get(0).getStartDate());
 		assertEquals(endDate, allCoops.get(0).getEndDate());
-		assertEquals(status, allCoops.get(0).getStatus());
 		assertEquals(salaryPerHour, allCoops.get(0).getSalaryPerHour());
 		assertEquals(hoursPerWeek, allCoops.get(0).getHoursPerWeek());
 
 		assertEquals(3, cs.getAllReports().size());
+		
+		
 
 	}
 
