@@ -1,6 +1,6 @@
 <! --- This component acts as a page to create a notification -->
 <template>
-    <div class="container">
+    <div v-if="this.reportLoaded" class="container">
         <div class="card" id="info">
             <h4><b>Report Information</b></h4>
             <br style="display:block;margin:10px0;"/>
@@ -93,6 +93,7 @@
 
 <script>
 import axios from "axios";
+import Router from "../router";
 
 var config = require("../../config");
 
@@ -114,7 +115,8 @@ export default {
         selectedDate: "",
         report: {
             type: Object
-        }
+        },
+        reportLoaded: false
       }
     },
     created: function() {
@@ -124,6 +126,7 @@ export default {
         .then(response => {
             // JSON responses are automatically parsed.
             this.report = response.data;
+            this.reportLoaded = true;
         })  
         .catch(e => {
             console.log(e.message);
@@ -131,10 +134,10 @@ export default {
     },
     methods: {
         setReportType: function() {
-            alert(this.report.reportType);
+            alert("This function has not been implemented yet.");
         },
         setReportStatus: function() {
-            AXIOS.put('/report/update?'+'id='+this.report.id+'&status='+this.report.reportStatus)
+            AXIOS.put('/report/update?'+'id='+this.report.id+'&status='+this.selectedStatus)
             .then(response => {})
             .catch(e => {
                 console.log(e.message)

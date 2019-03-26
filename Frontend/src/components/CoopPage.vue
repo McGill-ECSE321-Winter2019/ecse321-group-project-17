@@ -21,7 +21,6 @@
                     v-for="report in coop.reports"
                     :key="report.id"
                     :report="report"
-                    :coopId="coop.id"
                 />
             </table>
             <h4 v-if="!hasReports(coop)" id="no-reports"><br/>This coop has no reports</h4>
@@ -76,7 +75,7 @@ export default {
                 return true;
             }
             return false;
-        }
+        },
     }
 }
 </script>

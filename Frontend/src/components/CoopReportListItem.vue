@@ -36,7 +36,6 @@
 <script>
 import Router from "../router";
 import ReportPage from "./ReportPage.vue";
-import Vue from "vue";
 
 import axios from "axios";
 
@@ -53,7 +52,6 @@ var AXIOS = axios.create({
 
 export default {
     props: {
-        coopId: Number,
         report: {
             type: Object,
             required: true
@@ -65,15 +63,14 @@ export default {
                 path: "/report/",
                 name: "ReportPage",
                 params: {
-                    coopId: this.coopId,
-                    reportId: this.report.id
+                    id: this.report.id
                 }
             });
         },
         removeReport: function() {
             AXIOS.delete('/report/delete?id='+this.report.id)
             .then(response => {
-                Vue.$forceUpdate();
+
             })
             .catch(e=>{
                 console.log(e.message)
