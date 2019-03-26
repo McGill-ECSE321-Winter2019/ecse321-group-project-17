@@ -42,7 +42,7 @@
         >
         <option disabled value>Start Term</option>
         <option 
-          v-show="startTerm.number<selectedEndTerm.number || !selectedEndTerm" 
+          v-show="startTerm.number<=selectedEndTerm.number || !selectedEndTerm" 
           v-for="startTerm in terms" 
           v-bind:value="startTerm" :key="startTerm.value" :term="startTerm">
           {{ startTerm.text }}
