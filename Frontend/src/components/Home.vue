@@ -4,15 +4,15 @@
       @updateCoopNumber="updateCoopNumber"
       @updateStartTerm="updateStartTerm"
       @updateEndTerm="updateEndTerm"
-      @updateProfile="updateProfile"
+      @updateProfile="updateProfileTypeSelected"
     />
     <div id="home-container" class="card">
       <div>
         <table v-if="studentsLoaded && employersLoaded">
           <tr id="tr-heading">
-            <td class="td-checkbox">
+            <td id="td-checkbox">
               <input
-                class="form-check-input position-static checkbox"
+                class="form-check-input position-static home-checkbox"
                 type="checkbox"
                 id="blankCheckbox"
                 value="option1"
@@ -20,13 +20,13 @@
                 @change="updateAllSelectedState"
               >
             </td>
-            <td class="td-badge1">
+            <td id="td-badge1">
               <span class="badge badge-light">Type</span>
             </td>
-            <td class="td-name">
+            <td id="td-name">
               <h3>Name</h3>
             </td>
-            <td class="td-email">
+            <td id="td-email">
               <h3>Email</h3>
             </td>
           </tr>
@@ -73,6 +73,7 @@ import _ from "lodash";
 
 var config = require("../../config");
 
+// Axios config
 var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
 var backendUrl =
   "https://" + config.build.backendHost + ":" + config.build.backendPort;
@@ -82,7 +83,7 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
-// Remove a person from the selected list
+// Remove a person from the selected profiles list
 let remove = function(context, person) {
   for (var i = 0; i < context.selected.length; i++) {
     if (context.selected[i].email === person.email) {
@@ -111,7 +112,6 @@ export default {
     // Fetch all employers from backend
     AXIOS.get(`/employers`)
       .then(response => {
-        // JSON responses are automatically parsed.
         this.employers = response.data;
         this.employersLoaded = true;
       })
@@ -146,7 +146,7 @@ export default {
     }
   },
   methods: {
-    updateProfile: function(value) {
+    updateProfileTypeSelected: function(value) {
       if (this.selectedProfile === value) return; // Nothing to update
 
       this.studentsLoaded = false;
@@ -154,16 +154,15 @@ export default {
       this.selectedProfile = value;
 
       if (this.selectedProfile === "Students & Employers") {
+        // Fetch all students and employers from backend
         AXIOS.get(`/students`)
           .then(response => {
-            // JSON responses are automatically parsed.
             this.students = response.data;
             this.studentsLoaded = true;
           })
           .catch(e => {
             this.error = e;
           });
-        // Fetch all employers from backend
         AXIOS.get(`/employers`)
           .then(response => {
             this.employers = response.data;
@@ -173,6 +172,7 @@ export default {
             this.error = e;
           });
       } else if (this.selectedProfile === "Students") {
+        // Fetch only students from the backend
         AXIOS.get(`/students`)
           .then(response => {
             this.students = response.data;
@@ -184,6 +184,7 @@ export default {
         this.employers = [];
         this.employersLoaded = true;
       } else if (this.selectedProfile === "Employers") {
+        // Fetch only employers from the backend
         AXIOS.get(`/employers`)
           .then(response => {
             this.employers = response.data;
@@ -206,6 +207,7 @@ export default {
       this.selectedEndTerm = value;
     },
     handleSelect: function(isSelected, person) {
+      // Adds a profile to the selected list if their box is checked
       if (isSelected) {
         this.selected.push(person);
       } else {
@@ -213,6 +215,7 @@ export default {
       }
     },
     updateAllSelectedState: function() {
+      // Checks or unchecks all boxes in the list
       this.allSelected = !this.allSelected;
       this.$eventHub.$emit("setAllSelectedState", this.allSelected);
     },
@@ -231,7 +234,8 @@ export default {
       });
     },
     goToNotifications: function() {
-      if(this.selected.length != 0) {
+      // A notification must be sent to at least one profile
+      if (this.selected.length != 0) {
         Router.push({
           path: "/notifications/",
           name: "NotificationPage",
@@ -239,6 +243,8 @@ export default {
             selected: this.selected
           }
         });
+      } else {
+        alert("No profiles selected!");
       }
     }
   }
@@ -283,31 +289,31 @@ h3 {
   border-bottom-color: rgb(27, 27, 27);
 }
 
-.checkbox {
+.home-checkbox {
   margin-left: 20px;
   margin-right: 10px;
 }
 
-.td-checkbox {
+#td-checkbox {
   width: 5%;
   text-align: left;
   padding-left: 15px;
 }
 
-.td-badge1 {
+#td-badge1 {
   width: 5%;
   text-align: left;
   padding-left: 15px;
   padding-right: 29px;
 }
 
-.td-name {
+#td-name {
   width: 20%;
   text-align: left;
   padding-left: 15px;
 }
 
-.td-email {
+#td-email {
   width: 60%;
   text-align: left;
 }

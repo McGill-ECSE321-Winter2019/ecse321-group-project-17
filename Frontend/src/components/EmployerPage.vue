@@ -42,7 +42,6 @@ export default {
       // Fetch employer from backend
       AXIOS.get(`/employer/` + pathEmail)
         .then(response => {
-          // JSON responses are automatically parsed.
           this.employer = response.data;
         })
         .catch(e => {

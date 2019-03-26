@@ -18,6 +18,7 @@ import _ from "lodash";
 
 var config = require("../../config");
 
+// Axios config
 var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
 var backendUrl =
   "https://" + config.build.backendHost + ":" + config.build.backendPort;
@@ -43,7 +44,6 @@ export default {
       // Fetch student from backend
       AXIOS.get(`/student/` + pathEmail)
         .then(response => {
-          // JSON responses are automatically parsed.
           this.student = response.data;
         })
         .catch(e => {
