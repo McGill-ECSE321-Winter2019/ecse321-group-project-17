@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.cooperator.service;
 
+import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -198,9 +199,9 @@ public class CooperatorService {
 		coopRepository.save(c);
 		//create mandatory reports
 		Set<Report> mandatory = new HashSet<>();
-		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.Contract));
-		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.EmployerEval));		
-		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.StudentEval));
+		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.Contract, null));
+		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.EmployerEval, null));		
+		mandatory.add(createReport(c, startDate, ReportStatus.Unsubmitted, ReportType.StudentEval, null));
 		
 		c.setReport(mandatory);		
 		reportRepository.saveAll(mandatory);
@@ -426,7 +427,7 @@ public class CooperatorService {
 	}
 
 	@Transactional
-	public Report createReport(Coop c, Date d, ReportStatus s, ReportType t) {
+	public Report createReport(Coop c, Date d, ReportStatus s, ReportType t, File f) {
 		String error = "";
 		if (c == null) {
 			error = error + "Coop is null! ";
@@ -449,6 +450,7 @@ public class CooperatorService {
 		r.setDueDate(d);
 		r.setStatus(s);
 		r.setType(t);
+		r.setFile(f);
 		Set<Report> reports = c.getReport();
 		if (reports == null) reports = new HashSet<>();
 		reports.add(r);

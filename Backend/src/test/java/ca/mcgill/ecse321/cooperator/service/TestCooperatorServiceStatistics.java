@@ -93,7 +93,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Unsubmitted, ReportType.Contract);
+		cs.createReport(c, date, ReportStatus.Unsubmitted, ReportType.Contract, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -151,7 +151,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Submitted, ReportType.Technical);
+		cs.createReport(c, date, ReportStatus.Submitted, ReportType.Technical, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -209,7 +209,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Late, ReportType.StudentEval);
+		cs.createReport(c, date, ReportStatus.Late, ReportType.StudentEval, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -267,7 +267,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.EmployerEval);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.EmployerEval, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -325,7 +325,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -383,7 +383,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -441,7 +441,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 0);
 
@@ -500,7 +500,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 1);
 
@@ -559,7 +559,7 @@ public class TestCooperatorServiceStatistics {
 		Coop c;
 		c = cs.createCoop(s, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
 		Date date = Date.valueOf("2019-03-30");
-		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek);
+		cs.createReport(c, date, ReportStatus.Reviewed, ReportType.TwoWeek, null);
 
 		ReportStatisticsDto rsd = cs.generateAllReportStatistics("Winter2019", "Summer2019", 2);
 
