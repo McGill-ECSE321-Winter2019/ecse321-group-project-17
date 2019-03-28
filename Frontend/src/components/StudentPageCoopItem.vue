@@ -11,8 +11,9 @@
     </h5>
     <h6>
       <b>Company:</b>
-      {{ coop.employer.name }}
+      {{ coop.employer.company }}
     </h6>
+    
     <p>
       <b>Date:</b>
       {{ coop.startDate }}, End Date: {{ coop.endDate }}
