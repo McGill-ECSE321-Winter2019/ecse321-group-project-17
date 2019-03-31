@@ -63,7 +63,7 @@ public class TestCooperatorServiceCoop {
 	}
 
 	@Test
-	public void testCreateCoop() {
+	public void testCreateCoopDelete() {
 		assertEquals(0, cs.getAllCoops().size());
 		assertEquals(0, cs.getNumberofProfiles());
 
@@ -121,32 +121,149 @@ public class TestCooperatorServiceCoop {
 		assertEquals(0, cs.getCoopsByStatus(CoopStatus.NotStarted).size());
 		assertEquals(0, cs.getCoopsByStatus(CoopStatus.Completed).size());
 		
-		checkResultCoop(idS, idE, title, startDate, endDate, status, salaryPerHour, hoursPerWeek);
+		// Test delete coop
+		cs.deleteCoop(id);
+		
+		assertEquals(0, cs.getCoopforStudent(stu).size());
+		assertEquals(0, cs.getAllCoops().size());
+		
+	}
+	
+	@Test
+	public void testDeleteStudent() {
+		assertEquals(0, cs.getAllCoops().size());
+		assertEquals(0, cs.getNumberofProfiles());
+
+		String emailS = "paul.hooley@gmail.com";
+		String nameS = "qwefqwefq";
+		String passwordS = "frisbyislife";
+		int idS = 3;
+		String phoneS = "6047862815";
+		Student stu;
+
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+
+		String emailE = "emma.eagles@mail.mcgill.ca";
+		String nameE = "Emma Eagles";
+		String passwordE = "12341234";
+		String phoneE = "254334";
+		String companyE = "Lightspeed";
+		Employer emp;
+
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+
+		if (emp == null) {
+			System.out.println("hi");
+		} else {
+			System.out.println("bye");
+		}
+
+		Integer idE = emp.getId();
+
+		String title = "Developer";
+		Date startDate = Date.valueOf("2019-01-01");
+		Date endDate = Date.valueOf("2019-04-30");
+		CoopStatus status = CoopStatus.NotStarted;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
+		String error = "";
+		String address = "address";
+
+		Coop c = null;
+		try {
+			c = cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+		} catch (Exception e) {
+			error = e.getMessage();
+		}
+
+		int id = c.getId();
+		assertEquals(1, cs.getEmployersOfCompany(companyE).size());
+		assertEquals(1, cs.getAllCoops().size());
+		assertEquals(title, cs.getCoop(id).getTitle());
+		assertEquals(1, cs.getCoopforStudent(stu).size());
+		assertEquals(address, cs.getCoop(id).getAddress());
+		assertEquals(1, cs.getCoopsByStatus(CoopStatus.NotStarted).size());
+		
+		cs.updateCoopStatus(c, CoopStatus.InProgress);
+		assertEquals(0, cs.getCoopsByStatus(CoopStatus.NotStarted).size());
+		assertEquals(0, cs.getCoopsByStatus(CoopStatus.Completed).size());
+		
+		// Test delete student
+		cs.deleteStudent(emailS);
+		
+		assertEquals(0, cs.getAllStudents().size());
+		assertEquals(0, cs.getAllCoops().size());
+		
+	}
+	
+	@Test
+	public void testDeleteEmployer() {
+		assertEquals(0, cs.getAllCoops().size());
+		assertEquals(0, cs.getNumberofProfiles());
+
+		String emailS = "paul.hooley@gmail.com";
+		String nameS = "qwefqwefq";
+		String passwordS = "frisbyislife";
+		int idS = 3;
+		String phoneS = "6047862815";
+		Student stu;
+
+		stu = cs.createStudent(emailS, nameS, passwordS, phoneS, idS);
+
+		String emailE = "emma.eagles@mail.mcgill.ca";
+		String nameE = "Emma Eagles";
+		String passwordE = "12341234";
+		String phoneE = "254334";
+		String companyE = "Lightspeed";
+		Employer emp;
+
+		emp = cs.createEmployer(emailE, nameE, passwordE, phoneE, companyE);
+
+		if (emp == null) {
+			System.out.println("hi");
+		} else {
+			System.out.println("bye");
+		}
+
+		Integer idE = emp.getId();
+
+		String title = "Developer";
+		Date startDate = Date.valueOf("2019-01-01");
+		Date endDate = Date.valueOf("2019-04-30");
+		CoopStatus status = CoopStatus.NotStarted;
+		Integer salaryPerHour = 19;
+		Integer hoursPerWeek = 40;
+		String error = "";
+		String address = "address";
+
+		Coop c = null;
+		try {
+			c = cs.createCoop(stu, emp, title, startDate, endDate, status, salaryPerHour, hoursPerWeek, address);
+		} catch (Exception e) {
+			error = e.getMessage();
+		}
+
+		int id = c.getId();
+		assertEquals(1, cs.getEmployersOfCompany(companyE).size());
+		assertEquals(1, cs.getAllCoops().size());
+		assertEquals(title, cs.getCoop(id).getTitle());
+		assertEquals(1, cs.getCoopforStudent(stu).size());
+		assertEquals(address, cs.getCoop(id).getAddress());
+		assertEquals(1, cs.getCoopsByStatus(CoopStatus.NotStarted).size());
+		
+		cs.updateCoopStatus(c, CoopStatus.InProgress);
+		assertEquals(0, cs.getCoopsByStatus(CoopStatus.NotStarted).size());
+		assertEquals(0, cs.getCoopsByStatus(CoopStatus.Completed).size());
+		
+		// Test delete student
+		cs.deleteEmployer(emailE);
+		
+		assertEquals(0, cs.getAllEmployers().size());
+		assertEquals(0, cs.getAllCoops().size());
+		
 	}
 
-	private void checkResultCoop(Integer studentID, Integer employerID, String title, Date startDate, Date endDate,
-			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek) {
-		List<Student> allStudents = cs.getAllStudents();
-		List<Employer> allEmployers = cs.getAllEmployers();
-		List<Coop> allCoops = cs.getAllCoops();
-
-		assertEquals(1, allStudents.size());
-		assertEquals(studentID, allStudents.get(0).getId());
-
-		assertEquals(1, allEmployers.size());
-		assertEquals(employerID, allEmployers.get(0).getId());
-		assertEquals(1, allCoops.size());
-		assertEquals(title, allCoops.get(0).getTitle());
-		assertEquals(startDate, allCoops.get(0).getStartDate());
-		assertEquals(endDate, allCoops.get(0).getEndDate());
-		assertEquals(salaryPerHour, allCoops.get(0).getSalaryPerHour());
-		assertEquals(hoursPerWeek, allCoops.get(0).getHoursPerWeek());
-
-		assertEquals(3, cs.getAllReports().size());
-		
-		
-
-	}
+	
 
 	@Test
 	public void testcreateCoopNullStudentEmployer() {

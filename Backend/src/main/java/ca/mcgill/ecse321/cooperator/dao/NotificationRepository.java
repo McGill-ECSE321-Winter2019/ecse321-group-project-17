@@ -11,6 +11,8 @@ import ca.mcgill.ecse321.cooperator.model.Student;
 
 public interface NotificationRepository extends CrudRepository<Notification, Integer> {
 
+	Notification findByid(Integer id);
+	
 	Set<Notification> findByEmployer(Employer employer);
 
 	Set<Notification> findByStudent(Student student);

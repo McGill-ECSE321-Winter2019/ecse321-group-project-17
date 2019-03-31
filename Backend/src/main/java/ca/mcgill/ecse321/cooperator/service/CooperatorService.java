@@ -4,7 +4,9 @@ import java.io.File;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -195,7 +197,6 @@ public class CooperatorService {
 		c.setHoursPerWeek(hoursPerWeek);
 		c.setAddress(address);
 		
-		
 		coopRepository.save(c);
 		//create mandatory reports
 		Set<Report> mandatory = new HashSet<>();
@@ -256,7 +257,10 @@ public class CooperatorService {
 	@Transactional
 	public void deleteReport(Report r) {
 		Coop c = r.getCoop();
-		c.getReport().remove(r);
+		Set<Report> all = c.getReport();
+		all.remove(r);
+		c.setReport(all);
+		coopRepository.save(c);
 		reportRepository.delete(r);
 	}
 	
@@ -280,6 +284,15 @@ public class CooperatorService {
 			throw new IllegalArgumentException("Student is null!");
 		}
 		Set<Coop> stuCoops = coopRepository.findCoopByStudent(s);
+		return stuCoops;
+	}
+	
+	@Transactional
+	public Set<Coop> getCoopforEmployer(Employer e){
+		if(e == null) {
+			throw new IllegalArgumentException("Employer is null!");
+		}
+		Set<Coop> stuCoops = coopRepository.findCoopByEmployer(e);
 		return stuCoops;
 	}
 
@@ -367,23 +380,26 @@ public class CooperatorService {
 				notifs = new HashSet<>();
 			notifs.add(n);
 			a.setSent(notifs);
+			administratorRepository.save(a);
 		}
 
 		if (e != null) {
-			Set<Notification> notifs = e.getReceived();
+			Set<Notification> notifs = e.getEmployerReceived();
 			if (notifs == null)
 				notifs = new HashSet<>();
 			notifs.add(n);
-			e.setReceived(notifs);
+			e.setEmployerReceived(notifs);
+			employerRepository.save(e);
 		}
 		if (s != null) {
-			Set<Notification> notifs = s.getReceived();
+			Set<Notification> notifs = s.getStudentReceived();
 			if (notifs == null)
 				notifs = new HashSet<>();
 			notifs.add(n);
-			s.setReceived(notifs);
+			s.setStudentReceived(notifs);
+			studentRepository.save(s);
 		}
-
+		
 		notificationRepository.save(n);
 		return n;
 	}
@@ -394,7 +410,7 @@ public class CooperatorService {
 		if (e == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		} else {
-			n = e.getReceived() == null ? new HashSet<>() : e.getReceived();
+			n = e.getEmployerReceived() == null ? new HashSet<>() : e.getEmployerReceived();
 		}
 		return n;
 	}
@@ -405,7 +421,7 @@ public class CooperatorService {
 		if (s == null) {
 			throw new IllegalArgumentException("Profile cannot be null!");
 		} else {
-			n = s.getReceived() == null ? new HashSet<>() : s.getReceived();
+			n = s.getStudentReceived() == null ? new HashSet<>() : s.getStudentReceived();
 		}
 		return n;
 	}
@@ -652,38 +668,36 @@ public class CooperatorService {
 	@Transactional
 	public void deleteStudent(String email) {
 		Student s = studentRepository.findStudentByEmail(email);
-		Set<Notification> notifs = s.getStudentReceived();
-		if (notifs != null) {
-			for (Notification notif : notifs) {
-				if (notif.getEmployer() == null) {
-
-				}
-				notif.setStudent(null);
-				if (notif.getEmployer() == null) {
-					deleteNotif(notif.getId());
-				}
-				System.out.println(notif.getStudent());
-			}
-		}
-		Set<Coop> coops = s.getCoop();
-		for(Coop c : coops) {
+		
+		while(s.getStudentReceived().size() != 0) {
+			Set<Notification> notifs = s.getStudentReceived();
+			Notification n = notifs.iterator().next();
+			deleteNotif(n.getId());
+			notificationRepository.saveAll(notifs);
+		}	
+		
+		while( getCoopforStudent(s).size() != 0) {
+			Set<Coop> coops = getCoopforStudent(s);
+			Coop c = coops.iterator().next();
 			deleteCoop(c.getId());
 		}
-		notificationRepository.saveAll(notifs);
 		studentRepository.delete(s);
 	}
 
 	@Transactional
 	public void deleteCoop(Integer id) {
 		Coop c = coopRepository.findCoopById(id);
-		Set<Report> reports = c.getReport();
-		for(Report r : reports) {
+		while(c.getReport().size() != 0) {
+			Set<Report> reports = c.getReport();
+			Report r = reports.iterator().next();
 			deleteReport(r);
 		}
+	
 		Student s = c.getStudent();
 		s.getCoop().remove(c);
 		Employer e = c.getEmployer();
 		e.getCoop().remove(c);
+		
 		employerRepository.save(e);
 		studentRepository.save(s);
 		coopRepository.delete(c);
@@ -693,83 +707,65 @@ public class CooperatorService {
 	@Transactional
 	public void deleteAdmin(String email) {
 		Administrator a = administratorRepository.findAdministratorByEmail(email);
-		Set<Notification> notifs = a.getReceived();
-		for (Notification notif : notifs) {
-			notif.setSender(null);
+		
+		while(a.getSent().size() != 0) {
+			Set<Notification> notifs = a.getSent();
+			Notification n = notifs.iterator().next();
+			deleteNotif(n.getId());
+			notificationRepository.saveAll(notifs);
 		}
-		notificationRepository.saveAll(notifs);
+		
 		administratorRepository.delete(a);
 	}
 
 	@Transactional
 	public void deleteEmployer(String email) {
 		Employer e = employerRepository.findEmployerByEmail(email);
-		Set<Notification> notifs = e.getEmployerReceived();
-		for (Notification notif : notifs) {
-			notif.setEmployer(null);
+		
+		while(e.getEmployerReceived().size() != 0) {
+			Set<Notification> notifs = e.getEmployerReceived();
+			Notification n = notifs.iterator().next();
+			deleteNotif(n.getId());
+			notificationRepository.saveAll(notifs);
+		}	
+		
+		while( getCoopforEmployer(e).size() != 0) {
+			Set<Coop> coops = getCoopforEmployer(e);
+			Coop c = coops.iterator().next();
+			deleteCoop(c.getId());
 		}
-		notificationRepository.saveAll(notifs);
 		employerRepository.delete(e);
 	}
 
 	@Transactional
 	public void deleteNotif(Integer id) {
-		Iterable<Student> students = studentRepository.findAll();
-
-		Notification notifToRemove = null;
-
-		for (Student student : students) {
-			Set<Notification> notifs = student.getReceived();
-			for (Notification notif : notifs) {
-				if (notif.getId() == id) {
-					System.out.println("hello");
-					notifToRemove = notif;
-				}
-			}
-			notifs.remove(notifToRemove);
-			student.setReceived(notifs);
+		Notification n = notificationRepository.findByid(id);
+		
+		// Delete from admin
+		Administrator a = n.getSender();
+		Set<Notification> notifsA = a.getSent();
+		notifsA.remove(n);
+		a.setSent(notifsA);
+		administratorRepository.save(a);
+		
+		// Delete from student
+		Student s = n.getStudent();
+		if(s != null) {
+			Set<Notification> notifsS = s.getStudentReceived();
+			notifsS.remove(n);
+			s.setStudentReceived(notifsS);
+			studentRepository.save(s);
 		}
-
-		studentRepository.saveAll(students);
-		for (Student student : students) {
-			Set<Notification> notifs = student.getStudentReceived();
-			for (Notification notif : notifs) {
-				if (notif.getId() == id) {
-					System.out.println("hello");
-					notifToRemove = notif;
-				}
-			}
-			notifs.remove(notifToRemove);
-			student.setStudentReceived(notifs);
+				
+		// Delete from employer
+		Employer e = n.getEmployer();
+		if(e != null) {
+			Set<Notification> notifsE = e.getEmployerReceived();
+			notifsE.remove(n);
+			e.setEmployerReceived(notifsE);	
+			employerRepository.save(e);
 		}
-		studentRepository.saveAll(students);
-
-		Iterable<Administrator> admins = administratorRepository.findAll();
-		for (Administrator admin : admins) {
-			Set<Notification> notifs = admin.getSent();
-			for (Notification notif : notifs) {
-				if (notif.getId() == id) {
-					System.out.println("hello");
-					notifToRemove = notif;
-				}
-			}
-			notifs.remove(notifToRemove);
-			admin.setSent(notifs);
-		}
-		administratorRepository.saveAll(admins);
-
-		Iterable<Employer> employers = employerRepository.findAll();
-		for (Employer employer : employers) {
-			Set<Notification> notifs = employer.getReceived();
-			for (Notification notif : notifs) {
-				if (notif.getId() == id) {
-					System.out.println("hello");
-					notifToRemove = notif;
-				}
-			}
-			notifs.remove(notifToRemove);
-			employer.setReceived(notifs);
-		}
+		
 		notificationRepository.deleteById(id);
 	}
 
