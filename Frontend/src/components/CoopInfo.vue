@@ -13,11 +13,11 @@
     <span style="color:lightgreen" v-else-if="coop.status === 'Completed'">Complete</span>
     <span style="color:red" v-else>Incomplete</span>
     <p/>
-    <p>
+    <p @click="goToEmployerPage">
       <b>Employer:</b>
       {{ coop.employer.name }}
     </p>
-    <p>
+    <p @click="goToStudentPage">
       <b>Student:</b>
       {{ coop.student.name }}
     </p>
@@ -45,13 +45,40 @@
 </template>
 
 <script>
+import Router from "../router";
+
 export default {
   props: {
     coop: {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    goToEmployerPage: function() {
+      // Go to the student page
+      Router.push({
+        path: "/employer/",
+        name: "EmployerPage",
+        params: {
+          emailUrl: this.coop.employer.email,
+          employerEmail: this.coop.employer.email
+        }
+      });
+    },
+    goToStudentPage: function() {
+      // Go to the student page
+      Router.push({
+        path: "/student/",
+        name: "StudentPage",
+        params: {
+          emailUrl: this.coop.student.email,
+          studentEmail: this.coop.student.email
+        }
+      });
+    }
   }
+     
 };
 </script>
 
