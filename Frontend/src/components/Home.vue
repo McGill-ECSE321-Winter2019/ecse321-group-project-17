@@ -1,20 +1,20 @@
 <template>
   <div>
-    <div id="home-container" class="card">
+    <div id="home-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
       <div class="col-md-4" v-b-tooltip.hover title="Select to view Students, Employers, or both">
         <select
-        v-model="selectedProfile"
-        class="mr-sm-2 custom-select filter-box"
-        @change="updateProfileTypeSelected"
+          v-model="selectedProfile"
+          class="mr-sm-2 custom-select filter-box"
+          @change="updateProfileTypeSelected"
         >
-        <option>Students &amp; Employers</option>
-        <option>Students</option>
-        <option>Employers</option>
+          <option>Students &amp; Employers</option>
+          <option>Students</option>
+          <option>Employers</option>
         </select>
       </div>
       <div>
         <table v-if="studentsLoaded && employersLoaded">
-          <tr id="tr-heading">
+          <tr id="tr-heading" v-bind:style="{ backgroundColor: bgColor }">
             <td id="td-checkbox">
               <input
                 class="form-check-input position-static home-checkbox"
@@ -29,38 +29,52 @@
               <span class="badge badge-light">Type</span>
             </td>
             <td id="td-name">
-              <h3>Name</h3>
+              <h3 v-bind:style="{ color: textColor }">Name</h3>
             </td>
             <td id="td-email">
-              <h3>Email</h3>
+              <h3 v-bind:style="{ color: textColor }">Email</h3>
             </td>
           </tr>
         </table>
       </div>
       <div id="scroll-container">
         <table v-if="studentsLoaded && employersLoaded">
-          <HomeListStudentItem v-b-tooltip.hover title="Select to view Student page"
+          <HomeListStudentItem
             v-for="student in orderedStudents"
             :key="student.email"
             :student="student"
             @child-clicked="handleSelect"
           />
-          <HomeListEmployerItem v-b-tooltip.hover title="Select to view Employer page"
+          <HomeListEmployerItem
             v-for="employer in orderedEmployers"
             :key="employer.email"
             :employer="employer"
             @child-clicked="handleSelect"
           />
         </table>
-        <h2 v-else id="h2-loading">Loading...</h2>
+        <h2 v-else id="h2-loading" v-bind:style="{ color: textColor }">Loading...</h2>
       </div>
     </div>
     <div>
-      <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics" v-b-tooltip.hover title="Select to view Statistics Page">
+      <button
+        id="stats"
+        type="button"
+        class="btn btn-light btn-lg"
+        v-on:click="goToStatistics"
+        v-b-tooltip.hover
+        title="Select to view Statistics Page"
+      >
         Generate Statistics
         <img src="./../assets/line-chart.png">
       </button>
-      <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications" v-b-tooltip.hover title="Select to send a notification">
+      <button
+        id="notifs"
+        type="button"
+        class="btn btn-light btn-lg"
+        v-on:click="goToNotifications"
+        v-b-tooltip.hover
+        title="Select to send a notification"
+      >
         Create Notification
         <img src="./../assets/envelope.png">
       </button>
@@ -99,9 +113,17 @@ let remove = function(context, person) {
 export default {
   components: {
     HomeListStudentItem,
-    HomeListEmployerItem,
+    HomeListEmployerItem
   },
   created: function() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
     // Fetch all students from backend
     AXIOS.get(`/students`)
       .then(response => {
@@ -135,6 +157,8 @@ export default {
       allSelected: false,
       selected: [],
       selectedProfile: "Students & Employers",
+      bgColor: "",
+      textColor: ""
     };
   },
   computed: {
@@ -144,6 +168,9 @@ export default {
     orderedEmployers: function() {
       return _.sortBy(this.employers, "name");
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   },
   methods: {
     updateProfileTypeSelected: function() {
@@ -231,6 +258,15 @@ export default {
       } else {
         alert("No profiles selected!");
       }
+    },
+    setDarkMode: function(darkModeOn) {
+      if (darkModeOn) {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   }
 };
@@ -248,6 +284,10 @@ h3 {
   border-color: rgb(129, 133, 136);
 }
 
+.filter-box {
+  margin-bottom: 10px;
+}
+
 #h2-loading {
   text-align: center;
 }
@@ -260,7 +300,7 @@ h3 {
   margin-top: 15px;
   padding: 15px;
   text-align: left;
-  background-color: rgb(53, 58, 62);
+  /* background-color: rgb(53, 58, 62); rgb(248, 249, 251);*/
 }
 
 #scroll-container {

@@ -1,45 +1,57 @@
 <! --- This component acts as a page to create a notification -->
 <template>
   <div v-if="this.reportLoaded" class="container">
-    <div class="card" id="info">
+    <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
-        <b>Report Information</b>
+        <b v-bind:style="{ color : textColor}">Report Information</b>
       </h4>
       <br style="display:block;margin:10px0;">
       <span>
-        <b>Report Type:</b>
+        <b v-bind:style="{ color : textColor}">Report Type:</b>
       </span>
-      <span v-if="report.reportType === 'Contract'">Employer Contract</span>
-      <span v-else-if="report.reportType === 'Technical'">Technical Report</span>
-      <span v-else-if="report.reportType === 'StudentEval'">Student Evaluation</span>
-      <span v-else-if="report.reportType === 'EmployerEval'">Employer Evaluation</span>
-      <span v-else>Biweekly Report</span>
+      <span
+        v-if="report.reportType === 'Contract'"
+        v-bind:style="{ color : textColor}"
+      >Employer Contract</span>
+      <span
+        v-else-if="report.reportType === 'Technical'"
+        v-bind:style="{ color : textColor}"
+      >Technical Report</span>
+      <span
+        v-else-if="report.reportType === 'StudentEval'"
+        v-bind:style="{ color : textColor}"
+      >Student Evaluation</span>
+      <span
+        v-else-if="report.reportType === 'EmployerEval'"
+        v-bind:style="{ color : textColor}"
+      >Employer Evaluation</span>
+      <span v-else v-bind:style="{ color : textColor}">Biweekly Report</span>
       <br>
       <span>
-        <b>Report Status:</b>
+        <b v-bind:style="{ color : textColor}">Report Status:</b>
       </span>
-      <span style="color:yellow" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+      <span style="color:orange" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
       <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
       <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
       <span style="color:lightgreen" v-else>Reviewed</span>
       <br>
       <span>
-        <b>Report Due Date:</b>
+        <b v-bind:style="{ color : textColor}">Report Due Date:</b>
       </span>
-      <span>{{report.dueDate}}</span>
+      <span v-bind:style="{ color : textColor}">{{report.dueDate}}</span>
     </div>
     <div>
       <br>
     </div>
-    <div class="card" id="edit">
+    <div class="card" id="edit" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
-        <b>Modify Report Info</b>
+        <b v-bind:style="{ color : textColor}">Modify Report Info</b>
       </h4>
       <table>
         <tr>
           <td style="padding:15px">
             <span>
-              <b>Set Report Type:</b>
+              <b v-bind:style="{ color : textColor}">Set Report Type:</b>
             </span>
           </td>
           <td style="padding-right:15px">
@@ -63,7 +75,7 @@
         <tr>
           <td style="padding:15px">
             <span>
-              <b>Set Report Status:</b>
+              <b v-bind:style="{ color : textColor}">Set Report Status:</b>
             </span>
           </td>
           <td style="padding-right:15px">
@@ -86,7 +98,7 @@
         <tr>
           <td style="padding:15px">
             <span style="color:white">
-              <b>Set Due Date:</b>
+              <b v-bind:style="{ color : textColor}">Set Due Date:</b>
             </span>
           </td>
           <td>
@@ -99,9 +111,9 @@
     <div>
       <br>
     </div>
-    <div class="card" id="view">
+    <div class="card" id="view" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
-        <b>View File</b>
+        <b v-bind:style="{ color : textColor}">View File</b>
       </h4>
       <br>
       <h5 style="color:lightblue">[Pretend that this is a pdf viewer or something]</h5>
@@ -135,11 +147,22 @@ export default {
       report: {
         type: Object
       },
-      reportLoaded: false
+      reportLoaded: false,
+      bgColor: "",
+      textColor: ""
     };
   },
   created: function() {
     this.fetchReport();
+
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
   },
   methods: {
     setReportType: function() {
@@ -174,7 +197,20 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
+    },
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>

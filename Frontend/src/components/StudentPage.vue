@@ -5,7 +5,7 @@
     <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
       <StudentPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
-    <p v-else>Student has no co-op terms.</p>
+    <p v-else v-bind:style="{ color: textColor }">Student has no co-op terms.</p>
   </div>
 </template>
 
@@ -37,6 +37,15 @@ export default {
     studentEmail: String
   },
   created: function() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
+
     if (typeof this.studentEmail === "undefined") {
       // Page has been refreshed, must get student email explicitly
       let pathEmail = Router.currentRoute.path.split("/")[2];
@@ -84,13 +93,30 @@ export default {
       coops: {
         type: Object
       },
-      error: ""
+      error: "",
+      bgColor: "",
+      textColor: ""
     };
   },
   computed: {
     orderedCoops: function() {
       return _.sortBy(this.coops, "startDate").reverse();
     }
+  },
+  methods: {
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
+    }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>

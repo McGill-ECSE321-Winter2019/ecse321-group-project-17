@@ -1,20 +1,32 @@
 <template>
-  <tr>
+  <tr v-bind:style="{ backgroundColor : bgColor}">
     <td class="td-report-type">
-      <span v-if="report.reportType === 'Contract'">Employer Contract</span>
-      <span v-else-if="report.reportType === 'Technical'">Technical Report</span>
-      <span v-else-if="report.reportType === 'StudentEval'">Student Evaluation</span>
-      <span v-else-if="report.reportType === 'EmployerEval'">Employer Evaluation</span>
-      <span v-else>Biweekly Report</span>
+      <span
+        v-if="report.reportType === 'Contract'"
+        v-bind:style="{ color : textColor}"
+      >Employer Contract</span>
+      <span
+        v-else-if="report.reportType === 'Technical'"
+        v-bind:style="{ color : textColor}"
+      >Technical Report</span>
+      <span
+        v-else-if="report.reportType === 'StudentEval'"
+        v-bind:style="{ color : textColor}"
+      >Student Evaluation</span>
+      <span
+        v-else-if="report.reportType === 'EmployerEval'"
+        v-bind:style="{ color : textColor}"
+      >Employer Evaluation</span>
+      <span v-else v-bind:style="{ color : textColor}">Biweekly Report</span>
     </td>
     <td class="td-report-status">
-      <span style="color:yellow" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+      <span style="color:orange" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
       <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
       <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
       <span style="color:lightgreen" v-else>Reviewed</span>
     </td>
     <td class="td-due-date">
-      <span>{{ report.dueDate }}</span>
+      <span v-bind:style="{ color : textColor}">{{ report.dueDate }}</span>
     </td>
     <td class="td-view" v-b-tooltip.hover title="Click to see this view or edit this report">
       <button id="view-button" class="btn btn-light btn-sm" v-on:click="goToReportPage">View/Edit</button>
@@ -51,6 +63,23 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      bgColor: "",
+      textColor: ""
+    };
+  },
+
+  created() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
+  },
   methods: {
     goToReportPage: function() {
       Router.push({
@@ -69,7 +98,20 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
+    },
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>

@@ -1,22 +1,22 @@
 <template>
   <div class="container">
     <table class="Filter">
-      <HomeFilters
-      @updateCoopNumber="updateCoopNumber"
-      @updateStartTerm="updateStartTerm"
-      @updateEndTerm="updateEndTerm"
+      <StatisticsFilters
+        @updateCoopNumber="updateCoopNumber"
+        @updateStartTerm="updateStartTerm"
+        @updateEndTerm="updateEndTerm"
       />
     </table>
-    <div class="Chart" v-if="coopstatsLoaded" >
-      <h2 style="text-align:center;">Coop Statistics</h2>
+    <div class="Chart" v-if="coopstatsLoaded" v-bind:style="{ backgroundColor: bgColor }">
+      <h2 style="text-align:center;" v-bind:style="{ color: textColor }">Coop Statistics</h2>
       <pie-chart-coop :chartData="this.coopstats"/>
     </div>
-    <div class="Chart" v-if="reportstatsLoaded">
-      <h2 style="text-align:center;">Report Status Statistics</h2>
+    <div class="Chart" v-if="reportstatsLoaded" v-bind:style="{ backgroundColor: bgColor }">
+      <h2 style="text-align:center;" v-bind:style="{ color: textColor }">Report Status Statistics</h2>
       <pie-chart-report-status :chartData="this.reportstats"/>
     </div>
-    <div class="Chart" v-if="reportstatsLoaded">
-      <h2 style="text-align:center;">Report Type Statistics</h2>
+    <div class="Chart" v-if="reportstatsLoaded" v-bind:style="{ backgroundColor: bgColor }">
+      <h2 style="text-align:center;" v-bind:style="{ color: textColor }">Report Type Statistics</h2>
       <pie-chart-report-type :chartData="this.reportstats"/>
     </div>
   </div>
@@ -28,8 +28,7 @@ import PieChartCoop from "./PieChartCoop";
 import PieChartReportStatus from "./PieChartReportStatus";
 import PieChartReportType from "./PieChartReportType";
 import axios from "axios";
-import HomeFilters from "./HomeFilters.vue";
-
+import StatisticsFilters from "./StatisticsFilters.vue";
 
 var config = require("../../config");
 
@@ -44,17 +43,25 @@ var AXIOS = axios.create({
 });
 
 export default {
-  props: {
-  },
+  props: {},
   created: function() {
     this.updateCharts();
+
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
   },
   components: {
     BarChart,
     PieChartCoop,
     PieChartReportStatus,
     PieChartReportType,
-    HomeFilters
+    StatisticsFilters
   },
   data() {
     return {
@@ -71,41 +78,43 @@ export default {
       selectedProfile: "",
       selectedStartTerm: "",
       selectedEndTerm: "",
-      selectedCoopNumber: ""
+      selectedCoopNumber: "",
+      bgColor: "",
+      textColor: ""
     };
   },
   methods: {
     updateCharts: function() {
       AXIOS.get(
-      `/statistics/coop/` +
-        this.getStartTerm() +
-        `/` +
-        this.getEndTerm() +
-        `/` +
-        this.getCoopNumber()
+        `/statistics/coop/` +
+          this.getStartTerm() +
+          `/` +
+          this.getEndTerm() +
+          `/` +
+          this.getCoopNumber()
       )
-      .then(response => {
-        this.coopstats = response.data;
-        this.coopstatsLoaded = true;
-      })
-      .catch(e => {
-        this.error = e;
-      });
+        .then(response => {
+          this.coopstats = response.data;
+          this.coopstatsLoaded = true;
+        })
+        .catch(e => {
+          this.error = e;
+        });
       AXIOS.get(
-      `/statistics/report/` +
-        this.getStartTerm() +
-        `/` +
-        this.getEndTerm() +
-        `/` +
-        this.getCoopNumber()
+        `/statistics/report/` +
+          this.getStartTerm() +
+          `/` +
+          this.getEndTerm() +
+          `/` +
+          this.getCoopNumber()
       )
-      .then(response => {
-        this.reportstats = response.data;
-        this.reportstatsLoaded = true;
-      })
-      .catch(e => {
-        this.error = e;
-      });
+        .then(response => {
+          this.reportstats = response.data;
+          this.reportstatsLoaded = true;
+        })
+        .catch(e => {
+          this.error = e;
+        });
     },
     updateCoopNumber: function(value) {
       this.coopstatsLoaded = false;
@@ -116,7 +125,7 @@ export default {
     updateStartTerm: function(value) {
       this.coopstatsLoaded = false;
       this.reportstatsLoaded = false;
-      this.selectedStartTerm = value;      
+      this.selectedStartTerm = value;
       this.updateCharts();
     },
     updateEndTerm: function(value) {
@@ -151,6 +160,15 @@ export default {
       } else {
         return this.selectedCoopNumber;
       }
+    },
+    setDarkMode: function(darkModeOn) {
+      if (darkModeOn) {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   computed: {
@@ -160,6 +178,9 @@ export default {
         position: "relative"
       };
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>
