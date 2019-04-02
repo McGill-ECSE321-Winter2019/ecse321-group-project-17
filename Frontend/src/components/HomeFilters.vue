@@ -2,7 +2,7 @@
   <div id="filter-container" class="card">
     <p>Filters:</p>
     <div class="form-group row">
-      <div class="col-md-4">
+      <div class="col-md-4" v-b-tooltip.hover title="View the statistics for only after this term">
         <select
           v-model="selectedStartTerm"
           class="mr-sm-2 custom-select filter-box"
@@ -18,7 +18,7 @@
           >{{ startTerm.text }}</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" v-b-tooltip.hover title="View the statistics for only before this term">
         <select
           v-model="selectedEndTerm"
           class="mr-sm-2 custom-select filter-box"
@@ -34,7 +34,7 @@
           >{{ endTerm.text }}</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" v-b-tooltip.hover title="View the statistics for only students who are on a certain coop number">
         <select
           v-model="selectedCoopNumber"
           class="mr-sm-2 custom-select filter-box"

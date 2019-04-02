@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="home-container" class="card">
-      <div class="col-md-4">
+      <div class="col-md-4" v-b-tooltip.hover title="Select to view Students, Employers, or both">
         <select
         v-model="selectedProfile"
         class="mr-sm-2 custom-select filter-box"
@@ -39,13 +39,13 @@
       </div>
       <div id="scroll-container">
         <table v-if="studentsLoaded && employersLoaded">
-          <HomeListStudentItem
+          <HomeListStudentItem v-b-tooltip.hover title="Select to view Student page"
             v-for="student in orderedStudents"
             :key="student.email"
             :student="student"
             @child-clicked="handleSelect"
           />
-          <HomeListEmployerItem
+          <HomeListEmployerItem v-b-tooltip.hover title="Select to view Employer page"
             v-for="employer in orderedEmployers"
             :key="employer.email"
             :employer="employer"
@@ -56,11 +56,11 @@
       </div>
     </div>
     <div>
-      <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics">
+      <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics" v-b-tooltip.hover title="Select to view Statistics Page">
         Generate Statistics
         <img src="./../assets/line-chart.png">
       </button>
-      <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications">
+      <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications" v-b-tooltip.hover title="Select to send a notification">
         Create Notification
         <img src="./../assets/envelope.png">
       </button>

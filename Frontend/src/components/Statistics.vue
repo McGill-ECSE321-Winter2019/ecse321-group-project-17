@@ -7,7 +7,7 @@
       @updateEndTerm="updateEndTerm"
       />
     </table>
-    <div class="Chart" v-if="coopstatsLoaded">
+    <div class="Chart" v-if="coopstatsLoaded" >
       <h2 style="text-align:center;">Coop Statistics</h2>
       <pie-chart-coop :chartData="this.coopstats"/>
     </div>

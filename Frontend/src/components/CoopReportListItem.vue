@@ -16,10 +16,10 @@
     <td class="td-due-date">
       <span>{{ report.dueDate }}</span>
     </td>
-    <td class="td-view">
+    <td class="td-view" v-b-tooltip.hover title="Click to see this view or edit this report">
       <button id="view-button" class="btn btn-light btn-sm" v-on:click="goToReportPage">View/Edit</button>
     </td>
-    <td class="td-remove">
+    <td class="td-remove" v-b-tooltip.hover title="Click to remove this report">
       <button id="remove-button" class="btn btn-light btn-sm" v-on:click="removeReport">Remove</button>
     </td>
   </tr>
