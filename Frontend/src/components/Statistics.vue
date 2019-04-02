@@ -1,17 +1,13 @@
 <template>
   <div class="container">
-    <table class="center">
-      <tr>
-        <th>Selected Start Term: {{ this.getStartTerm() }}</th>
-        <th>Selected End Term: {{ this.getEndTerm() }}</th>
-        <th>Selected Coop Number: {{ this.getCoopNumber() }}</th>
-      </tr>
+    <table class="Filter">
+      <HomeFilters
+      @updateCoopNumber="updateCoopNumber"
+      @updateStartTerm="updateStartTerm"
+      @updateEndTerm="updateEndTerm"
+      />
     </table>
-    <div class="Chart">
-      <h2 style="text-align:center;">Profiles</h2>
-      <bar-chart :chartData="this.profiles"/>
-    </div>
-    <div class="Chart" v-if="coopstatsLoaded">
+    <div class="Chart" v-if="coopstatsLoaded" >
       <h2 style="text-align:center;">Coop Statistics</h2>
       <pie-chart-coop :chartData="this.coopstats"/>
     </div>
@@ -32,6 +28,8 @@ import PieChartCoop from "./PieChartCoop";
 import PieChartReportStatus from "./PieChartReportStatus";
 import PieChartReportType from "./PieChartReportType";
 import axios from "axios";
+import HomeFilters from "./HomeFilters.vue";
+
 
 var config = require("../../config");
 
@@ -47,56 +45,16 @@ var AXIOS = axios.create({
 
 export default {
   props: {
-    students: {
-      type: Array,
-      required: true
-    },
-    employers: {
-      type: Array,
-      required: true
-    },
-    selectedProfile: "",
-    selectedStartTerm: "",
-    selectedEndTerm: "",
-    selectedCoopNumber: ""
+  },
+  created: function() {
+    this.updateCharts();
   },
   components: {
     BarChart,
     PieChartCoop,
     PieChartReportStatus,
-    PieChartReportType
-  },
-  created: function() {
-    AXIOS.get(
-      `/statistics/coop/` +
-        this.getStartTerm() +
-        `/` +
-        this.getEndTerm() +
-        `/` +
-        this.getCoopNumber()
-    )
-      .then(response => {
-        this.coopstats = response.data;
-        this.coopstatsLoaded = true;
-      })
-      .catch(e => {
-        this.error = e;
-      });
-    AXIOS.get(
-      `/statistics/report/` +
-        this.getStartTerm() +
-        `/` +
-        this.getEndTerm() +
-        `/` +
-        this.getCoopNumber()
-    )
-      .then(response => {
-        this.reportstats = response.data;
-        this.reportstatsLoaded = true;
-      })
-      .catch(e => {
-        this.error = e;
-      });
+    PieChartReportType,
+    HomeFilters
   },
   data() {
     return {
@@ -109,10 +67,64 @@ export default {
       reportstats: {
         type: Object
       },
-      reportstatsLoaded: false
+      reportstatsLoaded: false,
+      selectedProfile: "",
+      selectedStartTerm: "",
+      selectedEndTerm: "",
+      selectedCoopNumber: ""
     };
   },
   methods: {
+    updateCharts: function() {
+      AXIOS.get(
+      `/statistics/coop/` +
+        this.getStartTerm() +
+        `/` +
+        this.getEndTerm() +
+        `/` +
+        this.getCoopNumber()
+      )
+      .then(response => {
+        this.coopstats = response.data;
+        this.coopstatsLoaded = true;
+      })
+      .catch(e => {
+        this.error = e;
+      });
+      AXIOS.get(
+      `/statistics/report/` +
+        this.getStartTerm() +
+        `/` +
+        this.getEndTerm() +
+        `/` +
+        this.getCoopNumber()
+      )
+      .then(response => {
+        this.reportstats = response.data;
+        this.reportstatsLoaded = true;
+      })
+      .catch(e => {
+        this.error = e;
+      });
+    },
+    updateCoopNumber: function(value) {
+      this.coopstatsLoaded = false;
+      this.reportstatsLoaded = false;
+      this.selectedCoopNumber = value;
+      this.updateCharts();
+    },
+    updateStartTerm: function(value) {
+      this.coopstatsLoaded = false;
+      this.reportstatsLoaded = false;
+      this.selectedStartTerm = value;      
+      this.updateCharts();
+    },
+    updateEndTerm: function(value) {
+      this.coopstatsLoaded = false;
+      this.reportstatsLoaded = false;
+      this.selectedEndTerm = value;
+      this.updateCharts();
+    },
     increaseHeight() {
       this.height += 10;
     },
@@ -146,12 +158,6 @@ export default {
       return {
         height: `${this.height}px`,
         position: "relative"
-      };
-    },
-    profiles() {
-      return {
-        students: this.students,
-        employers: this.employers
       };
     }
   }

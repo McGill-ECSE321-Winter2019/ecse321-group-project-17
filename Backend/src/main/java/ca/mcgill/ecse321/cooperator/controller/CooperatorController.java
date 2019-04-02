@@ -142,7 +142,7 @@ public class CooperatorController {
 	public ReportDto createReport(@RequestParam Integer coopId, @RequestParam Date date, 
 			@RequestParam ReportStatus status, @RequestParam ReportType type) {
 		Coop c = service.getCoop(coopId);
-		Report report = service.createReport(c, date, status, type);
+		Report report = service.createReport(c, date, status, type, null);
 		return convertToDto(report);
 	}
 	
@@ -448,7 +448,14 @@ public class CooperatorController {
 		if (r == null) {
 			throw new IllegalArgumentException("There is no such Report!");
 		}
-		ReportDto reportDto = new ReportDto(r.getId(), r.getDueDate(), r.getStatus(), r.getType());
+		ReportDto reportDto = new ReportDto();
+		if(r.getFile() == null) {
+			reportDto = new ReportDto(r.getId(), r.getDueDate(), r.getStatus(), r.getType(), null);
+		}
+		else {
+			reportDto = new ReportDto(r.getId(), r.getDueDate(), r.getStatus(), r.getType(), r.getFile());
+		}
+		
 		return reportDto;
 	}
 	

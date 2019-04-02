@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar navbar-dark bg-dark" id="container">
-    <a class="navbar-brand mb-0 h1" href="/">Cooperator</a>
+    <a class="navbar-brand mb-0 h1" href="/" v-b-tooltip.hover title="Get back to the Front Page!">Cooperator</a>
   </nav>
 </template>
 

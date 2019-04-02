@@ -72,7 +72,7 @@ public class TestCooperatorServiceReport {
 		Date date = null;
 
 		try {
-			cs.createReport(null, date, null, null);
+			cs.createReport(null, date, null, null, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -120,7 +120,7 @@ public class TestCooperatorServiceReport {
 		
 		Report r = null;
 		try {
-			r = cs.createReport(c, date, ReportStatus.Submitted, ReportType.Contract);
+			r = cs.createReport(c, date, ReportStatus.Submitted, ReportType.Contract, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}
@@ -181,7 +181,7 @@ public class TestCooperatorServiceReport {
 
 		Report r = null;
 		try {
-			r = cs.createReport(c, date, ReportStatus.Submitted, ReportType.Contract);
+			r = cs.createReport(c, date, ReportStatus.Submitted, ReportType.Contract, null);
 		} catch (IllegalArgumentException e) {
 			error = e.getMessage();
 		}

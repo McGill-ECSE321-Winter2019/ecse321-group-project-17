@@ -18,6 +18,7 @@
         type="button"
         v-on:click="sendNotification(selected, convertMessage(message))"
         class="btn btn-light btn-lg"
+        v-b-tooltip.hover title="Click to send the notification!"
       >Send</button>
     </b-container>
   </div>

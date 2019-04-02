@@ -1,40 +1,8 @@
 <template>
   <div id="filter-container" class="card">
-    <p>List Filters:</p>
+    <p>Filters:</p>
     <div class="form-group row">
-      <div class="col-md-4">
-        <select
-          v-model="selectedProfile"
-          class="mr-sm-2 custom-select filter-box"
-          @change="updateProfile"
-        >
-          <option>Students &amp; Employers</option>
-          <option>Students</option>
-          <option>Employers</option>
-        </select>
-      </div>
-      <!-- <div class="col-md-4">
-        <select v-model="selectedProblematicStatus" class="mr-sm-2 custom-select filter-box">
-          <option disabled value>Problematic/Not Problematic</option>
-          <option>All Profiles</option>
-          <option>Problematic</option>
-          <option>Not Problematic</option>
-        </select>
-      </div>
-      <div class="col-md-4">
-        <select v-model="selectedCoopStatus" class="mr-sm-2 custom-select filter-box">
-          <option disabled value>Coop Status</option>
-          <option>All Coops</option>
-          <option>NotStarted</option>
-          <option>InProgress</option>
-          <option>Incomplete</option>
-          <option>Complete</option>
-        </select>
-      </div>-->
-    </div>
-    <p>Statistics Filters:</p>
-    <div class="form-group row">
-      <div class="col-md-4">
+      <div class="col-md-4" v-b-tooltip.hover title="View the statistics for only after this term">
         <select
           v-model="selectedStartTerm"
           class="mr-sm-2 custom-select filter-box"
@@ -50,7 +18,7 @@
           >{{ startTerm.text }}</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" v-b-tooltip.hover title="View the statistics for only before this term">
         <select
           v-model="selectedEndTerm"
           class="mr-sm-2 custom-select filter-box"
@@ -66,7 +34,7 @@
           >{{ endTerm.text }}</option>
         </select>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-4" v-b-tooltip.hover title="View the statistics for only students who are on a certain coop number">
         <select
           v-model="selectedCoopNumber"
           class="mr-sm-2 custom-select filter-box"
@@ -89,7 +57,6 @@
 export default {
   data() {
     return {
-      selectedProfile: "Students & Employers",
       selectedProblematicStatus: "",
       selectedCoopStatus: "",
       selectedStartTerm: "",
@@ -128,10 +95,6 @@ export default {
     };
   },
   methods: {
-    updateProfile: function(event) {
-      this.selectedProfile = event.target.value;
-      this.$emit("updateProfile", this.selectedProfile);
-    },
     updateStartTerm: function() {
       this.$emit("updateStartTerm", this.selectedStartTerm);
     },
@@ -148,11 +111,11 @@ export default {
 <style>
 #filter-container {
   width: 70%;
-  min-width: 550px;
+  min-width: 770px;
   margin: auto;
   padding: 15px;
   text-align: left;
-  background-color: rgb(53, 58, 62);
+  background: #212733;
 }
 
 .filter-box {
@@ -160,4 +123,6 @@ export default {
   background-color: rgb(195, 201, 206);
   border-color: rgb(129, 133, 136);
 }
+
+
 </style>

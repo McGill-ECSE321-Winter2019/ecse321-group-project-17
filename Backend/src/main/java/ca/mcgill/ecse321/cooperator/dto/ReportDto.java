@@ -1,5 +1,6 @@
 package ca.mcgill.ecse321.cooperator.dto;
 
+import java.io.File;
 import java.sql.Date;
 
 import ca.mcgill.ecse321.cooperator.model.ReportStatus;
@@ -10,6 +11,7 @@ public class ReportDto {
 	private Date dueDate;
 	private ReportStatus status;
 	private ReportType type;
+	private File file;
 
 	public ReportDto() {
 
@@ -17,14 +19,15 @@ public class ReportDto {
 
 	@SuppressWarnings("unchecked")
 	public ReportDto(Integer id) {
-		this(id, null, null, null);
+		this(id, null, null, null, null);
 	}
 
-	public ReportDto(Integer id, Date date, ReportStatus status, ReportType type) {
+	public ReportDto(Integer id, Date date, ReportStatus status, ReportType type, File file) {
 		this.id = id;
 		this.dueDate = date;
 		this.status = status;
 		this.type = type;
+		this.file = file;
 	}
 
 	public Integer getID() {
@@ -57,6 +60,10 @@ public class ReportDto {
 
 	public void setReportType(ReportType type) {
 		this.type = type;
+	}
+	
+	public File getFile() {
+		return file;
 	}
 
 }

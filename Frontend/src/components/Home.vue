@@ -1,24 +1,29 @@
 <template>
   <div>
-    <HomeFilters
-      @updateCoopNumber="updateCoopNumber"
-      @updateStartTerm="updateStartTerm"
-      @updateEndTerm="updateEndTerm"
-      @updateProfile="updateProfileTypeSelected"
-    />
     <div id="home-container" class="card">
+      <div class="col-md-4" v-b-tooltip.hover title="Select to view Students, Employers, or both">
+        <select
+        v-model="selectedProfile"
+        class="mr-sm-2 custom-select filter-box"
+        @change="updateProfileTypeSelected"
+        >
+        <option>Students &amp; Employers</option>
+        <option>Students</option>
+        <option>Employers</option>
+        </select>
+      </div>
       <div>
         <table v-if="studentsLoaded && employersLoaded">
           <tr id="tr-heading">
             <td id="td-checkbox">
-              <input
+              <b-form-checkbox
                 class="form-check-input position-static home-checkbox"
                 type="checkbox"
                 id="blankCheckbox"
                 value="option1"
-                aria-label="..."
                 @change="updateAllSelectedState"
-              >
+                aria-label="..."
+              ></b-form-checkbox>
             </td>
             <td id="td-badge1">
               <span class="badge badge-light">Type</span>
@@ -34,13 +39,13 @@
       </div>
       <div id="scroll-container">
         <table v-if="studentsLoaded && employersLoaded">
-          <HomeListStudentItem
+          <HomeListStudentItem v-b-tooltip.hover title="Select to view Student page"
             v-for="student in orderedStudents"
             :key="student.email"
             :student="student"
             @child-clicked="handleSelect"
           />
-          <HomeListEmployerItem
+          <HomeListEmployerItem v-b-tooltip.hover title="Select to view Employer page"
             v-for="employer in orderedEmployers"
             :key="employer.email"
             :employer="employer"
@@ -51,11 +56,11 @@
       </div>
     </div>
     <div>
-      <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics">
+      <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics" v-b-tooltip.hover title="Select to view Statistics Page">
         Generate Statistics
         <img src="./../assets/line-chart.png">
       </button>
-      <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications">
+      <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications" v-b-tooltip.hover title="Select to send a notification">
         Create Notification
         <img src="./../assets/envelope.png">
       </button>
@@ -67,7 +72,6 @@
 import HomeListStudentItem from "./HomeListStudentItem.vue";
 import HomeListEmployerItem from "./HomeListEmployerItem.vue";
 import Router from "../router";
-import HomeFilters from "./HomeFilters.vue";
 import axios from "axios";
 import _ from "lodash";
 
@@ -96,7 +100,6 @@ export default {
   components: {
     HomeListStudentItem,
     HomeListEmployerItem,
-    HomeFilters
   },
   created: function() {
     // Fetch all students from backend
@@ -131,10 +134,7 @@ export default {
       employersLoaded: false,
       allSelected: false,
       selected: [],
-      selectedProfile: "",
-      selectedStartTerm: "",
-      selectedEndTerm: "",
-      selectedCoopNumber: ""
+      selectedProfile: "Students & Employers",
     };
   },
   computed: {
@@ -146,12 +146,9 @@ export default {
     }
   },
   methods: {
-    updateProfileTypeSelected: function(value) {
-      if (this.selectedProfile === value) return; // Nothing to update
-
+    updateProfileTypeSelected: function() {
       this.studentsLoaded = false;
       this.employersLoaded = false;
-      this.selectedProfile = value;
 
       if (this.selectedProfile === "Students & Employers") {
         // Fetch all students and employers from backend
@@ -197,15 +194,6 @@ export default {
         this.studentsLoaded = true;
       }
     },
-    updateCoopNumber: function(value) {
-      this.selectedCoopNumber = value;
-    },
-    updateStartTerm: function(value) {
-      this.selectedStartTerm = value;
-    },
-    updateEndTerm: function(value) {
-      this.selectedEndTerm = value;
-    },
     handleSelect: function(isSelected, person) {
       // Adds a profile to the selected list if their box is checked
       if (isSelected) {
@@ -226,10 +214,7 @@ export default {
         params: {
           students: this.students,
           employers: this.employers,
-          selectedProfile: this.selectedProfile,
-          selectedStartTerm: this.selectedStartTerm,
-          selectedEndTerm: this.selectedEndTerm,
-          selectedCoopNumber: this.selectedCoopNumber
+          selectedProfile: this.selectedProfile
         }
       });
     },

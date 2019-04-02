@@ -68,7 +68,7 @@ export default {
     };
   },
   methods: {
-    hasReports: function(coop) {
+   hasReports: function(coop) {
       if (coop.reports != null && coop.reports.length > 0) {
         return true;
       }
