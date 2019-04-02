@@ -1,6 +1,6 @@
 <template>
   <!-- tr = table row, td = table data --->
-  <tr v-bind:style="{ backgroundColor: bgColor }">
+  <tr v-bind:style="{ backgroundColor: bgColor }" @mouseover="hoverOn" @mouseleave="hoverOff">
     <td class="td-checkbox">
       <input
         class="form-check-input position-static checkbox"
@@ -95,6 +95,22 @@ export default {
         this.bgColor = "rgb(248, 249, 251)";
         this.textColor = "black";
       }
+    },
+    hoverOn: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(96, 101, 105)";
+      } else {
+        this.bgColor = "rgb(224, 224, 224)";
+      }
+    },
+    hoverOff: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+      }
     }
   },
   created() {
@@ -117,14 +133,6 @@ export default {
 <style scoped>
 span {
   color: white;
-}
-
-tr {
-  background-color: rgb(53, 58, 62);
-}
-
-tr:hover {
-  background-color: rgb(96, 101, 105);
 }
 
 .td-checkbox {

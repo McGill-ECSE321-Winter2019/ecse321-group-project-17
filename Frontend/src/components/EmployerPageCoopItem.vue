@@ -4,6 +4,8 @@
     class="card"
     @click="goToCoopPage"
     v-bind:style="{ backgroundColor: bgColor }"
+    @mouseover="hoverOn"
+    @mouseleave="hoverOff"
   >
     <span class="badge badge-info" v-if="coop.status === 'NotStarted'">Not Started</span>
     <span class="badge badge-warning" v-else-if="coop.status === 'InProgress'">In Progress</span>
@@ -20,7 +22,7 @@
     </h6>
     <p v-bind:style="{ color: textColor }">
       <b v-bind:style="{ color: textColor }">Dates:</b>
-      {{ coop.startDate }} - {{ coop.endDate }}
+      {{ coop.startDate }} to {{ coop.endDate }}
     </p>
   </div>
 </template>
@@ -68,6 +70,22 @@ export default {
       } else {
         this.bgColor = "rgb(248, 249, 251)";
         this.textColor = "black";
+      }
+    },
+    hoverOn: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(96, 101, 105)";
+      } else {
+        this.bgColor = "rgb(224, 224, 224)";
+      }
+    },
+    hoverOff: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
       }
     }
   },
