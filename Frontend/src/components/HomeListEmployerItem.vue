@@ -2,7 +2,7 @@
   <!-- tr = table row, td = table data --->
   <tr>
     <td class="td-checkbox">
-      <b-form-checkbox
+      <input
         class="form-check-input position-static checkbox"
         type="checkbox"
         id="blankCheckbox"
@@ -10,7 +10,7 @@
         aria-label="..."
         @change="updateState"
         v-model="selected"
-      ></b-form-checkbox>
+      >
     </td>
     <td class="td-badge">
       <span class="badge badge-success">Employer</span>

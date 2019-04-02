@@ -16,14 +16,14 @@
         <table v-if="studentsLoaded && employersLoaded">
           <tr id="tr-heading">
             <td id="td-checkbox">
-              <b-form-checkbox
+              <input
                 class="form-check-input position-static home-checkbox"
                 type="checkbox"
                 id="blankCheckbox"
                 value="option1"
-                @change="updateAllSelectedState"
                 aria-label="..."
-              ></b-form-checkbox>
+                @change="updateAllSelectedState"
+              >
             </td>
             <td id="td-badge1">
               <span class="badge badge-light">Type</span>
