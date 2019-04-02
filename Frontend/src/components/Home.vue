@@ -1,12 +1,17 @@
 <template>
   <div>
-    <HomeFilters
-      @updateCoopNumber="updateCoopNumber"
-      @updateStartTerm="updateStartTerm"
-      @updateEndTerm="updateEndTerm"
-      @updateProfile="updateProfileTypeSelected"
-    />
     <div id="home-container" class="card">
+      <div class="col-md-4">
+        <select
+        v-model="selectedProfile"
+        class="mr-sm-2 custom-select filter-box"
+        @change="updateProfileTypeSelected"
+        >
+        <option>Students &amp; Employers</option>
+        <option>Students</option>
+        <option>Employers</option>
+        </select>
+      </div>
       <div>
         <table v-if="studentsLoaded && employersLoaded">
           <tr id="tr-heading">
@@ -67,7 +72,6 @@
 import HomeListStudentItem from "./HomeListStudentItem.vue";
 import HomeListEmployerItem from "./HomeListEmployerItem.vue";
 import Router from "../router";
-import HomeFilters from "./HomeFilters.vue";
 import axios from "axios";
 import _ from "lodash";
 
@@ -96,7 +100,6 @@ export default {
   components: {
     HomeListStudentItem,
     HomeListEmployerItem,
-    HomeFilters
   },
   created: function() {
     // Fetch all students from backend
@@ -131,10 +134,7 @@ export default {
       employersLoaded: false,
       allSelected: false,
       selected: [],
-      selectedProfile: "",
-      selectedStartTerm: "",
-      selectedEndTerm: "",
-      selectedCoopNumber: ""
+      selectedProfile: "Students & Employers",
     };
   },
   computed: {
@@ -146,12 +146,9 @@ export default {
     }
   },
   methods: {
-    updateProfileTypeSelected: function(value) {
-      if (this.selectedProfile === value) return; // Nothing to update
-
+    updateProfileTypeSelected: function() {
       this.studentsLoaded = false;
       this.employersLoaded = false;
-      this.selectedProfile = value;
 
       if (this.selectedProfile === "Students & Employers") {
         // Fetch all students and employers from backend
@@ -197,15 +194,6 @@ export default {
         this.studentsLoaded = true;
       }
     },
-    updateCoopNumber: function(value) {
-      this.selectedCoopNumber = value;
-    },
-    updateStartTerm: function(value) {
-      this.selectedStartTerm = value;
-    },
-    updateEndTerm: function(value) {
-      this.selectedEndTerm = value;
-    },
     handleSelect: function(isSelected, person) {
       // Adds a profile to the selected list if their box is checked
       if (isSelected) {
@@ -226,10 +214,7 @@ export default {
         params: {
           students: this.students,
           employers: this.employers,
-          selectedProfile: this.selectedProfile,
-          selectedStartTerm: this.selectedStartTerm,
-          selectedEndTerm: this.selectedEndTerm,
-          selectedCoopNumber: this.selectedCoopNumber
+          selectedProfile: this.selectedProfile
         }
       });
     },
