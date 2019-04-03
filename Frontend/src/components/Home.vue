@@ -29,10 +29,10 @@
               <span class="badge badge-light">Type</span>
             </td>
             <td id="td-name">
-              <h3 v-bind:style="{ color: textColor }">Name</h3>
+              <h4>Name</h4>
             </td>
             <td id="td-email">
-              <h3 v-bind:style="{ color: textColor }">Email</h3>
+              <h4>Email</h4>
             </td>
           </tr>
         </table>
@@ -65,8 +65,8 @@
         title="Select to view Statistics Page"
       >
         Generate Statistics
-        <img src="./../assets/line-chart.png">
       </button>
+      
       <button
         id="notifs"
         type="button"
@@ -76,7 +76,6 @@
         title="Select to send a notification"
       >
         Create Notification
-        <img src="./../assets/envelope.png">
       </button>
     </div>
   </div>
@@ -267,6 +266,13 @@ export default {
         this.bgColor = "rgb(248, 249, 251)";
         this.textColor = "black";
       }
+    },
+    goToLogin: function() {
+      Router.push({
+          path: "/login/",
+          name: "LoginPage",
+      
+        });
     }
   }
 };
@@ -275,7 +281,7 @@ export default {
 <style>
 p,
 h2,
-h3 {
+h4 {
   color: white;
 }
 

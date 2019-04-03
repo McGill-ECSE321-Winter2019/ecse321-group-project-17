@@ -2,10 +2,10 @@
   <nav v-bind:class="navBarClass" id="container">
     <a
       class="navbar-brand mb-0 h1"
-      href="/"
       v-b-tooltip.hover
       title="Get back to the Front Page!"
       v-bind:style="{color: titleColor}"
+      @click="goToHomePage()"
     >Cooperator</a>
     <button type="button" v-bind:class="buttonClass" @click="toggleDarkLight">{{ buttonText }}</button>
   </nav>
@@ -16,6 +16,8 @@
 </template>
 
 <script>
+import Router from "../router";
+
 export default {
   data() {
     return {
@@ -40,6 +42,12 @@ export default {
     }
   },
   methods: {
+    goToHomePage: function(){
+        Router.push({
+          path: "/home/",
+          name: "Home",
+        });
+    },
     toggleDarkLight: function() {
       // Local storage only stores strings
       var darkModeOn = localStorage.getItem("DarkModeOn");
