@@ -1,19 +1,23 @@
 <template>
-  <div id="info-container" class="card">
-    <h3>
+  <div id="info-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
+    <h3 v-bind:style="{ color: textColor }">
       <span class="badge badge-success">Employer</span> &nbsp; &nbsp;
       <strong>{{ employer.name }}</strong>
       <small>from</small>
       {{ employer.company }}
     </h3>
     <h3></h3>
-    <p>
-      <b>Email:</b>
+    <p v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">Email:</b>
       {{ employer.email }}
     </p>
-    <p>
-      <b>Phone:</b>
+    <p v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">Phone:</b>
       {{ employer.phone}}
+    </p>
+    <p v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">Phone:</b>
+      {{ employer.password}}
     </p>
   </div>
 </template>
@@ -23,6 +27,37 @@ export default {
     employer: {
       type: Object,
       required: true
+    }
+  },
+  created() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
+  },
+  data() {
+    return {
+      bgColor: "",
+      textColor: ""
+    };
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
+  },
+  methods: {
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   }
 };

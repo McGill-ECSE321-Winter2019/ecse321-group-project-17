@@ -2,7 +2,7 @@
 <template>
   <div class="container">
     <EmployerPageInfo :employer="employer"/>
-    <div v-if="coops.length">
+    <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
       <EmployerPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
     <p v-else>Employer has no co-op terms.</p>

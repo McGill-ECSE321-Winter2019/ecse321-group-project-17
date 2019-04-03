@@ -1,7 +1,7 @@
-<! --- This component acts as a page to log in -->
+<! --- This component acts as a page to create an account -->
 <template>
-  <div id="login" class="card" v-bind:style="{ backgroundColor : bgColor }">
-    <span id="title" v-bind:style="{ color : textColor }">Administrator Login:</span>
+  <div id="account" class="card" v-bind:style="{ backgroundColor : bgColor }">
+    <span id="title" v-bind:style="{ color : textColor }">Create an Administrator Account:</span>
     <div>
       <span id="title1"></span>
     </div>
@@ -11,29 +11,36 @@
         type="text"
         id="username"
         v-model="email"
-        placeholder="Enter email"
+        placeholder="Enter Email"
+      />
+      <input
+        class="loginField"
+        type="text"
+        id="username"
+        v-model="name"
+        placeholder="Enter Name"
+      />
+      <input
+        class="loginField"
+        type="text"
+        id="phone"
+        v-model="num"
+        placeholder="Enter Phone Number"
       />
       <input
         class="loginField"
         type="password"
         id="password"
         v-model="pw"
-        placeholder="Enter password"
+        placeholder="Enter Password"
       />
       <button
         type="button"
-        v-on:click="login(email, pw)"
+        v-on:click="create(email, pw, name, num)"
         class="btn btn-light btn-lg, loginField"
         v-b-tooltip.hover
-        title="Click to login!"
-      >Login</button>
-      <button
-        type="button"
-        v-on:click="goToAccountPage()"
-        class="btn btn-light btn-lg, loginField"
-        v-b-tooltip.hover
-        title="Click to create a new Account"
-      >Create an Account</button>
+        title="Click to create!"
+      >Create</button>
     </b-container>
   </div>
 </template>
@@ -65,6 +72,8 @@ export default {
       error: "",
       pw: "",
       email: "",
+      num:"",
+      name:""
     };
   },
   created: function() {
@@ -79,20 +88,20 @@ export default {
   },
   methods: {
     // Send get request to find admin
-    login: function(email, pw) {
-      AXIOS.get(`/admin/` + email )
+    create: function(email, pw, name, num) {
+      AXIOS.post(
+          `/admin/create?email=` + email +
+          `&password=` + pw +
+          `&name=` + name +
+          `&phone=` + num 
+          )
         .then(response => {
           this.admin = response.data;
-          if(this.admin.password === pw){
-            this.goToHomePage();
-          }
-          else{
-            document.getElementById("title1").innerText = "Password Incorrect";
-          }
+          this.goToHomePage();
         })
         .catch(e => {
           console.log(e.message);
-          document.getElementById("title1").innerText = "Account does not exist";
+          document.getElementById("title1").innerText = "Please enter missing account information!";
         });
 
     },
@@ -127,7 +136,7 @@ export default {
 #title {
   text-align: left;
   color: white;
-  font-size: 30px;
+  font-size: 26px;
   padding-left: 15px;
 }
 
@@ -149,7 +158,7 @@ export default {
   padding-left: 15px;
 }
 
-#login {
+#account {
   width: 30%;
   max-height: 480px;
   min-width: 550px;
@@ -166,6 +175,7 @@ export default {
   margin: auto;
   margin-top: 15px;
 }
+
 
 
 </style>

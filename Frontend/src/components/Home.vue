@@ -1,15 +1,20 @@
 <template>
   <div>
-    <HomeFilters
-      @updateCoopNumber="updateCoopNumber"
-      @updateStartTerm="updateStartTerm"
-      @updateEndTerm="updateEndTerm"
-      @updateProfile="updateProfileTypeSelected"
-    />
-    <div id="home-container" class="card">
+    <div id="home-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
+      <div class="col-md-4" v-b-tooltip.hover title="Select to view Students, Employers, or both">
+        <select
+          v-model="selectedProfile"
+          class="mr-sm-2 custom-select filter-box"
+          @change="updateProfileTypeSelected"
+        >
+          <option>Students &amp; Employers</option>
+          <option>Students</option>
+          <option>Employers</option>
+        </select>
+      </div>
       <div>
         <table v-if="studentsLoaded && employersLoaded">
-          <tr id="tr-heading">
+          <tr id="tr-heading" v-bind:style="{ backgroundColor: bgColor }">
             <td id="td-checkbox">
               <input
                 class="form-check-input position-static home-checkbox"
@@ -47,17 +52,29 @@
             @child-clicked="handleSelect"
           />
         </table>
-        <h2 v-else id="h2-loading">Loading...</h2>
+        <h2 v-else id="h2-loading" v-bind:style="{ color: textColor }">Loading...</h2>
       </div>
     </div>
     <div>
-      <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics">
-        Generate Statistics
+      <button
+        id="stats"
+        type="button"
+        class="btn btn-light btn-lg"
+        v-on:click="goToStatistics"
+        v-b-tooltip.hover
+        title="Select to view Statistics Page"
+      >
+      Generate Statistics
       </button>
-      <button id="login" type="button" class="btn btn-light btn-lg" v-on:click="goToLogin">
-        Login
-      </button>
-      <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications">
+      
+      <button
+        id="notifs"
+        type="button"
+        class="btn btn-light btn-lg"
+        v-on:click="goToNotifications"
+        v-b-tooltip.hover
+        title="Select to send a notification"
+      >
         Create Notification
       </button>
     </div>
@@ -68,7 +85,6 @@
 import HomeListStudentItem from "./HomeListStudentItem.vue";
 import HomeListEmployerItem from "./HomeListEmployerItem.vue";
 import Router from "../router";
-import HomeFilters from "./HomeFilters.vue";
 import axios from "axios";
 import _ from "lodash";
 
@@ -96,10 +112,17 @@ let remove = function(context, person) {
 export default {
   components: {
     HomeListStudentItem,
-    HomeListEmployerItem,
-    HomeFilters
+    HomeListEmployerItem
   },
   created: function() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
     // Fetch all students from backend
     AXIOS.get(`/students`)
       .then(response => {
@@ -132,10 +155,9 @@ export default {
       employersLoaded: false,
       allSelected: false,
       selected: [],
-      selectedProfile: "",
-      selectedStartTerm: "",
-      selectedEndTerm: "",
-      selectedCoopNumber: ""
+      selectedProfile: "Students & Employers",
+      bgColor: "",
+      textColor: ""
     };
   },
   computed: {
@@ -146,13 +168,13 @@ export default {
       return _.sortBy(this.employers, "name");
     }
   },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
+  },
   methods: {
-    updateProfileTypeSelected: function(value) {
-      if (this.selectedProfile === value) return; // Nothing to update
-
+    updateProfileTypeSelected: function() {
       this.studentsLoaded = false;
       this.employersLoaded = false;
-      this.selectedProfile = value;
 
       if (this.selectedProfile === "Students & Employers") {
         // Fetch all students and employers from backend
@@ -198,15 +220,6 @@ export default {
         this.studentsLoaded = true;
       }
     },
-    updateCoopNumber: function(value) {
-      this.selectedCoopNumber = value;
-    },
-    updateStartTerm: function(value) {
-      this.selectedStartTerm = value;
-    },
-    updateEndTerm: function(value) {
-      this.selectedEndTerm = value;
-    },
     handleSelect: function(isSelected, person) {
       // Adds a profile to the selected list if their box is checked
       if (isSelected) {
@@ -227,10 +240,7 @@ export default {
         params: {
           students: this.students,
           employers: this.employers,
-          selectedProfile: this.selectedProfile,
-          selectedStartTerm: this.selectedStartTerm,
-          selectedEndTerm: this.selectedEndTerm,
-          selectedCoopNumber: this.selectedCoopNumber
+          selectedProfile: this.selectedProfile
         }
       });
     },
@@ -248,12 +258,14 @@ export default {
         alert("No profiles selected!");
       }
     },
-    goToLogin: function() {
-      Router.push({
-          path: "/login/",
-          name: "LoginPage",
-      
-        });
+    setDarkMode: function(darkModeOn) {
+      if (darkModeOn) {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   }
 };
@@ -271,6 +283,10 @@ h4 {
   border-color: rgb(129, 133, 136);
 }
 
+.filter-box {
+  margin-bottom: 10px;
+}
+
 #h2-loading {
   text-align: center;
 }
@@ -283,7 +299,7 @@ h4 {
   margin-top: 15px;
   padding: 15px;
   text-align: left;
-  background-color: rgb(53, 58, 62);
+  /* background-color: rgb(53, 58, 62); rgb(248, 249, 251);*/
 }
 
 #scroll-container {

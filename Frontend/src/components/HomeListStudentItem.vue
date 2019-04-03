@@ -1,6 +1,6 @@
 <template>
   <!-- tr = table row, td = table data --->
-  <tr>
+  <tr v-bind:style="{ backgroundColor: bgColor }" @mouseover="hoverOn" @mouseleave="hoverOff">
     <td class="td-checkbox">
       <input
         class="form-check-input position-static checkbox"
@@ -16,10 +16,10 @@
       <span class="badge badge-primary">Student</span>
     </td>
     <td class="td-name" v-on:click="goToStudentPage">
-      <span>{{ student.name }}</span>
+      <span v-bind:style="{ color: textColor }">{{ student.name }}</span>
     </td>
     <td class="td-email" v-on:click="goToStudentPage">
-      <span>{{ student.email }}</span>
+      <span v-bind:style="{ color: textColor }">{{ student.email }}</span>
     </td>
   </tr>
 </template>
@@ -60,7 +60,9 @@ export default {
   },
   data() {
     return {
-      selected: false
+      selected: false,
+      bgColor: "rgb(248, 249, 251)",
+      textColor: "black"
     };
   },
   methods: {
@@ -84,10 +86,46 @@ export default {
     setSelectedState: function(state) {
       this.selected = state;
       this.$emit("child-clicked", this.selected, this.student);
+    },
+    setDarkMode: function(darkModeOn) {
+      if (darkModeOn) {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
+    },
+    hoverOn: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(96, 101, 105)";
+      } else {
+        this.bgColor = "rgb(224, 224, 224)";
+      }
+    },
+    hoverOff: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+      }
+    }
+  },
+  created() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
     }
   },
   mounted() {
     this.$eventHub.$on("setAllSelectedState", this.setSelectedState);
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>
@@ -95,14 +133,6 @@ export default {
 <style scoped>
 span {
   color: white;
-}
-
-tr {
-  background-color: rgb(53, 58, 62);
-}
-
-tr:hover {
-  background-color: rgb(96, 101, 105);
 }
 
 .td-checkbox {

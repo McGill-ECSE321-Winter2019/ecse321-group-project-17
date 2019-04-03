@@ -1,9 +1,9 @@
-<! --- This component acts as a page to create a notification -->
+<!--- This component acts as a page to create a notification -->
 <template>
-  <div id="notif-container">
-    <span id="title">Notification:</span>
+  <div id="notif-container" class="card" v-bind:style="{ backgroundColor : bgColor }">
+    <span id="title" v-bind:style="{ color : textColor }">Notification:</span>
     <div>
-      <span id="title1">Send To: {{ getProfiles(selected) }}</span>
+      <span id="title1" v-bind:style="{ color : textColor }">Send To: {{ getProfiles(selected) }}</span>
     </div>
     <b-container fluid>
       <b-form-textarea
@@ -18,6 +18,8 @@
         type="button"
         v-on:click="sendNotification(selected, convertMessage(message))"
         class="btn btn-light btn-lg"
+        v-b-tooltip.hover
+        title="Click to send the notification!"
       >Send</button>
     </b-container>
   </div>
@@ -48,8 +50,22 @@ export default {
   },
   data() {
     return {
-      message: ""
+      message: "",
+      bgColor: "",
+      textColor: ""
     };
+  },
+  created: function() {
+    this.fetchReport();
+
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
   },
   methods: {
     // Display profile names in "send to:"
@@ -182,7 +198,20 @@ export default {
     },
     convertMessage: function(message) {
       return message.replace(/ /g, "+");
+    },
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>
@@ -190,15 +219,15 @@ export default {
 <style>
 #title {
   text-align: left;
-  color: white;
+  /* color: white; */
   font-size: 30px;
   padding-left: 15px;
 }
 
 #title1 {
   text-align: left;
-  color: white;
-  font-size: 26px;
+  /* color: white; */
+  font-size: 20px;
   padding-left: 15px;
 }
 
@@ -209,7 +238,7 @@ export default {
 
 #name {
   text-align: left;
-  color: white;
+  /* color: white; */
   font-size: 26px;
   padding-left: 15px;
 }
@@ -222,6 +251,6 @@ export default {
   margin-top: 15px;
   padding: 15px;
   text-align: left;
-  background-color: rgb(53, 58, 62);
+  /* background-color: rgb(53, 58, 62); */
 }
 </style>

@@ -1,21 +1,28 @@
 <template>
-  <div id="coop-container" class="card" @click="goToCoopPage">
+  <div
+    id="coop-container"
+    class="card"
+    @click="goToCoopPage"
+    v-bind:style="{ backgroundColor: bgColor }"
+    @mouseover="hoverOn"
+    @mouseleave="hoverOff"
+  >
     <span class="badge badge-info" v-if="coop.status === 'NotStarted'">Not Started</span>
     <span class="badge badge-warning" v-else-if="coop.status === 'InProgress'">In Progress</span>
     <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
     <span class="badge badge-danger" v-else>Incomplete</span>
     <h5></h5>
-    <h5>
-      <b>Student:</b>
+    <h5 v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">Student:</b>
       {{ coop.student.name }}
     </h5>
-    <h6>
-      <b>Title:</b>
+    <h6 v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">Title:</b>
       {{ coop.title }}
     </h6>
-    <p>
-      <b>Dates:</b>
-      {{ coop.startDate }} - {{ coop.endDate }}
+    <p v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">Dates:</b>
+      {{ coop.startDate }} to {{ coop.endDate }}
     </p>
   </div>
 </template>
@@ -54,7 +61,52 @@ export default {
           }
         });
       });
+    },
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
+    },
+    hoverOn: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(96, 101, 105)";
+      } else {
+        this.bgColor = "rgb(224, 224, 224)";
+      }
+    },
+    hoverOff: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+      }
     }
+  },
+  created() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
+  },
+  data() {
+    return {
+      bgColor: "",
+      textColor: ""
+    };
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>

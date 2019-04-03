@@ -8,6 +8,7 @@ import CoopPage from "@/components/CoopPage";
 import Statistics from "@/components/Statistics";
 import ReportPage from "@/components/ReportPage";
 import NotificationPage from "@/components/NotificationPage";
+import AccountPage from "@/components/AccountPage";
 
 Vue.use(Router);
 
@@ -15,11 +16,20 @@ export default new Router({
   routes: [
     {
       path: "/login/",
-      name: "Login",
+      name: "LoginPage",
       component: LoginPage
     },
     {
+      path: "/account/",
+      name: "AccountPage",
+      component: AccountPage
+    },
+    {
       path: "/",
+      redirect: "/login/"
+    },
+    {
+      path: "/home/",
       name: "Home",
       component: Home
     },

@@ -1,8 +1,8 @@
-import { Pie } from './BaseCharts'
+import { Doughnut } from './BaseCharts'
 import { reactiveProp } from './mixins'
 
 export default {
-  extends: Pie,
+  extends: Doughnut,
   mixins: [reactiveProp],
   data: () => ({
     options: {
