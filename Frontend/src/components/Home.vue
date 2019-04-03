@@ -289,7 +289,7 @@ h4 {
 
 #home-container {
   width: 70%;
-  max-height: 380px;
+  max-height: 580px;
   min-width: 550px;
   margin: auto;
   margin-top: 15px;
