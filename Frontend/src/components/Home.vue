@@ -29,10 +29,10 @@
               <span class="badge badge-light">Type</span>
             </td>
             <td id="td-name">
-              <h4>Name</h4>
+              <h4 v-bind:style="{ color: textColor }">Name</h4>
             </td>
             <td id="td-email">
-              <h4>Email</h4>
+              <h4 v-bind:style="{ color: textColor }">Email</h4>
             </td>
           </tr>
         </table>
@@ -63,10 +63,8 @@
         v-on:click="goToStatistics"
         v-b-tooltip.hover
         title="Select to view Statistics Page"
-      >
-      Generate Statistics
-      </button>
-      
+      >Generate Statistics</button>
+
       <button
         id="notifs"
         type="button"
@@ -74,9 +72,7 @@
         v-on:click="goToNotifications"
         v-b-tooltip.hover
         title="Select to send a notification"
-      >
-        Create Notification
-      </button>
+      >Create Notification</button>
     </div>
   </div>
 </template>

@@ -6,20 +6,14 @@
       <span id="title1"></span>
     </div>
     <b-container fluid>
-      <input
-        class="loginField"
-        type="text"
-        id="username"
-        v-model="email"
-        placeholder="Enter email"
-      />
+      <input class="loginField" type="text" id="username" v-model="email" placeholder="Enter email">
       <input
         class="loginField"
         type="password"
         id="password"
         v-model="pw"
         placeholder="Enter password"
-      />
+      >
       <button
         type="button"
         v-on:click="login(email, pw)"
@@ -57,14 +51,14 @@ var AXIOS = axios.create({
 export default {
   data() {
     return {
-      admin:{
-          type: Object
+      admin: {
+        type: Object
       },
       bgColor: "",
       textColor: "",
       error: "",
       pw: "",
-      email: "",
+      email: ""
     };
   },
   created: function() {
@@ -80,33 +74,32 @@ export default {
   methods: {
     // Send get request to find admin
     login: function(email, pw) {
-      AXIOS.get(`/admin/` + email )
+      AXIOS.get(`/admin/` + email)
         .then(response => {
           this.admin = response.data;
-          if(this.admin.password === pw){
+          if (this.admin.password === pw) {
             this.goToHomePage();
-          }
-          else{
+          } else {
             document.getElementById("title1").innerText = "Password Incorrect";
           }
         })
         .catch(e => {
           console.log(e.message);
-          document.getElementById("title1").innerText = "Account does not exist";
-        });
-
-    },
-    goToHomePage: function(){
-        Router.push({
-          path: "/home/",
-          name: "Home",
+          document.getElementById("title1").innerText =
+            "Account does not exist";
         });
     },
-     goToAccountPage: function(){
-        Router.push({
-          path: "/account/",
-          name: "AccountPage",
-        });
+    goToHomePage: function() {
+      Router.push({
+        path: "/home/",
+        name: "Home"
+      });
+    },
+    goToAccountPage: function() {
+      Router.push({
+        path: "/account/",
+        name: "AccountPage"
+      });
     },
     setDarkMode: function() {
       var darkModeOn = localStorage.getItem("DarkModeOn");
@@ -117,10 +110,12 @@ export default {
         this.bgColor = "rgb(248, 249, 251)";
         this.textColor = "black";
       }
-    } 
-  }    
+    }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
+  }
 };
-
 </script>
 
 <style>
@@ -166,6 +161,4 @@ export default {
   margin: auto;
   margin-top: 15px;
 }
-
-
 </style>
