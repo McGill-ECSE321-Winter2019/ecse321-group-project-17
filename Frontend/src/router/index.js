@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "@/components/Home";
+import LoginPage from "@/components/LoginPage";
 import StudentPage from "@/components/StudentPage";
 import EmployerPage from "@/components/EmployerPage";
 import CoopPage from "@/components/CoopPage";
@@ -12,6 +13,11 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
+    {
+      path: "/login/",
+      name: "Login",
+      component: LoginPage
+    },
     {
       path: "/",
       name: "Home",

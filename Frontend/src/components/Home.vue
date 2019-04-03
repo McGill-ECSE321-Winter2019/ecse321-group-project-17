@@ -24,10 +24,10 @@
               <span class="badge badge-light">Type</span>
             </td>
             <td id="td-name">
-              <h3>Name</h3>
+              <h4>Name</h4>
             </td>
             <td id="td-email">
-              <h3>Email</h3>
+              <h4>Email</h4>
             </td>
           </tr>
         </table>
@@ -53,11 +53,12 @@
     <div>
       <button id="stats" type="button" class="btn btn-light btn-lg" v-on:click="goToStatistics">
         Generate Statistics
-        <img src="./../assets/line-chart.png">
+      </button>
+      <button id="login" type="button" class="btn btn-light btn-lg" v-on:click="goToLogin">
+        Login
       </button>
       <button id="notifs" type="button" class="btn btn-light btn-lg" v-on:click="goToNotifications">
         Create Notification
-        <img src="./../assets/envelope.png">
       </button>
     </div>
   </div>
@@ -246,6 +247,13 @@ export default {
       } else {
         alert("No profiles selected!");
       }
+    },
+    goToLogin: function() {
+      Router.push({
+          path: "/login/",
+          name: "LoginPage",
+      
+        });
     }
   }
 };
@@ -254,7 +262,7 @@ export default {
 <style>
 p,
 h2,
-h3 {
+h4 {
   color: white;
 }
 
