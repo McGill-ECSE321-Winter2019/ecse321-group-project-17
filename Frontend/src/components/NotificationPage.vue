@@ -56,8 +56,6 @@ export default {
     };
   },
   created: function() {
-    this.fetchReport();
-
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";

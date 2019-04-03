@@ -17,9 +17,9 @@
           <tr id="tr-heading" v-bind:style="{ backgroundColor: bgColor }">
             <td id="td-checkbox">
               <input
-                class="form-check-input position-static home-checkbox"
+                class="form-check-input position-static"
                 type="checkbox"
-                id="blankCheckbox"
+                id="home-checkbox"
                 value="option1"
                 aria-label="..."
                 @change="updateAllSelectedState"
@@ -309,7 +309,7 @@ h4 {
   border-bottom-color: rgb(27, 27, 27);
 }
 
-.home-checkbox {
+#home-checkbox {
   margin-left: 20px;
   margin-right: 10px;
 }

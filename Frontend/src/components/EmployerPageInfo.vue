@@ -13,11 +13,7 @@
     </p>
     <p v-bind:style="{ color: textColor }">
       <b v-bind:style="{ color: textColor }">Phone:</b>
-      {{ employer.phone}}
-    </p>
-    <p v-bind:style="{ color: textColor }">
-      <b v-bind:style="{ color: textColor }">Phone:</b>
-      {{ employer.password}}
+      {{ employer.phone }}
     </p>
   </div>
 </template>

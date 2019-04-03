@@ -9,6 +9,7 @@ import Statistics from "@/components/Statistics";
 import ReportPage from "@/components/ReportPage";
 import NotificationPage from "@/components/NotificationPage";
 import AccountPage from "@/components/AccountPage";
+import StartPage from "@/components/StartPage";
 
 Vue.use(Router);
 
@@ -18,6 +19,11 @@ export default new Router({
       path: "/login/",
       name: "LoginPage",
       component: LoginPage
+    },
+    {
+      path: "/start/",
+      name: "StartPage",
+      component: StartPage
     },
     {
       path: "/account/",

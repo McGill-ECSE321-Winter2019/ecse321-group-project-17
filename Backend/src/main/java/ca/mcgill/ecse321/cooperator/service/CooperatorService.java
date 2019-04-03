@@ -32,6 +32,15 @@ import ca.mcgill.ecse321.cooperator.model.ReportStatus;
 import ca.mcgill.ecse321.cooperator.model.ReportType;
 import ca.mcgill.ecse321.cooperator.model.Student;
 
+/**
+ * This class contains the database service methods. 
+ * 
+ * @author Albert Kragl
+ * @author Emma Eagles
+ * @author Elliot Bourachot
+ * @author Matthew Kourlas
+ * @author Susan Matuszewski
+ */
 @Service
 public class CooperatorService {
 
@@ -50,6 +59,16 @@ public class CooperatorService {
 	@Autowired(required = true)
 	AdministratorRepository administratorRepository;
 
+	/**
+	 * Creates and adds a new Student object to the database. 
+	 * 
+	 * @param email
+	 * @param name
+	 * @param password
+	 * @param phone
+	 * @param id
+	 * @return Student object
+	 */
 	@Transactional
 	public Student createStudent(String email, String name, String password, String phone, Integer id) {
 		Student p = new Student();
@@ -81,6 +100,16 @@ public class CooperatorService {
 		return p;
 	}
 
+	/**
+	 * Creates and adds an Employer object to the database. 
+	 * 
+	 * @param email
+	 * @param name
+	 * @param password
+	 * @param phone
+	 * @param company
+	 * @return Employer object 
+	 */
 	@Transactional
 	public Employer createEmployer(String email, String name, String password, String phone, String company) {
 		Employer e = new Employer();
@@ -113,6 +142,15 @@ public class CooperatorService {
 		return e;
 	}
 
+	/**
+	 * Creates and adds an Administrator object to the database. 
+	 * 
+	 * @param email
+	 * @param name
+	 * @param password
+	 * @param phone
+	 * @return Adminstrator object 
+	 */
 	@Transactional
 	public Administrator createAdmin(String email, String name, String password, String phone) {
 		Administrator a = new Administrator();
@@ -141,6 +179,20 @@ public class CooperatorService {
 		return a;
 	}
 
+	/**
+	 * Creates and adds a Coop object to the database. 
+	 * 
+	 * @param student
+	 * @param employer
+	 * @param title
+	 * @param startDate
+	 * @param endDate
+	 * @param status
+	 * @param salaryPerHour
+	 * @param hoursPerWeek
+	 * @param address
+	 * @return Coop object 
+	 */
 	@Transactional
 	public Coop createCoop(Student student, Employer employer, String title, Date startDate, Date endDate,
 			CoopStatus status, Integer salaryPerHour, Integer hoursPerWeek, String address) {
@@ -211,12 +263,24 @@ public class CooperatorService {
 		return c;
 	}
 
+	/**
+	 * Returns the Coop with specified ID from the database. 
+	 * 
+	 * @param id
+	 * @return Coop object 
+	 */
 	@Transactional
 	public Coop getCoop(Integer id) {
 		Coop c = coopRepository.findCoopById(id);
 		return c;
 	}
 
+	/**
+	 * Returns all Coops with specified status from the database. 
+	 * 
+	 * @param status
+	 * @return List of Coop objects
+	 */
 	@Transactional
 	public List<Coop> getCoopsByStatus(CoopStatus status) {
 		List<Coop> coop = toList(coopRepository.findCoopByStatus(status));
@@ -224,6 +288,12 @@ public class CooperatorService {
 		return coop;
 	}
 
+	/**
+	 * Returns all Reports with specified type from the database. 
+	 * 
+	 * @param type
+	 * @return List of Report objects
+	 */
 	@Transactional
 	public List<Report> getReportByType(ReportType type) {
 		List<Report> report = toList(reportRepository.findByType(type));
@@ -231,6 +301,12 @@ public class CooperatorService {
 		return report;
 	}
 
+	/**
+	 * Returns all Reports with specified status from the database.
+	 * 
+	 * @param status
+	 * @return List of Report objects
+	 */
 	@Transactional
 	public List<Report> getReportByStatus(ReportStatus status) {
 		List<Report> report = toList(reportRepository.findByStatus(status));
@@ -238,11 +314,22 @@ public class CooperatorService {
 		return report;
 	}
 
+	/**
+	 * Returns all Coops in the database. 
+	 * 
+	 * @return List of Coop objects
+	 */
 	@Transactional
 	public List<Coop> getAllCoops() {
 		return toList(coopRepository.findAll());
 	}
 
+	/**
+	 * Returns all Coops associated with the specified company from the database. 
+	 * 
+	 * @param company
+	 * @return List of Coop objects
+	 */
 	@Transactional
 	public List<Coop> getCoopsOfCompany(String company) {
 		List<Coop> all = toList(coopRepository.findAll());
@@ -254,6 +341,11 @@ public class CooperatorService {
 		return all;
 	}
 
+	/**
+	 * Deletes the specified Report from the database.
+	 * 
+	 * @param r
+	 */
 	@Transactional
 	public void deleteReport(Report r) {
 		Coop c = r.getCoop();
@@ -264,6 +356,13 @@ public class CooperatorService {
 		reportRepository.delete(r);
 	}
 	
+	/**
+	 * Updates the specified Report's status in the database. 
+	 * 
+	 * @param r
+	 * @param s
+	 * @return Report object
+	 */
 	@Transactional
 	public Report updateReport(Report r, ReportStatus s) {
 		r.setStatus(s);
@@ -271,6 +370,13 @@ public class CooperatorService {
 		return r;
 	}
 	
+	/**
+	 * Updates the specified Coop's status in the database. 
+	 * 
+	 * @param c
+	 * @param s
+	 * @return Coop object 
+	 */
 	@Transactional
 	public Coop updateCoopStatus(Coop c, CoopStatus s) {
 		c.setStatus(s);
@@ -278,6 +384,12 @@ public class CooperatorService {
 		return c;
 	}
 	
+	/**
+	 * Returns all Coops for the specified student in the database. 
+	 * 
+	 * @param s
+	 * @return Set of Coop objects
+	 */
 	@Transactional
 	public Set<Coop> getCoopforStudent(Student s){
 		if(s == null) {
@@ -287,6 +399,12 @@ public class CooperatorService {
 		return stuCoops;
 	}
 	
+	/**
+	 * Returns all Coops for the specified employer in the database.
+	 * 
+	 * @param e
+	 * @return Set of Coop objects
+	 */
 	@Transactional
 	public Set<Coop> getCoopforEmployer(Employer e){
 		if(e == null) {
@@ -296,6 +414,12 @@ public class CooperatorService {
 		return stuCoops;
 	}
 
+	/**
+	 * Returns the Student with specified email from the database. 
+	 * 
+	 * @param email
+	 * @return Student object
+	 */
 	@Transactional
 	public Student getStudent(String email) {
 		if (email == null || email.trim().length() == 0) {
@@ -304,21 +428,13 @@ public class CooperatorService {
 		Student s = studentRepository.findStudentByEmail(email);
 		return s;
 	}
-
-	@Transactional
-	public Administrator getAdmin(String email) {
-		if (email == null || email.trim().length() == 0) {
-			throw new IllegalArgumentException("Administrator email cannot be empty!");
-		}
-		Administrator a = administratorRepository.findAdministratorByEmail(email);
-		return a;
-	}
-
-	@Transactional
-	public List<Student> getAllStudents() {
-		return toList(studentRepository.findAll());
-	}
-
+	
+	/**
+	 * Returns the Employer with specified email from the database. 
+	 * 
+	 * @param email
+	 * @return Employer object
+	 */
 	@Transactional
 	public Employer getEmployer(String email) {
 		if (email == null || email.trim().length() == 0) {
@@ -329,16 +445,57 @@ public class CooperatorService {
 		return e;
 	}
 
+	/**
+	 * Returns the Administrator with specified email from the database. 
+	 * 
+	 * @param email
+	 * @return Administrator object
+	 */
+	@Transactional
+	public Administrator getAdmin(String email) {
+		if (email == null || email.trim().length() == 0) {
+			throw new IllegalArgumentException("Administrator email cannot be empty!");
+		}
+		Administrator a = administratorRepository.findAdministratorByEmail(email);
+		return a;
+	}
+
+	/**
+	 * Returns all students in the database.
+	 * 
+	 * @return List of Student objects
+	 */
+	@Transactional
+	public List<Student> getAllStudents() {
+		return toList(studentRepository.findAll());
+	}
+
+	/**
+	 * Returns all employers in the database.
+	 * 
+	 * @return List of Employer objects
+	 */
 	@Transactional
 	public List<Employer> getAllEmployers() {
 		return toList(employerRepository.findAll());
 	}
 
+	/**
+	 * Returns all employers associated with the specified company in the database. 
+	 * 
+	 * @param company
+	 * @return List of Employer objects
+	 */
 	@Transactional
 	public List<Employer> getEmployersOfCompany(String company) {
 		return toList(employerRepository.findEmployerByCompany(company));
 	}
 
+	/**
+	 * Returns the total number of profiles in the database
+	 * 
+	 * @return int
+	 */
 	@Transactional
 	public int getNumberofProfiles() {
 		int num = (int) studentRepository.count();
@@ -347,11 +504,25 @@ public class CooperatorService {
 		return num;
 	}
 
+	/**
+	 * Returns all co-op Administrators in the database.
+	 * 
+	 * @return List of Administrator objects
+	 */
 	@Transactional
 	public List<Administrator> getAllAdministrators() {
 		return toList(administratorRepository.findAll());
 	}
 
+	/**
+	 * Creates a notification in the database with the specified parameters. 
+	 * 
+	 * @param text
+	 * @param a
+	 * @param s
+	 * @param e
+	 * @return Notification object
+	 */
 	@Transactional
 	public Notification createNotification(String text, Administrator a, Student s, Employer e) {
 		String error = "";
@@ -404,6 +575,12 @@ public class CooperatorService {
 		return n;
 	}
 
+	/**
+	 * Returns all notifications for the specified Employer in the database. 
+	 * 
+	 * @param e
+	 * @return Set of Notification objects
+	 */
 	@Transactional
 	public Set<Notification> getNotificationsEmp(Employer e) {
 		Set<Notification> n = null;
@@ -415,6 +592,12 @@ public class CooperatorService {
 		return n;
 	}
 
+	/**
+	 * Returns all notifications for the specified Student in the database. 
+	 * 
+	 * @param s
+	 * @return Set of Notification objects
+	 */
 	@Transactional
 	public Set<Notification> getNotificationsStu(Student s) {
 		Set<Notification> n = null;
@@ -426,6 +609,12 @@ public class CooperatorService {
 		return n;
 	}
 
+	/**
+	 * Returns all notifications for the specified co-op Administrator in the database. 
+	 * 
+	 * @param a
+	 * @return Set of Notification objects
+	 */
 	@Transactional
 	public Set<Notification> getNotificationsAdm(Administrator a) {
 		Set<Notification> n = null;
@@ -437,24 +626,39 @@ public class CooperatorService {
 		return n;
 	}
 
+	/**
+	 * Returns all Notifications in the database. 
+	 * 
+	 * @return List of Notification objects
+	 */
 	@Transactional
 	public List<Notification> getAllNotifications() {
 		return toList(notificationRepository.findAll());
 	}
 
+	/**
+	 * Creates a report with specified parameters in the database. 
+	 * 
+	 * @param coop
+	 * @param date
+	 * @param status
+	 * @param type
+	 * @param file
+	 * @return Report object 
+	 */
 	@Transactional
-	public Report createReport(Coop c, Date d, ReportStatus s, ReportType t, File f) {
+	public Report createReport(Coop coop, Date date, ReportStatus status, ReportType type, File file) {
 		String error = "";
-		if (c == null) {
+		if (coop == null) {
 			error = error + "Coop is null! ";
 		}
-		if (d == null) {
+		if (date == null) {
 			error = error + "Due date is invalid! ";
 		}
-		if (s == null) {
+		if (status == null) {
 			error = error + "Status is invalid! ";
 		}
-		if (t == null) {
+		if (type == null) {
 			error = error + "Type is invalid!";
 		}
 		if (error.length() != 0) {
@@ -462,25 +666,36 @@ public class CooperatorService {
 		}
 
 		Report r = new Report();
-		r.setCoop(c);
-		r.setDueDate(d);
-		r.setStatus(s);
-		r.setType(t);
-		r.setFile(f);
-		Set<Report> reports = c.getReport();
+		r.setCoop(coop);
+		r.setDueDate(date);
+		r.setStatus(status);
+		r.setType(type);
+		r.setFile(file);
+		Set<Report> reports = coop.getReport();
 		if (reports == null) reports = new HashSet<>();
 		reports.add(r);
-		c.setReport(reports);
+		coop.setReport(reports);
 		reportRepository.save(r);
 		return r;
 	}
 
+	/**
+	 * Returns the report with specified ID in the database. 
+	 * 
+	 * @param id
+	 * @return Report object
+	 */
 	@Transactional
 	public Report getReport(Integer id) {
 		Report r = reportRepository.findReportByid(id);
 		return r;
 	}
 
+	/**
+	 * Returns all reports in the database. 
+	 * 
+	 * @return List of Report objects
+	 */
 	@Transactional
 	public List<Report> getAllReports() {
 		return toList(reportRepository.findAll());
@@ -494,9 +709,14 @@ public class CooperatorService {
 		return resultList;
 	}
 
-	/*
-	 * Generates statistics. Can filter by a range of terms (i.e Winter2018 to
-	 * Fall2019) and/or a specific coop (i.e only students doing there 1st coop)
+	/**
+	 * Generates statistics that can be filtered by a range of terms (i.e Winter2018 to
+	 * Fall2019) and/or a specific coop (i.e only students doing their 1st coop).
+	 * 
+	 * @param startTerm
+	 * @param endTerm
+	 * @param coopNumber
+	 * @return CoopStatisticsDto object
 	 */
 	public CoopStatisticsDto generateAllCoopStatistics(String startTerm, String endTerm, Integer coopNumber) {
 		CoopStatisticsDto csd = new CoopStatisticsDto();
@@ -505,33 +725,33 @@ public class CooperatorService {
 		csd.setCoopNumber(coopNumber);
 		List<Coop> coops = (List<Coop>) coopRepository.findAll();
 		List<Coop> toRemove = new ArrayList<Coop>();
-		// filter out anything before startTerm
+		// Filter out anything before startTerm
 		String startSeason = csd.extractSeason(startTerm);
 		String startYear = csd.extractYear(startTerm);
 		if (startSeason != "" && startYear != "") {
 			Date startDate = csd.getStartDate(startSeason, startYear);
 			for (Coop coop : coops) {
-				// if the coop starts before the start of the term
+				// If the coop starts before the start of the term
 				if (coop.getStartDate().before(startDate) && !coop.getStartDate().equals(startDate)) {
 					toRemove.add(coop);
 				}
 			}
 		}
 
-		// filter out anything after the endTerm
+		// Filter out anything after the endTerm
 		String endSeason = csd.extractSeason(endTerm);
 		String endYear = csd.extractYear(endTerm);
 		if (endSeason != "" && endYear != "") {
 			Date endDate = csd.getEndDate(endSeason, endYear);
 			for (Coop coop : coops) {
-				// if the coop ends after the end of the term
+				// If the coop ends after the end of the term
 				if (coop.getEndDate().after(endDate) && !coop.getEndDate().equals(endDate)) {
 					toRemove.add(coop);
 				}
 			}
 		}
 
-		// filter out students who aren't on their [coopNumber] coop
+		// Filter out students who aren't on their [coopNumber] coop
 		if (coopNumber != 0) {
 			for (Coop coop : coops) {
 
@@ -542,12 +762,12 @@ public class CooperatorService {
 					completed = coop.getStudent().getCoopsCompleted();
 				}
 
-				if (!(completed == coopNumber - 1)) { // if the student is on there [coopNumber] coop
+				if (!(completed == coopNumber - 1)) { // If the student is on there [coopNumber] coop
 					toRemove.add(coop);
 				}
 			}
 		}
-		// fill statistics
+		// Fill statistics
 		coops.removeAll(toRemove);
 		for (Coop coop : coops) {
 			csd.setTotalCoops(csd.getTotalCoops() + 1);
@@ -567,10 +787,15 @@ public class CooperatorService {
 		}
 		return csd;
 	}
-
-	/*
-	 * Generates statistics. Can filter by a range of terms (i.e Winter2018 to
-	 * Fall2019) and/or a specific report (i.e only students doing there 1st report)
+	
+	/**
+	 * Generates report statistics that can be filtered by a range of terms (i.e Winter2018 
+	 * to Fall2019) and/or a specific report (i.e only students doing their 1st coop).
+	 * 
+	 * @param startTerm
+	 * @param endTerm
+	 * @param coopNumber
+	 * @return ReportStatisticsDto object
 	 */
 	public ReportStatisticsDto generateAllReportStatistics(String startTerm, String endTerm, Integer coopNumber) {
 		ReportStatisticsDto rsd = new ReportStatisticsDto();
@@ -580,13 +805,13 @@ public class CooperatorService {
 		List<Report> reports = (List<Report>) reportRepository.findAll();
 
 		List<Report> toRemove = new ArrayList<Report>();
-		// filter out anything before startTerm
+		// Filter out anything before startTerm
 		String startSeason = rsd.extractSeason(startTerm);
 		String startYear = rsd.extractYear(startTerm);
 		if (startSeason != "" && startYear != "") {
 			Date startDate = rsd.getStartDate(startSeason, startYear);
 			for (Report report : reports) {
-				// if the coop starts before the start of the term
+				// If the coop starts before the start of the term
 				if (report.getCoop().getStartDate().before(startDate)
 						&& !report.getCoop().getStartDate().equals(startDate)) {
 					toRemove.add(report);
@@ -594,20 +819,20 @@ public class CooperatorService {
 			}
 		}
 
-		// filter out anything after the endTerm
+		// Filter out anything after the endTerm
 		String endSeason = rsd.extractSeason(endTerm);
 		String endYear = rsd.extractYear(endTerm);
 		if (endSeason != "" && endYear != "") {
 			Date endDate = rsd.getEndDate(endSeason, endYear);
 			for (Report report : reports) {
-				// if the report ends after the end of the term
+				// If the report ends after the end of the term
 				if (report.getCoop().getEndDate().after(endDate) && !report.getCoop().getEndDate().equals(endDate)) {
 					toRemove.add(report);
 				}
 			}
 		}
 
-		// filter out students who aren't on their [coopNumber] report
+		// Filter out students who aren't on their [coopNumber] report
 		if (coopNumber != 0) {
 			for (Report report : reports) {
 
@@ -624,7 +849,7 @@ public class CooperatorService {
 			}
 		}
 
-		// fill statistics
+		// Fill statistics
 		reports.removeAll(toRemove);
 		for (Report report : reports) {
 			rsd.setTotalReports(rsd.getTotalReports() + 1);
@@ -665,6 +890,11 @@ public class CooperatorService {
 		return rsd;
 	}
 
+	/**
+	 * Deletes the student with specified email from the database.
+	 * 
+	 * @param email
+	 */
 	@Transactional
 	public void deleteStudent(String email) {
 		Student s = studentRepository.findStudentByEmail(email);
@@ -684,6 +914,11 @@ public class CooperatorService {
 		studentRepository.delete(s);
 	}
 
+	/**
+	 * Deletes the Coop with specified ID from the database. 
+	 * 
+	 * @param id
+	 */
 	@Transactional
 	public void deleteCoop(Integer id) {
 		Coop c = coopRepository.findCoopById(id);
@@ -703,21 +938,11 @@ public class CooperatorService {
 		coopRepository.delete(c);
 	}
 	
-	
-	@Transactional
-	public void deleteAdmin(String email) {
-		Administrator a = administratorRepository.findAdministratorByEmail(email);
-		
-		while(a.getSent().size() != 0) {
-			Set<Notification> notifs = a.getSent();
-			Notification n = notifs.iterator().next();
-			deleteNotif(n.getId());
-			notificationRepository.saveAll(notifs);
-		}
-		
-		administratorRepository.delete(a);
-	}
-
+	/**
+	 * Deletes the Employer with specified email from the database. 
+	 * 
+	 * @param email
+	 */
 	@Transactional
 	public void deleteEmployer(String email) {
 		Employer e = employerRepository.findEmployerByEmail(email);
@@ -736,7 +961,31 @@ public class CooperatorService {
 		}
 		employerRepository.delete(e);
 	}
+	
+	/**
+	 * Deletes the co-op Administrator with specified email from the database. 
+	 * 
+	 * @param email
+	 */
+	@Transactional
+	public void deleteAdmin(String email) {
+		Administrator a = administratorRepository.findAdministratorByEmail(email);
+		
+		while(a.getSent().size() != 0) {
+			Set<Notification> notifs = a.getSent();
+			Notification n = notifs.iterator().next();
+			deleteNotif(n.getId());
+			notificationRepository.saveAll(notifs);
+		}
+		
+		administratorRepository.delete(a);
+	}
 
+	/**
+	 * Deletes the Notification with specified ID from the database. 
+	 * 
+	 * @param id
+	 */
 	@Transactional
 	public void deleteNotif(Integer id) {
 		Notification n = notificationRepository.findByid(id);
