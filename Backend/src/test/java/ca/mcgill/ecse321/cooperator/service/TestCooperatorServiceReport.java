@@ -136,7 +136,7 @@ public class TestCooperatorServiceReport {
 		assertEquals(1, cs.getReportByStatus(ReportStatus.Submitted).size());
 		assertEquals(2, cs.getReportByType(ReportType.Contract).size());
 		
-		cs.updateReport(r, ReportStatus.Late);
+		cs.updateReportStatus(r, ReportStatus.Late);
 		assertEquals(0, cs.getReportByStatus(ReportStatus.Submitted).size());
 		assertEquals(1, cs.getReportByStatus(ReportStatus.Late).size());
 		
