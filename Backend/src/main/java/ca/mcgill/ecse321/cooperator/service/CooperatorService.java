@@ -467,6 +467,19 @@ public class CooperatorService {
 	}
 	
 	/**
+	 * Updates the specified Coop's address in the database. 
+	 * @param c
+	 * @param a
+	 * @return
+	 */
+	@Transactional
+	public Coop updateCoopAddress(Coop c, String a) {
+		c.setAddress(a);
+		coopRepository.save(c);
+		return c;
+	}
+	
+	/**
 	 * Returns the set of coop objects belonging to a student
 	 *  
 	 * @param s

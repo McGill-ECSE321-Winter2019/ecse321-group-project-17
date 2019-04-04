@@ -111,13 +111,106 @@
     <div>
       <br>
     </div>
-    <div v-if="report.reportType === 'Contract'" class="card" id="viewCon" >
-      <span class="t">
+    <p id="title1" class="title"></p>
+    <p id="title2" class="title"></p>
+    <p id="title3" class="title"></p>
+    <p id="title4" class="title"></p>
+    <p id="title5" class="title"></p>
+    <p id="title6" class="title"></p>
+    <div v-if="report.reportType === 'Contract'"> 
+      <div class="card" id="viewCon" >
+      <div class="t">
+        <h5><strong>Contract from:</strong></h5>
+        <h6> <strong> {{coop.employer.name}} </strong> at {{coop.employer.company}} </h6>
+        <h6>  {{coop.employer.email}}  </h6>
+        <h6>  {{coop.employer.phone}}  </h6>
+        <h6>  {{coop.address}}  </h6>
         <br>
-        <h5>Contract for:  </h5>
-        <h6>  </h6>
-      </span>
+        <h5><strong>Contract for:</strong></h5>
+        <h6>  {{coop.student.name}}  </h6>
+        <h6>  {{coop.student.email}}  </h6>
+        <h6>  {{coop.student.id}}  </h6>
+         <h6>  McGill University  </h6>
+
+        <br>
+        <h5><strong>Contract Information:</strong></h5>
+        <b-container fluid>
+          <h6> 
+            <strong>Title:</strong> 
+            {{coop.title}} &nbsp;&nbsp;
+            <input 
+            class="reportField" 
+            type="text" 
+            id="title" 
+            v-model="title"
+            placeholder= "Enter new title" > 
+          </h6>
+          <h6> 
+            <strong>Start Date:</strong> 
+            {{coop.startDate}} &nbsp;&nbsp;
+            <input 
+            class="reportField" 
+            type="text" 
+            id="start" 
+            v-model="start"
+            placeholder= "Enter new start date" > 
+          </h6>
+          <h6> 
+            <strong>End Date:</strong> 
+            {{coop.endDate}} &nbsp;&nbsp;
+            <input 
+            class="reportField" 
+            type="text" 
+            id="end" 
+            v-model="end"
+            placeholder= "Enter new end date" > 
+          </h6>
+          <h6> 
+            <strong>Hourly Wage:</strong> 
+            {{coop.salaryPerHour}}$ per hour&nbsp;&nbsp;
+            <input 
+            class="reportField" 
+            type="text" 
+            id="pay" 
+            v-model="pay"
+            placeholder= "Enter new hourly wage" > 
+          </h6>
+          <h6> 
+            <strong>Hours a Week:</strong> 
+            {{coop.hoursPerWeek}} &nbsp;&nbsp;
+            <input 
+            class="reportField" 
+            type="text" 
+            id="hours" 
+            v-model="hours"
+            placeholder= "Enter new weekly hours" > 
+          </h6>
+          
+          <h6> 
+            <strong>Location:</strong> 
+            {{coop.address}} &nbsp;&nbsp;
+            <input 
+            class="reportField" 
+            type="text" 
+            id="address" 
+            v-model="address"
+            placeholder= "Enter new address" > 
+          </h6>
+        </b-container>
+      </div>
     </div>
+    <p> <br> </p>
+      <button
+        type="button"
+        id="button"
+        v-on:click="save(title, start, end, pay, hours)"
+        class="btn btn-success btn-lg"
+        v-b-tooltip.hover
+        title="Click to save changes"
+      >Save Changes</button>
+
+    </div>
+    
     <div v-else class="card" id="viewCon" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
         <b v-bind:style="{ color : textColor}">View File</b>
@@ -125,6 +218,9 @@
       <br>
       <h5 style="color:lightblue">[Pretend that this is a pdf viewer or something]</h5>
     </div>
+
+
+
   </div>
 </template>
 
@@ -154,14 +250,23 @@ export default {
       report: {
         type: Object
       },
+      coop: {
+        type: Object
+      },
       reportLoaded: false,
       bgColor: "",
-      textColor: ""
+      textColor: "",
+      hours: "",
+      pay:"",
+      title:"",
+      start:"",
+      end:"",
+      address:"",
     };
   },
   created: function() {
     this.fetchReport();
-
+    
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";
@@ -172,12 +277,157 @@ export default {
     }
   },
   methods: {
+    getCoop: function() {
+      var repId = this.report.id;
+      AXIOS.get(`/coopFromReport/` + repId)
+        .then(response => {
+          this.coop = response.data;
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
+    },
+    
     setReportType: function() {
       alert("This function has not been implemented yet.");
     },
+    save: function() {
+      var val = document.getElementById("title").value;
+      var didSomething = false;
+      if(val === undefined || val == null || val.length <= 0){
+          console.log("hello");
+      }
+      else{
+        AXIOS.put(
+        "/coop/updateTitle?" +
+          "id=" +
+          this.coop.id +
+          "&title=" +
+          val
+        )
+        .then(response => {
+          didSomething = true;
+        })
+        .catch(e => {
+          console.log(e.message);
+          document.getElementById("title1").innerText =
+            "Title failed to update";
+        });
+      }
+      val = document.getElementById("start").value;
+      if(val === undefined || val == null || val.length <= 0){
+
+      }
+      else{
+        AXIOS.put(
+        "/coop/updateStart?" +
+          "id=" +
+          this.coop.id +
+          "&date=" +
+          val
+        )
+        .then(response => {
+          didSomething = true;
+        })
+        .catch(e => {
+          console.log(e.message);
+          document.getElementById("title2").innerText =
+            "Start date failed to update";
+        });
+      }
+      val = document.getElementById("end").value;
+      if(val === undefined || val == null || val.length <= 0){
+
+      }
+      else{
+        AXIOS.put(
+        "/coop/updateEnd?" +
+          "id=" +
+          this.coop.id +
+          "&date=" +
+          val
+        )
+        .then(response => {
+          didSomething = true;
+        })
+        .catch(e => {
+          console.log(e.message);
+          document.getElementById("title3").innerText =
+            "Start date failed to update";
+        });
+      }
+      val = document.getElementById("pay").value;
+      if(val === undefined || val == null || val.length <= 0 ){
+
+      }
+      else{
+        AXIOS.put(
+        "/coop/updatePay?" +
+          "id=" +
+          this.coop.id +
+          "&pay=" +
+          val
+        )
+        .then(response => {
+          didSomething = true;
+        })
+        .catch(e => {
+          console.log(e.message);
+          document.getElementById("title4").innerText =
+            "Pay failed to update";
+        });
+      }
+      val = document.getElementById("hours").value;
+      if(val === undefined || val == null || val.length <= 0 ){
+
+      }
+      else{
+        AXIOS.put(
+        "/coop/updateHours?" +
+          "id=" +
+          this.coop.id +
+          "&hours=" +
+          val
+        )
+        .then(response => {
+          didSomething = true;
+        })
+        .catch(e => {
+          console.log(e.message);
+          document.getElementById("title5").innerText =
+            "Hours failed to update";
+        });
+      }
+      val = document.getElementById("address").value;
+      if(val === undefined || val == null || val.length <= 0){
+          
+      }
+      else{
+        AXIOS.put(
+        "/coop/updateAddress?" +
+          "id=" +
+          this.coop.address +
+          "&address=" +
+          val
+        )
+        .then(response => {
+          didSomething = true;
+        })
+        .catch(e => {
+          console.log(e.message);
+          document.getElementById("title6").innerText =
+            "Address failed to update";
+        });
+      }
+      if(didSomething === true){
+        /* idk probs do something maybe refresh page*/
+      }
+      
+    },
+
     setReportStatus: function() {
       AXIOS.put(
-        "/report/update?" +
+        "/report/updateStatus?" +
           "id=" +
           this.report.id +
           "&status=" +
@@ -200,6 +450,7 @@ export default {
         .then(response => {
           this.report = response.data;
           this.reportLoaded = true;
+          this.getCoop();
         })
         .catch(e => {
           console.log(e.message);
@@ -265,7 +516,30 @@ export default {
   display: inline-block;
 }
 
+.reportField {
+  width: 28%;
+  border-radius: 4px;
+  border: 0px;
+  margin: auto;
+  margin-top: 15px;
+  
+}
+
+#button{
+  width: 20%;
+  color:white;
+  margin-bottom: 15px;
+  border: 0px;
+  
+}
+
 .t {
   color: black; 
+}
+.title1 {
+  text-align: left;
+  color: red;
+  font-size: 15px;
+  padding-left: 15px;
 }
 </style>

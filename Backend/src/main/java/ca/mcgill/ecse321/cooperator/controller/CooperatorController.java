@@ -341,6 +341,20 @@ public class CooperatorController {
 		return cDto;
 	}
 	
+	/**
+	 * Updates the address of the specified co-op term.
+	 * @param id
+	 * @param address
+	 * @return
+	 */
+	@PutMapping("/coop/updateAddress")
+	public CoopDto updateCoopAddress(@RequestParam Integer id, @RequestParam String address){
+		Coop c = service.getCoop(id);
+		c = service.updateCoopAddress(c, address);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
+	
 	/*
 	 * DELETE METHODS
 	 */
