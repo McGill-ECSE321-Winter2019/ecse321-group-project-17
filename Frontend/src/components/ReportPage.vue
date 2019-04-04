@@ -111,7 +111,14 @@
     <div>
       <br>
     </div>
-    <div class="card" id="view" v-bind:style="{ backgroundColor : bgColor}">
+    <div v-if="report.reportType === 'Contract'" class="card" id="viewCon" >
+      <span class="t">
+        <br>
+        <h5>Contract for:  </h5>
+        <h6>  </h6>
+      </span>
+    </div>
+    <div v-else class="card" id="viewCon" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
         <b v-bind:style="{ color : textColor}">View File</b>
       </h4>
@@ -247,7 +254,18 @@ export default {
   background-color: rgb(53, 58, 62);
   display: inline-block;
 }
-b {
-  color: white;
+
+#viewCon {
+  width: 70%;
+  min-width: 550px;
+  margin: auto;
+  padding: 15px;
+  text-align: left;
+  background-color: white;
+  display: inline-block;
+}
+
+.t {
+  color: black; 
 }
 </style>

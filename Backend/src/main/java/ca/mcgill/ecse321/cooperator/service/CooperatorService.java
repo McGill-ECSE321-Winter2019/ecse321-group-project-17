@@ -561,6 +561,18 @@ public class CooperatorService {
 	public List<Employer> getAllEmployers() {
 		return toList(employerRepository.findAll());
 	}
+	
+	/**
+	 * Returns all coop corresponding to a report.
+	 * 
+	 * @return List of Employer objects
+	 */
+	@Transactional
+	public Coop getCoopFromReport(Integer id) {
+		Report r = reportRepository.findReportByid(id);
+		Coop c = r.getCoop();
+		return c;
+	}
 
 	/**
 	 * Returns all employers associated with the specified company in the database. 
