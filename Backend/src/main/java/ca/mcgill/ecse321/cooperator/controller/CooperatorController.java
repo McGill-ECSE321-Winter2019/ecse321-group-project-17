@@ -481,6 +481,18 @@ public class CooperatorController {
 	}
 	
 	/**
+	 * Returns the co-op term associated to a report. 
+	 * 
+	 * @param id
+	 * @return CoopDto object
+	 */
+	@GetMapping(value = { "/coopFromReport/{id}", "/coop/{id}/" })
+	public CoopDto getCoopfromReport(@PathVariable("id") Integer id) {
+		Coop c = service.getCoopFromReport(id);
+		return convertToDto(c);
+	}
+	
+	/**
 	 * Returns all students in the database. 
 	 * 
 	 * @return List of StudentDto objects

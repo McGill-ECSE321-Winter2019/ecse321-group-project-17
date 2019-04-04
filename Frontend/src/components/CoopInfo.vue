@@ -14,8 +14,8 @@
     <span style="color:red" v-else>Incomplete</span>
     <p/>
     <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
-      <b v-bind:style="{ color : textColor}">Employer:</b>
-      {{ coop.employer.name }}
+      <b v-bind:style="{ color : textColor}">Company:</b>
+      {{ coop.employer.company }}
     </p>
     <p @click="goToStudentPage"></p>
     <p v-bind:style="{ color : textColor}">
