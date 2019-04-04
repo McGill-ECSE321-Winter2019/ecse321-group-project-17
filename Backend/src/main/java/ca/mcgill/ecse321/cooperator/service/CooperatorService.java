@@ -364,8 +364,36 @@ public class CooperatorService {
 	 * @return Report object
 	 */
 	@Transactional
-	public Report updateReport(Report r, ReportStatus s) {
+	public Report updateReportStatus(Report r, ReportStatus s) {
 		r.setStatus(s);
+		reportRepository.save(r);
+		return r;
+	}
+	
+	/**
+	 * Updates the specified Report's type in the database. 
+	 * 
+	 * @param r
+	 * @param t
+	 * @return Report object
+	 */
+	@Transactional
+	public Report updateReportType(Report r, ReportType t) {
+		r.setType(t);
+		reportRepository.save(r);
+		return r;
+	}
+	
+	/**
+	 * Updates the specified Report's due date in the database. 
+	 * 
+	 * @param r
+	 * @param d
+	 * @return Report object
+	 */
+	@Transactional
+	public Report updateReportDate(Report r, Date d) {
+		r.setDueDate(d);
 		reportRepository.save(r);
 		return r;
 	}

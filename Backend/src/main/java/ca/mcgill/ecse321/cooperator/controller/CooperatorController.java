@@ -228,10 +228,40 @@ public class CooperatorController {
 	 * @param status
 	 * @return Updated ReportDto object
 	 */
-	@PutMapping("/report/update")
+	@PutMapping("/report/updateStatus")
 	public ReportDto updateReportStatus(@RequestParam Integer id, @RequestParam ReportStatus status){
 		Report r = service.getReport(id);
-		r = service.updateReport(r, status);
+		r = service.updateReportStatus(r, status);
+		ReportDto rDto = convertToDto(r);
+		return rDto;
+	}
+	
+	/**
+	 * Updates the type of the specified report. 
+	 * 
+	 * @param id
+	 * @param type
+	 * @return Updated ReportDto object
+	 */
+	@PutMapping("/report/updateType")
+	public ReportDto updateReportType(@RequestParam Integer id, @RequestParam ReportType type){
+		Report r = service.getReport(id);
+		r = service.updateReportType(r, type);
+		ReportDto rDto = convertToDto(r);
+		return rDto;
+	}
+	
+	/**
+	 * Updates the due date of the specified report. 
+	 * 
+	 * @param id
+	 * @param date
+	 * @return Updated ReportDto object
+	 */
+	@PutMapping("/report/updateDate")
+	public ReportDto updateReportType(@RequestParam Integer id, @RequestParam Date date){
+		Report r = service.getReport(id);
+		r = service.updateReportDate(r, date);
 		ReportDto rDto = convertToDto(r);
 		return rDto;
 	}

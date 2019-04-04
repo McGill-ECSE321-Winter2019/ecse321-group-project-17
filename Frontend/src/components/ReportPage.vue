@@ -2,6 +2,7 @@
 <template>
   <div v-if="this.reportLoaded" class="container">
     <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
+      
       <h4>
         <b v-bind:style="{ color : textColor}">Report Information</b>
       </h4>
@@ -102,7 +103,7 @@
             </span>
           </td>
           <td>
-            <input type="date" v-model="selectedDate" name="due-date">
+            <input type="date" v-model="selectedDate" name="due-date" id="due">
             <button id="due-date-button" class="btn btn-light btn-sm" v-on:click="setDueDate">Set</button>
           </td>
         </tr>
@@ -130,7 +131,7 @@
         <h6>  {{coop.student.name}}  </h6>
         <h6>  {{coop.student.email}}  </h6>
         <h6>  {{coop.student.id}}  </h6>
-         <h6>  McGill University  </h6>
+        <h6>  McGill University  </h6>
 
         <br>
         <h5><strong>Contract Information:</strong></h5>
@@ -289,7 +290,19 @@ export default {
     },
     
     setReportType: function() {
-      alert("This function has not been implemented yet.");
+      AXIOS.put(
+        "/report/updateType?" +
+          "id=" +
+          this.report.id +
+          "&type=" +
+          this.selectedType
+      )
+        .then(response => {
+          this.fetchReport();
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
     },
     save: function() {
       var val = document.getElementById("title").value;
@@ -441,7 +454,20 @@ export default {
         });
     },
     setDueDate: function() {
-      alert("This function has not been implemented yet.");
+      var val = document.getElementById("due").value;
+      AXIOS.put(
+        "/report/updateDate" +
+          "id=" +
+          this.report.id +
+          "&date=" +
+          val
+      )
+        .then(response => {
+          this.fetchReport();
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
     },
     fetchReport: function() {
       var reportId = parseInt(Router.currentRoute.path.split("/")[2]);
@@ -484,7 +510,7 @@ export default {
   padding: 15px;
   text-align: left;
   background-color: rgb(53, 58, 62);
-  color: black;
+  color: white;
   display: inline-block;
 }
 #edit {
@@ -494,6 +520,7 @@ export default {
   padding: 15px;
   text-align: left;
   background-color: rgb(53, 58, 62);
+  color: black;
   display: inline-block;
 }
 #view {
@@ -513,8 +540,8 @@ export default {
   padding: 15px;
   text-align: left;
   background-color: white;
-  color: black;
   display: inline-block;
+  color:black;
 }
 
 .reportField {
@@ -523,7 +550,6 @@ export default {
   border: 0px;
   margin: auto;
   margin-top: 15px;
-  
 }
 
 #button{
@@ -531,7 +557,6 @@ export default {
   color:white;
   margin-bottom: 15px;
   border: 0px;
-  
 }
 
 #t {
