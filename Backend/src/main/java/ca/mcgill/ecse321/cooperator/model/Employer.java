@@ -38,8 +38,8 @@ public class Employer extends Profile {
 		return this.employerReceived;
 	}
 
-	public void setEmployerReceived(Set<Notification> employerReceiveds) {
-		this.employerReceived = employerReceiveds;
+	public void setEmployerReceived(Set<Notification> employerReceived) {
+		this.employerReceived = employerReceived;
 	}
 
 	private String company;

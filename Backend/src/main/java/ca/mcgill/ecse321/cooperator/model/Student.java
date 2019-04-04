@@ -32,8 +32,8 @@ public class Student extends Profile {
 		return this.studentReceived;
 	}
 
-	public void setStudentReceived(Set<Notification> studentReceiveds) {
-		this.studentReceived = studentReceiveds;
+	public void setStudentReceived(Set<Notification> studentReceived) {
+		this.studentReceived = studentReceived;
 	}
 
 	public Integer getId() {

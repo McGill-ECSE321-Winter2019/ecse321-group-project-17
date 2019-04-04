@@ -196,6 +196,26 @@ public class TestCooperatorServiceNotification {
 
 		// Check to see if associated to student
 		assertEquals(1, cs.getNotificationsStu(stu).size());
+		
+		//try to delete
+		Integer id = cs.getAllNotifications().get(0).getId();
+		cs.deleteNotif(id);
+		adm = cs.getAdmin(emailA);
+		emp = cs.getEmployer(emailE);
+		stu = cs.getStudent(emailS);
+		
+		// Check to see if exists
+    	assertEquals(0, cs.getAllNotifications().size());
+		
+    	// Check to see if associated to admin
+    	assertEquals(0, cs.getNotificationsAdm(adm).size());
+    	
+		// Check to see if associated to employer
+		assertEquals(0, cs.getNotificationsEmp(emp).size());
+		
+		// Check to see if associated to student
+    	assertEquals(0, cs.getNotificationsStu(stu).size());
+		
 	}
 
 	@Test

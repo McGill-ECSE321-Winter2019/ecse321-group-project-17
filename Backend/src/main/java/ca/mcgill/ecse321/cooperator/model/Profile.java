@@ -19,8 +19,8 @@ public abstract class Profile {
 		return this.received;
 	}
 
-	public void setReceived(Set<Notification> receiveds) {
-		this.received = receiveds;
+	public void setReceived(Set<Notification> received) {
+		this.received = received;
 	}
 
 	private Set<Notification> sent;
@@ -30,8 +30,8 @@ public abstract class Profile {
 		return this.sent;
 	}
 
-	public void setSent(Set<Notification> sents) {
-		this.sent = sents;
+	public void setSent(Set<Notification> sent) {
+		this.sent = sent;
 	}
 
 	private String email;

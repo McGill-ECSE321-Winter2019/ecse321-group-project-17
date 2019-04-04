@@ -2,17 +2,17 @@
 <template>
   <div class="container">
     <CoopInfo :coop="coop"/>
-    <div id="report-table" class="card">
+    <div id="report-table" class="card" v-bind:style="{ backgroundColor: bgColor }">
       <table v-cloak>
-        <tr id="tr-heading">
+        <tr id="tr-heading" v-bind:style="{ backgroundColor: bgColor }">
           <th class="td-report-type">
-            <h5>Report Type</h5>
+            <h5 v-bind:style="{ color: textColor }">Report Type</h5>
           </th>
           <th class="td-report-status">
-            <h5>Report Status</h5>
+            <h5 v-bind:style="{ color: textColor }">Report Status</h5>
           </th>
           <th class="td-due-date">
-            <h5>Due Date</h5>
+            <h5 v-bind:style="{ color: textColor }">Due Date</h5>
           </th>
           <th class="td-view"/>
           <th class="td-remove"/>
@@ -23,7 +23,7 @@
           :report="report"
         />
       </table>
-      <h4 v-if="!hasReports(coop)" id="no-reports">
+      <h4 v-if="!hasReports(coop)" id="no-reports" v-bind:style="{ color: textColor }">
         <br>This coop has no reports
       </h4>
     </div>
@@ -54,8 +54,17 @@ export default {
     CoopInfo,
     CoopReportListItem
   },
-  created: function() {
+  created() {
     this.fetchCoop();
+
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
   },
   data() {
     return {
@@ -64,11 +73,13 @@ export default {
       },
       orderedReports: {
         type: Array
-      }
+      },
+      bgColor: "",
+      textColor: ""
     };
   },
   methods: {
-    hasReports: function(coop) {
+   hasReports: function(coop) {
       if (coop.reports != null && coop.reports.length > 0) {
         return true;
       }
@@ -85,7 +96,20 @@ export default {
         .catch(e => {
           console.log(e.message);
         });
+    },
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>

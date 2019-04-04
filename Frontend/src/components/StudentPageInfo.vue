@@ -1,16 +1,16 @@
 <template>
-  <div id="info-container" class="card">
-    <h3>
+  <div id="info-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
+    <h3 v-bind:style="{ color: textColor }">
       <span class="badge badge-primary">Student</span>
       &nbsp; &nbsp; {{ student.name }}
     </h3>
     <h3></h3>
-    <p>
-      <b>Email:</b>
+    <p v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">Email:</b>
       {{ student.email }}
     </p>
-    <p>
-      <b>ID:</b>
+    <p v-bind:style="{ color: textColor }">
+      <b v-bind:style="{ color: textColor }">ID:</b>
       {{ student.id }}
     </p>
   </div>
@@ -21,6 +21,37 @@ export default {
     student: {
       type: Object,
       required: true
+    }
+  },
+  created() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
+  },
+  data() {
+    return {
+      bgColor: "",
+      textColor: ""
+    };
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
+  },
+  methods: {
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   }
 };

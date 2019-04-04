@@ -1,45 +1,57 @@
 <! --- This component acts as a page to create a notification -->
 <template>
   <div v-if="this.reportLoaded" class="container">
-    <div class="card" id="info">
+    <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
-        <b>Report Information</b>
+        <b v-bind:style="{ color : textColor}">Report Information</b>
       </h4>
       <br style="display:block;margin:10px0;">
       <span>
-        <b>Report Type:</b>
+        <b v-bind:style="{ color : textColor}">Report Type:</b>
       </span>
-      <span v-if="report.reportType === 'Contract'">Employer Contract</span>
-      <span v-else-if="report.reportType === 'Technical'">Technical Report</span>
-      <span v-else-if="report.reportType === 'StudentEval'">Student Evaluation</span>
-      <span v-else-if="report.reportType === 'EmployerEval'">Employer Evaluation</span>
-      <span v-else>Biweekly Report</span>
+      <span
+        v-if="report.reportType === 'Contract'"
+        v-bind:style="{ color : textColor}"
+      >Employer Contract</span>
+      <span
+        v-else-if="report.reportType === 'Technical'"
+        v-bind:style="{ color : textColor}"
+      >Technical Report</span>
+      <span
+        v-else-if="report.reportType === 'StudentEval'"
+        v-bind:style="{ color : textColor}"
+      >Student Evaluation</span>
+      <span
+        v-else-if="report.reportType === 'EmployerEval'"
+        v-bind:style="{ color : textColor}"
+      >Employer Evaluation</span>
+      <span v-else v-bind:style="{ color : textColor}">Biweekly Report</span>
       <br>
       <span>
-        <b>Report Status:</b>
+        <b v-bind:style="{ color : textColor}">Report Status:</b>
       </span>
-      <span style="color:yellow" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+      <span style="color:orange" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
       <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
       <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
       <span style="color:lightgreen" v-else>Reviewed</span>
       <br>
       <span>
-        <b>Report Due Date:</b>
+        <b v-bind:style="{ color : textColor}">Report Due Date:</b>
       </span>
-      <span>{{report.dueDate}}</span>
+      <span v-bind:style="{ color : textColor}">{{report.dueDate}}</span>
     </div>
     <div>
       <br>
     </div>
-    <div class="card" id="edit">
+    <div class="card" id="edit" v-bind:style="{ backgroundColor : bgColor }">
       <h4>
-        <b>Modify Report Info</b>
+        <b v-bind:style="{ color : textColor}">Modify Report Info</b>
       </h4>
       <table>
         <tr>
           <td style="padding:15px">
             <span>
-              <b>Set Report Type:</b>
+              <b v-bind:style="{ color : textColor}">Set Report Type:</b>
             </span>
           </td>
           <td style="padding-right:15px">
@@ -63,7 +75,7 @@
         <tr>
           <td style="padding:15px">
             <span>
-              <b>Set Report Status:</b>
+              <b v-bind:style="{ color : textColor}">Set Report Status:</b>
             </span>
           </td>
           <td style="padding-right:15px">
@@ -86,11 +98,11 @@
         <tr>
           <td style="padding:15px">
             <span style="color:white">
-              <b>Set Due Date:</b>
+              <b v-bind:style="{ color : textColor}">Set Due Date:</b>
             </span>
           </td>
           <td>
-            <input type="date" v-model="selectedDate" name="due-date">
+            <input type="date" v-model="selectedDate" name="due-date" id="due">
             <button id="due-date-button" class="btn btn-light btn-sm" v-on:click="setDueDate">Set</button>
           </td>
         </tr>
@@ -99,9 +111,123 @@
     <div>
       <br>
     </div>
-    <div class="card" id="view">
+    <p id="title1" class="title"></p>
+    <p id="title2" class="title"></p>
+    <p id="title3" class="title"></p>
+    <p id="title4" class="title"></p>
+    <p id="title5" class="title"></p>
+    <p id="title6" class="title"></p>
+    <div v-if="report.reportType === 'Contract'">
+      <div class="card" id="viewCon" v-bind:style="{ backgroundColor : bgColor }">
+        <div id="t">
+          <h5 v-bind:style="{ color : textColor }">
+            <strong>Contract from:</strong>
+          </h5>
+          <h6 v-bind:style="{ color : textColor }">
+            <strong>{{coop.employer.name}}</strong>
+            at {{coop.employer.company}}
+          </h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.employer.email}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.employer.phone}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.address}}</h6>
+          <br>
+          <h5 v-bind:style="{ color : textColor }">
+            <strong>Contract for:</strong>
+          </h5>
+          <h6 v-bind:style="{ color : textColor }">{{coop.student.name}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.student.email}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.student.id}}</h6>
+          <h6 v-bind:style="{ color : textColor }">McGill University</h6>
+          <br>
+          <h5 v-bind:style="{ color : textColor }">
+            <strong>Contract Information:</strong>
+          </h5>
+          <b-container fluid>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Title:</strong>
+              {{coop.title}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="title"
+                v-model="title"
+                placeholder="Enter new title"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Start Date:</strong>
+              {{coop.startDate}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="start"
+                v-model="start"
+                placeholder="Enter new start date"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>End Date:</strong>
+              {{coop.endDate}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="end"
+                v-model="end"
+                placeholder="Enter new end date"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Hourly Wage:</strong>
+              {{coop.salaryPerHour}}$ per hour&nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="pay"
+                v-model="pay"
+                placeholder="Enter new hourly wage"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Hours a Week:</strong>
+              {{coop.hoursPerWeek}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="hours"
+                v-model="hours"
+                placeholder="Enter new weekly hours"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Location:</strong>
+              {{coop.address}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="address"
+                v-model="address"
+                placeholder="Enter new address"
+              >
+            </h6>
+          </b-container>
+        </div>
+      </div>
+      <p>
+        <br>
+      </p>
+      <button
+        type="button"
+        id="button"
+        v-on:click="save(title, start, end, pay, hours)"
+        class="btn btn-success btn-lg"
+        v-b-tooltip.hover
+        title="Click to save changes"
+      >Save Changes</button>
+    </div>
+
+    <div v-else class="card" id="viewCon" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
-        <b>View File</b>
+        <b v-bind:style="{ color : textColor}">View File</b>
       </h4>
       <br>
       <h5 style="color:lightblue">[Pretend that this is a pdf viewer or something]</h5>
@@ -135,19 +261,149 @@ export default {
       report: {
         type: Object
       },
-      reportLoaded: false
+      coop: {
+        type: Object
+      },
+      reportLoaded: false,
+      hours: "",
+      pay: "",
+      title: "",
+      start: "",
+      end: "",
+      address: "",
+      bgColor: "",
+      textColor: ""
     };
   },
   created: function() {
     this.fetchReport();
+
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
   },
   methods: {
+    getCoop: function() {
+      var repId = this.report.id;
+      AXIOS.get(`/coopFromReport/` + repId)
+        .then(response => {
+          this.coop = response.data;
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
+    },
+
     setReportType: function() {
-      alert("This function has not been implemented yet.");
+      AXIOS.put(
+        "/report/updateType?" +
+          "id=" +
+          this.report.id +
+          "&type=" +
+          this.selectedType
+      )
+        .then(response => {
+          this.fetchReport();
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
+    },
+    save: function() {
+      var val = document.getElementById("title").value;
+      var didSomething = false;
+      if (val === undefined || val == null || val.length <= 0) {
+        console.log("hello");
+      } else {
+        AXIOS.put("/coop/updateTitle?" + "id=" + this.coop.id + "&title=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title1").innerText =
+              "Title failed to update";
+          });
+      }
+      val = document.getElementById("start").value;
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updateStart?" + "id=" + this.coop.id + "&date=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title2").innerText =
+              "Start date failed to update";
+          });
+      }
+      val = document.getElementById("end").value;
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updateEnd?" + "id=" + this.coop.id + "&date=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title3").innerText =
+              "Start date failed to update";
+          });
+      }
+      val = document.getElementById("pay").value;
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updatePay?" + "id=" + this.coop.id + "&pay=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title4").innerText =
+              "Pay failed to update";
+          });
+      }
+      val = document.getElementById("hours").value;
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updateHours?" + "id=" + this.coop.id + "&hours=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title5").innerText =
+              "Hours failed to update";
+          });
+      }
+      val = document.getElementById("address").value;
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put(
+          "/coop/updateAddress?" + "id=" + this.coop.address + "&address=" + val
+        )
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title6").innerText =
+              "Address failed to update";
+          });
+      }
+      if (didSomething === true) {
+        /* idk probs do something maybe refresh page*/
+      }
     },
     setReportStatus: function() {
       AXIOS.put(
-        "/report/update?" +
+        "/report/updateStatus?" +
           "id=" +
           this.report.id +
           "&status=" +
@@ -161,7 +417,14 @@ export default {
         });
     },
     setDueDate: function() {
-      alert("This function has not been implemented yet.");
+      var val = document.getElementById("due").value;
+      AXIOS.put("/report/updateDate" + "id=" + this.report.id + "&date=" + val)
+        .then(response => {
+          this.fetchReport();
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
     },
     fetchReport: function() {
       var reportId = parseInt(Router.currentRoute.path.split("/")[2]);
@@ -170,11 +433,25 @@ export default {
         .then(response => {
           this.report = response.data;
           this.reportLoaded = true;
+          this.getCoop();
         })
         .catch(e => {
           console.log(e.message);
         });
+    },
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>
@@ -200,6 +477,7 @@ export default {
   padding: 15px;
   text-align: left;
   background-color: rgb(53, 58, 62);
+  color: black;
   display: inline-block;
 }
 #view {
@@ -211,7 +489,40 @@ export default {
   background-color: rgb(53, 58, 62);
   display: inline-block;
 }
-b {
+
+#viewCon {
+  width: 70%;
+  min-width: 550px;
+  margin: auto;
+  padding: 15px;
+  text-align: left;
+  background-color: white;
+  display: inline-block;
+  color: black;
+}
+
+.reportField {
+  width: 28%;
+  border-radius: 4px;
+  border: 0px;
+  margin: auto;
+  margin-top: 15px;
+}
+
+#button {
+  width: 20%;
   color: white;
+  margin-bottom: 15px;
+  border: 0px;
+}
+
+#t {
+  color: black;
+}
+.title {
+  text-align: left;
+  color: red;
+  font-size: 15px;
+  padding-left: 15px;
 }
 </style>

@@ -1,26 +1,22 @@
 <template>
   <div class="container">
-    <table class="center">
-      <tr>
-        <th>Selected Start Term: {{ this.getStartTerm() }}</th>
-        <th>Selected End Term: {{ this.getEndTerm() }}</th>
-        <th>Selected Coop Number: {{ this.getCoopNumber() }}</th>
-      </tr>
+    <table class="Filter">
+      <StatisticsFilters
+        @updateCoopNumber="updateCoopNumber"
+        @updateStartTerm="updateStartTerm"
+        @updateEndTerm="updateEndTerm"
+      />
     </table>
-    <div class="Chart">
-      <h2 style="text-align:center;">Profiles</h2>
-      <bar-chart :chartData="this.profiles"/>
-    </div>
-    <div class="Chart" v-if="coopstatsLoaded">
-      <h2 style="text-align:center;">Coop Statistics</h2>
+    <div class="Chart" v-if="coopstatsLoaded" v-bind:style="{ backgroundColor: bgColor }">
+      <h2 style="text-align:center;" v-bind:style="{ color: textColor }">Coop Statistics</h2>
       <pie-chart-coop :chartData="this.coopstats"/>
     </div>
-    <div class="Chart" v-if="reportstatsLoaded">
-      <h2 style="text-align:center;">Report Status Statistics</h2>
+    <div class="Chart" v-if="reportstatsLoaded" v-bind:style="{ backgroundColor: bgColor }">
+      <h2 style="text-align:center;" v-bind:style="{ color: textColor }">Report Status Statistics</h2>
       <pie-chart-report-status :chartData="this.reportstats"/>
     </div>
-    <div class="Chart" v-if="reportstatsLoaded">
-      <h2 style="text-align:center;">Report Type Statistics</h2>
+    <div class="Chart" v-if="reportstatsLoaded" v-bind:style="{ backgroundColor: bgColor }">
+      <h2 style="text-align:center;" v-bind:style="{ color: textColor }">Report Type Statistics</h2>
       <pie-chart-report-type :chartData="this.reportstats"/>
     </div>
   </div>
@@ -32,6 +28,7 @@ import PieChartCoop from "./PieChartCoop";
 import PieChartReportStatus from "./PieChartReportStatus";
 import PieChartReportType from "./PieChartReportType";
 import axios from "axios";
+import StatisticsFilters from "./StatisticsFilters.vue";
 
 var config = require("../../config");
 
@@ -46,57 +43,25 @@ var AXIOS = axios.create({
 });
 
 export default {
-  props: {
-    students: {
-      type: Array,
-      required: true
-    },
-    employers: {
-      type: Array,
-      required: true
-    },
-    selectedProfile: "",
-    selectedStartTerm: "",
-    selectedEndTerm: "",
-    selectedCoopNumber: ""
+  props: {},
+  created: function() {
+    this.updateCharts();
+
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
   },
   components: {
     BarChart,
     PieChartCoop,
     PieChartReportStatus,
-    PieChartReportType
-  },
-  created: function() {
-    AXIOS.get(
-      `/statistics/coop/` +
-        this.getStartTerm() +
-        `/` +
-        this.getEndTerm() +
-        `/` +
-        this.getCoopNumber()
-    )
-      .then(response => {
-        this.coopstats = response.data;
-        this.coopstatsLoaded = true;
-      })
-      .catch(e => {
-        this.error = e;
-      });
-    AXIOS.get(
-      `/statistics/report/` +
-        this.getStartTerm() +
-        `/` +
-        this.getEndTerm() +
-        `/` +
-        this.getCoopNumber()
-    )
-      .then(response => {
-        this.reportstats = response.data;
-        this.reportstatsLoaded = true;
-      })
-      .catch(e => {
-        this.error = e;
-      });
+    PieChartReportType,
+    StatisticsFilters
   },
   data() {
     return {
@@ -109,10 +74,66 @@ export default {
       reportstats: {
         type: Object
       },
-      reportstatsLoaded: false
+      reportstatsLoaded: false,
+      selectedProfile: "",
+      selectedStartTerm: "",
+      selectedEndTerm: "",
+      selectedCoopNumber: "",
+      bgColor: "",
+      textColor: ""
     };
   },
   methods: {
+    updateCharts: function() {
+      AXIOS.get(
+        `/statistics/coop/` +
+          this.getStartTerm() +
+          `/` +
+          this.getEndTerm() +
+          `/` +
+          this.getCoopNumber()
+      )
+        .then(response => {
+          this.coopstats = response.data;
+          this.coopstatsLoaded = true;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+      AXIOS.get(
+        `/statistics/report/` +
+          this.getStartTerm() +
+          `/` +
+          this.getEndTerm() +
+          `/` +
+          this.getCoopNumber()
+      )
+        .then(response => {
+          this.reportstats = response.data;
+          this.reportstatsLoaded = true;
+        })
+        .catch(e => {
+          this.error = e;
+        });
+    },
+    updateCoopNumber: function(value) {
+      this.coopstatsLoaded = false;
+      this.reportstatsLoaded = false;
+      this.selectedCoopNumber = value;
+      this.updateCharts();
+    },
+    updateStartTerm: function(value) {
+      this.coopstatsLoaded = false;
+      this.reportstatsLoaded = false;
+      this.selectedStartTerm = value;
+      this.updateCharts();
+    },
+    updateEndTerm: function(value) {
+      this.coopstatsLoaded = false;
+      this.reportstatsLoaded = false;
+      this.selectedEndTerm = value;
+      this.updateCharts();
+    },
     increaseHeight() {
       this.height += 10;
     },
@@ -139,6 +160,15 @@ export default {
       } else {
         return this.selectedCoopNumber;
       }
+    },
+    setDarkMode: function(darkModeOn) {
+      if (darkModeOn) {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   computed: {
@@ -147,13 +177,10 @@ export default {
         height: `${this.height}px`,
         position: "relative"
       };
-    },
-    profiles() {
-      return {
-        students: this.students,
-        employers: this.employers
-      };
     }
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>

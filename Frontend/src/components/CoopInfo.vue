@@ -1,56 +1,116 @@
 <template>
-  <div id="info-container" class="card">
+  <div id="info-container" class="card" v-bind:style="{ backgroundColor : bgColor}">
     <h3>
       <span class="badge badge-warning">Coop</span> &nbsp; &nbsp;
-      <strong style="color:white">Coop Information</strong>
+      <strong v-bind:style="{ color : textColor}">Coop Information</strong>
     </h3>
     <br>
-    <span style="color:white">
-      <b>Status:</b>
+    <span v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Status:</b>
     </span>
     <span style="color:lightblue" v-if="coop.status === 'NotStarted'">Not Started</span>
     <span style="color:yellow" v-else-if="coop.status === 'InProgress'">In Progress</span>
     <span style="color:lightgreen" v-else-if="coop.status === 'Completed'">Complete</span>
     <span style="color:red" v-else>Incomplete</span>
     <p/>
-    <p>
-      <b>Employer:</b>
+    <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Company:</b>
+      {{ coop.employer.company }}
+    </p>
+    <p @click="goToStudentPage"></p>
+    <p v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Employer:</b>
       {{ coop.employer.name }}
     </p>
-    <p>
-      <b>Student:</b>
+    <p v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Student:</b>
       {{ coop.student.name }}
     </p>
-    <p>
-      <b>Salary per hour:</b>
+    <p v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Salary per hour:</b>
       {{ coop.salaryPerHour }}
     </p>
-    <p>
-      <b>Hours per week:</b>
+    <p v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Hours per week:</b>
       {{ coop.hoursPerWeek }}
     </p>
-    <p>
-      <b>Title:</b>
+    <p v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Title:</b>
       {{ coop.title }}
     </p>
-    <p>
-      <b>Dates:</b>
+    <p v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Dates:</b>
       {{ coop.startDate }} to {{ coop.endDate }}
     </p>
-    <p>
-      <b>Location:</b>
+    <p v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Location:</b>
       {{ coop.address }}
     </p>
   </div>
 </template>
 
 <script>
+import Router from "../router";
+
 export default {
   props: {
     coop: {
       type: Object,
       required: true
     }
+  },
+  methods: {
+    goToEmployerPage: function() {
+      // Go to the student page
+      Router.push({
+        path: "/employer/",
+        name: "EmployerPage",
+        params: {
+          emailUrl: this.coop.employer.email,
+          employerEmail: this.coop.employer.email
+        }
+      });
+    },
+    goToStudentPage: function() {
+      // Go to the student page
+      Router.push({
+        path: "/student/",
+        name: "StudentPage",
+        params: {
+          emailUrl: this.coop.student.email,
+          studentEmail: this.coop.student.email
+        }
+      });
+    },
+    setDarkMode: function() {
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
+    }
+  },
+  created() {
+    var darkModeOn = localStorage.getItem("DarkModeOn");
+    if (darkModeOn === "true") {
+      this.bgColor = "rgb(53, 58, 62)";
+      this.textColor = "white";
+    } else {
+      this.bgColor = "rgb(248, 249, 251)";
+      this.textColor = "black";
+    }
+  },
+  data() {
+    return {
+      bgColor: "",
+      textColor: ""
+    };
+  },
+  mounted() {
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>
