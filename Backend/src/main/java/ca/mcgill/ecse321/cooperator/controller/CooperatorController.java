@@ -25,6 +25,7 @@ import ca.mcgill.ecse321.cooperator.dto.ReportDto;
 import ca.mcgill.ecse321.cooperator.dto.ReportStatisticsDto;
 import ca.mcgill.ecse321.cooperator.dto.NotificationDto;
 import ca.mcgill.ecse321.cooperator.dto.StudentDto;
+import ca.mcgill.ecse321.cooperator.gmail.GmailService;
 import ca.mcgill.ecse321.cooperator.model.Administrator;
 import ca.mcgill.ecse321.cooperator.model.Coop;
 import ca.mcgill.ecse321.cooperator.model.CoopStatus;
@@ -101,6 +102,7 @@ public class CooperatorController {
 		}
 
 		Notification notif = service.createNotification(text, a, s, e);
+		
 		return convertToDto(notif);
 	}
 	
@@ -144,6 +146,17 @@ public class CooperatorController {
 		Coop c = service.getCoop(coopId);
 		Report report = service.createReport(c, date, status, type);
 		return convertToDto(report);
+	}
+	
+	//send email from cooperator gmail account
+	@PostMapping("/notification/sendEmail")
+	public void createReport(@RequestParam String recipient, @RequestParam String bodytext) {
+		try {
+			GmailService.sendEmail(recipient, bodytext);
+		}
+		catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 	}
 	
 	/*
