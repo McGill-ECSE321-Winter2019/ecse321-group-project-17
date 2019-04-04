@@ -1,4 +1,4 @@
-<! --- This component acts as a page to create an account -->
+<!--- This component acts as a page to create an account -->
 <template>
   <div id="account" class="card" v-bind:style="{ backgroundColor : bgColor }">
     <span id="title" v-bind:style="{ color : textColor }">Create an Administrator Account:</span>
@@ -6,34 +6,22 @@
       <span id="title1"></span>
     </div>
     <b-container fluid>
-      <input
-        class="loginField"
-        type="text"
-        id="username"
-        v-model="email"
-        placeholder="Enter Email"
-      />
-      <input
-        class="loginField"
-        type="text"
-        id="username"
-        v-model="name"
-        placeholder="Enter Name"
-      />
+      <input class="loginField" type="text" id="username" v-model="email" placeholder="Enter Email">
+      <input class="loginField" type="text" id="username" v-model="name" placeholder="Enter Name">
       <input
         class="loginField"
         type="text"
         id="phone"
         v-model="num"
         placeholder="Enter Phone Number"
-      />
+      >
       <input
         class="loginField"
         type="password"
         id="password"
         v-model="pw"
         placeholder="Enter Password"
-      />
+      >
       <button
         type="button"
         v-on:click="create(email, pw, name, num)"
@@ -64,16 +52,16 @@ var AXIOS = axios.create({
 export default {
   data() {
     return {
-      admin:{
-          type: Object
+      admin: {
+        type: Object
       },
       bgColor: "",
       textColor: "",
       error: "",
       pw: "",
       email: "",
-      num:"",
-      name:""
+      num: "",
+      name: ""
     };
   },
   created: function() {
@@ -90,32 +78,36 @@ export default {
     // Send get request to find admin
     create: function(email, pw, name, num) {
       AXIOS.post(
-          `/admin/create?email=` + email +
-          `&password=` + pw +
-          `&name=` + name +
-          `&phone=` + num 
-          )
+        `/admin/create?email=` +
+          email +
+          `&password=` +
+          pw +
+          `&name=` +
+          name +
+          `&phone=` +
+          num
+      )
         .then(response => {
           this.admin = response.data;
           this.goToHomePage();
         })
         .catch(e => {
           console.log(e.message);
-          document.getElementById("title1").innerText = "Please enter missing account information!";
-        });
-
-    },
-    goToHomePage: function(){
-        Router.push({
-          path: "/home/",
-          name: "Home",
+          document.getElementById("title1").innerText =
+            "Please enter missing account information!";
         });
     },
-     goToAccountPage: function(){
-        Router.push({
-          path: "/account/",
-          name: "AccountPage",
-        });
+    goToHomePage: function() {
+      Router.push({
+        path: "/home/",
+        name: "Home"
+      });
+    },
+    goToAccountPage: function() {
+      Router.push({
+        path: "/account/",
+        name: "AccountPage"
+      });
     },
     setDarkMode: function() {
       var darkModeOn = localStorage.getItem("DarkModeOn");
@@ -126,10 +118,9 @@ export default {
         this.bgColor = "rgb(248, 249, 251)";
         this.textColor = "black";
       }
-    } 
-  }    
+    }
+  }
 };
-
 </script>
 
 <style>
@@ -175,7 +166,4 @@ export default {
   margin: auto;
   margin-top: 15px;
 }
-
-
-
 </style>

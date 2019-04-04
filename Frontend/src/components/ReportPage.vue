@@ -2,7 +2,6 @@
 <template>
   <div v-if="this.reportLoaded" class="container">
     <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
-      
       <h4>
         <b v-bind:style="{ color : textColor}">Report Information</b>
       </h4>
@@ -44,7 +43,7 @@
     <div>
       <br>
     </div>
-    <div class="card" id="edit" v-bind:style="{ backgroundColor : bgColor}">
+    <div class="card" id="edit" v-bind:style="{ backgroundColor : bgColor }">
       <h4>
         <b v-bind:style="{ color : textColor}">Modify Report Info</b>
       </h4>
@@ -118,89 +117,104 @@
     <p id="title4" class="title"></p>
     <p id="title5" class="title"></p>
     <p id="title6" class="title"></p>
-    <div v-if="report.reportType === 'Contract'"> 
-      <div class="card" id="viewCon" >
-      <div id="t">
-        <h5><strong>Contract from:</strong></h5>
-        <h6> <strong> {{coop.employer.name}} </strong> at {{coop.employer.company}} </h6>
-        <h6>  {{coop.employer.email}}  </h6>
-        <h6>  {{coop.employer.phone}}  </h6>
-        <h6>  {{coop.address}}  </h6>
-        <br>
-        <h5><strong>Contract for:</strong></h5>
-        <h6>  {{coop.student.name}}  </h6>
-        <h6>  {{coop.student.email}}  </h6>
-        <h6>  {{coop.student.id}}  </h6>
-        <h6>  McGill University  </h6>
-
-        <br>
-        <h5><strong>Contract Information:</strong></h5>
-        <b-container fluid>
-          <h6> 
-            <strong>Title:</strong> 
-            {{coop.title}} &nbsp;&nbsp;
-            <input 
-            class="reportField" 
-            type="text" 
-            id="title" 
-            v-model="title"
-            placeholder= "Enter new title" > 
+    <div v-if="report.reportType === 'Contract'">
+      <div class="card" id="viewCon" v-bind:style="{ backgroundColor : bgColor }">
+        <div id="t">
+          <h5 v-bind:style="{ color : textColor }">
+            <strong>Contract from:</strong>
+          </h5>
+          <h6 v-bind:style="{ color : textColor }">
+            <strong>{{coop.employer.name}}</strong>
+            at {{coop.employer.company}}
           </h6>
-          <h6> 
-            <strong>Start Date:</strong> 
-            {{coop.startDate}} &nbsp;&nbsp;
-            <input 
-            class="reportField" 
-            type="text" 
-            id="start" 
-            v-model="start"
-            placeholder= "Enter new start date" > 
-          </h6>
-          <h6> 
-            <strong>End Date:</strong> 
-            {{coop.endDate}} &nbsp;&nbsp;
-            <input 
-            class="reportField" 
-            type="text" 
-            id="end" 
-            v-model="end"
-            placeholder= "Enter new end date" > 
-          </h6>
-          <h6> 
-            <strong>Hourly Wage:</strong> 
-            {{coop.salaryPerHour}}$ per hour&nbsp;&nbsp;
-            <input 
-            class="reportField" 
-            type="text" 
-            id="pay" 
-            v-model="pay"
-            placeholder= "Enter new hourly wage" > 
-          </h6>
-          <h6> 
-            <strong>Hours a Week:</strong> 
-            {{coop.hoursPerWeek}} &nbsp;&nbsp;
-            <input 
-            class="reportField" 
-            type="text" 
-            id="hours" 
-            v-model="hours"
-            placeholder= "Enter new weekly hours" > 
-          </h6>
-          
-          <h6> 
-            <strong>Location:</strong> 
-            {{coop.address}} &nbsp;&nbsp;
-            <input 
-            class="reportField" 
-            type="text" 
-            id="address" 
-            v-model="address"
-            placeholder= "Enter new address" > 
-          </h6>
-        </b-container>
+          <h6 v-bind:style="{ color : textColor }">{{coop.employer.email}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.employer.phone}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.address}}</h6>
+          <br>
+          <h5 v-bind:style="{ color : textColor }">
+            <strong>Contract for:</strong>
+          </h5>
+          <h6 v-bind:style="{ color : textColor }">{{coop.student.name}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.student.email}}</h6>
+          <h6 v-bind:style="{ color : textColor }">{{coop.student.id}}</h6>
+          <h6 v-bind:style="{ color : textColor }">McGill University</h6>
+          <br>
+          <h5 v-bind:style="{ color : textColor }">
+            <strong>Contract Information:</strong>
+          </h5>
+          <b-container fluid>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Title:</strong>
+              {{coop.title}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="title"
+                v-model="title"
+                placeholder="Enter new title"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Start Date:</strong>
+              {{coop.startDate}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="start"
+                v-model="start"
+                placeholder="Enter new start date"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>End Date:</strong>
+              {{coop.endDate}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="end"
+                v-model="end"
+                placeholder="Enter new end date"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Hourly Wage:</strong>
+              {{coop.salaryPerHour}}$ per hour&nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="pay"
+                v-model="pay"
+                placeholder="Enter new hourly wage"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Hours a Week:</strong>
+              {{coop.hoursPerWeek}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="hours"
+                v-model="hours"
+                placeholder="Enter new weekly hours"
+              >
+            </h6>
+            <h6 v-bind:style="{ color : textColor }">
+              <strong>Location:</strong>
+              {{coop.address}} &nbsp;&nbsp;
+              <input
+                class="reportField"
+                type="text"
+                id="address"
+                v-model="address"
+                placeholder="Enter new address"
+              >
+            </h6>
+          </b-container>
+        </div>
       </div>
-    </div>
-    <p> <br> </p>
+      <p>
+        <br>
+      </p>
       <button
         type="button"
         id="button"
@@ -209,9 +223,8 @@
         v-b-tooltip.hover
         title="Click to save changes"
       >Save Changes</button>
-
     </div>
-    
+
     <div v-else class="card" id="viewCon" v-bind:style="{ backgroundColor : bgColor}">
       <h4>
         <b v-bind:style="{ color : textColor}">View File</b>
@@ -219,9 +232,6 @@
       <br>
       <h5 style="color:lightblue">[Pretend that this is a pdf viewer or something]</h5>
     </div>
-
-
-
   </div>
 </template>
 
@@ -255,19 +265,19 @@ export default {
         type: Object
       },
       reportLoaded: false,
-      bgColor: "",
-      textColor: "",
       hours: "",
-      pay:"",
-      title:"",
-      start:"",
-      end:"",
-      address:"",
+      pay: "",
+      title: "",
+      start: "",
+      end: "",
+      address: "",
+      bgColor: "",
+      textColor: ""
     };
   },
   created: function() {
     this.fetchReport();
-    
+
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";
@@ -288,7 +298,7 @@ export default {
           console.log(e.message);
         });
     },
-    
+
     setReportType: function() {
       AXIOS.put(
         "/report/updateType?" +
@@ -307,137 +317,90 @@ export default {
     save: function() {
       var val = document.getElementById("title").value;
       var didSomething = false;
-      if(val === undefined || val == null || val.length <= 0){
-          console.log("hello");
-      }
-      else{
-        AXIOS.put(
-        "/coop/updateTitle?" +
-          "id=" +
-          this.coop.id +
-          "&title=" +
-          val
-        )
-        .then(response => {
-          didSomething = true;
-        })
-        .catch(e => {
-          console.log(e.message);
-          document.getElementById("title1").innerText =
-            "Title failed to update";
-        });
+      if (val === undefined || val == null || val.length <= 0) {
+        console.log("hello");
+      } else {
+        AXIOS.put("/coop/updateTitle?" + "id=" + this.coop.id + "&title=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title1").innerText =
+              "Title failed to update";
+          });
       }
       val = document.getElementById("start").value;
-      if(val === undefined || val == null || val.length <= 0){
-
-      }
-      else{
-        AXIOS.put(
-        "/coop/updateStart?" +
-          "id=" +
-          this.coop.id +
-          "&date=" +
-          val
-        )
-        .then(response => {
-          didSomething = true;
-        })
-        .catch(e => {
-          console.log(e.message);
-          document.getElementById("title2").innerText =
-            "Start date failed to update";
-        });
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updateStart?" + "id=" + this.coop.id + "&date=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title2").innerText =
+              "Start date failed to update";
+          });
       }
       val = document.getElementById("end").value;
-      if(val === undefined || val == null || val.length <= 0){
-
-      }
-      else{
-        AXIOS.put(
-        "/coop/updateEnd?" +
-          "id=" +
-          this.coop.id +
-          "&date=" +
-          val
-        )
-        .then(response => {
-          didSomething = true;
-        })
-        .catch(e => {
-          console.log(e.message);
-          document.getElementById("title3").innerText =
-            "Start date failed to update";
-        });
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updateEnd?" + "id=" + this.coop.id + "&date=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title3").innerText =
+              "Start date failed to update";
+          });
       }
       val = document.getElementById("pay").value;
-      if(val === undefined || val == null || val.length <= 0 ){
-
-      }
-      else{
-        AXIOS.put(
-        "/coop/updatePay?" +
-          "id=" +
-          this.coop.id +
-          "&pay=" +
-          val
-        )
-        .then(response => {
-          didSomething = true;
-        })
-        .catch(e => {
-          console.log(e.message);
-          document.getElementById("title4").innerText =
-            "Pay failed to update";
-        });
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updatePay?" + "id=" + this.coop.id + "&pay=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title4").innerText =
+              "Pay failed to update";
+          });
       }
       val = document.getElementById("hours").value;
-      if(val === undefined || val == null || val.length <= 0 ){
-
-      }
-      else{
-        AXIOS.put(
-        "/coop/updateHours?" +
-          "id=" +
-          this.coop.id +
-          "&hours=" +
-          val
-        )
-        .then(response => {
-          didSomething = true;
-        })
-        .catch(e => {
-          console.log(e.message);
-          document.getElementById("title5").innerText =
-            "Hours failed to update";
-        });
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
+        AXIOS.put("/coop/updateHours?" + "id=" + this.coop.id + "&hours=" + val)
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title5").innerText =
+              "Hours failed to update";
+          });
       }
       val = document.getElementById("address").value;
-      if(val === undefined || val == null || val.length <= 0){
-          
-      }
-      else{
+      if (val === undefined || val == null || val.length <= 0) {
+      } else {
         AXIOS.put(
-        "/coop/updateAddress?" +
-          "id=" +
-          this.coop.address +
-          "&address=" +
-          val
+          "/coop/updateAddress?" + "id=" + this.coop.address + "&address=" + val
         )
-        .then(response => {
-          didSomething = true;
-        })
-        .catch(e => {
-          console.log(e.message);
-          document.getElementById("title6").innerText =
-            "Address failed to update";
-        });
+          .then(response => {
+            didSomething = true;
+          })
+          .catch(e => {
+            console.log(e.message);
+            document.getElementById("title6").innerText =
+              "Address failed to update";
+          });
       }
-      if(didSomething === true){
+      if (didSomething === true) {
         /* idk probs do something maybe refresh page*/
       }
-      
     },
-
     setReportStatus: function() {
       AXIOS.put(
         "/report/updateStatus?" +
@@ -455,13 +418,7 @@ export default {
     },
     setDueDate: function() {
       var val = document.getElementById("due").value;
-      AXIOS.put(
-        "/report/updateDate" +
-          "id=" +
-          this.report.id +
-          "&date=" +
-          val
-      )
+      AXIOS.put("/report/updateDate" + "id=" + this.report.id + "&date=" + val)
         .then(response => {
           this.fetchReport();
         })
@@ -541,7 +498,7 @@ export default {
   text-align: left;
   background-color: white;
   display: inline-block;
-  color:black;
+  color: black;
 }
 
 .reportField {
@@ -552,15 +509,15 @@ export default {
   margin-top: 15px;
 }
 
-#button{
+#button {
   width: 20%;
-  color:white;
+  color: white;
   margin-bottom: 15px;
   border: 0px;
 }
 
 #t {
-  color: black; 
+  color: black;
 }
 .title {
   text-align: left;
