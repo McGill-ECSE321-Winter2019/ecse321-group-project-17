@@ -119,7 +119,7 @@
     <p id="title6" class="title"></p>
     <div v-if="report.reportType === 'Contract'"> 
       <div class="card" id="viewCon" >
-      <div class="t">
+      <div id="t">
         <h5><strong>Contract from:</strong></h5>
         <h6> <strong> {{coop.employer.name}} </strong> at {{coop.employer.company}} </h6>
         <h6>  {{coop.employer.email}}  </h6>
@@ -484,7 +484,7 @@ export default {
   padding: 15px;
   text-align: left;
   background-color: rgb(53, 58, 62);
-  color: white;
+  color: black;
   display: inline-block;
 }
 #edit {
@@ -513,6 +513,7 @@ export default {
   padding: 15px;
   text-align: left;
   background-color: white;
+  color: black;
   display: inline-block;
 }
 
@@ -533,10 +534,10 @@ export default {
   
 }
 
-.t {
+#t {
   color: black; 
 }
-.title1 {
+.title {
   text-align: left;
   color: red;
   font-size: 15px;

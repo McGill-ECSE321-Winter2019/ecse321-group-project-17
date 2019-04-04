@@ -6,7 +6,12 @@
       <span id="title1"></span>
     </div>
     <b-container fluid>
-      <input class="loginField" type="text" id="username" v-model="email" placeholder="Enter email">
+      <input 
+        class="loginField" 
+        type="text" 
+        id="username" 
+        v-model="email" 
+        placeholder="Enter email">
       <input
         class="loginField"
         type="password"
