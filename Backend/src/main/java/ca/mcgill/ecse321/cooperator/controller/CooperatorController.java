@@ -217,7 +217,9 @@ public class CooperatorController {
 		return convertToDto(report);
 	}
 	
-	/* PUT METHODS */
+	/* 
+	 * PUT METHODS 
+	 */
 	
 	/**
 	 * Updates the status of the specified report. 
@@ -241,19 +243,110 @@ public class CooperatorController {
 	 * @param status
 	 * @return Updated CoopDto object
 	 */
-	@PutMapping("/coop/update")
+	@PutMapping("/coop/updateStatus")
 	public CoopDto updateCoopStatus(@RequestParam Integer id, @RequestParam CoopStatus status){
 		Coop c = service.getCoop(id);
 		c = service.updateCoopStatus(c, status);
 		CoopDto cDto = convertToDto(c);
 		return cDto;
 	}
+
+	/**
+	 * Updates the title of the specified co-op term.
+	 * 
+	 * @param id
+	 * @param title
+	 * @return
+	 */
+	@PutMapping("/coop/updateTitle")
+	public CoopDto updateCoopTitle(@RequestParam Integer id, @RequestParam String title){
+		Coop c = service.getCoop(id);
+		c = service.updateCoopTitle(c, title);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
+	/**
+	 * Updates the start date of the specified co-op term.
+	 * 
+	 * @param id
+	 * @param date
+	 * @return
+	 */
+	@PutMapping("/coop/updateStart")
+	public CoopDto updateCoopStart(@RequestParam Integer id, @RequestParam Date date){
+		Coop c = service.getCoop(id);
+		c = service.updateCoopStart(c, date);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
 	
-	/* DELETE METHODS */
+	/**
+	 * Updates the end date of the specified co-op term.
+	 * 
+	 * @param id
+	 * @param date
+	 * @return
+	 */
+	@PutMapping("/coop/updateEnd")
+	public CoopDto updateCoopEnd(@RequestParam Integer id, @RequestParam Date date){
+		Coop c = service.getCoop(id);
+		c = service.updateCoopEnd(c, date);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
+	
+	/**
+	 * Updates the employer of the specified co-op term.
+	 * 
+	 * @param id
+	 * @param email
+	 * @return
+	 */
+	@PutMapping("/coop/updateEmp")
+	public CoopDto updateCoopEmp(@RequestParam Integer id, @RequestParam String email){
+		Coop c = service.getCoop(id);
+		Employer e = service.getEmployer(email);
+		c = service.updateCoopEmp(c, e);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
+	
+	/**
+	 * Updates the pay of the specified co-op term.
+	 * 
+	 * @param id
+	 * @param pay
+	 * @return
+	 */
+	@PutMapping("/coop/updatePay")
+	public CoopDto updateCoopPay(@RequestParam Integer id, @RequestParam Integer pay){
+		Coop c = service.getCoop(id);
+		c = service.updateCoopPay(c, pay);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
+	
+	/**
+	 * Updates the hours of the specified co-op term.
+	 * 
+	 * @param id
+	 * @param hours
+	 * @return
+	 */
+	@PutMapping("/coop/updateHours")
+	public CoopDto updateCoopHours(@RequestParam Integer id, @RequestParam Integer hours){
+		Coop c = service.getCoop(id);
+		c = service.updateCoopHours(c, hours);
+		CoopDto cDto = convertToDto(c);
+		return cDto;
+	}
+	
+	/*
+	 * DELETE METHODS
+	 */
 	
 	/**
 	 * Deletes the report with specified ID.
-	 * 
 	 * @param id
 	 */
 	@DeleteMapping( "/report/delete")

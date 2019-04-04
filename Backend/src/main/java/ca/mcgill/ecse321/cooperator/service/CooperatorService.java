@@ -385,8 +385,90 @@ public class CooperatorService {
 	}
 	
 	/**
-	 * Returns all Coops for the specified student in the database. 
+	 * Updates the specified Coop's title in the database. 
+	 *  
+	 * @param s
+	 * @return Set of Coop objects
+	 */
+	@Transactional
+	public Coop updateCoopTitle(Coop c, String s) {
+		c.setTitle(s);
+		coopRepository.save(c);
+		return c;
+	}
+	
+	/**
+	 * Updates the specified Coop's start date in the database. 
 	 * 
+	 * @param c
+	 * @param d
+	 * @return
+	 */
+	@Transactional
+	public Coop updateCoopStart(Coop c, Date d) {
+		c.setStartDate(d);
+		coopRepository.save(c);
+		return c;
+	}
+	
+	/**
+	 * Updates the specified Coop's end date in the database. 
+	 * 
+	 * @param c
+	 * @param d
+	 * @return
+	 */
+	@Transactional
+	public Coop updateCoopEnd(Coop c, Date d) {
+		c.setEndDate(d);
+		coopRepository.save(c);
+		return c;
+	}
+	
+	/**
+	 * Updates the specified Coop's employer in the database. 
+	 * 
+	 * @param c
+	 * @param e
+	 * @return
+	 */
+	@Transactional
+	public Coop updateCoopEmp(Coop c, Employer e) {
+		c.setEmployer(e);
+		coopRepository.save(c);
+		return c;
+	}
+	
+	/**
+	 * Updates the specified Coop's pay in the database. 
+	 * 
+	 * @param c
+	 * @param p
+	 * @return
+	 */
+	@Transactional
+	public Coop updateCoopPay(Coop c, Integer p) {
+		c.setSalaryPerHour(p);
+		coopRepository.save(c);
+		return c;
+	}
+	
+	/**
+	 * Updates the specified Coop's hours in the database. 
+	 * @param c
+	 * @param h
+	 * @return
+	 */
+	@Transactional
+	public Coop updateCoopHours(Coop c, Integer h) {
+		c.setHoursPerWeek(h);
+		coopRepository.save(c);
+		return c;
+	}
+	
+	/**
+	 * Returns the set of coop objects belonging to a student
+	 *  
 	 * @param s
 	 * @return Set of Coop objects
 	 */
