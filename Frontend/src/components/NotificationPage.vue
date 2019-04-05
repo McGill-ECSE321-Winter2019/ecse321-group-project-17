@@ -35,9 +35,15 @@ var config = require("../../config");
 var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
 var backendUrl =
   "https://" + config.build.backendHost + ":" + config.build.backendPort;
+var localhost = "http://localhost:8081";
 
 var AXIOS = axios.create({
   baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl }
+});
+
+var AXIOS_local = axios.create({
+  baseURL: localhost,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
@@ -83,6 +89,7 @@ export default {
     // Send post request to create notification
     sendNotification: function(profiles, message) {
       var length = profiles.length;
+      
       if (length == 1) {
         if (profiles[0].company == null) {
           AXIOS.post(
@@ -90,6 +97,19 @@ export default {
               message +
               `&senderEmail=admin@gmail.com&stuEmail=` +
               profiles[0].email
+          )
+            .then(response => {
+              //alert("Success!");
+            })
+            .catch(e => {
+              this.error = e;
+            });
+
+            AXIOS_local.post(
+            `/notification/sendEmail?recipient=` +
+              profiles[0].email +
+              `&bodytext=` +
+              message
           )
             .then(response => {
               alert("Success!");
@@ -105,6 +125,19 @@ export default {
               profiles[0].email
           )
             .then(response => {
+              //alert("Success!");
+            })
+            .catch(e => {
+              this.error = e;
+            });
+
+            AXIOS_local.post(
+            `/notification/sendEmail?recipient=` +
+              profiles[0].email +
+              `&bodytext=` +
+              message
+          )
+            .then(response => {
               alert("Success!");
             })
             .catch(e => {
@@ -114,6 +147,7 @@ export default {
       } else {
         var students = this.getStudents(profiles);
         var employers = this.getEmployers(profiles);
+        var emailSend = true;
         if (employers.length == 0) {
           var studentEmails = this.getProfilesEmails(students);
           AXIOS.post(
@@ -126,6 +160,7 @@ export default {
               alert("Success!");
             })
             .catch(e => {
+              emailSend = false;
               this.error = e;
             });
         } else if (students.length == 0) {
@@ -137,9 +172,10 @@ export default {
               employerEmails
           )
             .then(response => {
-              alert("Success!");
+              //alert("Success!");
             })
             .catch(e => {
+              emailSend = false;
               this.error = e;
             });
         } else {
@@ -154,14 +190,35 @@ export default {
               employerEmails
           )
             .then(response => {
+              //alert("Success!");
+            })
+            .catch(e => {
+              emailSend = false;
+              this.error = e;
+            });
+        }
+        if(emailSend === true){
+          var length = profiles.length;
+          while(length != 0){
+            AXIOS_local.post(
+            `/notification/sendEmail?recipient=` +
+              profiles[length - 1].email +
+              `&bodytext=` +
+              message
+          )
+            .then(response => {
               alert("Success!");
             })
             .catch(e => {
               this.error = e;
             });
+
+          }
+
         }
       }
     },
+    
     // Get list of student emails for post request
     getStudents: function(profiles) {
       var students = new Array();
