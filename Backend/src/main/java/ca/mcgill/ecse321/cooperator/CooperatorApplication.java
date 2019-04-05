@@ -12,7 +12,6 @@ import com.google.api.services.gmail.Gmail;
 
 import ca.mcgill.ecse321.cooperator.gmail.GmailService;
 
-
 @SpringBootApplication
 public class CooperatorApplication {
 	public static void main(String[] args) throws IOException, GeneralSecurityException{
