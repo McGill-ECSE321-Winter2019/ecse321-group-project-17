@@ -21,6 +21,7 @@
           v-for="report in this.orderedReports"
           :key="report.id"
           :report="report"
+          @remove-report="removeReport"
         />
       </table>
       <h4 v-if="!hasReports(coop)" id="no-reports" v-bind:style="{ color: textColor }">
@@ -92,6 +93,19 @@ export default {
         .then(response => {
           this.coop = response.data;
           this.orderedReports = _.sortBy(this.coop.reports, "dueDate");
+        })
+        .catch(e => {
+          console.log(e.message);
+        });
+    },
+    removeReport: function(report) {
+        var index = this.orderedReports.indexOf(report);
+        if (index > -1) {
+            this.orderedReports.splice(index, 1);
+        }
+        AXIOS.delete("/report/delete?id=" + report.id)
+        .then(response => {
+          this.fetchCoop();
         })
         .catch(e => {
           console.log(e.message);

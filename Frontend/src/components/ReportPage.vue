@@ -418,7 +418,7 @@ export default {
     },
     setDueDate: function() {
       var val = document.getElementById("due").value;
-      AXIOS.put("/report/updateDate" + "id=" + this.report.id + "&date=" + val)
+      AXIOS.put("/report/updateDate?" + "id=" + this.report.id + "&date=" + val)
         .then(response => {
           this.fetchReport();
         })
