@@ -42,20 +42,6 @@ import Router from "../router";
 import ReportPage from "./ReportPage.vue";
 import CoopPage from "./CoopPage.vue";
 
-import axios from "axios";
-
-var config = require("../../config");
-
-// Axios config
-var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
-var backendUrl =
-  "https://" + config.build.backendHost + ":" + config.build.backendPort;
-
-var AXIOS = axios.create({
-  baseURL: backendUrl,
-  headers: { "Access-Control-Allow-Origin": frontendUrl }
-});
-
 export default {
   props: {
     report: {
@@ -91,13 +77,7 @@ export default {
       });
     },
     removeReport: function() {
-      AXIOS.delete("/report/delete?id=" + this.report.id)
-        .then(response => {
-          CoopPage.methods.fetchCoop();
-        })
-        .catch(e => {
-          console.log(e.message);
-        });
+      this.$emit("remove-report", this.report);
     },
     setDarkMode: function() {
       var darkModeOn = localStorage.getItem("DarkModeOn");
