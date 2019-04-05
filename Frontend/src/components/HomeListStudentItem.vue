@@ -16,7 +16,7 @@
       <span class="badge badge-primary">Student</span>
     </td>
     <td class="td-name" v-on:click="goToStudentPage">
-      <span v-bind:style="{ color: textColor }">{{ student.name }}</span>
+      <span v-bind:style="{ color: textColor }">{{ student.name || student.firstName + ' ' + student.lastName }}</span>
     </td>
     <td class="td-email" v-on:click="goToStudentPage">
       <span v-bind:style="{ color: textColor }">{{ student.email }}</span>
