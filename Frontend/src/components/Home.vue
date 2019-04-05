@@ -45,6 +45,12 @@
             :student="student"
             @child-clicked="handleSelect"
           />
+          <HomeListStudentItem
+            v-for="student in externalStudents"
+            :key="student.studentID"
+            :student="student.person"
+            @child-clicked="handleSelect"
+          />
           <HomeListEmployerItem
             v-for="employer in orderedEmployers"
             :key="employer.email"
@@ -96,6 +102,22 @@ var AXIOS = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
+// Axios config for student POV
+backendUrl =
+  "https://cooperator-backend-00.herokuapp.com";
+var AXIOS_Student = axios.create({
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl }
+});
+
+// Axios config for employer POV
+// backendUrl =
+//   "https://ecse321-group12.herokuapp.com: ??? ";
+// var AXIOS_Employer = axios.create({
+//   baseURL: backendUrl,
+//   headers: { "Access-Control-Allow-Origin": frontendUrl }
+// });
+
 // Remove a person from the selected profiles list
 let remove = function(context, person) {
   for (var i = 0; i < context.selected.length; i++) {
@@ -124,11 +146,19 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.students = response.data;
-        this.studentsLoaded = true;
       })
       .catch(e => {
         this.error = e;
       });
+    // Fetch all students from student POV database
+    AXIOS_Student.get('/getAllStudents/')
+      .then(response => {
+        this.externalStudents = response.data;
+        this.studentsLoaded = true;
+      })
+      .catch(e => {
+        this.error = e;
+      })
     // Fetch all employers from backend
     AXIOS.get(`/employers`)
       .then(response => {
@@ -138,11 +168,15 @@ export default {
       .catch(e => {
         this.error = e;
       });
+    // Fetch all employers from employer POV database
   },
   data() {
     return {
       students: {
         type: Object
+      },
+      externalStudents: {
+        type: Array
       },
       employers: {
         type: Object
@@ -177,6 +211,13 @@ export default {
         AXIOS.get(`/students`)
           .then(response => {
             this.students = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        AXIOS_Student.get('/getAllStudents/')
+          .then(response => {
+            this.externalStudents = response.data;
             this.studentsLoaded = true;
           })
           .catch(e => {
@@ -195,6 +236,13 @@ export default {
         AXIOS.get(`/students`)
           .then(response => {
             this.students = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        AXIOS_Student.get('/getAllStudents/')
+          .then(response => {
+            this.externalStudents = response.data;
             this.studentsLoaded = true;
           })
           .catch(e => {
@@ -213,6 +261,7 @@ export default {
             this.error = e;
           });
         this.students = [];
+        this.externalStudents = [];
         this.studentsLoaded = true;
       }
     },
