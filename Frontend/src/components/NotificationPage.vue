@@ -199,20 +199,19 @@ export default {
         }
         if(emailSend === true){
           var length = profiles.length;
-          while(length != 0){
+          for(var i = 0; i < length; i++){
             AXIOS_local.post(
             `/notification/sendEmail?recipient=` +
               profiles[length - 1].email +
               `&bodytext=` +
               message
-          )
+            )
             .then(response => {
               alert("Success!");
             })
             .catch(e => {
               this.error = e;
             });
-
           }
 
         }
