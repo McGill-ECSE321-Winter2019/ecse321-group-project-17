@@ -9,7 +9,7 @@
     <button
       type="button"
       v-bind:class="buttonClass"
-      onclick="location.href='https://www.w3docs.com/'"
+      onclick="location.href='http://localhost:8080/ecse321/login.php/'"
     >Employer</button>
     <button
       type="button"
@@ -19,7 +19,7 @@
     <button
       type="button"
       v-bind:class="buttonClass"
-      onclick="location.href='https://ecse321-group-20-frontend.herokuapp.com/#/'"
+      onclick="location.href='http://127.0.0.1:8087/#/'"
     >Academic Manager</button>
   </div>
 </template>
