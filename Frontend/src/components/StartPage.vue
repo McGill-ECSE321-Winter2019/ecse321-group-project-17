@@ -4,7 +4,7 @@
     <button
       type="button"
       v-bind:class="buttonClass"
-      onclick="location.href='https://www.w3docs.com/'"
+      onclick="location.href='http://127.0.0.1:8089/#/'"
     >Student</button>
     <button
       type="button"
@@ -19,7 +19,7 @@
     <button
       type="button"
       v-bind:class="buttonClass"
-      onclick="location.href='http://127.0.0.1:8084/#/'"
+      onclick="location.href='https://ecse321-group-20-frontend.herokuapp.com/#/'"
     >Academic Manager</button>
   </div>
 </template>
