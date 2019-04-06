@@ -3,13 +3,13 @@
   <div class="container">
     <EmployerPageInfo :employer="employer"/>
     <button
-        type="button"
-        id="button"
-        v-on:click="send(employer)"
-        class="btn btn-danger btn-lg"
-        v-b-tooltip.hover
-        title="Click to save changes"
-      >Send Notifcation</button>
+      type="button"
+      id="button"
+      v-on:click="send(employer)"
+      class="btn btn-danger btn-lg"
+      v-b-tooltip.hover
+      title="Click to save changes"
+    >Send Notification</button>
     <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
       <EmployerPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
@@ -43,15 +43,15 @@ export default {
     employerEmail: String
   },
   methods: {
-    send: function(employer){
+    send: function(employer) {
       var fakeSelect = [employer];
       Router.push({
-          path: "/notifications/",
-          name: "NotificationPage",
-          params: {
-            selected: fakeSelect
-          }
-        });
+        path: "/notifications/",
+        name: "NotificationPage",
+        params: {
+          selected: fakeSelect
+        }
+      });
     }
   },
   created: function() {

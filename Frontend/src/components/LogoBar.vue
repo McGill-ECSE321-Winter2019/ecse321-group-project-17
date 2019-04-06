@@ -8,8 +8,8 @@
       @click="goToHomePage()"
     >Cooperator</a>
     <span style="float:left;">
-    <button type="button" v-bind:class="buttonClass" @click="logOut">Log Out</button>
-    <button type="button" v-bind:class="buttonClass" @click="toggleDarkLight">{{ buttonText }}</button>
+      <button type="button" v-bind:class="buttonClass" @click="logOut">Log Out</button>
+      <button type="button" v-bind:class="buttonClass" @click="toggleDarkLight">{{ buttonText }}</button>
     </span>
   </nav>
   <!-- <nav class="navbar navbar-dark bg-light" id="container">
@@ -35,27 +35,27 @@ export default {
     if (darkModeOn === "true") {
       this.navBarClass = "navbar navbar-dark bg-dark";
       this.buttonClass = "btn btn-dark";
-      this.buttonText = "Dark Mode";
+      this.buttonText = "🌙";
       this.titleColor = "white";
     } else {
       this.navBarClass = "navbar navbar-dark bg-light";
       this.buttonClass = "btn btn-light";
-      this.buttonText = "Light Mode";
+      this.buttonText = "☀️";
       this.titleColor = "black";
     }
   },
   methods: {
-    goToHomePage: function(){
-        Router.push({
-          path: "/home/",
-          name: "Home",
-        });
+    goToHomePage: function() {
+      Router.push({
+        path: "/home/",
+        name: "Home"
+      });
     },
-    logOut: function(){
-        Router.push({
-          path: "/login/",
-          name: "LoginPage",
-        });
+    logOut: function() {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     },
     toggleDarkLight: function() {
       // Local storage only stores strings
@@ -76,12 +76,12 @@ export default {
       if (darkModeOnBool == true) {
         this.navBarClass = "navbar navbar-dark bg-dark";
         this.buttonClass = "btn btn-dark";
-        this.buttonText = "Dark Mode";
+        this.buttonText = "🌙";
         this.titleColor = "white";
       } else {
         this.navBarClass = "navbar navbar-dark bg-light";
         this.buttonClass = "btn btn-light";
-        this.buttonText = "Light Mode";
+        this.buttonText = "☀️";
         this.titleColor = "black";
       }
     }
