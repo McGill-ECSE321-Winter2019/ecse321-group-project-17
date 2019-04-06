@@ -7,7 +7,10 @@
       v-bind:style="{color: titleColor}"
       @click="goToHomePage()"
     >Cooperator</a>
+    <span style="float:left;">
+    <button type="button" v-bind:class="buttonClass" @click="logOut">Log Out</button>
     <button type="button" v-bind:class="buttonClass" @click="toggleDarkLight">{{ buttonText }}</button>
+    </span>
   </nav>
   <!-- <nav class="navbar navbar-dark bg-light" id="container">
       <a class="navbar-brand mb-0 h1" href="/" style="color: black">Cooperator</a>
@@ -46,6 +49,12 @@ export default {
         Router.push({
           path: "/home/",
           name: "Home",
+        });
+    },
+    logOut: function(){
+        Router.push({
+          path: "/login/",
+          name: "LoginPage",
         });
     },
     toggleDarkLight: function() {
