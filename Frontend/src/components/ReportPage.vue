@@ -467,7 +467,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   align-content: center;
 }
