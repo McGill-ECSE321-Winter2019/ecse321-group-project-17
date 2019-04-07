@@ -154,7 +154,6 @@ export default {
   width: 20%;
   color: white;
   border: 0px;
-  /* background-color: red; */
   margin: auto;
   margin-top: 15px;
 }

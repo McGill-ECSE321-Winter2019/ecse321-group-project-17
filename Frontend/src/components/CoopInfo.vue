@@ -10,7 +10,7 @@
       <b v-bind:style="{ color : textColor}">Status:</b>
     </span>
     <span style="color:lightblue" v-if="coop.status === 'NotStarted'">Not Started</span>
-    <span style="color:yellow" v-else-if="coop.status === 'InProgress'">In Progress</span>
+    <span style="color:orange" v-else-if="coop.status === 'InProgress'">In Progress</span>
     <span style="color:lightgreen" v-else-if="coop.status === 'Completed'">Complete</span>
     <span style="color:red" v-else>Incomplete</span>
     <p/>
