@@ -46,52 +46,61 @@ export default {
   },
 
   created: function() {
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
-    }
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
 
-    if (typeof this.studentEmail === "undefined") {
-      // Page has been refreshed, must get student email explicitly
-      let pathEmail = Router.currentRoute.path.split("/")[2];
+      if (typeof this.studentEmail === "undefined") {
+        // Page has been refreshed, must get student email explicitly
+        let pathEmail = Router.currentRoute.path.split("/")[2];
 
-      // Fetch student from backend
-      AXIOS.get(`/student/` + pathEmail)
-        .then(response => {
-          this.student = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
-      // Get all coop terms for this student
-      AXIOS.get(`/student/coops/` + pathEmail)
-        .then(response => {
-          this.coops = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
-    } else {
-      // Initializing with fetched student from backend
-      AXIOS.get(`/student/` + this.studentEmail)
-        .then(response => {
-          this.student = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
-      // Get all coop terms for this student
-      AXIOS.get(`/student/coops/` + this.studentEmail)
-        .then(response => {
-          this.coops = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
+        // Fetch student from backend
+        AXIOS.get(`/student/` + pathEmail)
+          .then(response => {
+            this.student = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        // Get all coop terms for this student
+        AXIOS.get(`/student/coops/` + pathEmail)
+          .then(response => {
+            this.coops = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+      } else {
+        // Initializing with fetched student from backend
+        AXIOS.get(`/student/` + this.studentEmail)
+          .then(response => {
+            this.student = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        // Get all coop terms for this student
+        AXIOS.get(`/student/coops/` + this.studentEmail)
+          .then(response => {
+            this.coops = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+      }
     }
   },
   data() {

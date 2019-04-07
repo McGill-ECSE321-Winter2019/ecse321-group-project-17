@@ -62,13 +62,22 @@ export default {
     };
   },
   created: function() {
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   methods: {
@@ -89,7 +98,7 @@ export default {
     // Send post request to create notification
     sendNotification: function(profiles, message) {
       var length = profiles.length;
-      
+
       if (length == 1) {
         if (profiles[0].company == null) {
           AXIOS.post(
@@ -105,7 +114,7 @@ export default {
               this.error = e;
             });
 
-            AXIOS_local.post(
+          AXIOS_local.post(
             `/notification/sendEmail?recipient=` +
               profiles[0].email +
               `&bodytext=` +
@@ -131,7 +140,7 @@ export default {
               this.error = e;
             });
 
-            AXIOS_local.post(
+          AXIOS_local.post(
             `/notification/sendEmail?recipient=` +
               profiles[0].email +
               `&bodytext=` +
@@ -197,28 +206,26 @@ export default {
               this.error = e;
             });
         }
-        if(emailSend === true){
+        if (emailSend === true) {
           var length = profiles.length;
-          while(length != 0){
+          while (length != 0) {
             AXIOS_local.post(
-            `/notification/sendEmail?recipient=` +
-              profiles[length - 1].email +
-              `&bodytext=` +
-              message
-          )
-            .then(response => {
-              alert("Success!");
-            })
-            .catch(e => {
-              this.error = e;
-            });
-
+              `/notification/sendEmail?recipient=` +
+                profiles[length - 1].email +
+                `&bodytext=` +
+                message
+            )
+              .then(response => {
+                alert("Success!");
+              })
+              .catch(e => {
+                this.error = e;
+              });
           }
-
         }
       }
     },
-    
+
     // Get list of student emails for post request
     getStudents: function(profiles) {
       var students = new Array();
