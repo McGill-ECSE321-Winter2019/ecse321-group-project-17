@@ -219,7 +219,11 @@ public class CooperatorController {
 		return convertToDto(report);
 	}
 
-	//send email from cooperator gmail account
+	/**
+	 * Sends a real email to the specified email with the provided text
+	 * @param recipient
+	 * @param bodytext
+	 */
 	@PostMapping("/notification/sendEmail")
 	public void createReport(@RequestParam String recipient, @RequestParam String bodytext) {
 		try {
