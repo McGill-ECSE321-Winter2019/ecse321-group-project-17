@@ -9,10 +9,10 @@
     <span v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Status:</b>
     </span>
-    <span style="color:lightblue" v-if="coop.status === 'NotStarted'">Not Started</span>
-    <span style="color:orange" v-else-if="coop.status === 'InProgress'">In Progress</span>
-    <span style="color:lightgreen" v-else-if="coop.status === 'Completed'">Complete</span>
-    <span style="color:red" v-else>Incomplete</span>
+    <span class="badge badge-info" v-if="coop.status === 'NotStarted'">Not Started</span>
+    <span class="badge badge-warning" v-else-if="coop.status === 'InProgress'">In Progress</span>
+    <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
+    <span class="badge badge-danger" v-else>Incomplete</span>
     <p/>
     <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Company:</b>

@@ -30,10 +30,10 @@
       <span>
         <b v-bind:style="{ color : textColor}">Report Status:</b>
       </span>
-      <span style="color:orange" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
-      <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
-      <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
-      <span style="color:lightgreen" v-else>Reviewed</span>
+       <span class="badge badge-warning" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+      <span class="badge badge-primary" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
+      <span class="badge badge-danger" v-else-if="report.reportStatus === 'Late'">Late</span>
+      <span class="badge badge-success" v-else>Reviewed</span>
       <br>
       <span>
         <b v-bind:style="{ color : textColor}">Report Due Date:</b>

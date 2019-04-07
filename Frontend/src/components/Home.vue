@@ -27,7 +27,7 @@
               >
             </td>
             <td id="td-badge1">
-              <span class="badge badge-light">Type</span>
+              <span class="badge badge-light">&nbsp;&nbsp;&nbsp; Type &nbsp;&nbsp;&nbsp;</span>
             </td>
             <td id="td-name">
               <h4 v-bind:style="{ color: textColor }">Name</h4>

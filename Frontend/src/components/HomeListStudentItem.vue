@@ -14,10 +14,10 @@
       >
     </td>
     <td class="td-badge">
-      <span class="badge badge-primary">Student</span>
+      <span v-on:click="goToStudentPage" class="badge badge-primary">&nbsp;Student&nbsp;</span>
     </td>
     <td class="td-name" v-on:click="goToStudentPage">
-      <span v-bind:style="{ color: textColor }">{{ student.name || student.firstName + ' ' + student.lastName }}</span>
+      <span v-bind:style="{ color: textColor }">&nbsp;&nbsp;{{ student.name || student.firstName + ' ' + student.lastName }}</span>
     </td>
     <td class="td-email" v-on:click="goToStudentPage">
       <span v-bind:style="{ color: textColor }">{{ student.email }}</span>

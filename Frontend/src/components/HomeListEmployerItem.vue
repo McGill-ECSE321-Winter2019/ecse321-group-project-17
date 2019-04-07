@@ -17,7 +17,7 @@
       <span class="badge badge-success">Employer</span>
     </td>
     <td class="td-name" v-on:click="goToEmployerPage">
-      <span v-bind:style="{ color: textColor }">{{ employer.name }}</span>
+      <span v-bind:style="{ color: textColor }">&nbsp;&nbsp;{{ employer.name }}</span>
     </td>
     <td class="td-email" v-on:click="goToEmployerPage">
       <span v-bind:style="{ color: textColor }">{{ employer.email }}</span>
