@@ -132,9 +132,9 @@ export default {
 #button {
   width: 20%;
   color: white;
-  margin-top: 15px;
   border: 0px;
   background-color: red;
   margin: auto;
+  margin-top: 15px;
 }
 </style>

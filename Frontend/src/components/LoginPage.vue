@@ -26,7 +26,7 @@
         v-on:click="goToAccountPage()"
         class="btn btn-danger btn-lg loginField button"
         v-b-tooltip.hover
-        title="Click to create a new Account"
+        title="Click to create a new account!"
       >Create an Account</button>
     </b-container>
   </div>
