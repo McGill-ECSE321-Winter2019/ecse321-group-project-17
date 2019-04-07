@@ -28,7 +28,7 @@
       <span v-else v-bind:style="{ color : textColor}">Biweekly Report</span>
       <br>
       <span>
-        <b v-bind:style="{ color : textColor}">Report Status:</b>
+        <b v-bind:style="{ color : textColor}">Report Status:&nbsp;</b>
       </span>
        <span class="badge badge-warning" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
       <span class="badge badge-primary" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>

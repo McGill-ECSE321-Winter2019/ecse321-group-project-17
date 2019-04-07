@@ -1,9 +1,9 @@
 <!--- This component renders the information of a specific coop for a coop page -->
 <template>
   <div id="info-container" class="card" v-bind:style="{ backgroundColor : bgColor}">
-    <h3>
+    <h3 v-bind:style="{ color : textColor}">
       <span class="badge badge-warning">Coop</span> &nbsp; &nbsp;
-      <strong v-bind:style="{ color : textColor}">Coop Information</strong>
+      <strong>{{coop.title}}</strong>
     </h3>
     <br>
     <span v-bind:style="{ color : textColor}">
@@ -14,6 +14,10 @@
     <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
     <span class="badge badge-danger" v-else>Incomplete</span>
     <p/>
+    <p @click="goToStudentPage" v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Student:</b>
+     {{ coop.student.name }}
+    </p>
     <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Company:</b>
       {{ coop.employer.company }}
@@ -22,10 +26,6 @@
       <b v-bind:style="{ color : textColor}">Employer:</b>
       {{ coop.employer.name }}
     </p>
-    <p @click="goToStudentPage" v-bind:style="{ color : textColor}">
-      <b v-bind:style="{ color : textColor}">Student:</b>
-      {{ coop.student.name }}
-    </p>
     <p v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Salary per hour:</b>
       {{ coop.salaryPerHour }}
@@ -33,10 +33,6 @@
     <p v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Hours per week:</b>
       {{ coop.hoursPerWeek }}
-    </p>
-    <p v-bind:style="{ color : textColor}">
-      <b v-bind:style="{ color : textColor}">Title:</b>
-      {{ coop.title }}
     </p>
     <p v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Dates:</b>
