@@ -154,14 +154,14 @@ export default {
       if (!this.selectedEndTerm) {
         return "Winter2020";
       } else {
-        return this.selectedEndTerm.text;
+        return this.selectedEndTerm.value;
       }
     },
     getStartTerm() {
       if (!this.selectedStartTerm) {
         return "Fall2012";
       } else {
-        return this.selectedStartTerm.text;
+        return this.selectedStartTerm.value;
       }
     },
     getCoopNumber() {
