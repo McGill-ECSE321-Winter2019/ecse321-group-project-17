@@ -25,14 +25,14 @@
       <button
         type="button"
         v-on:click="login(email, pw)"
-        class="btn btn-danger btn-lg loginField button"
+        class="btn btn-primary btn-lg loginField button"
         v-b-tooltip.hover
         title="Click to login!"
       >Login</button>
       <button
         type="button"
         v-on:click="goToAccountPage()"
-        class="btn btn-danger btn-lg loginField button"
+        class="btn btn-primary btn-lg loginField button"
         v-b-tooltip.hover
         title="Click to create a new account!"
       >Create an Account</button>
