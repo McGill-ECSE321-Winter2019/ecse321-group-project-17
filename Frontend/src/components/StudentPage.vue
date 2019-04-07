@@ -2,8 +2,8 @@
 <template>
   <div class="container">
     <StudentPageInfo :student="student"/>
-       <span >
-        <button
+    <span>
+      <button
         type="button"
         id="button"
         v-on:click="send(student)"
@@ -11,7 +11,7 @@
         v-b-tooltip.hover
         title="Click to send notification to this student"
       >Send Notification</button>
-      </span>
+    </span>
     <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
       <StudentPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
@@ -46,7 +46,7 @@ export default {
   props: {
     studentEmail: String
   },
- 
+
   created: function() {
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
@@ -125,15 +125,15 @@ export default {
         this.textColor = "black";
       }
     },
-    send: function(student){
+    send: function(student) {
       var fakeSelect = [student];
       Router.push({
-          path: "/notifications/",
-          name: "NotificationPage",
-          params: {
-            selected: fakeSelect
-          }
-        });
+        path: "/notifications/",
+        name: "NotificationPage",
+        params: {
+          selected: fakeSelect
+        }
+      });
     }
   },
   mounted() {
@@ -150,7 +150,7 @@ export default {
   width: 20%;
   color: white;
   border: 0px;
-  background-color: red;
+  /* background-color: red; */
   margin: auto;
   margin-top: 15px;
 }
