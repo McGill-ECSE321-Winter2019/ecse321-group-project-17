@@ -162,5 +162,6 @@ export default {
   border: 0px;
   margin: auto;
   margin-top: 15px;
+  background-color: red;
 }
 </style>
