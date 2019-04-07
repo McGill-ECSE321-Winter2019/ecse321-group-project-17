@@ -10,8 +10,14 @@
       v-b-tooltip.hover
       title="Click to send notification to this employer"
     >Send Notification</button>
-    <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
-      <EmployerPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
+    <div v-if="coops.length">
+      <EmployerPageCoopItem
+        v-for="coop in orderedCoops"
+        :key="coop.id"
+        :coop="coop"
+        v-b-tooltip.hover
+        title="Click to see this Coop"
+      />
     </div>
     <p v-else v-bind:style="{ color: textColor }">Employer has no co-op terms.</p>
   </div>
