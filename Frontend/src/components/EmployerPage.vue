@@ -3,15 +3,6 @@
   <div class="container">
     <EmployerPageInfo :employer="employer"/>
     <button
-<<<<<<< HEAD
-        type="button"
-        id="button"
-        v-on:click="send(employer)"
-        class="btn btn-danger btn-lg"
-        v-b-tooltip.hover
-        title="Click to save changes"
-      >Send Notification</button>
-=======
       type="button"
       id="button"
       v-on:click="send(employer)"
@@ -19,7 +10,6 @@
       v-b-tooltip.hover
       title="Click to send notification to this employer"
     >Send Notification</button>
->>>>>>> ce6c5475762c4e922c7a6989dc2385b8a8c9207c
     <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
       <EmployerPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
