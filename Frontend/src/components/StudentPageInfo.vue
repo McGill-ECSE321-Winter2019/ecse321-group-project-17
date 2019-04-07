@@ -1,5 +1,5 @@
 <template>
-  <div id="info-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
+  <div id="student-info-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
     <h3 v-bind:style="{ color: textColor }">
       <span class="badge badge-primary">Student</span>
       &nbsp; &nbsp; {{ student.name }}
@@ -64,7 +64,7 @@ h6 {
   color: white;
 }
 
-#info-container {
+#student-info-container {
   width: 65%;
   margin: auto;
   padding: 15px;
