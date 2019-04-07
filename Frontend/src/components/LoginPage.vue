@@ -6,13 +6,21 @@
       <span id="title1"></span>
     </div>
     <b-container fluid>
-      <input class="loginField" type="text" id="username" v-model="email" placeholder="Enter email">
+      <input
+        class="loginField"
+        type="text"
+        id="username"
+        v-model="email"
+        placeholder="Enter email"
+        v-on:keyup.enter="login(email, pw)"
+      >
       <input
         class="loginField"
         type="password"
         id="password"
         v-model="pw"
         placeholder="Enter password"
+        v-on:keyup.enter="login(email, pw)"
       >
       <button
         type="button"
