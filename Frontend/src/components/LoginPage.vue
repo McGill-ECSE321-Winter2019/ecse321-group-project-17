@@ -16,17 +16,15 @@
       >
       <button
         type="button"
-        id="button"
         v-on:click="login(email, pw)"
-        class="btn btn-danger btn-lg, loginField"
+        class="btn btn-danger btn-lg loginField button"
         v-b-tooltip.hover
         title="Click to login!"
       >Login</button>
       <button
         type="button"
-        id="button"
         v-on:click="goToAccountPage()"
-        class="btn btn-danger btn-lg, loginField"
+        class="btn btn-danger btn-lg loginField button"
         v-b-tooltip.hover
         title="Click to create a new Account"
       >Create an Account</button>
@@ -157,6 +155,7 @@ export default {
   padding: 15px;
   text-align: left;
 }
+
 .loginField {
   width: 98%;
   border-radius: 4px;
@@ -165,7 +164,8 @@ export default {
   margin: auto;
   margin-top: 15px;
 }
-#button {
+
+.button {
   color: white;
   background-color: rgb(46, 126, 201);
 }
