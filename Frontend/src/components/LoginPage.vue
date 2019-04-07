@@ -175,6 +175,5 @@ export default {
 
 .button {
   color: white;
-  background-color: rgb(46, 126, 201);
 }
 </style>
