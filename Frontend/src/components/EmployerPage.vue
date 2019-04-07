@@ -9,7 +9,7 @@
         class="btn btn-danger btn-lg"
         v-b-tooltip.hover
         title="Click to save changes"
-      >Send Notifcation</button>
+      >Send Notification</button>
     <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
       <EmployerPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
     </div>
@@ -123,5 +123,7 @@ export default {
   color: white;
   margin-top: 15px;
   border: 0px;
+  background-color: red;
+  margin: auto;
 }
 </style>
