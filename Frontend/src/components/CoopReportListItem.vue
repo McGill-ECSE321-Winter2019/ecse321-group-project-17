@@ -1,3 +1,4 @@
+<!--- This component renders the information of a report for the list on the coop page -->
 <template>
   <tr v-bind:style="{ backgroundColor : bgColor}">
     <td class="td-report-type">

@@ -1,3 +1,4 @@
+<!--- This component shows statistics in charts-->
 <template>
   <div class="container">
     <table class="Filter">

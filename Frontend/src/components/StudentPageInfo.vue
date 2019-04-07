@@ -1,3 +1,4 @@
+<!--- This component renders the information of a specific employer for an employer page -->
 <template>
   <div id="student-info-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
     <h3 v-bind:style="{ color: textColor }">

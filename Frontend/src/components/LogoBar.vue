@@ -1,3 +1,4 @@
+<!--- This component is the nav bar that appears on every page -->
 <template>
   <nav v-bind:class="navBarClass" id="container">
     <a
@@ -12,10 +13,6 @@
       <button type="button" v-bind:class="buttonClass" @click="toggleDarkLight">{{ buttonText }}</button>
     </span>
   </nav>
-  <!-- <nav class="navbar navbar-dark bg-light" id="container">
-      <a class="navbar-brand mb-0 h1" href="/" style="color: black">Cooperator</a>
-      <button type="button" class="btn btn-light" @click="toggleDarkLight">Light Mode</button>
-  </nav>-->
 </template>
 
 <script>

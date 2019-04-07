@@ -1,3 +1,4 @@
+<!--- This component is the home page --->
 <template>
   <div>
     <div id="home-container" class="card" v-bind:style="{ backgroundColor: bgColor }">

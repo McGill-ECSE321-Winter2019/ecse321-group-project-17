@@ -1,3 +1,4 @@
+<!--- This component renders the information of a employer for the list on the home page -->
 <template>
   <!-- tr = table row, td = table data --->
   <tr v-bind:style="{ backgroundColor: bgColor }" @mouseover="hoverOn" @mouseleave="hoverOff">

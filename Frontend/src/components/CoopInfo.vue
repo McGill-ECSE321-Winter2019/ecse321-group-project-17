@@ -1,3 +1,4 @@
+<!--- This component renders the information of a specific coop for a coop page -->
 <template>
   <div id="info-container" class="card" v-bind:style="{ backgroundColor : bgColor}">
     <h3>

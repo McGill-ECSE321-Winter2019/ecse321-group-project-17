@@ -1,4 +1,4 @@
-<! --- This component acts as a page to log in -->
+<!--- This component acts as a page to log in --->
 <template>
   <div id="login" class="card" v-bind:style="{ backgroundColor : bgColor }">
     <span id="title" v-bind:style="{ color : textColor }">Administrator Login:</span>
