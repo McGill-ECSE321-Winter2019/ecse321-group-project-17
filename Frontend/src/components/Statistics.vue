@@ -45,15 +45,24 @@ var AXIOS = axios.create({
 export default {
   props: {},
   created: function() {
-    this.updateCharts();
-
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
+      this.updateCharts();
+
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   components: {

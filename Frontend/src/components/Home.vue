@@ -103,8 +103,7 @@ var AXIOS = axios.create({
 });
 
 // Axios config for student POV
-backendUrl =
-  "https://cooperator-backend-00.herokuapp.com";
+backendUrl = "https://cooperator-backend-00.herokuapp.com";
 var AXIOS_Student = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
@@ -133,6 +132,15 @@ export default {
     HomeListEmployerItem
   },
   created: function() {
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
+    }
+
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";
@@ -151,14 +159,14 @@ export default {
         this.error = e;
       });
     // Fetch all students from student POV database
-    AXIOS_Student.get('/getAllStudents/')
+    AXIOS_Student.get("/getAllStudents/")
       .then(response => {
         this.externalStudents = response.data;
         this.studentsLoaded = true;
       })
       .catch(e => {
         this.error = e;
-      })
+      });
     // Fetch all employers from backend
     AXIOS.get(`/employers`)
       .then(response => {
@@ -215,7 +223,7 @@ export default {
           .catch(e => {
             this.error = e;
           });
-        AXIOS_Student.get('/getAllStudents/')
+        AXIOS_Student.get("/getAllStudents/")
           .then(response => {
             this.externalStudents = response.data;
             this.studentsLoaded = true;
@@ -240,7 +248,7 @@ export default {
           .catch(e => {
             this.error = e;
           });
-        AXIOS_Student.get('/getAllStudents/')
+        AXIOS_Student.get("/getAllStudents/")
           .then(response => {
             this.externalStudents = response.data;
             this.studentsLoaded = true;

@@ -9,7 +9,7 @@
         v-on:click="send(student)"
         class="btn btn-danger btn-lg"
         v-b-tooltip.hover
-        title="Click to save changes"
+        title="Click to send notification to this student"
       >Send Notification</button>
       </span>
     <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
@@ -152,6 +152,6 @@ export default {
   margin-top: 15px;
   border: 0px;
   background-color: red;
-  text-align: center;
+  margin: auto;
 }
 </style> 

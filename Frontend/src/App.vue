@@ -29,6 +29,10 @@ export default {
       if (darkModeOn === "true") this.bgColor = "rgb(88, 96, 102)";
       else this.bgColor = "white";
     }
+    if (!localStorage.getItem("isLoggedIn")) {
+      // Set local storage value if none exists
+      localStorage.setItem("isLoggedIn", "false");
+    }
   },
   methods: {
     setBackgroundColor: function(darkModeOn) {

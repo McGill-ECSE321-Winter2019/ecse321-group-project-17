@@ -17,12 +17,11 @@
       <b v-bind:style="{ color : textColor}">Company:</b>
       {{ coop.employer.company }}
     </p>
-    <p @click="goToStudentPage"></p>
-    <p v-bind:style="{ color : textColor}">
+    <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Employer:</b>
       {{ coop.employer.name }}
     </p>
-    <p v-bind:style="{ color : textColor}">
+    <p @click="goToStudentPage" v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Student:</b>
       {{ coop.student.name }}
     </p>
@@ -61,7 +60,7 @@ export default {
   },
   methods: {
     goToEmployerPage: function() {
-      // Go to the student page
+      // Go to the employer associated with this coop term
       Router.push({
         path: "/employer/",
         name: "EmployerPage",
@@ -72,7 +71,7 @@ export default {
       });
     },
     goToStudentPage: function() {
-      // Go to the student page
+      // Go to the student associated with this coop term
       Router.push({
         path: "/student/",
         name: "StudentPage",
@@ -94,13 +93,23 @@ export default {
     }
   },
   created() {
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
+      // Fetches the user's selected UI mode from browser local storage
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   data() {
@@ -110,6 +119,7 @@ export default {
     };
   },
   mounted() {
+    // Listens to the setDarkModeState event emitted from the LogoBar component
     this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
