@@ -1,5 +1,5 @@
-import { Bar } from './BaseCharts'
-import { reactiveProp } from './mixins'
+import { Bar } from "./BaseCharts";
+import { reactiveProp } from "./mixins";
 
 export default {
   extends: Bar,
@@ -11,18 +11,23 @@ export default {
     }
   }),
 
-  mounted () {
-    // Overwriting base render method with actual data.
-    this.renderChart({
-      labels: ['Students', 'Employers'],
-      datasets: [
-        {
-          label: 'Number' ,
-          backgroundColor: '#f87979', //color of bars when hovering
-          data: [this.chartData.students.length, this.chartData.employers.length]
-        }
-      ]
-    }, this.options)
-    // this.renderChart(this.students, this.options)
+  mounted() {
+    // Overwriting base render method with actual data
+    this.renderChart(
+      {
+        labels: ["Students", "Employers"],
+        datasets: [
+          {
+            label: "Number",
+            backgroundColor: "#f87979", // Color of bars when hovering
+            data: [
+              this.chartData.students.length,
+              this.chartData.employers.length
+            ]
+          }
+        ]
+      },
+      this.options
+    );
   }
-}
+};

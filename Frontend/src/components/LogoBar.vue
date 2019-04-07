@@ -8,7 +8,7 @@
       @click="goToHomePage()"
     >Cooperator</a>
     <span style="float:left;">
-      <button type="button" v-bind:class="buttonClass" @click="logOut">Log Out</button>
+      <button type="button" v-bind:class="buttonClass" @click="logOut" v-show="isLoggedIn">Log Out</button>
       <button type="button" v-bind:class="buttonClass" @click="toggleDarkLight">{{ buttonText }}</button>
     </span>
   </nav>
@@ -27,7 +27,8 @@ export default {
       navBarClass: "",
       buttonClass: "",
       buttonText: "",
-      titleColor: ""
+      titleColor: "",
+      isLoggedIn: false
     };
   },
   created() {
@@ -43,15 +44,31 @@ export default {
       this.buttonText = "☀️";
       this.titleColor = "black";
     }
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    if (isLoggedIn === "true") this.isLoggedIn = true;
+    else this.isLoggedIn = false;
   },
   methods: {
     goToHomePage: function() {
-      Router.push({
-        path: "/home/",
-        name: "Home"
-      });
+      var isLoggedIn = localStorage.getItem("isLoggedIn");
+      if (isLoggedIn === "true") {
+        // User is logged in, allow access to Home page
+        Router.push({
+          path: "/home/",
+          name: "Home"
+        });
+      } else {
+        // Do not allow user to go to the Home page if they are not logged in
+        Router.push({
+          path: "/login/",
+          name: "LoginPage"
+        });
+      }
     },
     logOut: function() {
+      // Update logged in status
+      localStorage.setItem("isLoggedIn", "false");
+      this.isLoggedIn = false;
       Router.push({
         path: "/login/",
         name: "LoginPage"
@@ -84,7 +101,13 @@ export default {
         this.buttonText = "☀️";
         this.titleColor = "black";
       }
+    },
+    updateLoggedInState: function(state) {
+      this.isLoggedIn = state;
     }
+  },
+  mounted() {
+    this.$loggedInEvent.$on("setLoggedInState", this.updateLoggedInState);
   }
 };
 </script>
@@ -93,7 +116,5 @@ export default {
 <style scoped>
 #container {
   margin-bottom: 50px;
-  /* font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif; */
 }
 </style>

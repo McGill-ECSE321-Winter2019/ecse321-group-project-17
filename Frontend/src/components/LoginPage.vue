@@ -6,12 +6,7 @@
       <span id="title1"></span>
     </div>
     <b-container fluid>
-      <input 
-        class="loginField" 
-        type="text" 
-        id="username" 
-        v-model="email" 
-        placeholder="Enter email">
+      <input class="loginField" type="text" id="username" v-model="email" placeholder="Enter email">
       <input
         class="loginField"
         type="password"
@@ -79,13 +74,15 @@ export default {
     }
   },
   methods: {
-    // Send get request to find admin
+    // Send GET request to find admin
     login: function(email, pw) {
       AXIOS.get(`/admin/` + email)
         .then(response => {
           this.admin = response.data;
           if (this.admin.password === pw) {
             this.goToHomePage();
+            localStorage.setItem("isLoggedIn", "true");
+            this.$loggedInEvent.$emit("setLoggedInState", true);
           } else {
             document.getElementById("title1").innerText = "Password Incorrect";
           }
@@ -168,8 +165,8 @@ export default {
   margin: auto;
   margin-top: 15px;
 }
-#button{
-  color:white;
-  background-color: rgb(46, 126, 201); 
+#button {
+  color: white;
+  background-color: rgb(46, 126, 201);
 }
 </style>

@@ -55,8 +55,8 @@ export default {
       textColor: ""
     };
   },
-
   created() {
+    // Fetches the user's selected UI mode from browser local storage
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";

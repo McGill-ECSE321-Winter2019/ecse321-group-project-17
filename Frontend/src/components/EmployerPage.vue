@@ -29,6 +29,7 @@ var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
 var backendUrl =
   "https://" + config.build.backendHost + ":" + config.build.backendPort;
 
+// Axios config
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
@@ -44,19 +45,19 @@ export default {
   },
   methods: {
     send: function(employer) {
-      var fakeSelect = [employer];
+      var pseudoSelect = [employer];
       Router.push({
         path: "/notifications/",
         name: "NotificationPage",
         params: {
-          selected: fakeSelect
+          selected: pseudoSelect
         }
       });
     }
   },
   created: function() {
     if (typeof this.employerEmail === "undefined") {
-      // Page has been refreshed, must get employer email explicitly
+      // Page has been refreshed, must get employer email explicitly from URL
       let pathEmail = Router.currentRoute.path.split("/")[2];
 
       // Fetch employer from backend
@@ -106,6 +107,7 @@ export default {
     };
   },
   computed: {
+    // Sorts coops by start date
     orderedCoops: function() {
       return _.sortBy(this.coops, "startDate").reverse();
     }
