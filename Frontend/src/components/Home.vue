@@ -5,7 +5,7 @@
       <div class="col-md-4" v-b-tooltip.hover title="Select to view Students, Employers, or both">
         <select
           v-model="selectedProfile"
-          class="mr-sm-2 custom-select filter-box"
+          class="mr-sm-2 custom-select home-filter-box"
           @change="updateProfileTypeSelected"
         >
           <option>Students &amp; Employers</option>
@@ -337,7 +337,7 @@ h4 {
   border-color: rgb(129, 133, 136);
 }
 
-.filter-box {
+.home-filter-box {
   margin-bottom: 10px;
 }
 
@@ -353,7 +353,6 @@ h4 {
   margin-top: 15px;
   padding: 15px;
   text-align: left;
-  /* background-color: rgb(53, 58, 62); rgb(248, 249, 251);*/
 }
 
 #scroll-container {

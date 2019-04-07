@@ -136,6 +136,7 @@ export default {
   background-color: rgb(53, 58, 62);
   display: inline-block;
 }
+
 h4,
 p {
   color: rgb(241, 240, 240);
