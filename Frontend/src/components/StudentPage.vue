@@ -2,16 +2,24 @@
 <template>
   <div class="container">
     <StudentPageInfo :student="student"/>
-        <button
+    <span>
+      <button
         type="button"
         id="button"
         v-on:click="send(student)"
         class="btn btn-danger btn-lg"
         v-b-tooltip.hover
-        title="Click to save changes"
-      >Send Notifcation</button>
-    <div v-if="coops.length" v-b-tooltip.hover title="Click to see this Coop">
-      <StudentPageCoopItem v-for="coop in orderedCoops" :key="coop.id" :coop="coop"/>
+        title="Click to send notification to this student"
+      >Send Notification</button>
+    </span>
+    <div v-if="coops.length">
+      <StudentPageCoopItem
+        v-for="coop in orderedCoops"
+        :key="coop.id"
+        :coop="coop"
+        v-b-tooltip.hover
+        title="Click to see this Coop"
+      />
     </div>
     <p v-else v-bind:style="{ color: textColor }">Student has no co-op terms.</p>
   </div>
@@ -44,54 +52,63 @@ export default {
   props: {
     studentEmail: String
   },
- 
+
   created: function() {
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
-    }
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
 
-    if (typeof this.studentEmail === "undefined") {
-      // Page has been refreshed, must get student email explicitly
-      let pathEmail = Router.currentRoute.path.split("/")[2];
+      if (typeof this.studentEmail === "undefined") {
+        // Page has been refreshed, must get student email explicitly
+        let pathEmail = Router.currentRoute.path.split("/")[2];
 
-      // Fetch student from backend
-      AXIOS.get(`/student/` + pathEmail)
-        .then(response => {
-          this.student = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
-      // Get all coop terms for this student
-      AXIOS.get(`/student/coops/` + pathEmail)
-        .then(response => {
-          this.coops = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
-    } else {
-      // Initializing with fetched student from backend
-      AXIOS.get(`/student/` + this.studentEmail)
-        .then(response => {
-          this.student = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
-      // Get all coop terms for this student
-      AXIOS.get(`/student/coops/` + this.studentEmail)
-        .then(response => {
-          this.coops = response.data;
-        })
-        .catch(e => {
-          this.error = e;
-        });
+        // Fetch student from backend
+        AXIOS.get(`/student/` + pathEmail)
+          .then(response => {
+            this.student = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        // Get all coop terms for this student
+        AXIOS.get(`/student/coops/` + pathEmail)
+          .then(response => {
+            this.coops = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+      } else {
+        // Initializing with fetched student from backend
+        AXIOS.get(`/student/` + this.studentEmail)
+          .then(response => {
+            this.student = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+        // Get all coop terms for this student
+        AXIOS.get(`/student/coops/` + this.studentEmail)
+          .then(response => {
+            this.coops = response.data;
+          })
+          .catch(e => {
+            this.error = e;
+          });
+      }
     }
   },
   data() {
@@ -123,15 +140,15 @@ export default {
         this.textColor = "black";
       }
     },
-    send: function(student){
+    send: function(student) {
       var fakeSelect = [student];
       Router.push({
-          path: "/notifications/",
-          name: "NotificationPage",
-          params: {
-            selected: fakeSelect
-          }
-        });
+        path: "/notifications/",
+        name: "NotificationPage",
+        params: {
+          selected: fakeSelect
+        }
+      });
     }
   },
   mounted() {
@@ -147,7 +164,9 @@ export default {
 #button {
   width: 20%;
   color: white;
-  margin-top: 15px;
   border: 0px;
+  margin: auto;
+  margin-top: 15px;
+  background-color: red;
 }
 </style> 

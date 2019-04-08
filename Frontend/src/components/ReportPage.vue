@@ -1,11 +1,15 @@
-<! --- This component acts as a page to create a notification -->
+<!--- This component acts as a page to view a speicific report-->
 <template>
   <div v-if="this.reportLoaded" class="container">
     <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
-      <h4>
-        <b v-bind:style="{ color : textColor}">Report Information</b>
-      </h4>
-      <br style="display:block;margin:10px0;">
+      <h3 v-bind:style="{ color : textColor}">
+        <span class="badge badge-info">Report</span> &nbsp;
+        <small @click="goToStudentPage">&nbsp; {{coop.student.name}} </small>
+        &nbsp;-&nbsp; 
+        <small @click="goToCoopPage"> {{coop.title}} at {{coop.employer.company}} </small>
+      </h3>
+      <br>
+      <p>
       <span>
         <b v-bind:style="{ color : textColor}">Report Type:</b>
       </span>
@@ -26,15 +30,16 @@
         v-bind:style="{ color : textColor}"
       >Employer Evaluation</span>
       <span v-else v-bind:style="{ color : textColor}">Biweekly Report</span>
-      <br>
+      <p>
+      <p>
       <span>
-        <b v-bind:style="{ color : textColor}">Report Status:</b>
+        <b v-bind:style="{ color : textColor}">Report Status:&nbsp;</b>
       </span>
-      <span style="color:orange" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
-      <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
-      <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
-      <span style="color:lightgreen" v-else>Reviewed</span>
-      <br>
+       <span class="badge badge-warning" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+      <span class="badge badge-primary" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
+      <span class="badge badge-danger" v-else-if="report.reportStatus === 'Late'">Late</span>
+      <span class="badge badge-success" v-else>Reviewed</span>
+      </p>
       <span>
         <b v-bind:style="{ color : textColor}">Report Due Date:</b>
       </span>
@@ -178,7 +183,7 @@
             </h6>
             <h6 v-bind:style="{ color : textColor }">
               <strong>Hourly Wage:</strong>
-              {{coop.salaryPerHour}}$ per hour&nbsp;&nbsp;
+              {{coop.salaryPerHour}}$ &nbsp;&nbsp;
               <input
                 class="reportField"
                 type="text"
@@ -276,15 +281,26 @@ export default {
     };
   },
   created: function() {
-    this.fetchReport();
-
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
+      // Fetch report from the backend
+      this.fetchReport();
+
+      // Fetches the user's selected UI mode from browser local storage
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   methods: {
@@ -298,7 +314,27 @@ export default {
           console.log(e.message);
         });
     },
-
+    goToCoopPage: function() {
+      // Go to the employer associated with this coop term
+      Router.push({
+        path: "/coop/",
+        name: "CoopPage",
+        params: {
+          id: this.coop.id
+        }
+      });
+    },
+    goToStudentPage: function() {
+      // Go to the student associated with this coop term
+      Router.push({
+        path: "/student/",
+        name: "StudentPage",
+        params: {
+          emailUrl: this.coop.student.email,
+          studentEmail: this.coop.student.email
+        }
+      });
+    },
     setReportType: function() {
       AXIOS.put(
         "/report/updateType?" +
@@ -456,7 +492,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .container {
   align-content: center;
 }
@@ -506,7 +542,7 @@ export default {
   border-radius: 4px;
   border: 0px;
   margin: auto;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 #button {

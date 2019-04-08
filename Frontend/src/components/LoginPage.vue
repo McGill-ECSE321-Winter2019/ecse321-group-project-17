@@ -1,4 +1,4 @@
-<! --- This component acts as a page to log in -->
+<!--- This component acts as a page to log in --->
 <template>
   <div id="login" class="card" v-bind:style="{ backgroundColor : bgColor }">
     <span id="title" v-bind:style="{ color : textColor }">Administrator Login:</span>
@@ -6,34 +6,35 @@
       <span id="title1"></span>
     </div>
     <b-container fluid>
-      <input 
-        class="loginField" 
-        type="text" 
-        id="username" 
-        v-model="email" 
-        placeholder="Enter email">
+      <input
+        class="loginField"
+        type="text"
+        id="username"
+        v-model="email"
+        placeholder="Enter email"
+        v-on:keyup.enter="login(email, pw)"
+      >
       <input
         class="loginField"
         type="password"
         id="password"
         v-model="pw"
         placeholder="Enter password"
+        v-on:keyup.enter="login(email, pw)"
       >
       <button
         type="button"
-        id="button"
         v-on:click="login(email, pw)"
-        class="btn btn-danger btn-lg, loginField"
+        class="btn btn-primary btn-lg loginField button"
         v-b-tooltip.hover
         title="Click to login!"
       >Login</button>
       <button
         type="button"
-        id="button"
         v-on:click="goToAccountPage()"
-        class="btn btn-danger btn-lg, loginField"
+        class="btn btn-primary btn-lg loginField button"
         v-b-tooltip.hover
-        title="Click to create a new Account"
+        title="Click to create a new account!"
       >Create an Account</button>
     </b-container>
   </div>
@@ -79,13 +80,15 @@ export default {
     }
   },
   methods: {
-    // Send get request to find admin
+    // Send GET request to find admin
     login: function(email, pw) {
       AXIOS.get(`/admin/` + email)
         .then(response => {
           this.admin = response.data;
           if (this.admin.password === pw) {
             this.goToHomePage();
+            localStorage.setItem("isLoggedIn", "true");
+            this.$loggedInEvent.$emit("setLoggedInState", true);
           } else {
             document.getElementById("title1").innerText = "Password Incorrect";
           }
@@ -160,6 +163,7 @@ export default {
   padding: 15px;
   text-align: left;
 }
+
 .loginField {
   width: 98%;
   border-radius: 4px;
@@ -168,8 +172,8 @@ export default {
   margin: auto;
   margin-top: 15px;
 }
-#button{
-  color:white;
-  background-color: rgb(46, 126, 201); 
+
+.button {
+  color: white;
 }
 </style>

@@ -1,30 +1,30 @@
+<!--- This component renders the information of a specific coop for a coop page -->
 <template>
   <div id="info-container" class="card" v-bind:style="{ backgroundColor : bgColor}">
-    <h3>
+    <h3 v-bind:style="{ color : textColor}">
       <span class="badge badge-warning">Coop</span> &nbsp; &nbsp;
-      <strong v-bind:style="{ color : textColor}">Coop Information</strong>
+      <strong>{{coop.title}}</strong>
     </h3>
     <br>
+    <p @click="goToStudentPage" v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Student:</b>
+     {{ coop.student.name }}
+    </p>
     <span v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Status:</b>
     </span>
-    <span style="color:lightblue" v-if="coop.status === 'NotStarted'">Not Started</span>
-    <span style="color:yellow" v-else-if="coop.status === 'InProgress'">In Progress</span>
-    <span style="color:lightgreen" v-else-if="coop.status === 'Completed'">Complete</span>
-    <span style="color:red" v-else>Incomplete</span>
+    <span class="badge badge-info" v-if="coop.status === 'NotStarted'">Not Started</span>
+    <span class="badge badge-warning" v-else-if="coop.status === 'InProgress'">In Progress</span>
+    <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
+    <span class="badge badge-danger" v-else>Incomplete</span>
     <p/>
     <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Company:</b>
       {{ coop.employer.company }}
     </p>
-    <p @click="goToStudentPage"></p>
-    <p v-bind:style="{ color : textColor}">
+    <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Employer:</b>
       {{ coop.employer.name }}
-    </p>
-    <p v-bind:style="{ color : textColor}">
-      <b v-bind:style="{ color : textColor}">Student:</b>
-      {{ coop.student.name }}
     </p>
     <p v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Salary per hour:</b>
@@ -33,10 +33,6 @@
     <p v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Hours per week:</b>
       {{ coop.hoursPerWeek }}
-    </p>
-    <p v-bind:style="{ color : textColor}">
-      <b v-bind:style="{ color : textColor}">Title:</b>
-      {{ coop.title }}
     </p>
     <p v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Dates:</b>
@@ -61,7 +57,7 @@ export default {
   },
   methods: {
     goToEmployerPage: function() {
-      // Go to the student page
+      // Go to the employer associated with this coop term
       Router.push({
         path: "/employer/",
         name: "EmployerPage",
@@ -72,7 +68,7 @@ export default {
       });
     },
     goToStudentPage: function() {
-      // Go to the student page
+      // Go to the student associated with this coop term
       Router.push({
         path: "/student/",
         name: "StudentPage",
@@ -94,13 +90,23 @@ export default {
     }
   },
   created() {
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
+      // Fetches the user's selected UI mode from browser local storage
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   data() {
@@ -110,6 +116,7 @@ export default {
     };
   },
   mounted() {
+    // Listens to the setDarkModeState event emitted from the LogoBar component
     this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
@@ -125,6 +132,7 @@ export default {
   background-color: rgb(53, 58, 62);
   display: inline-block;
 }
+
 h4,
 p {
   color: rgb(241, 240, 240);

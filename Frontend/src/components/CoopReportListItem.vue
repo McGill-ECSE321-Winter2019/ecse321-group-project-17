@@ -1,3 +1,4 @@
+<!--- This component renders the information of a report for the list on the coop page -->
 <template>
   <tr v-bind:style="{ backgroundColor : bgColor}">
     <td class="td-report-type">
@@ -20,10 +21,10 @@
       <span v-else v-bind:style="{ color : textColor}">Biweekly Report</span>
     </td>
     <td class="td-report-status">
-      <span style="color:orange" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
-      <span style="color:lightblue" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
-      <span style="color:red" v-else-if="report.reportStatus === 'Late'">Late</span>
-      <span style="color:lightgreen" v-else>Reviewed</span>
+      <span class="badge badge-warning" v-if="report.reportStatus === 'Unsubmitted'">Unsubmitted</span>
+      <span class="badge badge-primary" v-else-if="report.reportStatus === 'Submitted'">&nbsp;&nbsp;Submitted&nbsp;&nbsp;</span>
+      <span class="badge badge-danger" v-else-if="report.reportStatus === 'Late'">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Late&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <span class="badge badge-success" v-else>&nbsp;&nbsp;Reviewed&nbsp;&nbsp;&nbsp;</span>
     </td>
     <td class="td-due-date">
       <span v-bind:style="{ color : textColor}">{{ report.dueDate }}</span>
@@ -55,8 +56,8 @@ export default {
       textColor: ""
     };
   },
-
   created() {
+    // Fetches the user's selected UI mode from browser local storage
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";

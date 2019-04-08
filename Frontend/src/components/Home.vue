@@ -1,10 +1,11 @@
+<!--- This component is the home page --->
 <template>
   <div>
     <div id="home-container" class="card" v-bind:style="{ backgroundColor: bgColor }">
       <div class="col-md-4" v-b-tooltip.hover title="Select to view Students, Employers, or both">
         <select
           v-model="selectedProfile"
-          class="mr-sm-2 custom-select filter-box"
+          class="mr-sm-2 custom-select home-filter-box"
           @change="updateProfileTypeSelected"
         >
           <option>Students &amp; Employers</option>
@@ -26,7 +27,7 @@
               >
             </td>
             <td id="td-badge1">
-              <span class="badge badge-light">Type</span>
+              <span class="badge badge-light">&nbsp;&nbsp;&nbsp; Type &nbsp;&nbsp;&nbsp;</span>
             </td>
             <td id="td-name">
               <h4 v-bind:style="{ color: textColor }">Name</h4>
@@ -103,8 +104,7 @@ var AXIOS = axios.create({
 });
 
 // Axios config for student POV
-backendUrl =
-  "https://cooperator-backend-00.herokuapp.com";
+backendUrl = "https://cooperator-backend-00.herokuapp.com";
 var AXIOS_Student = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
@@ -133,6 +133,15 @@ export default {
     HomeListEmployerItem
   },
   created: function() {
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
+    }
+
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";
@@ -151,14 +160,14 @@ export default {
         this.error = e;
       });
     // Fetch all students from student POV database
-    AXIOS_Student.get('/getAllStudents/')
+    AXIOS_Student.get("/getAllStudents/")
       .then(response => {
         this.externalStudents = response.data;
         this.studentsLoaded = true;
       })
       .catch(e => {
         this.error = e;
-      })
+      });
     // Fetch all employers from backend
     AXIOS.get(`/employers`)
       .then(response => {
@@ -215,7 +224,7 @@ export default {
           .catch(e => {
             this.error = e;
           });
-        AXIOS_Student.get('/getAllStudents/')
+        AXIOS_Student.get("/getAllStudents/")
           .then(response => {
             this.externalStudents = response.data;
             this.studentsLoaded = true;
@@ -240,7 +249,7 @@ export default {
           .catch(e => {
             this.error = e;
           });
-        AXIOS_Student.get('/getAllStudents/')
+        AXIOS_Student.get("/getAllStudents/")
           .then(response => {
             this.externalStudents = response.data;
             this.studentsLoaded = true;
@@ -328,7 +337,7 @@ h4 {
   border-color: rgb(129, 133, 136);
 }
 
-.filter-box {
+.home-filter-box {
   margin-bottom: 10px;
 }
 
@@ -344,7 +353,6 @@ h4 {
   margin-top: 15px;
   padding: 15px;
   text-align: left;
-  /* background-color: rgb(53, 58, 62); rgb(248, 249, 251);*/
 }
 
 #scroll-container {

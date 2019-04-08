@@ -1,3 +1,4 @@
+<!--- This component renders the information of a coop for the list on the employer page -->
 <template>
   <div
     id="coop-container"

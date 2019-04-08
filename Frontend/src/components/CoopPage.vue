@@ -40,11 +40,11 @@ import _ from "lodash";
 
 var config = require("../../config");
 
-// Axios config
 var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
 var backendUrl =
   "https://" + config.build.backendHost + ":" + config.build.backendPort;
 
+// Axios config
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
@@ -56,15 +56,26 @@ export default {
     CoopReportListItem
   },
   created() {
-    this.fetchCoop();
-
-    var darkModeOn = localStorage.getItem("DarkModeOn");
-    if (darkModeOn === "true") {
-      this.bgColor = "rgb(53, 58, 62)";
-      this.textColor = "white";
+    var isLoggedIn = localStorage.getItem("isLoggedIn");
+    // Send the user back to the login page if they are not logged in
+    if (isLoggedIn === "false") {
+      Router.push({
+        path: "/login/",
+        name: "LoginPage"
+      });
     } else {
-      this.bgColor = "rgb(248, 249, 251)";
-      this.textColor = "black";
+      // Fetch the coop term from the backend
+      this.fetchCoop();
+
+      // Fetches the user's selected UI mode from browser local storage
+      var darkModeOn = localStorage.getItem("DarkModeOn");
+      if (darkModeOn === "true") {
+        this.bgColor = "rgb(53, 58, 62)";
+        this.textColor = "white";
+      } else {
+        this.bgColor = "rgb(248, 249, 251)";
+        this.textColor = "black";
+      }
     }
   },
   data() {
@@ -80,14 +91,17 @@ export default {
     };
   },
   methods: {
-   hasReports: function(coop) {
+    // Checks if the coop term has any reports
+    hasReports: function(coop) {
       if (coop.reports != null && coop.reports.length > 0) {
         return true;
       }
       return false;
     },
     fetchCoop: function() {
+      // Get coop ID from current URL
       var coopId = parseInt(Router.currentRoute.path.split("/")[2]);
+
       // Fetch coop from backend
       AXIOS.get(`/coop/` + coopId)
         .then(response => {
@@ -98,12 +112,15 @@ export default {
           console.log(e.message);
         });
     },
+    // Removes a report from the coop
     removeReport: function(report) {
-        var index = this.orderedReports.indexOf(report);
-        if (index > -1) {
-            this.orderedReports.splice(index, 1);
-        }
-        AXIOS.delete("/report/delete?id=" + report.id)
+      var index = this.orderedReports.indexOf(report);
+      if (index > -1) {
+        this.orderedReports.splice(index, 1);
+      }
+
+      // Remove report in backend
+      AXIOS.delete("/report/delete?id=" + report.id)
         .then(response => {
           this.fetchCoop();
         })
@@ -123,6 +140,7 @@ export default {
     }
   },
   mounted() {
+    // Listens to the setDarkModeState event emitted from the LogoBar component
     this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };

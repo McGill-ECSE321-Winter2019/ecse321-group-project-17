@@ -25,7 +25,7 @@
       <button
         type="button"
         v-on:click="create(email, pw, name, num)"
-        class="btn btn-light btn-lg, loginField"
+        v-bind:class="buttonClass"
         v-b-tooltip.hover
         title="Click to create!"
       >Create</button>
@@ -39,11 +39,11 @@ import Router from "../router";
 
 var config = require("../../config");
 
-// Axios config
 var frontendUrl = "http://" + config.build.host + ":" + config.build.port;
 var backendUrl =
   "https://" + config.build.backendHost + ":" + config.build.backendPort;
 
+// Axios config
 var AXIOS = axios.create({
   baseURL: backendUrl,
   headers: { "Access-Control-Allow-Origin": frontendUrl }
@@ -57,6 +57,7 @@ export default {
       },
       bgColor: "",
       textColor: "",
+      buttonClass: "",
       error: "",
       pw: "",
       email: "",
@@ -65,17 +66,20 @@ export default {
     };
   },
   created: function() {
+    // Fetches the user's selected UI mode from browser local storage
     var darkModeOn = localStorage.getItem("DarkModeOn");
     if (darkModeOn === "true") {
       this.bgColor = "rgb(53, 58, 62)";
       this.textColor = "white";
+      this.buttonClass = "btn btn-dark btn-lg loginField";
     } else {
       this.bgColor = "rgb(248, 249, 251)";
       this.textColor = "black";
+      this.buttonClass = "btn btn-white btn-lg loginField";
     }
   },
   methods: {
-    // Send get request to find admin
+    // Send GET request to fetch admin
     create: function(email, pw, name, num) {
       AXIOS.post(
         `/admin/create?email=` +
@@ -114,11 +118,17 @@ export default {
       if (darkModeOn === "true") {
         this.bgColor = "rgb(53, 58, 62)";
         this.textColor = "white";
+        this.buttonClass = "btn btn-dark btn-lg loginField";
       } else {
         this.bgColor = "rgb(248, 249, 251)";
         this.textColor = "black";
+        this.buttonClass = "btn btn-white btn-lg loginField";
       }
     }
+  },
+  mounted() {
+    // Listens to the setDarkModeState event emitted from the LogoBar component
+    this.$root.$on("setDarkModeState", this.setDarkMode);
   }
 };
 </script>

@@ -38,3 +38,16 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |Susan Matuszewski |  20 hours  | created notifications page frontend, employer page, resolved some backend issues from last week                     |
 |Eliott Bourachot  |  17 hours  | frontend statistics page, project report |
 |Matthew Kourlas   |  21 hours  | frontend coop page, frontend report page |
+
+## Deliverable 4
+
+[Project Report](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-17/wiki/Project-Report:-Deliverable-4)
+
+|Team member's name|Total hours |Responsibility         |
+|------------------|------------|-----------------------|
+|Emma Eagles       |  x hours  |                     |
+|Albert Kragl      |  x hours  |  |
+|Susan Matuszewski |  x hours  |                     |
+|Eliott Bourachot  |  x hours  |  |
+|Matthew Kourlas   |  x hours  |  |
+

@@ -11,7 +11,7 @@ Vue.use(BootstrapVue);
 Vue.config.productionTip = false;
 
 Vue.prototype.$eventHub = new Vue(); // Global event bus
-// Vue.prototype.$darkMode = false; // Global variable to keep track of dark mode status
+Vue.prototype.$loggedInEvent = new Vue(); // Event bus for log in events
 
 /* eslint-disable no-new */
 new Vue({
