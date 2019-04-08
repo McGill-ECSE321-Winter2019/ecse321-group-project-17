@@ -1,4 +1,4 @@
-<!--- This component acts as a page to view a speicific report-->
+<!--- This component acts as a page to view a speicific report --->
 <template>
   <div v-if="this.reportLoaded" class="container">
     <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
@@ -542,8 +542,7 @@ export default {
   border-radius: 4px;
   border: 0px;
   margin: auto;
-  margin-top: 10px;
-}
+  margin-top: 10px;}
 
 #button {
   width: 20%;

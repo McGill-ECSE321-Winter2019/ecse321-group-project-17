@@ -3,6 +3,18 @@
 
 Group 17 is part of Development Unit 2, and we are working on the Co-op Administrator viewpoint. A detailed breakdown of our system features can be found in our system requirements, as well as on the Wiki.
 
+## Links
+
+Our frontend Heroku application can be accessed [here](https://ecse321-group17-frontend.herokuapp.com/#/).
+
+Our backend Heroku application can be accessed [here](https://ecse321-group17.herokuapp.com/).
+
+## Run Locally
+
+To run the frontend locally, clone this repository and run `npm start` from within the Frontend folder.
+
+The backend can be run locally with the Spring Tools Suite application. If the Gmail API imports cannot be resolved, running `gradle eclipse` in the backend folder should fix that issue. 
+
 ## Deliverable 1
 
 [Project Report](https://github.com/McGill-ECSE321-Winter2019/ecse321-group-project-17/wiki/Project-Report:-Deliverable-1)
@@ -45,9 +57,9 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 |Team member's name|Total hours |Responsibility         |
 |------------------|------------|-----------------------|
-|Emma Eagles       |  x hours  | Added login/logout/account creation, fixed backend, deliverable documentation, report editing frontend/backend code                  |
-|Albert Kragl      |  x hours  |  |
-|Susan Matuszewski |  x hours  |                     |
+|Emma Eagles       |  20 hours  | Added login/logout/account creation, fixed backend, user documentation, project report, updated API documentation, added the report editing feature in frontend/backend code                  |
+|Albert Kragl      |  25 hours  |  Added dark/light mode, user documentation, Bug fixes in frontend, organized integration with other teams |
+|Susan Matuszewski |  15 hours  | Added notifications via email using Gmail API, added to frontend to implement email sending|
 |Eliott Bourachot  |  x hours  |  |
-|Matthew Kourlas   |  x hours  |  |
+|Matthew Kourlas   |  8 hours  | Added integration with other teams to frontend, added dynamic updating of report removal, fixed set report due date |
 
