@@ -542,8 +542,7 @@ export default {
   border-radius: 4px;
   border: 0px;
   margin: auto;
-  margin-top: 10px;
-}
+  margin-top: 10px;}
 
 #button {
   width: 20%;

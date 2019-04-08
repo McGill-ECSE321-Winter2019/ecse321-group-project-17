@@ -39,7 +39,7 @@
         </table>
       </div>
       <div id="scroll-container">
-        <table v-if="studentsLoaded && employersLoaded">
+        <table v-if="studentsLoaded && employersLoaded && externalStudentsLoaded && externalEmployersLoaded">
           <HomeListStudentItem
             v-for="student in orderedStudents"
             :key="student.email"
@@ -55,6 +55,12 @@
           <HomeListEmployerItem
             v-for="employer in orderedEmployers"
             :key="employer.email"
+            :employer="employer"
+            @child-clicked="handleSelect"
+          />
+          <HomeListEmployerItem
+            v-for="employer in externalEmployers"
+            :key="employer.username"
             :employer="employer"
             @child-clicked="handleSelect"
           />
@@ -110,13 +116,13 @@ var AXIOS_Student = axios.create({
   headers: { "Access-Control-Allow-Origin": frontendUrl }
 });
 
-// Axios config for employer POV
-// backendUrl =
-//   "https://ecse321-group12.herokuapp.com: ??? ";
-// var AXIOS_Employer = axios.create({
-//   baseURL: backendUrl,
-//   headers: { "Access-Control-Allow-Origin": frontendUrl }
-// });
+//Axios config for employer POV
+backendUrl =
+  "https://ecse321-group12.herokuapp.com";
+var AXIOS_Employer = axios.create({
+  baseURL: backendUrl,
+  headers: { "Access-Control-Allow-Origin": frontendUrl }
+});
 
 // Remove a person from the selected profiles list
 let remove = function(context, person) {
@@ -155,6 +161,7 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.students = response.data;
+        this.studentsLoaded = true;
       })
       .catch(e => {
         this.error = e;
@@ -163,7 +170,7 @@ export default {
     AXIOS_Student.get("/getAllStudents/")
       .then(response => {
         this.externalStudents = response.data;
-        this.studentsLoaded = true;
+        this.externalStudentsLoaded = true;
       })
       .catch(e => {
         this.error = e;
@@ -178,6 +185,14 @@ export default {
         this.error = e;
       });
     // Fetch all employers from employer POV database
+    AXIOS_Employer.get("/employers")
+      .then(response => {
+        this.externalEmployers = response.data;
+        this.externalEmployersLoaded = true;
+      })
+      .catch(e => {
+        this.error = e;
+      });
   },
   data() {
     return {
@@ -190,8 +205,13 @@ export default {
       employers: {
         type: Object
       },
+      externalEmployers: {
+        type: Array
+      },
       studentsLoaded: false,
       employersLoaded: false,
+      externalStudentsLoaded: false,
+      externalEmployersLoaded: false,
       allSelected: false,
       selected: [],
       selectedProfile: "Students & Employers",
@@ -220,6 +240,7 @@ export default {
         AXIOS.get(`/students`)
           .then(response => {
             this.students = response.data;
+            this.studentsLoaded = true;
           })
           .catch(e => {
             this.error = e;
@@ -227,7 +248,7 @@ export default {
         AXIOS_Student.get("/getAllStudents/")
           .then(response => {
             this.externalStudents = response.data;
-            this.studentsLoaded = true;
+            this.externalStudentsLoaded = true;
           })
           .catch(e => {
             this.error = e;
@@ -240,11 +261,20 @@ export default {
           .catch(e => {
             this.error = e;
           });
+        AXIOS_Employer.get("/employers")
+          .then(response => {
+            this.externalEmployers = response.data;
+            this.externalEmployersLoaded = true;
+          })
+          .catch(e => {
+            this.error = e;
+          });
       } else if (this.selectedProfile === "Students") {
         // Fetch only students from the backend
         AXIOS.get(`/students`)
           .then(response => {
             this.students = response.data;
+            this.studentsLoaded = true;
           })
           .catch(e => {
             this.error = e;
@@ -252,13 +282,15 @@ export default {
         AXIOS_Student.get("/getAllStudents/")
           .then(response => {
             this.externalStudents = response.data;
-            this.studentsLoaded = true;
+            this.externalStudentsLoaded = true;
           })
           .catch(e => {
             this.error = e;
           });
         this.employers = [];
+        this.externalEmployers = [];
         this.employersLoaded = true;
+        this.externalEmployersLoaded = true;
       } else if (this.selectedProfile === "Employers") {
         // Fetch only employers from the backend
         AXIOS.get(`/employers`)
@@ -269,9 +301,18 @@ export default {
           .catch(e => {
             this.error = e;
           });
+        AXIOS_Employer.get("/employers")
+          .then(response => {
+            this.externalEmployers = response.data;
+            this.externalEmployersLoaded = true;
+          })
+          .catch(e => {
+            this.error = e;
+          });
         this.students = [];
         this.externalStudents = [];
         this.studentsLoaded = true;
+        this.externalStudentsLoaded = true;
       }
     },
     handleSelect: function(isSelected, person) {
