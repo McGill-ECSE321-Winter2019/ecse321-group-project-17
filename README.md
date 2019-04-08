@@ -57,7 +57,7 @@ The backend can be run locally with the Spring Tools Suite application. If the G
 
 |Team member's name|Total hours |Responsibility         |
 |------------------|------------|-----------------------|
-|Emma Eagles       |  x hours  | Added login/logout/account creation, fixed backend, deliverable documentation, report editing frontend/backend code                  |
+|Emma Eagles       |  20 hours  | Added login/logout/account creation, fixed backend, deliverable documentation, report editing frontend/backend code                  |
 |Albert Kragl      |  25 hours  |  Added dark/light mode, user documentation, Bug fixes in frontend, organized integration with other teams |
 |Susan Matuszewski |  15 hours  | Added notifications via email using Gmail API, added to frontend to implement email sending|
 |Eliott Bourachot  |  x hours  |  |
