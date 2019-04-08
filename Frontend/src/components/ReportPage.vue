@@ -1,4 +1,4 @@
-<!--- This component acts as a page to view a speicific report-->
+<!--- This component acts as a page to view a speicific report --->
 <template>
   <div v-if="this.reportLoaded" class="container">
     <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
