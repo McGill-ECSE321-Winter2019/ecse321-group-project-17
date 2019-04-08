@@ -45,7 +45,7 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 |Team member's name|Total hours |Responsibility         |
 |------------------|------------|-----------------------|
-|Emma Eagles       |  x hours  |                     |
+|Emma Eagles       |  x hours  | Added login/logout and account creation, fixed up backend, deliverable documentation, report editing frontend and backend code                  |
 |Albert Kragl      |  x hours  |  |
 |Susan Matuszewski |  x hours  |                     |
 |Eliott Bourachot  |  x hours  |  |
