@@ -36,6 +36,11 @@ import javax.mail.internet.MimeMessage;
 
 public class GmailService {
 	
+	public static Gmail service;
+	
+	public GmailService (Gmail service) {
+		GmailService.service = service;
+	}
 	
 	public static final String APPLICATION_NAME = "Gmail API Java Quickstart";
 	public static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
@@ -108,7 +113,6 @@ public class GmailService {
      */
     public static Message createMessageWithEmail(MimeMessage emailContent)
             throws MessagingException, IOException {
-    	System.out.println(Base64.class.getProtectionDomain().getCodeSource().getLocation());
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         emailContent.writeTo(buffer);
         byte[] bytes = buffer.toByteArray();
@@ -143,10 +147,10 @@ public class GmailService {
 
     public static void sendEmail(String to, String bodytext) throws IOException, GeneralSecurityException {
     	
-		final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
+		/*final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
         Gmail service = new Gmail.Builder(HTTP_TRANSPORT, GmailService.JSON_FACTORY, GmailService.getCredentials(HTTP_TRANSPORT))
                 .setApplicationName(GmailService.APPLICATION_NAME)
-                .build();
+                .build();*/
     	
         String user = "me";
     	
@@ -155,7 +159,7 @@ public class GmailService {
     	
     	try {
     		MimeMessage m = createEmail(to, from, subject, bodytext);
-    		sendMessage(service, user, m);
+    		sendMessage(GmailService.service, user, m);
     	}
     	catch (Exception e) {
     		System.out.println(e.getMessage());
