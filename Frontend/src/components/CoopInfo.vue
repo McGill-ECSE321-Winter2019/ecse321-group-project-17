@@ -6,6 +6,10 @@
       <strong>{{coop.title}}</strong>
     </h3>
     <br>
+    <p @click="goToStudentPage" v-bind:style="{ color : textColor}">
+      <b v-bind:style="{ color : textColor}">Student:</b>
+     {{ coop.student.name }}
+    </p>
     <span v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Status:</b>
     </span>
@@ -14,10 +18,6 @@
     <span class="badge badge-success" v-else-if="coop.status === 'Completed'">Complete</span>
     <span class="badge badge-danger" v-else>Incomplete</span>
     <p/>
-    <p @click="goToStudentPage" v-bind:style="{ color : textColor}">
-      <b v-bind:style="{ color : textColor}">Student:</b>
-     {{ coop.student.name }}
-    </p>
     <p @click="goToEmployerPage" v-bind:style="{ color : textColor}">
       <b v-bind:style="{ color : textColor}">Company:</b>
       {{ coop.employer.company }}

@@ -2,10 +2,14 @@
 <template>
   <div v-if="this.reportLoaded" class="container">
     <div class="card" id="info" v-bind:style="{ backgroundColor : bgColor}">
-      <h4>
-        <b v-bind:style="{ color : textColor}">Report Information</b>
-      </h4>
-      <br style="display:block;margin:10px0;">
+      <h3 v-bind:style="{ color : textColor}">
+        <span class="badge badge-info">Report</span> &nbsp;
+        <small @click="goToStudentPage">&nbsp; {{coop.student.name}} </small>
+        &nbsp;-&nbsp; 
+        <small @click="goToCoopPage"> {{coop.title}} at {{coop.employer.company}} </small>
+      </h3>
+      <br>
+      <p>
       <span>
         <b v-bind:style="{ color : textColor}">Report Type:</b>
       </span>
@@ -26,7 +30,8 @@
         v-bind:style="{ color : textColor}"
       >Employer Evaluation</span>
       <span v-else v-bind:style="{ color : textColor}">Biweekly Report</span>
-      <br>
+      <p>
+      <p>
       <span>
         <b v-bind:style="{ color : textColor}">Report Status:&nbsp;</b>
       </span>
@@ -34,7 +39,7 @@
       <span class="badge badge-primary" v-else-if="report.reportStatus === 'Submitted'">Submitted</span>
       <span class="badge badge-danger" v-else-if="report.reportStatus === 'Late'">Late</span>
       <span class="badge badge-success" v-else>Reviewed</span>
-      <br>
+      </p>
       <span>
         <b v-bind:style="{ color : textColor}">Report Due Date:</b>
       </span>
@@ -309,7 +314,27 @@ export default {
           console.log(e.message);
         });
     },
-
+    goToCoopPage: function() {
+      // Go to the employer associated with this coop term
+      Router.push({
+        path: "/coop/",
+        name: "CoopPage",
+        params: {
+          id: this.coop.id
+        }
+      });
+    },
+    goToStudentPage: function() {
+      // Go to the student associated with this coop term
+      Router.push({
+        path: "/student/",
+        name: "StudentPage",
+        params: {
+          emailUrl: this.coop.student.email,
+          studentEmail: this.coop.student.email
+        }
+      });
+    },
     setReportType: function() {
       AXIOS.put(
         "/report/updateType?" +
