@@ -24,7 +24,7 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 |Emma Eagles       |  20 hours  | Unit tests for service methods, created dto files, set up for RESTful, basic RESTful methods and controller methods (getting and setting), Restful services for viewing files, tracking Student status, viewing coop status |
 |Albert Kragl      |  18 hours  | Create test DB, automatic deployment to Heroku, API documentation, Software Assurance Plan, RESTful tests, modify report RESTful methods  |
 |Susan Matuszewski |  15 hours  | send notifications RESTful, integration testing for query services, integration tests gradle task |
-|Eliott Bourachot  |  15 hours  | statistics RESTful services, unit testing for service methods, Software Assurance Plan  |
+|Eliott Bourachbackendot  |  15 hours  | statistics RESTful services, unit testing for service methods, Software Assurance Plan  |
 |Matthew Kourlas   |  14 hours  | co-op progress RESTful service, integration testing for data modifying services |
 
 ## Deliverable 3
@@ -45,7 +45,7 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 |Team member's name|Total hours |Responsibility         |
 |------------------|------------|-----------------------|
-|Emma Eagles       |  x hours  |                     |
+|Emma Eagles       |  x hours  | Added login/logout/account creation, fixed backend, deliverable documentation, report editing frontend/backend code                  |
 |Albert Kragl      |  x hours  |  |
 |Susan Matuszewski |  x hours  |                     |
 |Eliott Bourachot  |  x hours  |  |
