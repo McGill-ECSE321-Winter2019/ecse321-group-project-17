@@ -7,6 +7,8 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 Our frontend Heroku application can be accessed [here](https://ecse321-group17-frontend.herokuapp.com/#/).
 
+(Note: if you get an Application Error, refreshing the page should bring up the actual frontend application.)
+
 Our backend Heroku application can be accessed [here](https://ecse321-group17.herokuapp.com/).
 
 ## Run Locally
