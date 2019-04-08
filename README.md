@@ -60,6 +60,6 @@ The backend can be run locally with the Spring Tools Suite application. If the G
 |Emma Eagles       |  20 hours  | Added login/logout/account creation, fixed backend, user documentation, project report, updated API documentation, added the report editing feature in frontend/backend code                  |
 |Albert Kragl      |  25 hours  |  Added dark/light mode, user documentation, Bug fixes in frontend, organized integration with other teams |
 |Susan Matuszewski |  15 hours  | Added notifications via email using Gmail API, added to frontend to implement email sending|
-|Eliott Bourachot  |  x hours  |  |
+|Eliott Bourachot  |  15 hours  | Moved statistics filters, added help pop-ups, fixed bugs with statistics page |
 |Matthew Kourlas   |  8 hours  | Added integration with other teams to frontend, added dynamic updating of report removal, fixed set report due date |
 
