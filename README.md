@@ -7,8 +7,6 @@ Group 17 is part of Development Unit 2, and we are working on the Co-op Administ
 
 Our frontend Heroku application can be accessed [here](https://ecse321-group17-frontend.herokuapp.com/#/).
 
-(Note: if you get an Application Error, refreshing the page should bring up the actual frontend application.)
-
 Our backend Heroku application can be accessed [here](https://ecse321-group17.herokuapp.com/).
 
 ## Run Locally
@@ -61,7 +59,7 @@ The backend can be run locally with the Spring Tools Suite application. If the G
 |------------------|------------|-----------------------|
 |Emma Eagles       |  x hours  | Added login/logout/account creation, fixed backend, deliverable documentation, report editing frontend/backend code                  |
 |Albert Kragl      |  25 hours  |  Added dark/light mode, user documentation, Bug fixes in frontend, organized integration with other teams |
-|Susan Matuszewski |  x hours  |                     |
+|Susan Matuszewski |  15 hours  | Added notifications via email using Gmail API, added to frontend to implement email sending|
 |Eliott Bourachot  |  x hours  |  |
-|Matthew Kourlas   |  x hours  | Added integration with other teams to frontend, added dynamic updating of report removal, fixed set report due date |
+|Matthew Kourlas   |  x hours  |  |
 
