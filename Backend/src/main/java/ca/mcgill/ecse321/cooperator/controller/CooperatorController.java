@@ -135,7 +135,7 @@ public class CooperatorController {
 	} 
 	
 	/**
-	 * Creates a new notification that can be sent to a student, employer, or both.
+	 * Creates a new notification that can be sent to a student or employer, not both
 	 * 
 	 * @param text
 	 * @param senderEmail
