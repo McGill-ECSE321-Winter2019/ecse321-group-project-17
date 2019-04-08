@@ -183,7 +183,7 @@
             </h6>
             <h6 v-bind:style="{ color : textColor }">
               <strong>Hourly Wage:</strong>
-              {{coop.salaryPerHour}}$ per hour&nbsp;&nbsp;
+              {{coop.salaryPerHour}}$ &nbsp;&nbsp;
               <input
                 class="reportField"
                 type="text"
@@ -542,7 +542,7 @@ export default {
   border-radius: 4px;
   border: 0px;
   margin: auto;
-  margin-top: 15px;
+  margin-top: 10px;
 }
 
 #button {
